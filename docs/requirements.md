@@ -4,7 +4,7 @@ All requirements are already installed in the ESS Development Machine (4.x and u
 
 **E3 is only supported on Linux.**
 
-## conda
+## Conda
 
 [Conda](https://docs.conda.io/en/latest/) is a Package, dependency and environment management for any language — Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
 
@@ -54,8 +54,8 @@ conda config --set auto_activate_base false
 ```
 
 All E3 packages are available on [ESS Artifactory](https://artifactory.esss.lu.se).
-Artifactory includes mirrors for `anaconda-main` and `conda-forge` channels.
-To work with E3, you should use the `conda-e3-virtual` channel:
+Artifactory includes mirrors for `anaconda-main` and `conda-forge` channels. You should set artifactory as the the default channel_alias.
+To work with E3, you have to use the `conda-e3-virtual` channel:
 
 ```bash
 conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
@@ -72,7 +72,7 @@ conda config --set use_only_tar_bz2 true
 The previous commands created the following `~/.condarc` file:
 
 ```bash
-cat ~/.condarc
+auto_activate_base: false
 channel_alias: https://artifactory.esss.lu.se/artifactory/api/conda
 channels:
   - conda-e3-virtual
@@ -80,3 +80,52 @@ use_only_tar_bz2: true
 ```
 
 You can modify the configuration by editing directly this file or using the `conda config` command.
+
+## Cookiecutter
+
+[Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from templates. It's used to easily create new E3 modules, recipes or IOCs.
+
+### Installation
+
+Cookiecutter is a Python tool. It can be installed with `pip`.
+Note that you should **never run** `sudo pip install`. This can override system packages.
+
+Cookiecutter can be installed in different ways (`pip install --user` or using [pipx](https://pipxproject.github.io/pipx/)).
+As conda is installed, let's use it.
+
+```bash
+conda create -y -c conda-forge -n cookiecutter python=3 cookiecutter
+```
+
+Add an alias to your `.bashrc`:
+
+```bash
+echo "alias cookiecutter='~/miniconda/envs/cookiecutter/bin/cookiecutter'" >> ~/.bashrc
+```
+
+Close and re-open your current shell. You should be able to run `cookiecutter`:
+
+```bash
+cookiecutter --version
+Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
+```
+
+### Configuration
+
+Add the following aliases to your `.bashrc`:
+
+```bash
+echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
+echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
+echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
+```
+
+## conda-build
+
+[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html) is only required if you want to build conda packages locally. It's not directly needed to work with E3.
+
+Install conda-build in the base environment:
+
+```bash
+conda install -y -n base -c conda-forge conda-build
+```
