@@ -1,0 +1,14 @@
+---
+#include:
+#  - 'https://gitlab.esss.lu.se/ics-infrastructure/gitlab-ci-yml/raw/master/SphinxPages.gitlab-ci.yml'
+pages:
+  tags:
+    - docker
+  stage: deploy
+  image: registry.esss.lu.se/ics-docker/sphinx
+  script:
+    - sphinx-build -M html docs docs/_build
+    - mv docs/_build/html public
+  artifacts:
+    paths:
+      - public
