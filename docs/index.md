@@ -8,4 +8,6 @@ maxdepth: 2
 caption: Contents
 ---
 requirements.md
+using/quickstart.md
+using/conda.md
 ```

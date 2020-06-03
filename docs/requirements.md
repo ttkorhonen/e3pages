@@ -1,3 +1,5 @@
+(e3_requirements)=
+
 # Requirements
 
 All requirements are already installed in the ESS Development Machine (4.x and upward).
@@ -81,9 +83,19 @@ use_only_tar_bz2: true
 
 You can modify the configuration by editing directly this file or using the `conda config` command.
 
+## conda-build
+
+[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html) is only required if you want to build conda packages locally. It's not directly needed to work with E3.
+
+Install conda-build in the base environment:
+
+```bash
+conda install -y -n base -c conda-forge conda-build
+```
+
 ## Cookiecutter
 
-[Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from templates. It's used to easily create new E3 modules, recipes or IOCs.
+[Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from templates. It's used to easily create new E3 modules, recipes or IOCs for development. It's not required to run E3.
 
 ### Installation
 
@@ -115,17 +127,9 @@ Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site
 Add the following aliases to your `.bashrc`:
 
 ```bash
-echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
 echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
+echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
 echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
 ```
 
-## conda-build
-
-[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html) is only required if you want to build conda packages locally. It's not directly needed to work with E3.
-
-Install conda-build in the base environment:
-
-```bash
-conda install -y -n base -c conda-forge conda-build
-```
+To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or `e3-ioc`.
