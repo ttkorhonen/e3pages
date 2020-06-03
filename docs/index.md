@@ -7,7 +7,8 @@ E3 is managed using [conda](https://docs.conda.io/en/latest/).
 maxdepth: 2
 caption: Contents
 ---
-requirements.md
 using/quickstart.md
+using/development.md
 using/conda.md
+requirements.md
 ```
