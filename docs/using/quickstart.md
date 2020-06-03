@@ -3,7 +3,7 @@
 Conda is used to package and deploy E3 modules.
 
 To work with E3, the only requirement is to have conda installed and configured to use the `conda-e3-virtual` channel on Artifactory.
-Please refer to the {ref}`requirements <e3_requirements>`.
+Please refer to the {ref}`e3_requirements`.
 
 As explained in the [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html), a conda environment is just a directory that contains a specific collection of conda packages that you have installed. You could have one environment with epics-base 7 and another one with epics-base 3.15. You can easily switch between environments (by activating or deactivating them). When installing packages in an environment, others are not impacted. To avoid conflicts, conda ensures that there is only one version of each package in an environment.
 
@@ -338,3 +338,5 @@ Loaded iocstats version 3.1.15
 Loading dbd file /home/csi/miniconda/envs/epics3/modules/iocstats/3.1.15/dbd/iocstats.dbd
 Calling function iocstats_registerRecordDeviceDriver
 ```
+
+Note that when working with E3, you aren't limited to work with conda packages. During development, you can compile a module locally in a conda environment. See {ref}`how to compile a module <e3_module_compilation>`.

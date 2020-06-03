@@ -1,6 +1,6 @@
 (e3_requirements)=
 
-# Requirements
+# E3 Requirements
 
 All requirements are already installed in the ESS Development Machine (4.x and upward).
 
@@ -8,12 +8,14 @@ All requirements are already installed in the ESS Development Machine (4.x and u
 
 ## Conda
 
-[Conda](https://docs.conda.io/en/latest/) is a Package, dependency and environment management for any language — Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
+[Conda] is a Package, dependency and environment management for any language — Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
 
-Conda is open-source and runs on Linux, MacOS and Windows. It allows to easily install packages and their dependencies in isolated environment.
+[Conda] is open-source and runs on Linux, MacOS and Windows. It allows to easily install packages and their dependencies in isolated environment.
 You can read more about conda concepts in the official [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html).
 
-### Installation
+(conda_installation)=
+
+### Conda Installation
 
 To install conda, we'll use the [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.
 The only requirements to run the installation are `bzip2` and `curl`.
@@ -29,7 +31,9 @@ conda init
 
 You can refer to the [official documentation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) for more detailed information.
 
-### Update
+(conda_update)=
+
+### Conda Update
 
 The installer might not come with the latest available version of conda. After installation you should update conda:
 
@@ -46,7 +50,9 @@ conda 4.8.3
 
 You need at least conda 4.7 to work with E3. Conda 4.8 is recommended.
 
-### Configuration
+(conda_configuration)=
+
+### Conda Configuration
 
 If you don't want conda to activate the base environment by default (and modify your PATH),
 you should run:
@@ -83,9 +89,11 @@ use_only_tar_bz2: true
 
 You can modify the configuration by editing directly this file or using the `conda config` command.
 
+(conda_build_installation)=
+
 ## conda-build
 
-[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html) is only required if you want to build conda packages locally. It's not directly needed to work with E3.
+[conda-build] is only required if you want to build conda packages locally. It's not directly needed to work with E3.
 
 Install conda-build in the base environment:
 
@@ -93,16 +101,36 @@ Install conda-build in the base environment:
 conda install -y -n base -c conda-forge conda-build
 ```
 
+```{note}
+The base environment shall be writeable by the current user to run this command.
+```
+
+Download the [conda_build_config.yaml](https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/blob/master/conda_build_config.yaml) file from the
+[e3-pinning repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).
+You should save it at the root of your home directory.
+
+```bash
+[csi@8ef3d5671aef Dev]$ cd
+[csi@8ef3d5671aef ~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2960  100  2960    0     0   7750      0 --:--:-- --:--:-- --:--:--  7748
+```
+
+This file defines the default version of each dependency to use.
+
 ## Cookiecutter
 
 [Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from templates. It's used to easily create new E3 modules, recipes or IOCs for development. It's not required to run E3.
 
-### Installation
+(cookiecutter_installation)=
 
-Cookiecutter is a Python tool. It can be installed with `pip`.
+### Cookiecutter Installation
+
+[Cookiecutter] is a Python tool. It can be installed with `pip`.
 Note that you should **never run** `sudo pip install`. This can override system packages.
 
-Cookiecutter can be installed in different ways (`pip install --user` or using [pipx](https://pipxproject.github.io/pipx/)).
+[Cookiecutter] can be installed in different ways (`pip install --user` or using [pipx](https://pipxproject.github.io/pipx/)).
 As conda is installed, let's use it.
 
 ```bash
@@ -122,7 +150,9 @@ cookiecutter --version
 Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
 ```
 
-### Configuration
+(cookiecutter_configuration)=
+
+### Cookiecutter Configuration
 
 Create the file `~/.cookiecutterrc` with your name:
 
@@ -144,3 +174,7 @@ echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/
 ```
 
 To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or `e3-ioc`.
+
+[conda]: https://docs.conda.io/en/latest/
+[conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html
+[cookiecutter]: https://cookiecutter.readthedocs.io
