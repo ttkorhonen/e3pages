@@ -124,6 +124,17 @@ Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site
 
 ### Configuration
 
+Create the file `~/.cookiecutterrc` with your name:
+
+```bash
+default_context:
+    full_name: "Your Name"
+```
+
+This will override the variable `full_name` from any cookiecutter template with your name.
+It will become the default value and avoid you having to enter it every time you create a new project.
+Note that you could add to that file other variables.
+
 Add the following aliases to your `.bashrc`:
 
 ```bash
