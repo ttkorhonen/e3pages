@@ -12,16 +12,19 @@ An IOC in e3 is typically (minimally) just a startup script, preferably also wit
 
 ## Create the startup script
 
+A very minimal startup script to illustrate what "a typical" IOC in e3 looks like:
+
 ```bash
 $ touch st.cmd
-$ echo "require iocstats" >> st.cmd
+$ echo "require iocstats" >> st.cmd  # iocInit() is called implicitly
+```
+
+## Start the IOC
+
+```bash
 $ ./opt/epics/base-7.0.4/require/3.3.0/bin/iocsh.bash st.cmd
 ```
 
-## Populate the directory
+## Other
 
-Add `README.md`.
-
-## Upload the directory to GiLab
-
-You should upload your IOC to the proper subgroup under <https://gitlab.esss.lu.se/iocs>
+You should preferably add a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and version control in the proper subgroup under <https://gitlab.esss.lu.se/iocs>

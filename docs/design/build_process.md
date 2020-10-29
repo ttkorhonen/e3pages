@@ -45,10 +45,9 @@ The key is in how `make` generates its dependency tree. Unlike many programming 
 
 ## The `make` process for E3
 
-### Stage 1 of the build process: The e3-wrapper
+### Stage 1: The e3-wrapper
 
-We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that
-we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify
+We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify
 dependencies and for which version of base/require we are building, as well as `CONFIG` from the require module
 (located in `configure/modules/CONFIG` in this repository).
 
