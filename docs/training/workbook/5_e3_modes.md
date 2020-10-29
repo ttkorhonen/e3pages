@@ -19,7 +19,7 @@ By design, e3 modules and applications have no source code in their repositories
 
 Following the above, e3 is not concerned with each commit nor release in a source code repository, but rather on specific *snapshots* (a particular release version) needed for a certain implementation. For example, at a certain point in time we select *stream* version `2.7.14` as the stable release within e3. Later, we select version `2.8.8` because a subsystem requires it. At that moment, we don't really care about versions `2.8.0`, `2.8.1`, `2.8.2` - and so forth. We don't need to sync their changes into a master branch of a local repository, which we would have to clone or fork. Simply put, we don't need to do any maintenance job. The point is to add dependencies only when we need them, and to reduce unecessary work for maintainers of the code base.
 
-> We will describe how to release a specific version of an e3 module in [Chapter 11](chapter11.md). <!-- is this really correct? -->
+> We will describe how to release a specific version of an e3 module in [Chapter 11](11_release_rules.md). <!-- is this really correct? -->
 
 > It should be noted that an e3 module **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
 

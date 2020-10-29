@@ -78,11 +78,11 @@ Roll back the *asynDriver* (henceforth *asyn*) version and rebuild:
 
 If we postulate that we (due to new requirements or critical bugs in an existent IOC) need to swap from *StreamDevice* version `2.7.14p` to `2.8.4`, we have to consider two dependency modules (*asyn* and *pcre*). Here, for the sake of brevity, we will only consider the *asyn* dependence. Before swapping, we need to consider if the existing *asyn* module is both sufficient for our needs and compatible with *StreamDevice* `2.8.4`.
 
-* If it is, recall what we did in [Chapter 3](chapter03.md).
+* If it is, recall what we did in [Chapter 3](3_module_versions.md).
 
   > Note that this makes a strong assumption that the list of source files in `2.7.14p` and `2.8.4` are the same. If some files have been added or removed between the versions, we have to modify `StreamDevice.Makefile` accordingly. Whenever this is the case, contact the maintainer of e3.
 
-* If it isn't, we have to install a new *asyn* version using our current e3 environment. The procedure is here the same with *StreamDevice* in [Chapter 3](chapter03.md). In our case, there are neither new files nor deleted files between *asyn* versions `4.33` and `4.34`, and we can thus build the new version of asyn with the same `asyn.Makefile`:
+* If it isn't, we have to install a new *asyn* version using our current e3 environment. The procedure is here the same with *StreamDevice* in [Chapter 3](3_module_versions.md). In our case, there are neither new files nor deleted files between *asyn* versions `4.33` and `4.34`, and we can thus build the new version of asyn with the same `asyn.Makefile`:
 
   ```console
   [iocuser@host:e3-asyn]$ make vars
@@ -114,7 +114,7 @@ If we postulate that we (due to new requirements or critical bugs in an existent
 
   Next, we can install *StreamDevice* `2.8.4`, which will be using *asyn* `4.34.0`.
 
-  > This step is exactly the same as we what did in [Chapter 3](chapter03.md).
+  > This step is exactly the same as we what did in [Chapter 3](3_module_versions.md).
 
   ```console
   [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ existent

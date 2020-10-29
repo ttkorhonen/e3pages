@@ -16,7 +16,7 @@ We will now have an example of *acalcout* use, from the module [calc](https://gi
 
 ### Create a new module 
 
-Use this as an exercise. If you need to, go back to the instructions in [Chapter 8](chapter08.md). We will consider the module name to be `linconv` and the e3 module `e3-linconv`.
+Use this as an exercise. If you need to, go back to the instructions in [Chapter 8](8_building_modules.md). We will consider the module name to be `linconv` and the e3 module `e3-linconv`.
 
 ### Create the database file with linear conversion
 
@@ -130,7 +130,7 @@ In our module we will do something similar to the IOC example present at std mod
 
 ### Create a new module 
 
-To start this you will need to create a new module, to do this follow the instructions on [Chapter 8](chapter08.md). For our setup the module name will be considered *mypid*.
+To start this you will need to create a new module, to do this follow the instructions on [Chapter 8](8_building_modules.md). For our setup the module name will be considered *mypid*.
 
 ### Create a substitution file
 

@@ -33,7 +33,7 @@ The build process then runs in five passes, with the last four passes all manage
 4. In the module directory: Perform a final collection of the relevant files, create the directories `O.${EPICSVERSION}_Common` and `O.${EPICSVERSION}_${T_A}`.
 5. In the directories `O.*`: Build/Install all of the required shared libraries and other files for the given version of EPICS base and target architecture.
 
-[Details for the build process](driver.makefile.md)
+<!-- [Details for the build process](driver.makefile.md)  # todo: fixme -->
 
 ## IOC Startup
 

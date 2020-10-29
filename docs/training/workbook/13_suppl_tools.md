@@ -184,7 +184,7 @@ As you saw, we added no specifics to our templated unit file, but instead used e
 
 ## Managing your IOCs with conserver
 
-[Conserver](https//www.conserver.com) is an application that allows multiple users to watch and interact with a serial console at the same time. We will thus use conserver instead of telnet or netcat to attach to our consoles. Conserver consists of a server and a client. The server will run as a system daemon on our IOC machine, but the client could be either local to that machine or remote.
+[Conserver](https://www.conserver.com) is an application that allows multiple users to watch and interact with a serial console at the same time. We will thus use conserver instead of telnet or netcat to attach to our consoles. Conserver consists of a server and a client. The server will run as a system daemon on our IOC machine, but the client could be either local to that machine or remote.
 
 Conserver requires a bit of boilerplate code for its setup. We will first have a quick look at the two programs and the main configuration files necessary for setup.
 

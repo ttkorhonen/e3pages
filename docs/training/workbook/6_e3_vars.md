@@ -194,7 +194,7 @@ As you can see, `var` is defined as a variable within the *require* module. This
 
 ## Building a module or an application 
 
-Back in [Chapter 3](chapter03.md) we looked at the two e3 variables `E3_MODULE_VERSION` and  `EPICS_MODULE_TAG`. As you will see, there are many more environment variables that we can use together with e3 when configuring and installing modules.
+Back in [Chapter 3](3_module_versions.md) we looked at the two e3 variables `E3_MODULE_VERSION` and  `EPICS_MODULE_TAG`. As you will see, there are many more environment variables that we can use together with e3 when configuring and installing modules.
 
 ### e3 environment variables
 
