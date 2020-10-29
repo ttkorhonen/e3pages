@@ -1,28 +1,48 @@
-# ESS EPICS Environment (E3)
+# ESS EPICS Environment (e3)
 
-ESS EPICS Environment (E3) is based on the concept from
-[PSI](https://github.com/paulscherrerinstitute/require) of dynamically
-loading EPICS modules.
+ESS' EPICS Environment, also known as e3, is a design concept and a toolkit intended to a) facilitate development by abstracting away some of the low-level complexities intrinsic to large EPICS implementations (primarily dependency management), and b) allow for more manageable quality control of released modules. It allows for easily building EPICS modules directly from source and automagically resolves module dependencies, and allows for site specific modifications to EPICS modules without needing to directly modify source trees. It is based off of the module *require* which allows for dynamic loading of EPICS modules. Thus, e3 aims to simplify the work for primarily two groups: EPICS integrators, and a central core group that oversees module interdependencies.
 
-E3 installation is managed using [conda].
+---
 
 ```{toctree}
 ---
-maxdepth: 2
-caption: Using E3
+maxdepth: 1
+caption: Usage
 ---
-using/quickstart.md
-using/module_creation.md
-using/recipe_creation.md
+usage/quickstart.md
+usage/sample_ioc.md
 ```
 
+---
+
 ```{toctree}
 ---
-maxdepth: 2
+maxdepth: 1
+caption: Design
+---
+design/require.md
+design/wrappers.md
+design/build_process.md
+```
+
+---
+
+```{toctree}
+---
+maxdepth: 1
+caption: Knowledge-base
+---
+training/index.md
+howto/index.md
+```
+
+---
+
+```{toctree}
+---
+maxdepth: 1
 caption: References
 ---
-references/conda.md
-references/requirements.md
+references/repos.md
+references/comms.md
 ```
-
-[conda]: https://docs.conda.io/en/latest/
