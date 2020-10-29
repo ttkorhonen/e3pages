@@ -1,5 +1,11 @@
 # The *require* module
 
+```{admonition} Under Construction
+:class: warning
+
+Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
+```
+
 At its heart, the ESS Epics Environment (E3, not to be confused with EEE) *is* the `require` module. This does three things:
 
 * It provides a consistent build process to package EPICS modules which is based on the EPICS build system

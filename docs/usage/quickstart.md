@@ -1,6 +1,12 @@
 # Quickstart
 
-Ad lorum ipsum
+```{admonition} Under Construction
+:class: warning
+
+Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
+```
+
+Building e3 locally is fairly easy:
 
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/e3.git

@@ -1,6 +1,14 @@
 # Sample IOC
 
+```{admonition} Under Construction
+:class: warning
+
+Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
+```
+
 The following assumes that you already have EPICS base, *require*, and *iocStats* installed.
+
+An IOC in e3 is typically (minimally) just a startup script, preferably also with an `env.sh` file to set environment variables.
 
 ## Create the startup script
 
