@@ -26,6 +26,8 @@ $ tree
 
 In the above output, `<module>` is the name of the EPICS module/application/library. For community modules, this would be a git submodule. For ESS-specific application, it can be a normal directory (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
+## Creating an e3 wrapper
+
 To create the wrapper, please follow the direction in How to use cookiecutter to create an E3 wrapper. <!-- TODO: fixme --> You can also use the e3 template generator found in <https://github.com/icshwi/e3-tools>, although that is intended to be deprecated. After having created a template, you would generally modify the `<module>.Makefile`, and typically some of the data in the `configure/` directory.
 
 ## The configure directory
@@ -62,22 +64,22 @@ Before we move on, we should look at the output of this process, i.e. a compiled
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
 /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
-|-- db
-|   |-- access.db
-|   |-- ...
-|   `-- iocVxWorksOnly.template
-|-- dbd
-|   `-- iocstats.dbd
-|-- include
-|   |-- devIocStats.h
-|   `-- devIocStatsOSD.h
-|-- iocReleaseCreateDb.py
-|-- iocStats.iocsh
-|-- iocstats_meta.yaml
-`-- lib
-    `-- linux-x86_64
-        |-- iocstats.dep
-        `-- libiocstats.so
+├── db
+|   ├── access.db
+|   ├── ...
+|   └── iocVxWorksOnly.template
+├── dbd
+|   └── iocstats.dbd
+├── include
+|   ├── devIocStats.h
+|   └── devIocStatsOSD.h
+├── iocReleaseCreateDb.py
+├── iocStats.iocsh
+├── iocstats_meta.yaml
+└── lib
+    └── linux-x86_64
+        ├── iocstats.dep
+        └── libiocstats.so
 ```
 
 The build process installs (potentially) several things to be available at run-time:
