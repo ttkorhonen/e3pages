@@ -43,7 +43,7 @@ ADCORE_DEP_VERSION:=3.9.0
 
 Note that these variables do not do anything special, but we will reference them later.
 
-## <module>.Makefile
+## The module Makefile
 
 The module makefile is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: iocStats; the makefile for version 3.1.16, built by require 3.3.0, is iocStats.Makefile.
 
