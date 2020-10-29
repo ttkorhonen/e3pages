@@ -18,6 +18,7 @@ $ tree
 ├── docs
 ├── patch
 ├── opi
+├── template
 ├── <module>
 ├── <module>.Makefile
 └── tools
@@ -25,38 +26,15 @@ $ tree
 
 In the above output, `<module>` is the name of the EPICS module/application/library. For community modules, this would be a git submodule. For ESS-specific application, it can be a normal directory (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
-## <module>.Makefile
+To create the wrapper, please follow the direction in How to use cookiecutter to create an E3 wrapper. <!-- TODO: fixme --> You can also use the e3 template generator found in <https://github.com/icshwi/e3-tools>, although that is intended to be deprecated. After having created a template, you would generally modify the `<module>.Makefile`, and typically some of the data in the `configure/` directory.
 
-In order to develop an EPICS module in e3, you need to create an e3 wrapper for an EPICS module and configure it. To create the wrapper, please follow the direction in How to use cookiecutter to create an E3 wrapper.
+## The configure directory
 
-You can also use the e3 template generator found in <https://github.com/icshwi/e3-tools>, although that is intended to be deprecated.
-
-Once you have the e3 wrapper created, you should have a directory tree that looks like:
-
-```bash
-$ tree e3-mymodule/ -L 1
-e3-mymodule/
-|-- Makefile
-|-- README.md
-|-- cmds
-|-- configure
-|-- iocsh
-|-- mymodule
-|-- mymodule.Makefile
-|-- opi
-|-- patch
-`-- template
-```
-
-The relevant files to configure are mymodule.Makefile and (potentially) some of the data in the configure directory.
-
-### The configure directory
-
-The configuration of the EPICS base, require version, and module version should have been done already when the E3 wrapper was created. In case you need to change them, these are located in configure/RELEASE and configure/CONFIG_MODULE.
+The configuration of the EPICS base, require version, and module version should have been done already when the e3 wrapper was created. In case you need to change them, these are located in configure/RELEASE and configure/CONFIG_MODULE.
 
 If your module depends on other modules (for example, it may depend on asyn, StreamDevice, Area Detector, or any other number of modules), then you should specify the version in configure/CONFIG_MODULE. This is done like so:
 
-```
+```makefile
 # DEPENDENT MODULE VERSION
 ASYN_DEP_VERSION:=4.37.0
 STREAM_DEP_VERSION:=2.8.10
@@ -65,7 +43,7 @@ ADCORE_DEP_VERSION:=3.9.0
 
 Note that these variables do not do anything special, but we will reference them later.
 
----
+## <module>.Makefile
 
 The module makefile is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: iocStats; the makefile for version 3.1.16, built by require 3.3.0, is iocStats.Makefile.
 
