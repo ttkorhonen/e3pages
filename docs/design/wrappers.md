@@ -24,3 +24,5 @@ $ tree
 ```
 
 In the above output, `<module>` is the name of the EPICS module/application/library. For community modules, this would be a git submodule. For ESS-specific application, it can be a normal directory (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+
+## <module>.Makefile

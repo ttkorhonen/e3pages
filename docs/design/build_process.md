@@ -172,8 +172,7 @@ when you include a line such as `SOURCES += file.c` in your `$(module).Makefile`
 
 ## Examples of the `make` process
 
-We will provide a few examples of how `make` processes the data and produces the desired result. The first is
-installing a header file, and the second is actually compiling a source file.
+We will provide a few examples of how `make` processes the data and produces the desired result. The first is installing a header file, and the second is actually compiling a source file.
 
 ### Installing a header file
 
