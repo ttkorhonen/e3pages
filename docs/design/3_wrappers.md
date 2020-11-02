@@ -167,7 +167,7 @@ The build process is smart enough to detect any code-based dependencies. For exa
 
 The correct version is done with the following code:
 
-```
+```makefile
 calc_VERSION=$(CALC_DEP_VERSION)
 ```
 
