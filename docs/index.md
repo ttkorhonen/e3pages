@@ -21,17 +21,25 @@ usage/2*
 ```{toctree}
 :maxdepth: 2
 :caption: Design
-design/index.md
+:glob:
+design/1*
+design/2*
+design/3*
+design/4*
 ```
 
 ```{toctree}
 :maxdepth: 2
 :caption: Knowledge-base
-kb/index.md
+kb/training/index.md
+kb/howto/index.md
 ```
 
 ```{toctree}
 :maxdepth: 2
 :caption: References
-references/index.md
+:glob:
+references/1*
+references/2*
+references/3*
 ```
