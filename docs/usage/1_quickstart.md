@@ -8,7 +8,7 @@ Please note that this portal currently is being set-up, and that content is evol
 
 Building EPICS with "common modules" using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically isn't what you would do for a production build.
 
-# Building a local e3 environment
+## Building a local e3 environment
 
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/e3.git
@@ -19,7 +19,7 @@ $ ./e3.bash req
 $ ./e3.bash -c mod
 ```
 
-# Sourcing a specific e3 environment
+## Sourcing a specific e3 environment
 
 ```bash
 $ source /path/to/epics/<EPICS_VERSION>/require/<REQUIRE_VERSION>/bin/setE3Env.bash
