@@ -25,8 +25,7 @@ design/index.md
 ```{toctree}
 :maxdepth: 2
 :caption: Knowledge-base
-training/index.md
-howto/index.md
+kb/index.md
 ```
 
 ```{toctree}

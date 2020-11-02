@@ -4,7 +4,6 @@
 :maxdepth: 1
 :glob:
 :caption: Design
-:hidden:
 1*
 2*
 3*
