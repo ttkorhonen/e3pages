@@ -16,15 +16,11 @@ ESS' EPICS Environment, also known as e3, is a design concept and a toolkit inte
 usage/index.md
 ```
 
----
-
 ```{toctree}
 :maxdepth: 2
 :caption: Design
 design/index.md
 ```
-
----
 
 ```{toctree}
 :maxdepth: 2
@@ -32,8 +28,6 @@ design/index.md
 training/index.md
 howto/index.md
 ```
-
----
 
 ```{toctree}
 :maxdepth: 2
