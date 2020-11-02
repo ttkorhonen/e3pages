@@ -1,3 +1,4 @@
+# Design
 
 ```{toctree}
 :maxdepth: 1
