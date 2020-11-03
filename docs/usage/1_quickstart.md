@@ -4,7 +4,7 @@ Building EPICS with "common modules" (to see what the various module groups cont
 
 ## Building a local e3 environment
 
-To build EPICS base 7.0.4 with *require* 3.3.0 and the *common* module group and install it at `/opt/epics`, you would only need to run (note `sudo` as we are installing to a subdirectory of `/opt` which is owned by `root`):
+To build EPICS base 7.0.4 with *require* 3.3.0 and the *common* module group and install it at `/opt/epics`, you would only need to run (note `sudo` as we are installing to a subdirectory of `/opt` which generally is owned by `root`):
 
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/e3.git
@@ -15,14 +15,18 @@ $ sudo ./e3.bash req
 $ sudo ./e3.bash -c mod
 ```
 
+:::{tip}
+If you leave out the flags `-b` (version of EPICS base) and `-r` (version of *require*) it will default to the latest stable release, but it's always good practice to be explicit.
+:::
+
 As you may realise, this allows a user to have multiple EPICS trees installed at various locations.
 
 ## Sourcing a specific e3 environment
 
-As you with e3 may have several EPICS "environments" available, you need to explicitly source your environment or call on binaries from specific paths.
+As you with e3 may have several EPICS "environments" available, you need to explicitly source your environment or call on binaries (such as `iocsh.bash`) explicitly.
 
 ```bash
-$ source /path/to/epics/<EPICS_VERSION>/require/<REQUIRE_VERSION>/bin/setE3Env.bash
+$ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
 ```
 
 or, alternatively:

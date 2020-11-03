@@ -1,12 +1,6 @@
 # Module wrappers
 
-```{admonition} Under Construction
-:class: warning
-
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
-```
-
-At the core of e3 is the module wrapper. This allows us to apply site specific changes - whether those are source code changes in the form of patches, different PV naming structure, or custom GUIs - to modules of any source without needing to modify that source directly.
+Another key feature of e3 is the module wrapper. This allows us to apply site specific changes---whether those are source code changes in the form of patches, different PV naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
 
 ```bash
 $ tree
@@ -19,22 +13,22 @@ $ tree
 ├── patch
 ├── opi
 ├── template
-├── <module>
-├── <module>.Makefile
+├── ${MODULE}
+├── ${MODULE}.Makefile
 └── tools
 ```
 
-In the above output, `<module>` is the name of the EPICS module/application/library. For community modules, this would be a git submodule. For ESS-specific application, it can be a normal directory (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+In the above output, `${MODULE}` is the name of the EPICS module/application/library. For community modules, this would be a *git submodule*. For ESS-specific modules, it can be a normal file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
 ## Creating an e3 wrapper
 
-To create the wrapper, please follow the direction in How to use cookiecutter to create an E3 wrapper. <!-- TODO: fixme --> You can also use the e3 template generator found in <https://github.com/icshwi/e3-tools>, although that is intended to be deprecated. After having created a template, you would generally modify the `<module>.Makefile`, and typically some of the data in the `configure/` directory.
+To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter]()*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The configure directory
 
-The configuration of the EPICS base, require version, and module version should have been done already when the e3 wrapper was created. In case you need to change them, these are located in configure/RELEASE and configure/CONFIG_MODULE.
+If you used one of the template generators, the configuration of the EPICS base, require version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
 
-If your module depends on other modules (for example, it may depend on asyn, StreamDevice, Area Detector, or any other number of modules), then you should specify the version in configure/CONFIG_MODULE. This is done like so:
+If your module depends on other modules (for example, it may depend on *asyn*, *StreamDevice*, *areaDetector*, or any other number of modules), then you should specify the dependencies in `configure/CONFIG_MODULE`. This is done like so:
 
 ```makefile
 # DEPENDENT MODULE VERSION
@@ -43,13 +37,11 @@ STREAM_DEP_VERSION:=2.8.10
 ADCORE_DEP_VERSION:=3.9.0
 ```
 
-Note that these variables do not do anything special, but we will reference them later.
+## The ${MODULE}.Makefile
 
-## The module Makefile
+The module makefile is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, buil for *require* 3.3.0.
 
-The module makefile is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: iocStats; the makefile for version 3.1.16, built by require 3.3.0, is iocStats.Makefile.
-
-This includes some boilerplate code at the start which sets the build stage correctly:
+At the top of the makefile there is some boilerplate code which sets the build stage correctly:
 
 ```bash
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
@@ -57,9 +49,11 @@ include ${E3_REQUIRE_TOOLS}/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 ```
 
-`driver.makefile` is the workhorse that does 99% of the build process, using the information provided in the makefile.
+:::{note}
+The file `driver.makefile` is the workhorse that does 99% of the build process, using the information provided in the makefile.
+:::
 
-Before we move on, we should look at the output of this process, i.e. a compiled and installed module. For iocStats 3.1.16 built under require 3.3.0, we find the following:
+Before we move on, we should look at the output of this process, i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
@@ -90,6 +84,10 @@ The build process installs (potentially) several things to be available at run-t
 - Iocsh snippets
 - Compiled libraries
 
+:::{note}
+At ESS, startup scripts are modularized, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
+:::
+
 The database files are ones that you want available to an IOC at run-time. These are defined by the variable TEMPLATES:
 
 ```makefile
@@ -97,36 +95,38 @@ TEMPLATES += $(wildcard $(IOCADMINDB)/*.db)
 TEMPLATES += $(wildcard $(IOCADMINDB)/*.template)
 ```
 
-Make allows for wildcards using the function above, so this will include all .db and .template files included in the directory specified by the variable IOCADMINDB.
+Make allows for wildcards using the function above, so this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
 
-The Iocsh snippets are portions of a startup script that you would like to call to configure your module; for example, they may contain a call to drvAsynIPPortConfigure for a device that depends on asyn. These are simply installed in the top-level module directory, and are controlled by the variable SCRIPTS:
+The snippets are portions of a startup script that you would like to call to configure your module; for example, they may contain a call to `drvAsynIPPortConfigure` for a device that depends on *asyn*. These are simply installed in the top-level module directory, and are controlled by the variable `${SCRIPTS}`:
 
 ```makefile
 SCRIPTS += $(IOCADMINSRC)/iocReleaseCreateDb.py
 SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
-Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific .iocsh files, which are best kept in the E3 wrapper and not the module directory itself.
+Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
 
-The header files are only usually necessary for a module that is a dependency of other modules; for example, asyn has a lot of header files since other modules depend on that library. These are installed via the HEADERS variable.
+The header files are usually only necessary for a module that is a dependency of other modules; for example, *asyn* declares many header files since many other modules depend on that library. These are declared via the `${HEADERS}` variable.
 
 ```makefile
 HEADERS += $(DEVIOCSTATS)/os/default/devIocStatsOSD.h
 HEADERS += $(DEVIOCSTATS)/devIocStats.h
 ```
 
-Note that by default, the headers are all flatly installed into the include/ directory; that is, the two files listed are both installed directly as follows:
+:::{note}
+By default, the headers are all flatly installed into the include/ directory; that is, the two files listed are both installed directly as follows:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
 /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
-|-- devIocStats.h
-`-- devIocStatsOSD.h
+├── devIocStats.h
+└── devIocStatsOSD.h
 ```
 
 If you have two files in separate directories but with the same name, then you cannot install them this way. However, there is another mechanism to install them described in the release notes for require 3.3.0.
+:::
 
-The library that is built is a shared library that results from compiling and linking all of the source files into a single shared object. These are managed by the variable SOURCES.
+The library that is built is a shared library that results from compiling and linking all of the source files into a single shared object. These are managed by the variable `${SOURCES}`.
 
 ```makefile
 SOURCES += $(DEVIOCSTATS)/devIocStatsAnalog.c
@@ -149,46 +149,54 @@ SOURCES += $(DEVIOCSTATS)/os/posix/osdHostInfo.c
 SOURCES += $(DEVIOCSTATS)/os/posix/osdPIDInfo.c
 ```
 
-Note that you can also include sequencer files, or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate .dbd file will be created with the correct database definitions to register your sequencer program.
+Note that you can also include e.g. sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
 
-Any .dbd files that you would like to add are combined into a single module .dbd file that is loaded when the module is loaded at IOC startup. These are governed by the variable DBDS:
+Any `.dbd` files that you would like to add are combined into a single module `.dbd` file that is loaded when the module is loaded at IOC startup. These are governed by the variable `${DBDS}`:
 
 ```makefile
 DBDS    += $(DEVIOCSTATS)/devIocStats.dbd
 ```
 
-These will of course be joined with any other .dbd files generated during the build process, such as the sequencer ones described above.
-Dependencies
+## Dependencies
 
-The build process is smart enough to detect any code-based dependencies. For example, if you include the header files from iocStats above in one of your source code files, then driver.makefile will infer that your module depends on iocStats; as such when your module is loaded, it will also load the correct version of iocStats first (note that this does not distinguish between build-time and run-time dependencies). This raises two questions:
+The build process is smart enough to detect any code-based dependencies. For example, if you include the header files from *iocStats* above in one of your source code files, then `driver.makefile` will infer that your module depends on *iocStats*; when your module is loaded, it will also load the correct version of *iocStats* first.[^deps] This raises two questions:
 
 - How does it detect the correct version?
 - What about non code-based dependencies?
 
-The correct version is done with the following code:
+The correct version is detected with the following code:
 
 ```makefile
 calc_VERSION=$(CALC_DEP_VERSION)
 ```
 
-Note that CALC_DEP_VERSION should be specified in configure/CONFIG_MODULE. In principle it does not need to be there, but it is clearer and easier to maintain if the dependencies are consistently placed in the same file.
+Note that `${CALC_DEP_VERSION}` should be specified in `configure/CONFIG_MODULE`. In principle it does not need to be there, but it is clearer and easier to maintain if the dependencies are consistently placed in the same file.
 
-Note also that the variable name calc_VERSION must match exactly (including case) the name of the installed module; in require 3.3.0 we have switched to all modules being lowercase. So if you have a dependency on ADCore, then from require 3.3.0 onwards you should use the definition
+Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module. 
+
+:::{warning}
+In *require*` 3.3.0 we have switched to all modules being lowercase. So if you have a dependency on ADCore, then from require 3.3.0 onwards you should use the definition:
 
 ```makefile
 adcore_VERSION=$(ADCORE_DEP_VERSION)
 ```
 
-while for earlier versions of require you would instead use
+while for earlier versions of require you would instead use:
 
 ```makefile
 ADCore_VERSION=$(ADCORE_DEP_VERSION)
 ```
+:::
 
-For non-code based dependencies (such as StreamDevice and protocol files, or the records introduced in the cal module), you have to explicitly state the requirement with the REQUIRED variable:
+For non-code based dependencies (such as *StreamDevice* and *protocol* files, or the records introduced in the *cal* module), you have to explicitly state the requirement using the `${REQUIRED}` variable:
 
 ```makefile
 REQUIRED += calc
 ```
 
 As above, the module name must exactly match the name of the installed module.
+
+
+[^ccdb]: ESS uses a fairly intricate software stack for deployment and management of IOCs. One of these tools builds startup scripts by including snippets.
+
+[^deps]: note that this does not distinguish between build-time and run-time dependencies
