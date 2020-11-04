@@ -24,7 +24,7 @@ In the above output, `${MODULE}` is the name of the EPICS module/application/lib
 
 To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter]()*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
-## The configure directory
+## The `configure/` directory
 
 If you used one of the template generators, the configuration of the EPICS base, require version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
 
@@ -37,9 +37,9 @@ STREAM_DEP_VERSION:=2.8.10
 ADCORE_DEP_VERSION:=3.9.0
 ```
 
-## The ${MODULE}.Makefile
+## The module Makefile
 
-The module makefile is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, buil for *require* 3.3.0.
+The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, built for *require* 3.3.0.
 
 At the top of the makefile there is some boilerplate code which sets the build stage correctly:
 
@@ -112,8 +112,8 @@ HEADERS += $(DEVIOCSTATS)/os/default/devIocStatsOSD.h
 HEADERS += $(DEVIOCSTATS)/devIocStats.h
 ```
 
-:::{note}
-By default, the headers are all flatly installed into the include/ directory; that is, the two files listed are both installed directly as follows:
+:::{warning}
+By default, the headers are all flatly installed into the `include/` directory; that is, the two files listed are both installed directly as follows:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
@@ -122,7 +122,7 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
 └── devIocStatsOSD.h
 ```
 
-If you have two files in separate directories but with the same name, then you cannot install them this way. However, there is another mechanism to install them described in the release notes for require 3.3.0.
+If you have two files in separate directories but with the same name, then you cannot install them this way. There is however another mechanism included in require 3.3.0 that helps deal with this case. <!-- TODO: find link and fixme -->
 :::
 
 The library that is built is a shared library that results from compiling and linking all of the source files into a single shared object. These are managed by the variable `${SOURCES}`.
@@ -173,7 +173,7 @@ Note that `${CALC_DEP_VERSION}` should be specified in `configure/CONFIG_MODULE`
 Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module. 
 
 :::{warning}
-In *require*` 3.3.0 we have switched to all modules being lowercase. So if you have a dependency on ADCore, then from require 3.3.0 onwards you should use the definition:
+Joint with the release of *require* 3.3.0 there was a switch to all modules being lowercase. So if you have a dependency on ADCore, then from *require* 3.3.0 onwards you should use the definition:
 
 ```makefile
 adcore_VERSION=$(ADCORE_DEP_VERSION)

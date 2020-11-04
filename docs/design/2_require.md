@@ -7,7 +7,7 @@ ESS' EPICS environment has gone through a few different iterations, but a centra
 * It provides a mechanism to dynamically load shared libraries for use within an IOC.
 
 :::{note}
-Note that each of these is linked to each other; the dynamic loading depends on the build process, and it also depends on how the soft IOC has been started.
+Each of the above-mentioned features are linked to each other; the dynamic loading depends on the build process, and it also depends on how the soft IOC has been started.
 :::
 
 ## IOC startup
@@ -59,7 +59,7 @@ Note that `1.0.0 < 1.0.0-0 < 1.0.0-1 < ... < 1.0.1 < ...`.
 
 A test version is any version that does not conform to the above pattern. So `simonrose` is a test version, but so is `1.0.0-test` or even `1.0`.
 
-:::{note}
+:::{tip}
 As *require* will load the first test version it finds when there are no numeric versions, it is best practice to specify the exact version you would like to load when working with test versions.
 :::
 

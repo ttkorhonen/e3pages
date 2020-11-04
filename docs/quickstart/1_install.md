@@ -1,4 +1,4 @@
-# Quickstart
+# Installing e3
 
 Building EPICS with "common modules" (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.txt)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically isn't what you would do for a production build.
 

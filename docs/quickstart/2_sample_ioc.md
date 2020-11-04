@@ -1,4 +1,4 @@
-# Sample IOC
+# An e3 IOC
 
 The following assumes that you already have EPICS base, *require* (`3.3.0` or later as the module version has been left out in the `require` call[^require]), and *iocStats* installed.
 
@@ -33,5 +33,6 @@ $ ./epics/${BASE_VERSION}/require/${REQUIRE_VERSION}/bin/iocsh.bash st.cmd
 You should preferably add a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and version control in the proper subgroup under <https://gitlab.esss.lu.se/iocs>
 
 
-[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE,(MODULE_VERSION)`.
+[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
+
 [^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`.

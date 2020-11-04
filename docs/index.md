@@ -14,10 +14,10 @@ Thus, e3 aims to simplify the work for primarily two groups: EPICS integrators, 
 
 ```{toctree}
 :maxdepth: 2
-:caption: Usage
+:caption: Quickstart
 :glob:
-usage/1*
-usage/2*
+quickstart/1*
+quickstart/2*
 ```
 
 ```{toctree}
