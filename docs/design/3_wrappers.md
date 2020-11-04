@@ -1,6 +1,8 @@
+(wrappers)=
+
 # Module wrappers
 
-Another key feature of e3 is the module wrapper. This allows us to apply site specific changes---whether those are source code changes in the form of patches, different PV naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
+Another key feature of e3 is the module wrapper. This allows us to apply site specific changes---whether those are source code changes in the form of patches, separate database and substitution files to enable ESS-compliant Process Variable (PV) naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
 
 ```bash
 $ tree
@@ -18,11 +20,11 @@ $ tree
 └── tools
 ```
 
-In the above output, `${MODULE}` is the name of the EPICS module/application/library. For community modules, this would be a *git submodule*. For ESS-specific modules, it can be a normal file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
 ## Creating an e3 wrapper
 
-To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter]()*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
+To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter](../kb/howto/articles/4_cookiecutter_module.md)*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The `configure/` directory
 
@@ -37,6 +39,8 @@ STREAM_DEP_VERSION:=2.8.10
 ADCORE_DEP_VERSION:=3.9.0
 ```
 
+(iocstats_tree)=
+
 ## The module Makefile
 
 The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, built for *require* 3.3.0.
@@ -49,11 +53,9 @@ include ${E3_REQUIRE_TOOLS}/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 ```
 
-:::{note}
-The file `driver.makefile` is the workhorse that does 99% of the build process, using the information provided in the makefile.
-:::
+---
 
-Before we move on, we should look at the output of this process, i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
@@ -76,9 +78,11 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
         └── libiocstats.so
 ```
 
+---
+
 The build process installs (potentially) several things to be available at run-time:
 - Database/template/protocol files
-- DBD (Database definition) files
+- DBD (database definition) files
 - Header files for dependent modules
 - Iocsh snippets
 - Compiled libraries
@@ -87,14 +91,20 @@ The build process installs (potentially) several things to be available at run-t
 At ESS, startup scripts are modularized, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
 :::
 
-The database files are ones that you want available to an IOC at run-time. These are defined by the variable TEMPLATES:
+### Database files
+
+The database files are ones that you want available to an IOC at run-time. These are defined by the variable `${TEMPLATES}`:
 
 ```makefile
 TEMPLATES += $(wildcard $(IOCADMINDB)/*.db)
 TEMPLATES += $(wildcard $(IOCADMINDB)/*.template)
 ```
 
+:::{note}
 Make allows for wildcards using the function above, so this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
+:::
+
+### Snippets
 
 The snippets are portions of a startup script that you would like to call to configure your module; for example, they may contain a call to `drvAsynIPPortConfigure` for a device that depends on *asyn*. These are simply installed in the top-level module directory, and are controlled by the variable `${SCRIPTS}`:
 
@@ -104,6 +114,8 @@ SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
 Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
+
+### Header files
 
 The header files are usually only necessary for a module that is a dependency of other modules; for example, *asyn* declares many header files since many other modules depend on that library. These are declared via the `${HEADERS}` variable.
 
@@ -124,6 +136,8 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
 
 If you have two files in separate directories but with the same name, then you cannot install them this way. There is however another mechanism included in require 3.3.0 that helps deal with this case. <!-- TODO: find link and fixme -->
 :::
+
+### Compiled libraries
 
 The library that is built is a shared library that results from compiling and linking all of the source files into a single shared object. These are managed by the variable `${SOURCES}`.
 
@@ -149,6 +163,8 @@ SOURCES += $(DEVIOCSTATS)/os/posix/osdPIDInfo.c
 ```
 
 Note that you can also include e.g. sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
+
+### Database definition files
 
 Any `.dbd` files that you would like to add are combined into a single module `.dbd` file that is loaded when the module is loaded at IOC startup. These are governed by the variable `${DBDS}`:
 

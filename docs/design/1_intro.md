@@ -1,12 +1,16 @@
 # Introduction
 
-:::{warning} Under Construction
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
+ESS has gone through a few different EPICS environments during its construction phase. First *CODAC* (from *[ITER](https://www.iter.org/)*), then *EEE* (short for ESS EPICS Environment), then EEE version 2, and then finally a major revamp to *e3*. Both EEE and e3 were based off of *[PSI](https://www.psi.ch/en)*'s EPICS environment.
+
+In short, e3 is a packaged EPICS environment---but e3 also offers much more. Part of e3 is also a common front-end for users and developers at ESS, and a collection of utilities to set up and maintain the environment, a framework to facilitate dependency management, and a build process. The intention was twofold with e3: to simplify life for integrators, but also for a central team managing the environment. At the core of e3 is a fork of PSI's [*require*](https://github.com/paulscherrerinstitute/require) module, *git*, *GNU Make*, and *module wrappers* (as a standardized front-end to non-standard modules).
+
+Two of the key design considerations for e3 were dependency and quality management. EPICS modules vary in structure and in quality, and each Site that uses EPICS have their own particularities, which will need to be imposed on and/or coupled to the source code. Furthermore, each module release will have dependencies upon specific releases of other modules. How e3 deals with these is to wrap all community "packages" in a wrapper. This wrapper is an EPICS-like structure that links to the module, and which contains our Site specific modifications; patches, database files, GUIs, etc. When a build occurs, e3 parses and automagically resolves these dependency chains, compiles shared static libraries and inflates and copies database files, and finally installs into a hierarchical EPICS "tree." This tree allows us to easily keep track of what module version has been built for what version of base and *require*, and allows removal of deprecated versions. At ESS, there is a shared (network mounted) EPICS tree that all IOCs utilize the binaries from.
+
+:::{note}
+Although ESS uses a shared build (using e.g. NFS) and statically linked binaries, e3 in itself is not bound to this distribution approach.[^conda] Similarily, there's an associated toolsuite (*systemd*, *procServ*, *conserver*, etc.) used to manage IOCs at ESS, but these are decoupled from e3, just as client and service applications (such as *CS-Studio*, *DisplayBuilder*, *ChannelFinder*, and so on) are.
 :::
 
-ESS has gone through a few different EPICS environments during it's developmental phase. The latter of these have been referred to as *EEE*---"ESS EPICS Environment". The current setup is the 3rd version - thus e3. In a single sentence, e3 is an EPICS front-end for users and developers at ESS and a collection of utilities to set up and maintain ESS' EPICS environment.
+Finally, ESS have made some design choices, where at least one is worth mentioning in the context of documentation: at ESS, everything is a module---meaning that IOC applications, libraries, and modules all will be referred to as modules on this portal as well as in associated documents. An IOC at ESS is generally just a startup script, since the built application (module) is shared (and thus can be used for several IOCs).
 
-Two of the key design considerations for e3 were dependency and quality management. EPICS modules vary in structure and in quality, and each Site that uses EPICS have their own particularities, which will need to be imposed on and/or coupled to the source code. Furthermore, each module release will have dependencies upon specific releases of other modules. ESS' e3 started off based on PSI's EPICS environment, which is heavily built around the [*require*](https://github.com/paulscherrerinstitute/require) module to more easily manage these dependencies. The intention was thus twofold with e3: to simplify life for integrators, but also for a central team managing available modules. At the core of e3 is usage of *git*, *Makefile* rules, and *module wrappers* (as a standardized front-end to non-standard modules).
 
-The aforementioned wrapper is an EPICS-like structure that links to the module, and which contains our Site specific modifications; patches, database files, GUIs, etc.
-
+[^conda]: ESS have also experimented with using *conda* to distribute.

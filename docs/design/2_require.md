@@ -1,10 +1,10 @@
+(the_require_module)=
+
 # The *require* module
 
-ESS' EPICS environment has gone through a few different iterations, but a central component since the move away from *CODAC* has been PSI's *require* module. This does three things:
-
-* It provides a consistent build process to package EPICS modules which is based on the EPICS build system (more on this in {ref}`build_process`).
-* It provides a method to start a soft IOC.
-* It provides a mechanism to dynamically load shared libraries for use within an IOC.
+* Provides a method to start a soft IOC.
+* Provides a mechanism to dynamically load shared libraries for use within an IOC.
+* Provides a consistent build process to package EPICS modules which is based on the EPICS build system (more on this in {ref}`build_process`).
 
 :::{note}
 Each of the above-mentioned features are linked to each other; the dynamic loading depends on the build process, and it also depends on how the soft IOC has been started.
@@ -13,7 +13,6 @@ Each of the above-mentioned features are linked to each other; the dynamic loadi
 ## IOC startup
 
 IOC startup is run from the bash script `iocsh.bash`, which is installed in `${E3_REQUIRE_LOCATION}/bin/iocsh.bash`. This script generates a temporary startup script which is passed to `softIocPVA` from EPICS base. This temporary startup script:
-
 * Tries to load an environment file, if it exists
 * Sets some environment variables, e.g. `${IOCSH_TOP}` and `${REQUIRE_IOC}`
 * Prints a list of EPICS environment variables into the startup log
@@ -45,9 +44,12 @@ Most of the functionality for this is contained in the file `tools/iocsh_functio
 
 This is the most obviously visible part of *require* from the perspective of an IOC developer; one must include the line `require $MODULE[,$MODULE_VERSION]` in the startup script (`st.cmd`) in order to load a module in e3. If a version is specified, *require* will try to load that version. If you leave `version` blank, it will load the version with the highest numerical version available, else the first test version it finds.
 
-### Numerical versions
+### Versioning
 
-Versioning of modules follows the [semantic versioning (semver)](https://semver.org/) scheme. A numerical version is specified in one of two ways:
+#### Numerical versions
+
+Versioning of modules follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
+
 * MAJOR.MINOR.PATCH e.g. `require asyn,4.37.0`
 * MAJOR.MINOR.PATCH-BUILD e.g. `require sis8300llrf,3.17.1-1`
 
@@ -55,7 +57,7 @@ If you do not specify a BUILD number, then *require* will load the version with 
 
 Note that `1.0.0 < 1.0.0-0 < 1.0.0-1 < ... < 1.0.1 < ...`.
 
-### Test versions
+#### Test versions
 
 A test version is any version that does not conform to the above pattern. So `simonrose` is a test version, but so is `1.0.0-test` or even `1.0`.
 

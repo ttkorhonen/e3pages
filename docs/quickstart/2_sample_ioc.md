@@ -28,9 +28,50 @@ $ ./epics/${BASE_VERSION}/require/${REQUIRE_VERSION}/bin/iocsh.bash st.cmd
 ```
 :::
 
-## Other
+## Conventions
 
-You should preferably add a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and version control in the proper subgroup under <https://gitlab.esss.lu.se/iocs>
+As mentioned above, there should be an `env.sh` together with the startup script, that at minimum defines the `$IOCNAME`. There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/iocs).
+
+Thus you may end up with something like the following:
+
+### Directory
+
+```bash
+$ tree e3-ioc-test
+e3-ioc-test
+├── README.md
+├── env.sh
+└── st.cmd
+```
+
+### Startup script (`st.cmd`)
+
+```bash
+$ cat st.cmd
+require common
+require module
+
+epicsEnvSet(${IOCNAME},                 "${IOCNAME:NoName}")
+
+iocshLoad(${module_DIR}snippet.iocsh,   "IOCNAME=${IOCNAME})
+
+iocInit()
+
+dbl > PVs.list
+date
+
+```
+
+:::{note}
+Note the blank line at the end of `st.cmd`---this will be explained in {ref}`the_require_module`.
+:::
+
+### Environment file (`env.sh`)
+
+```sh
+$ cat env.sh
+IOCNAME="SomeName"
+```
 
 
 [^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
