@@ -77,7 +77,6 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
 ```
 
 The build process installs (potentially) several things to be available at run-time:
-
 - Database/template/protocol files
 - DBD (Database definition) files
 - Header files for dependent modules
@@ -160,7 +159,6 @@ DBDS    += $(DEVIOCSTATS)/devIocStats.dbd
 ## Dependencies
 
 The build process is smart enough to detect any code-based dependencies. For example, if you include the header files from *iocStats* above in one of your source code files, then `driver.makefile` will infer that your module depends on *iocStats*; when your module is loaded, it will also load the correct version of *iocStats* first.[^deps] This raises two questions:
-
 - How does it detect the correct version?
 - What about non code-based dependencies?
 
@@ -198,5 +196,4 @@ As above, the module name must exactly match the name of the installed module.
 
 
 [^ccdb]: ESS uses a fairly intricate software stack for deployment and management of IOCs. One of these tools builds startup scripts by including snippets.
-
-[^deps]: note that this does not distinguish between build-time and run-time dependencies
+[^deps]: This does not distinguish between build-time and run-time dependencies.

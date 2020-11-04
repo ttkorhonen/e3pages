@@ -48,7 +48,6 @@ This is the most obviously visible part of *require* from the perspective of an 
 ### Numerical versions
 
 Versioning of modules follows the [semantic versioning (semver)](https://semver.org/) scheme. A numerical version is specified in one of two ways:
-
 * MAJOR.MINOR.PATCH e.g. `require asyn,4.37.0`
 * MAJOR.MINOR.PATCH-BUILD e.g. `require sis8300llrf,3.17.1-1`
 
@@ -79,8 +78,9 @@ pcre 8.41.0
 
 The reader should be aware that *require* is limited in the degree to which it can perform dependency resolution; all it can do is a simple check against existing loaded versions. This is why build numbers are necessary. As an example, consider the following scenario.
 
-Scenario
-: `sis8300llrf` version 3.16.1 depends on `scaling`, and has been built against version 1.7.0. We update `scaling` to version 1.7.1. There is no new version of `sis8300llrf`, but an IOC integrator would like to use the new version of `scaling`. What should happen to the existing installed version of `sis8300llrf`?
+#### Example scenario
+
+`sis8300llrf` version 3.16.1 depends on `scaling`, and has been built against version 1.7.0. We update `scaling` to version 1.7.1. There is no new version of `sis8300llrf`, but an IOC integrator would like to use the new version of `scaling`. What should happen to the existing installed version of `sis8300llrf`?
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
 2. We could try to update the version of `sis8300llrf` to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.

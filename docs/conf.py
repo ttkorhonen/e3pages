@@ -69,3 +69,6 @@ html_static_path = []
 
 # Enable special syntax for admonitions (:::{directive})
 myst_admonition_enable = True
+
+# Enable definition lists (Term\n: Definition)
+myst_deflist_enable = True

@@ -8,7 +8,7 @@
 Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
 ```
 
-The E3 build process is a complicated bit of work. To recap, the overview is as follows:
+The e3 build process is a complicated bit of work. To recap, the overview is as follows:
 
 1. In the e3-wrapper directory: we collect some information and decide what build process we will perform (from `RULES_E3`), calling `make` in the module directory with information passed as in `CONFIG_E3_MAKEFILE`.
 2. In the module directory: EPICSVERSION has not been defined, so determine which versions to build for.
@@ -20,7 +20,7 @@ We will go over each of these steps in more detail, as well as go over an exampl
 
 ## Some details about `make`
 
-Before we can describe the build process, we have to talk a little about how `make` works. If you don't understand `make`, it is very *very* hard to understand the E3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
+Before we can describe the build process, we have to talk a little about how `make` works. If you don't understand `make`, it is very *very* hard to understand the e3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
 
 `make` does two things:
 
@@ -49,13 +49,13 @@ The key is in how `make` generates its dependency tree. Unlike many programming 
 
 <!-- Perhaps we can expand this more, but I will leave it like this for now. -->
 
-## The `make` process for E3
+## The `make` process for e3
 
 ### Stage 1: The e3-wrapper
 
 We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify dependencies and for which version of base/require we are building, as well as `CONFIG` from the require module (located in `configure/modules/CONFIG` in this repository).
 
-We also load `RULES` which similarly loads a number of rules-related configure files installed with `require`. The most important one in `RULES_E3` which initiates most of the E3 build process. As an example, we have:
+We also load `RULES` which similarly loads a number of rules-related configure files installed with `require`. The most important one in `RULES_E3` which initiates most of the e3 build process. As an example, we have:
 
 ```makefile
 ## Build the EPICS Module : $(E3_MODULE_NAME)
@@ -68,7 +68,7 @@ which first makes sure that `conf` and `checkout` are up to date (these copy the
 
 ### Stage 2: Defining `EPICSVERSION`
 
-The first pass through is to determine the EPICS version that we are building for. In E3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
+The first pass through is to determine the EPICS version that we are building for. In e3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
 
 ```makefile
 E3_EPICS_VERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
@@ -105,7 +105,7 @@ export SRCS
 ```
 
 Note in particular the `export SRCS` line: when make is called recursively, variables from one run to the next do not persist unless they are `export`ed. It is also extremely important to note when the variable being exported
-is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the E3 build process), it will `export` correctly.
+is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the e3 build process), it will `export` correctly.
 
 The cross-compiler target architectures `CROSS_COMPILER_TARGET_ARCHS` are defined in `$(EPICS_LOCATION)/configure/CONFIG_SITE`, which is generated when you build EPICS base for the first time.
 
