@@ -12,7 +12,7 @@ This is a training series for using ESS' EPICS environment [e3](https://gitlab.e
 
 ---
 
-Note that this workbook is intended for e3 app developers and integrators at ESS (and consequently also contains some site specific processes and standards); if you simply want to use EPICS to read or manipulate PVs you can either run the first two installation commands, or e.g. install EPICS base using conda from conda-forge.
+Note that this workbook primarily is intended for e3 app developers and integrators at ESS (and consequently also contains some site specific processes and standards).
 
 For some of the chapters there are supplementary directories containing code and utilities, so it's recommended to clone <https://gitlab.esss.lu.se/e3/e3-training-material> prior to starting.
 
