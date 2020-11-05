@@ -34,7 +34,7 @@ design/4*
 :maxdepth: 2
 :caption: Knowledge-base
 kb/training/index.md
-kb/howto/index.md
+kb/guide/index.md
 ```
 
 ```{toctree}
