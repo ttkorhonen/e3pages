@@ -43,10 +43,9 @@ To install an existing e3 module in *deployment mode*[^depmode], only a few step
 $ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
 ```
 
-Next, modify `configure/RELEASE` to point towards the correct installation path:
+Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should like the following:
 
-```bash
-$ cat e3-caenelfastps/configure/RELEASE
+```makefile
 #
 EPICS_BASE:=/opt/epics/base-7.0.4
 
