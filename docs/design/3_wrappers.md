@@ -24,7 +24,7 @@ In the above output, `${MODULE}` is the name of the EPICS module(/application/li
 
 ## Creating an e3 wrapper
 
-To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter](../kb/howto/articles/4_cookiecutter_module.md)*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
+To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter](../kb/guide/articles/4_cookiecutter_module.md)*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The `configure/` directory
 
@@ -81,7 +81,7 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
 ---
 
 The build process installs (potentially) several things to be available at run-time:
-- Database/template/protocol files
+- Database/template/substitution/protocol files
 - DBD (database definition) files
 - Header files for dependent modules
 - Iocsh snippets
