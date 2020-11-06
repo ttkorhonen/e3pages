@@ -82,7 +82,7 @@ Done!
 
 :::{tip}
 If you here wanted to use a different version of the module than the most recent one, you could simply check out a specific commit or tag.
-```
+:::
 
 
 [^depmode]: More on this in the e3 tutorial.
