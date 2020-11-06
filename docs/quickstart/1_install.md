@@ -71,6 +71,13 @@ $ make init patch build
 $ sudo make install
 ```
 
+We should finally validate that everything is working as expected:
+
+```bash
+$ # this assumes you have sourced setenv or setE3Env.bash
+$ iocsh.bash -r caenelfastps
+```
+
 Done!
 
 :::{tip}
