@@ -35,7 +35,7 @@ If the command `iocInit` is not explicitly called in `st.cmd`, it will be implic
 :::
 
 :::{warning}
-The file `st.cmd` above **must** have a blank line at the end of the file---otherwise the last line will be ignored.
+The file `st.cmd` above **must** have a newline at the end of the file---otherwise the last line will be ignored.
 :::
 
 Most of the functionality for this is contained in the file `tools/iocsh_functions` in the [e3 repository](https://gitlab.esss.lu.se/e3/e3). There are also *gdb* and *valgrind* options if you would like to run an IOC with either of those utilities.

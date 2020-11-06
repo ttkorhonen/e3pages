@@ -59,11 +59,10 @@ iocInit()
 
 dbl > PVs.list
 date
-
 ```
 
 :::{note}
-Note the blank line at the end of `st.cmd`---this will be explained in {ref}`the_require_module`.
+Note that `st.cmd` must end with a newline---this will be explained in {ref}`the_require_module`.
 :::
 
 ### Environment file (`env.sh`)
