@@ -21,5 +21,15 @@ For some of the chapters there are supplementary directories containing code and
 ```{toctree}
 :caption: Table of Content
 :maxdepth: 1
-workbook/index.md
+:glob:
+workbook/1_*
+workbook/2_*
+workbook/3_*
+workbook/4_*
+workbook/5_*
+workbook/6_*
+workbook/7_*
+workbook/8_*
+workbook/9_*
+workbook/13_*
 ```
