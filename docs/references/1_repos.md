@@ -12,9 +12,9 @@ Generally, all ESS e3-related repositories are kept under:
 
 They are then furthermore divided into different groups, depending on their type and application. Some examples for e3 wrappers are:
 
-- <https://gitlab.ess.lu.se/e3/common>
-- <https://gitlab.ess.lu.se/e3/area>
-- <https://gitlab.ess.lu.se/e3/ecat>
+- <https://gitlab.esss.lu.se/e3/common>
+- <https://gitlab.esss.lu.se/e3/area>
+- <https://gitlab.esss.lu.se/e3/ecat>
 
 The source modules (including applications and libraries) are kept under:
 
