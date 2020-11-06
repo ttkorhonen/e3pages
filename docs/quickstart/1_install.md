@@ -34,3 +34,48 @@ or, alternatively:
 ```bash
 $ source /path/to/e3/repository/tools/setenv
 ```
+
+## Installing a module
+
+To install an existing e3 module in "Deployment mode"[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* for this example):
+
+```bash
+$ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
+```
+
+Next, modify `configure/RELEASE` to point towards the correct installation path:
+
+```bash
+$ cat e3-caenelfastps/configure/RELEASE
+#
+EPICS_BASE:=/opt/epics/base-7.0.4
+
+E3_REQUIRE_NAME:=require
+E3_REQUIRE_VERSION:=3.3.0
+
+# The definitions shown below can also be placed in an untracked RELEASE.local
+-include $(TOP)/../../RELEASE.local
+-include $(TOP)/../RELEASE.local
+-include $(TOP)/configure/RELEASE.local
+```
+
+:::{note}
+Notice the change to ${EPICS_BSAE} from the default `/epics/base-7.0.4` to `/opt/epics/base-7.0.4`.
+:::
+
+Finally, we would run all of the make rules that: clones the submodule, applies patches (if there are any valid ones for this version), build the module, and finally install it;
+
+```
+$ cd e3-caenelfastps
+$ make init patch build
+$ sudo make install
+```
+
+Done!
+
+:::{tip}
+If you here wanted to use a different version of the module than the most recent one, you could simply check out a specific commit or tag.
+```
+
+
+[^depmode]: More on this in the e3 tutorial.
