@@ -35,7 +35,7 @@ or, alternatively:
 $ source /path/to/e3/repository/tools/setenv
 ```
 
-## Installing a module
+## Installing an e3 module
 
 To install an existing e3 module in "Deployment mode"[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* for this example):
 
