@@ -2,7 +2,7 @@
 
 The following assumes that you already have EPICS base, *require* (`3.3.0` or later as the module version has been left out in the `require` call[^require]), and *iocStats* installed.
 
-An IOC in e3 is typically (minimally) just a startup script---passed to `softIoc` or `softIocPVA`[^epics7]---preferably also with an `env.sh` file to define environment variables (such as `${IOCNAME}`, and/or the architecture and versions to be used when calling `iocsh.bash` using macros).
+An IOC in e3 is typically (minimally) just a startup script---passed to `softIocPVA`[^epics7]---preferably also with an `env.sh` file to define environment variables (such as `${IOCNAME}`, and/or the architecture and versions to be used when calling `iocsh.bash` using macros).
 
 ## Create the startup script
 
@@ -75,4 +75,4 @@ IOCNAME="SomeName"
 
 [^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
 
-[^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`.
+[^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`. Earlier iterations of e3 also supported use of `softIoc`, but that funtionality has been removed from scope.

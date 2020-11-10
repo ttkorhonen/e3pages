@@ -2,12 +2,6 @@
 
 # Building and installing
 
-```{admonition} Under Construction
-:class: warning
-
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
-```
-
 ## The EPICS tree
 
 Building EPICS with e3 generates a hierarhical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS, we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` could also be used. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:

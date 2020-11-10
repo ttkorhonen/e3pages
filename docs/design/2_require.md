@@ -4,7 +4,7 @@
 
 * Provides a method to start a soft IOC.
 * Provides a mechanism to dynamically load shared libraries for use within an IOC.
-* Provides a consistent build process to package EPICS modules which is based on the EPICS build system (more on this in {ref}`build_process`).
+* Provides a build process (more on this in {ref}`build_process`).
 
 :::{note}
 Each of the above-mentioned features are linked to each other; the dynamic loading depends on the build process, and it also depends on how the soft IOC has been started.
@@ -67,7 +67,7 @@ As *require* will load the first test version it finds when there are no numeric
 
 ### Dependency resolution
 
-If one module depends on another one, both of these will be loaded. For example, `StreamDevice` depends on `asyn`, so loading `StreamDevice` will automatically load `asyn` as well. Dependencies are version-specific; `StreamDevice` 2.8.10 in its current incarnation has been built against `asyn` 4.37.0---if you load that version of `StreamDevice` then it will try to load specifically version 4.37.0 of `asyn`, and if it cannot find that version, or if another version of `asyn` has already been loaded, then the IOC will exit with an error.
+If one module depends on another one, both of these will be loaded. For example, *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.10 in its current incarnation has been built against *asyn* 4.37.0---if you load that version of *StreamDevice* then it will try to load specifically version 4.37.0 of *asyn*, and if it cannot find that version, or if another version of *asyn* has already been loaded, then the IOC will exit with an error.
 
 These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for StreamDevice 2.8.10 are (directly from the aforementioned file):
 
@@ -82,8 +82,8 @@ The reader should be aware that *require* is limited in the degree to which it c
 
 #### Example scenario
 
-`sis8300llrf` version 3.16.1 depends on `scaling`, and has been built against version 1.7.0. We update `scaling` to version 1.7.1. There is no new version of `sis8300llrf`, but an IOC integrator would like to use the new version of `scaling`. What should happen to the existing installed version of `sis8300llrf`?
+The module *sis8300llrf* version 3.16.1 depends on the module *scaling*, and has been built against version 1.7.0. We update *scaling* to version 1.7.1. There is no new version of *sis8300llrf*, but an IOC integrator would like to use the new version of *scaling*. What should happen to the existing installed version of *sis8300llrf*?
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
-2. We could try to update the version of `sis8300llrf` to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
-3. We could instead update the version to 3.16.1-1, i.e. add a build number. This way, the existing version has not been modified. Moreover, you can use `sis8300llrf` version 3.16.1 with either version of scaling by specifying the build number.
+2. We could try to update the version of *sis8300llrf* to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
+3. We could instead update the version to 3.16.1-1, i.e. add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.

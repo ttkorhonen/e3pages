@@ -208,7 +208,9 @@ For non-code based dependencies (such as *StreamDevice* and *protocol* files, or
 REQUIRED += calc
 ```
 
-As above, the module name must exactly match the name of the installed module.
+:::{note}
+As in the example above, the module name must exactly match the name of the installed module.
+:::
 
 
 [^ccdb]: ESS uses a fairly intricate software stack for deployment and management of IOCs. One of these tools builds startup scripts by including snippets.
