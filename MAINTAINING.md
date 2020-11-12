@@ -10,6 +10,8 @@ General structure:
 - All content should be kept up-to-date, else highlighted with admonitions (warnings, notices, etc.)
 - All content should be usable also by external ESS users, with no access to ESS infrastructure
 
+Good reference repository for setting up Sphinx documentation: https://github.com/godotengine/godot-docs
+
 ## Training
 
 Below notes are specifically for the training chapters.
