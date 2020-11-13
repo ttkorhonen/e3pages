@@ -20,4 +20,4 @@ articles/5*
  ```
 
 
-[^1]: See also (CONTRIBUTING.MD)[https://gitlab.esss.lu.se/e3/e3.pages.esss.lu.se/-/blob/master/CONTRIBUTING.md].
+[^1]: See also `CONTRIBUTING.md` at the root level of e3 pages' source repository.
