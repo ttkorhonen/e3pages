@@ -15,7 +15,7 @@ Here is an inventory of existing user guides. For information on more ESS-specif
 % articles/1*
 % articles/2*
 % articles/3*
-% articles/4*
+articles/4*
 articles/5*
  ```
 
