@@ -10,4 +10,4 @@ The most recent presentation about e3 was held at the [EPICS Collaboration Meeti
 
 ## Acknowledgements
 
-EEE was initially developed by Cosylab for ESS. Han-Lee Jeong (ESS) then revamped the entire design from scratch to create e3. Since 2019, e3 has been managed by an e3 team at ESS, with significant contributions from Simon Rose (ESS) and Wayne Lewis (Osprey).
+EEE was initially developed by Cosylab for ESS. Han-Lee Jeong (ESS) then revamped the entire design from scratch to create e3. Since 2019, e3 has been managed by an e3 team at ESS.

@@ -2,6 +2,12 @@
 
 # Building and installing
 
+```{admonition} Under Construction
+:class: warning
+
+This page is still being written.
+```
+
 ## The EPICS tree
 
 Building EPICS with e3 generates a hierarhical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS, we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` could also be used. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:
@@ -81,6 +87,4 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
 
 ## The build tool
 
-Due to it's origin, e3 makes use of *require*'s build facilities.
-
-<!-- link to some other location where Simon's build process doc is -->
+Due to it's origin, e3 makes use of *require*'s build facilities. For a dive into *require*'s build facilities, visit {ref}`require_build`.

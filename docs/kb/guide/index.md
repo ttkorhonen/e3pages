@@ -3,7 +3,7 @@
 ```{admonition} Under Construction
 :class: warning
 
-This page-tree has barely been set up, and doesn't yet contain any real (curated) content. This notice will be removed or changed once that is done.
+Content is still being produced or adapted to be fitted into this page-tree. Users are encouraged to add their own articles, through a pull request on this page's git repository.[^1]
 ```
 
 Here is an inventory of existing user guides. For information on more ESS-specific items (such as deployment workflows or tools), please instead browse e3's information space on the [intranet](https://confluence.esss.lu.se/display/E3).
@@ -18,3 +18,6 @@ Here is an inventory of existing user guides. For information on more ESS-specif
 % articles/4*
 articles/5*
  ```
+
+
+[^1]: See also (CONTRIBUTING.MD)[https://gitlab.esss.lu.se/e3/e3.pages.esss.lu.se/-/blob/master/CONTRIBUTING.md].
