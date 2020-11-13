@@ -59,7 +59,7 @@ E3_REQUIRE_VERSION:=3.3.0
 ```
 
 :::{note}
-Notice the change to ${EPICS_BSAE} from the default `/epics/base-7.0.4` to `/opt/epics/base-7.0.4`.
+Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.4` to `/opt/epics/base-7.0.4`.
 :::
 
 Finally, we would run all of the make rules that: clones the submodule, applies patches (if there are any valid ones for this version), build the module, and finally install it;
