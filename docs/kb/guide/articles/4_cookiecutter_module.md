@@ -1,4 +1,4 @@
-# Creating an e3 wrapper with cookiecutter
+# How to: Create an e3 wrapper with cookiecutter
 
 ```{admonition} Under Construction
 :class: warning
