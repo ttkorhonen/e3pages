@@ -113,7 +113,10 @@ $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
 When you have created an e3-wrapper as above, it is only a local git repository on your machine. If you want to share it on the ESS gitlab (or otherwise), you will need to add a remote to the repository. Assuming you are using the ESS gitlab, then the steps are as follows:
 
 1. Create the remote repository by choosing "New project" from the menu on <https://gitlab.esss.lu.se>.
-2. The repository should be named *e3-testmodule*, and (although not necessary) should be public, at least if you want to share it with anyone else. However, you can change this at a later date. For simplicity, leave the box "Initialize repository with a README" unchecked.
+2. The repository should be named *e3-testmodule*, and (although not necessary) should be public, at least if you want to share it with anyone else. However, you can change this at a later date. 
+   :::{warning}
+   It is best to leave the box "Initialize repository with a README" unchecked.
+   :::
 3. As the repository has already been initialized, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name "simonrose" to your account or to the target group where you have created your repository, and change the name "e3-testmodule" to the name you have chosen:
    ```bash
    $ # You do not need to switch into the directory if you are already there
