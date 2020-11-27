@@ -4,6 +4,8 @@
 
 Another key feature of e3 is the module wrapper. This allows us to apply site specific changes---whether those are source code changes in the form of patches, separate database and substitution files to enable ESS-compliant Process Variable (PV) naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
 
+The template structure for an e3 wrapper is as follows:
+
 ```bash
 $ tree
 .
@@ -21,6 +23,12 @@ $ tree
 ```
 
 In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+
+It should be noted that non-used directories in the above structure should be removed; e.g. if there are no patch-files, `patch/*` should be deleted.
+
+:::{tip}
+Embedded file-trees are recommended for ESS-developed modules that the community would have no use of.
+:::
 
 ## Creating an e3 wrapper
 
@@ -172,7 +180,7 @@ Any `.dbd` files that you would like to add are combined into a single module `.
 DBDS    += $(DEVIOCSTATS)/devIocStats.dbd
 ```
 
-## Dependencies
+### Dependencies
 
 The build process is smart enough to detect any code-based dependencies. For example, if you include the header files from *iocStats* above in one of your source code files, then `driver.makefile` will infer that your module depends on *iocStats*; when your module is loaded, it will also load the correct version of *iocStats* first.[^deps] This raises two questions:
 - How does it detect the correct version?
