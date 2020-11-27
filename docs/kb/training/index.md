@@ -17,7 +17,7 @@ Note that this workbook primarily is intended for e3 app developers and integrat
 For some of the chapters there are supplementary directories containing code and utilities, so it's recommended to clone <https://gitlab.esss.lu.se/e3/e3-training-material> prior to starting.
 
 :::{tip}
-It is recommended to instead follow the tutorial directly in (e3training)[https://gitlab.esss.lu.se/e3/e3training], while the content is being adapted to fit into this portal (e3 pages).
+It is recommended to instead follow the tutorial directly in <https://gitlab.esss.lu.se/e3/e3training>, while the content is being adapted to fit into this portal.
 :::
 
 ---
