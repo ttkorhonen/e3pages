@@ -142,7 +142,16 @@ $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
 └── devIocStatsOSD.h
 ```
 
-If you have two files in separate directories but with the same name, then you cannot install them this way. There is however another mechanism included in require 3.3.0 that helps deal with this case. <!-- TODO: find link and fixme -->
+If you have two files in separate directories but with the same name, then you cannot install them this way. 
+
+From require 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile. `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process. <!-- TODO: find link and fixme -->
+
+```makefile
+KEEP_HEADER_SUBDIRS += $(GMTOP)
+```
+where you have defined `GMTOP` elsewhere in the module Makefile.
+
+
 :::
 
 ### Compiled libraries
