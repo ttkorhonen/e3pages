@@ -33,7 +33,7 @@ If you are using conda with Python3 installed, then you can simply use pip inste
 :::
 
 :::{tip}
-It is highly recommended to use virtual environments (using e.g. the `venv` module or *conda*) when dealing with Python environments.
+It is highly recommended to use virtual environments (using, for example, the `venv` module or *conda*) when dealing with Python environments.
 :::
 
 ### Building an EPICS module
