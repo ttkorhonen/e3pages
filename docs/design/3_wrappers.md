@@ -32,7 +32,7 @@ Embedded file-trees are recommended for ESS-developed modules that the community
 
 ## Creating an e3 wrapper
 
-To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter](../kb/guide/articles/4_cookiecutter_module.md)*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
+To create a wrapper, you could use *[cookiecutter](../kb/guide/articles/4_cookiecutter_module.md)*, *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The `configure/` directory
 
@@ -63,7 +63,7 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
 ---
 
-Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
@@ -92,7 +92,7 @@ The build process installs (potentially) several things to be available at run-t
 - Database/template/substitution/protocol files
 - DBD (database definition) files
 - Header files for dependent modules
-- Iocsh snippets
+- iocsh snippets
 - Compiled libraries
 
 :::{note}
@@ -170,7 +170,7 @@ SOURCES += $(DEVIOCSTATS)/os/posix/osdHostInfo.c
 SOURCES += $(DEVIOCSTATS)/os/posix/osdPIDInfo.c
 ```
 
-Note that you can also include e.g. sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
+Note that you can also include sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
 
 ### Database definition files
 
@@ -210,7 +210,7 @@ ADCore_VERSION=$(ADCORE_DEP_VERSION)
 ```
 :::
 
-For non-code based dependencies (such as *StreamDevice* and *protocol* files, or the records introduced in the *cal* module), you have to explicitly state the requirement using the `${REQUIRED}` variable:
+For non-code based dependencies (such as *StreamDevice* and *protocol* files, or the records introduced in the *calc* module), you have to explicitly state the requirement using the `${REQUIRED}` variable:
 
 ```makefile
 REQUIRED += calc
