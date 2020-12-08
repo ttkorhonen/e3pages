@@ -22,9 +22,9 @@ $ tree
 └── tools
 ```
 
-In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e., both the wrapper and the wrapped module are controlled in the same repository).
 
-It should be noted that non-used directories in the above structure should be removed; e.g. if there are no patch-files, `patch/*` should be deleted.
+It should be noted that non-used directories in the above structure should be removed; e.g., if there are no patch-files, `patch/*` should be deleted.
 
 :::{tip}
 Embedded file-trees are recommended for ESS-developed modules that the community would have no use of.
@@ -121,7 +121,7 @@ SCRIPTS += $(IOCADMINSRC)/iocReleaseCreateDb.py
 SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
-Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
+Note that the second line refers to the parent directory of the module, i.e., the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
 
 ### Header files
 
