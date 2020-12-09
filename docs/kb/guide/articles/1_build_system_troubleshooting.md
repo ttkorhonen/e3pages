@@ -1,4 +1,4 @@
-# Build system troubleshoting 
+# Build system troubleshooting 
 
 ```{admonition} Under Construction
 :class: warning
@@ -60,7 +60,7 @@ The meaning of `.nfsXXXX` can be found in http://nfs.sourceforge.net/#faq_d2.
 
 ### Problem
 
-when we run `make init`, we may see the following sort of conflict with the git submodule:
+When we run `make init`, we may see the following sort of conflict with the git submodule:
 
 ```console
 # --- snip snip ---
