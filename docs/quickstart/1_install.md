@@ -9,7 +9,7 @@ To build EPICS base 7.0.4 with *require* 3.3.0 and the *common* module group and
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/e3.git
 $ cd e3
-$ ./e3_building_config.bash -b 7.0.4 -r 3.3.0 -t /opt/epics
+$ ./e3_building_config.bash -b 7.0.4 -r 3.3.0 -t /opt/epics setup
 $ sudo ./e3.bash base
 $ sudo ./e3.bash req
 $ sudo ./e3.bash -c mod
