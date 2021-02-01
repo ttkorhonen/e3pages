@@ -12,7 +12,7 @@ This page is still being written.
 
 Cookiecutter is a templating utility built in python. Cookiecutter is already extensively used within ICS to help standardize the creation of multiple projects, see <https://gitlab.esss.lu.se/ics-cookiecutter>. For an e3 wrapper, we will be using the cookiecutter template located at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper>, which has some instructions for use, which we will repeat below.
 
-The following is based on the e3TemplateGenerator that is part of the (e3-tools repository)[https://github.com/icshwi/e3-tools].
+The following is based on the e3TemplateGenerator that is part of the [e3-tools repository](https://github.com/icshwi/e3-tools).
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ If you are using conda with Python3 installed, then you can simply use pip inste
 :::
 
 :::{tip}
-It is highly recommended to use virtual environments (using e.g. the `venv` module or *conda*) when dealing with Python environments.
+It is highly recommended to use virtual environments (using, for example, the `venv` module or *conda*) when dealing with Python environments.
 :::
 
 ### Building an EPICS module

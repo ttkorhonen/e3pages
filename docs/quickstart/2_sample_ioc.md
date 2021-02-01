@@ -30,7 +30,7 @@ $ ./epics/${BASE_VERSION}/require/${REQUIRE_VERSION}/bin/iocsh.bash st.cmd
 
 ## Conventions
 
-As mentioned above, there should be an `env.sh` together with the startup script, that at minimum defines the `$IOCNAME`. There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/iocs).
+As mentioned above, there should be an `env.sh` together with the startup script, that at minimum defines the `$IOCNAME`. There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
 
 Thus you may end up with something like the following:
 
@@ -73,6 +73,6 @@ IOCNAME="SomeName"
 ```
 
 
-[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
+[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e., from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
 
-[^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`. Earlier iterations of e3 also supported use of `softIoc`, but that funtionality has been removed from scope.
+[^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`. Earlier iterations of e3 also supported use of `softIoc`, but that functionality has been removed from scope.

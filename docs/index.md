@@ -1,12 +1,8 @@
 # ESS EPICS Environment (e3)
 
-```{admonition} Under Construction
-:class: warning
-
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This warning will be removed once the site is in a fairly stable state.
-```
-
-ESS' EPICS Environment (e3) is a design concept and a toolkit intended to a) facilitate development by abstracting away some of the low-level complexities intrinsic to large EPICS implementations (primarily dependency management), and b) allow for more manageable quality control of released modules as well as IOCs. It allows for easily building EPICS modules directly from source and automagically resolves module dependencies, and allows for site specific modifications to EPICS modules without needing to directly modify source trees.
+ESS' EPICS Environment (e3) is a design concept and a toolkit intended to 
+1. facilitate development by abstracting away some of the low-level complexities intrinsic to large EPICS implementations (primarily dependency management), and to
+2. allow for more manageable quality control of released modules as well as IOCs. It allows for easily building EPICS modules directly from source and automagically resolves module dependencies, and allows for site specific modifications to EPICS modules without needing to directly modify source trees.
 
 ---
 

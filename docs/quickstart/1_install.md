@@ -9,7 +9,7 @@ To build EPICS base 7.0.4 with *require* 3.3.0 and the *common* module group and
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/e3.git
 $ cd e3
-$ ./e3_building_config.bash -b 7.0.4 -r 3.3.0 -t /opt/epics
+$ ./e3_building_config.bash -b 7.0.4 -r 3.3.0 -t /opt/epics setup
 $ sudo ./e3.bash base
 $ sudo ./e3.bash req
 $ sudo ./e3.bash -c mod
@@ -23,7 +23,7 @@ As you may realise, this allows a user to have multiple EPICS trees installed at
 
 ## Sourcing a specific e3 environment
 
-As you with e3 may have several EPICS "environments" available, you need to explicitly source your environment or call on binaries (such as `iocsh.bash`) explicitly.
+With e3, you may have several EPICS "environments" available, so you need to explicitly source your environment or call on binaries (such as `iocsh.bash`) explicitly.
 
 ```bash
 $ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
@@ -37,13 +37,13 @@ $ source /path/to/e3/repository/tools/setenv
 
 ## Installing an e3 module
 
-To install an existing e3 module in *deployment mode*[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* for this example):
+To install an existing e3 module in *deployment mode*[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* module for this example):
 
 ```bash
 $ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
 ```
 
-Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should like the following:
+Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should look like the following:
 
 ```makefile
 #
@@ -59,10 +59,10 @@ E3_REQUIRE_VERSION:=3.3.0
 ```
 
 :::{note}
-Notice the change to ${EPICS_BSAE} from the default `/epics/base-7.0.4` to `/opt/epics/base-7.0.4`.
+Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.4` to `/opt/epics/base-7.0.4`.
 :::
 
-Finally, we would run all of the make rules that: clones the submodule, applies patches (if there are any valid ones for this version), build the module, and finally install it;
+Finally, we would run all of the make rules that: clones the submodule, applies patches (if there are any valid ones for this version), builds the module, and finally installs it;
 
 ```
 $ cd e3-caenelfastps
@@ -80,8 +80,9 @@ $ iocsh.bash -r caenelfastps
 Done!
 
 :::{tip}
-If you here wanted to use a different version of the module than the most recent one, you could simply check out a specific commit or tag.
+If you here wanted to use a different version of the module than the most recent one, you could simply check out a specific commit or tag of the wrapper, prior to running `make init`.
 :::
+
 
 
 [^depmode]: More on this in the e3 tutorial.

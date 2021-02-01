@@ -4,6 +4,8 @@
 
 Another key feature of e3 is the module wrapper. This allows us to apply site specific changes---whether those are source code changes in the form of patches, separate database and substitution files to enable ESS-compliant Process Variable (PV) naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
 
+The template structure for an e3 wrapper is as follows:
+
 ```bash
 $ tree
 .
@@ -20,11 +22,17 @@ $ tree
 └── tools
 ```
 
-In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
+In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e., both the wrapper and the wrapped module are controlled in the same repository).
+
+It should be noted that non-used directories in the above structure should be removed; e.g., if there are no patch-files, `patch/*` should be deleted.
+
+:::{tip}
+Embedded file-trees are recommended for ESS-developed modules that the community would have no use of.
+:::
 
 ## Creating an e3 wrapper
 
-To create a wrapper, you could use *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), *[cookiecutter](../kb/guide/articles/4_cookiecutter_module.md)*, or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
+To create a wrapper, you could use *[cookiecutter](../kb/guide/articles/4_cookiecutter_module.md)*, *e3templateGenerator* (found in [e3-tools](https://github.com/icshwi/e3-tools)), or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The `configure/` directory
 
@@ -55,7 +63,7 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
 ---
 
-Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
 
 ```bash
 $ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
@@ -84,7 +92,7 @@ The build process installs (potentially) several things to be available at run-t
 - Database/template/substitution/protocol files
 - DBD (database definition) files
 - Header files for dependent modules
-- Iocsh snippets
+- iocsh snippets
 - Compiled libraries
 
 :::{note}
@@ -113,7 +121,7 @@ SCRIPTS += $(IOCADMINSRC)/iocReleaseCreateDb.py
 SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
-Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
+Note that the second line refers to the parent directory of the module, i.e., the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
 
 ### Header files
 
@@ -162,7 +170,7 @@ SOURCES += $(DEVIOCSTATS)/os/posix/osdHostInfo.c
 SOURCES += $(DEVIOCSTATS)/os/posix/osdPIDInfo.c
 ```
 
-Note that you can also include e.g. sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
+Note that you can also include sequencer files or C++ files here as well. The build process will understand based on the file extension how to compile it accordingly. If you use any sequencer files, then an appropriate `.dbd` file will be created with the correct database definitions to register your sequencer program.
 
 ### Database definition files
 
@@ -172,7 +180,7 @@ Any `.dbd` files that you would like to add are combined into a single module `.
 DBDS    += $(DEVIOCSTATS)/devIocStats.dbd
 ```
 
-## Dependencies
+### Dependencies
 
 The build process is smart enough to detect any code-based dependencies. For example, if you include the header files from *iocStats* above in one of your source code files, then `driver.makefile` will infer that your module depends on *iocStats*; when your module is loaded, it will also load the correct version of *iocStats* first.[^deps] This raises two questions:
 - How does it detect the correct version?
@@ -202,7 +210,7 @@ ADCore_VERSION=$(ADCORE_DEP_VERSION)
 ```
 :::
 
-For non-code based dependencies (such as *StreamDevice* and *protocol* files, or the records introduced in the *cal* module), you have to explicitly state the requirement using the `${REQUIRED}` variable:
+For non-code based dependencies (such as *StreamDevice* and *protocol* files, or the records introduced in the *calc* module), you have to explicitly state the requirement using the `${REQUIRED}` variable:
 
 ```makefile
 REQUIRED += calc

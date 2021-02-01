@@ -23,7 +23,7 @@ IOC startup is run from the bash script `iocsh.bash`, which is installed in `${E
 As we at ESS have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
 :::
 
-There are number of option flags and arguments that `iocsh.bash` accepts, the most common being: <!-- TODO: rewrite all of tihs and fixme -->
+There are number of option flags and arguments that `iocsh.bash` accepts, the most common being: <!-- TODO: rewrite all of this and fixme -->
 
 * `iocsh.bash st.cmd`---Run the commands in `st.cmd`.
 * `iocsh.bash -r module[,version]`---Load the given module/version upon startup. Equivalent to including the line `require module[,version]` in your startup script.
@@ -86,4 +86,4 @@ The module *sis8300llrf* version 3.16.1 depends on the module *scaling*, and has
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
 2. We could try to update the version of *sis8300llrf* to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
-3. We could instead update the version to 3.16.1-1, i.e. add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
+3. We could instead update the version to 3.16.1-1, i.e., add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
