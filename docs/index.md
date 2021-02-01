@@ -16,6 +16,7 @@ ESS' EPICS Environment (e3) is a design concept and a toolkit intended to a) fac
 :glob:
 quickstart/1*
 quickstart/2*
+quickstart/3*
 ```
 
 ```{toctree}
