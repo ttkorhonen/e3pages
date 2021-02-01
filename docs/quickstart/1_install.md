@@ -15,6 +15,8 @@ $ sudo ./e3.bash req
 $ sudo ./e3.bash -c mod
 ```
 
+For more information, see {ref}`e3_bash`
+
 :::{tip}
 If you leave out the flags `-b` (version of EPICS base) and `-r` (version of *require*) it will default to the latest stable release, but it's always good practice to be explicit.
 :::
