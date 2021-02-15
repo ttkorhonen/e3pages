@@ -4,6 +4,6 @@ At ESS, there is a core e3 team. For issues, feature requests, or questions on e
 
 ## ESS intranet
 
-The main space for e3 is [ESS EPICS Environment (e3) on Confluence](https://confluence.esss.lu.se/x/FmVPEQ). There is also an [Slack](https://ess-eric.slack.com) channel, `#e3`, used as a tech-talk channel.
+The main space for e3 is [ESS EPICS Environment (e3) on Confluence](https://confluence.esss.lu.se/x/cUAAFQ). There is also an [Slack](https://ess-eric.slack.com) channel, `#e3`, used as a tech-talk channel.
 
 Issues, bugs, and build requests can be submitted on ESS' JIRA, under the project `ICSHWI` with the component `ICS_HWI_E3`. If you do not have an ESS intranet account, you can either report bugs and request features directly in the relevant repository, or otherwise contact one of the previous developers or maintainers.
