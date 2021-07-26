@@ -19,10 +19,12 @@ In this lesson, you'll learn how to do the following:
 
 > As e3 heavily relies on git, it's recommended to first be familiar with especially git submodules.
 
-If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning:
+If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning. This will install
+all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.
 
 ```bash
-sudo yum install -y git tree ipmitool autoconf libtool automake m4 re2c tclx \
+$ sudo yum install -y \
+git tree ipmitool autoconf libtool automake m4 re2c tclx \
 coreutils graphviz patch readline-devel libXt-devel libXp-devel libXmu-devel \
 libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils \
 net-snmp-devel libxml2-devel libpng12-devel libzip-devel libusb-devel \
@@ -32,23 +34,26 @@ libusbx-devel systemd-devel libraw1394.x86_64 hg libtirpc-devel \
 liberation-fonts-common liberation-narrow-fonts \
 liberation-mono-fonts liberation-serif-fonts liberation-sans-fonts \
 logrotate xorg-x11-fonts-misc cpan kernel-devel symlinks \
-dkms procServ curl netcdf netcdf-devel telnet glib2-devel
+dkms procServ curl netcdf netcdf-devel patchelf python3-devel \
+boost-devel glib2-devel libtool popt-devel
 ```
 
 ---
 
-Start by downloading e3 from GitHub:
+Start by downloading e3 from GitLab:
 ```console
-[iocuser@host:~]$ git clone https://github.com/icshwi/e3 
+[iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/e3.git
 ```
 
-> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 3.15.5 and 7.0.3 during development. For example, if one would like to use EPICS base 3.15.5, it is preferred to clone like:
+## TODO: mention that this is all based on e3 v0.4.1
+
+> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, it is preferred to clone like:
 
 ```console
-[iocuser@host:~]$ git clone https://github.com/icshwi/e3 e3-3.15.5
+[iocuser@host:~]$ git clone https://github.com/icshwi/e3 e3-7.0.3.1
 ```
 
-The e3 root directory (`/home/iocuser/e3-3.15.5/` in the most recent example) will henceforth be referred to as **E3_TOP**.
+The e3 root directory (`/home/iocuser/e3-7.0.3.1/` in the most recent example) will henceforth be referred to as **E3_TOP**.
 
 > Typical paths for EPICS installations tend to be `/epics` or `/opt/epics`. For this tutorial series, e3 will be cloned to `$HOME` and EPICS will be installed at `/epics`.
 
@@ -72,25 +77,27 @@ As always with EPICS, versions are important. Especially pay attention to:
 Examples:
 
 ```console
-[iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.1.1 setup
+[iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.3.1 setup
 >> 
   The following configuration for e3 installation
   will be generated :
 
 >> Set the global configuration as follows:
->>  
+>>
   EPICS TARGET                     : /epics
-  EPICS_BASE                       : /epics/base-7.0.1.1
-  EPICS_BASE VERSION               : 7.0.1.1
-  EPICS_MODULE_TAG                 : 7.0.1.1
-  E3_REQUIRE_VERSION               : 3.0.5
-  E3_REQUIRE_LOCATION              : /epics/base-7.0.1.1/require/3.0.5
-  E3_CROSS_COMPILER_TOOLCHAIN_PATH : /opt/fsl-qoriq
-  E3_CROSS_COMPILER_TOOLCHAIN_VER  : current
+  EPICS_BASE                       : /epics/base-7.0.3.1
+  EPICS_BASE VERSION               : 7.0.3.1
+  EPICS_MODULE_TAG                 : 7.0.3.1
+  E3_REQUIRE_VERSION               : 3.4.1
+  E3_REQUIRE_LOCATION              : /epics/base-7.0.3.1/require/3.4.1
+  E3_CC_IFC14XX_TOOLCHAIN_PATH     : /opt/ifc14xx
+  E3_CC_IFC14XX_TOOLCHAIN_VER      : 2.6-4.14
+  E3_CC_POKY_TOOLCHAIN_PATH        : /opt/cct
+  E3_CC_POKY_TOOLCHAIN_VER         : 2.6-4.14
 ```
 
 ```console
-[iocuser@host:e3]$ ./e3_building_config.bash -b 3.15.5 -t /opt/epics setup
+[iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.3.1 -t /opt/epics setup
 >> 
   The following configuration for e3 installation
   will be generated :
@@ -98,13 +105,15 @@ Examples:
 >> Set the global configuration as follows:
 >>
   EPICS TARGET                     : /opt/epics
-  EPICS_BASE                       : /opt/epics/base-3.15.5
-  EPICS_BASE VERSION               : 3.15.5
-  EPICS_MODULE_TAG                 : 3.15.5
-  E3_REQUIRE_VERSION               : 3.0.5
-  E3_REQUIRE_LOCATION              : /opt/epics/base-3.15.5/require/3.0.5
-  E3_CROSS_COMPILER_TOOLCHAIN_PATH : /opt/fsl-qoriq
-  E3_CROSS_COMPILER_TOOLCHAIN_VER  : current
+  EPICS_BASE                       : /opt/epics/base-7.0.3.1
+  EPICS_BASE VERSION               : 7.0.3.1
+  EPICS_MODULE_TAG                 : 7.0.3.1
+  E3_REQUIRE_VERSION               : 3.4.1
+  E3_REQUIRE_LOCATION              : /opt/epics/base-7.0.3.1/require/3.4.1
+  E3_CC_IFC14XX_TOOLCHAIN_PATH     : /opt/ifc14xx
+  E3_CC_IFC14XX_TOOLCHAIN_VER      : 2.6-4.14
+  E3_CC_POKY_TOOLCHAIN_PATH        : /opt/cct
+  E3_CC_POKY_TOOLCHAIN_VER         : 2.6-4.14
 ```
 
 ## Global e3 environment settings
@@ -113,25 +122,28 @@ Configuring EPICS per above directions will generate the following three `*.loca
 
 * `CONFIG_BASE.local`
   
-  ```python
+  ```bash
   E3_EPICS_PATH:=/epics
-  EPICS_BASE_TAG:=tags/r3.15.5
-  E3_BASE_VERSION:=3.15.5
-  E3_CROSS_COMPILER_TOOLCHAIN_VER=current
-  E3_CROSS_COMPILER_TOOLCHAIN_PATH=/opt/fsl-qoriq
+  EPICS_BASE_TAG:=tags/R7.0.3.1
+  E3_BASE_VERSION:=7.0.3.1
+  E3_CC_IFC14XX_TOOLCHAIN_PATH:=/opt/ifc14xx
+  E3_CC_IFC14XX_TOOLCHAIN_VER:=2.6-4.14
+  E3_CC_POKY_TOOLCHAIN_PATH:=/opt/cct
+  E3_CC_POKY_TOOLCHAIN_VER:=2.6-4.14
   ```
 
 * `RELEASE.local`
   
-  ```python
-  EPICS_BASE:=/epics/base-3.15.5
-  E3_REQUIRE_VERSION:=3.0.5
+  ```bash
+  EPICS_BASE:=/epics/base-7.0.3.1
+  E3_REQUIRE_NAME:=require
+  E3_REQUIRE_VERSION:=3.4.1
   ```
 
 * `REQUIRE_CONFIG_MODULE.local`
   
-  ```python
-  EPICS_MODULE_TAG:=tags/3.0.5
+  ```bash
+  EPICS_MODULE_TAG:=tags/3.4.1
   ```
 
 These will help us to change base, require, and all modules' configuration without having to change any source files.
@@ -154,37 +166,121 @@ For EPICS base and *require*, it's as simple as running:
 
 ## Module packs
 
-As with installing EPICS base and *require*, you can use the `e3.bash` utility to install common module groups. These are:
+As with installing EPICS base and *require*, you can use the `e3.bash` utility to install certain module groups. Note that
+the groupings themselves are somewhat arbitrary and based on the judgement of the e3 team.
 
-### Common group
+* core (c)
+* communication (n)
+* ts (t)
+* psi (p)
+* ifc (i)
+* ecat (e)
+* area (a)
+* ps (s)
+* devices
+* vac (v)
+* rf (l)
+* bi (b)
+* mps (m)
 
-This group contains the common EPICS modules, and is more or less a standard install.
+Each of these groups are installed via the syntax
+```console
+[iocuser@host:e3]$ ./e3.bash -<groups> <command>
+```
+where `<groups>` are in brackets next to the names; you can combine as many flags as you like in one command, and `command` is one of
+* mod
+* cmod
+* bmod
+* imod
+* gmod
+
+Some examples of the groups and how to install them are as follows.
+### Core group
+
+This group contains the common EPICS modules, and is more or less a standard install: nearly every other group depends
+on at least one module in this group, so you will need to install at least some of this group before you can install
+any other groups. Note that there are a few ESS-specific modules in here, most notably `e3-auth` and `e3-essioc`.
 
 ```console
 [iocuser@host:e3]$ ./e3.bash -c vars
 >> Vertical display for the selected modules :
 
  Modules List 
-    0 : e3-ess
-    1 : e3-iocStats
-    2 : e3-autosave
-    3 : e3-caPutLog
-    4 : e3-asyn
-    5 : e3-busy
-    6 : e3-modbus
-    7 : e3-ipmiComm
-    8 : e3-seq
-    9 : e3-sscan
-   10 : e3-std
-   11 : e3-ip
-   12 : e3-calc
-   13 : e3-delaygen
-   14 : e3-pcre
-   15 : e3-StreamDevice
-   16 : e3-s7plc
-   17 : e3-recsync
-   18 : e3-MCoreUtils
+    0 : core/e3-auth
+    1 : core/e3-autosave
+    2 : core/e3-caPutLog
+    3 : core/e3-asyn
+    4 : core/e3-busy
+    5 : core/e3-seq
+    6 : core/e3-sscan
+    7 : core/e3-std
+    8 : core/e3-calc
+    9 : core/e3-iocStats
+   10 : core/e3-pcre
+   11 : core/e3-stream
+   12 : core/e3-recsync
+   13 : core/e3-essioc
+   14 : core/e3-MCoreUtils
+   15 : core/e3-nds3
+   16 : core/e3-nds3epics
+   17 : core/e3-devlib2
 ```
+
+### Communication group
+
+This group contains those EPICS modules that are used for communication with specific devices and device types.
+
+```console
+[iocuser@host:e3]$ bash e3.bash -n vars
+>> Vertical display for the selected modules :
+
+ Modules List 
+    0 : core/e3-auth
+    1 : core/e3-autosave
+    2 : core/e3-caPutLog
+    3 : core/e3-asyn
+    4 : core/e3-busy
+    5 : core/e3-seq
+    6 : core/e3-sscan
+    7 : core/e3-std
+    8 : core/e3-calc
+    9 : core/e3-iocStats
+   10 : core/e3-pcre
+   11 : core/e3-stream
+   12 : core/e3-recsync
+   13 : core/e3-essioc
+   14 : core/e3-MCoreUtils
+   15 : core/e3-nds3
+   16 : core/e3-nds3epics
+   17 : core/e3-devlib2
+   18 : communication/e3-modbus
+   19 : communication/e3-ipmiComm
+   20 : communication/e3-motor
+   21 : communication/e3-ip
+   22 : communication/e3-delaygen
+   23 : communication/e3-s7plc
+   24 : communication/e3-opcua
+   25 : communication/e3-mca
+   26 : communication/e3-snmp
+```
+
+> Note that this includes a duplication of the core modules: this is due to the fact that this module group
+> depends on the core group as stated above. If you want to see only those modules that are from this group,
+> you should add the `o` flag like
+> ```console
+> [iocuser@host:e3]$ bash e3.bash -no vars
+> >> Vertical display for the selected modules :
+> Modules List 
+>    0 : communication/e3-modbus
+>    1 : communication/e3-ipmiComm
+>    2 : communication/e3-motor
+>    3 : communication/e3-ip
+>    4 : communication/e3-delaygen
+>    5 : communication/e3-s7plc
+>    6 : communication/e3-opcua
+>    7 : communication/e3-mca
+>    8 : communication/e3-snmp
+> ```
 
 ### Timing group
 
