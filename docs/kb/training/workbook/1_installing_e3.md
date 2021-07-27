@@ -183,18 +183,13 @@ the groupings themselves are somewhat arbitrary and based on the judgement of th
 * bi (b)
 * mps (m)
 
-Each of these groups are installed via the syntax
+To see the contents of any of these groups, you can run
 ```console
-[iocuser@host:e3]$ ./e3.bash -<groups> <command>
+[iocuser@host:e3]$ ./e3.bash -<groups> vars
 ```
-where `<groups>` are in brackets next to the names; you can combine as many flags as you like in one command, and `command` is one of
-* mod
-* cmod
-* bmod
-* imod
-* gmod
+where `<groups>` are in brackets next to the names. Some examples of the groups are as follows. For a full inventory, see the file `e3-inventory.yaml` in
+the tools directory, or try the above command with some of the other groups.
 
-Some examples of the groups and how to install them are as follows.
 ### Core group
 
 This group contains the common EPICS modules, and is more or less a standard install: nearly every other group depends
@@ -282,176 +277,44 @@ This group contains those EPICS modules that are used for communication with spe
 >    8 : communication/e3-snmp
 > ```
 
-### Timing group
-
-This group contains modules important for fast timestamping.
-
-```console
-[iocuser@host:e3]$ ./e3.bash -t vars
->> vertical display for the selected modules :
-
- modules list 
-    0 : e3-devlib2
-    1 : e3-mrfioc2
-```
-
-### EPICS V4 group
-
-*N.B.! This group is not necessary for EPICS base 7 as they already are included.*
-
-```console
-[iocuser@host:e3]$ ./e3.bash -4 vars
->> Vertical display for the selected modules :
-
- Modules List 
-    0 : e3-pvData
-    1 : e3-pvAccess
-    2 : e3-pva2pva
-    3 : e3-pvDatabase
-    4 : e3-normativeTypes
-    5 : e3-pvaClient
-```
-
-### EtherCAT / Motion group
-
-*N.B.! You will need an ESS' Bitbucket account to access some of the modules in this group. Furthermore, *ethercatmaster* must be installed before e3-ecmc can be installed.*
-
-This group contains modules commonly used with motion contol. Note here that if a group has depencies upon other modules, these will be added automatically:
-
-```console
-[iocuser@host:e3]$ ./e3.bash -e vars
->> Vertical display for the selected modules :
-
- Modules List 
-    0 : e3-ess
-    1 : e3-iocStats
-    2 : e3-autosave
-    3 : e3-caPutLog
-    4 : e3-asyn
-    5 : e3-busy
-    6 : e3-modbus
-    7 : e3-ipmiComm
-    8 : e3-seq
-    9 : e3-sscan
-   10 : e3-std
-   11 : e3-ip
-   12 : e3-calc
-   13 : e3-delaygen
-   14 : e3-pcre
-   15 : e3-StreamDevice
-   16 : e3-s7plc
-   17 : e3-recsync
-   18 : e3-MCoreUtils
-   19 : e3-exprtk
-   20 : e3-motor
-   21 : e3-ecmc
-   22 : e3-ethercatmc
-   23 : e3-ecmctraining
-```
-
-> While installing module groups, dependencies are added automatically. You can choose to exclude the dependency modules by adding an `-o` flag, like:
-> 
-> ```console
-> [iocuser@host:e3]$ ./e3.bash -eo vars
-> >> Vertical display for the selected modules :
-> 
->  Modules List 
->     0 : e3-exprtk
->     1 : e3-motor
->     2 : e3-ecmc
->     3 : e3-ethercatmc
->     4 : e3-ecmctraining
-> ```
-
-### PSI module group
-
-```console
-[iocuser@host:e3]$ ./e3.bash -io vars
->> Vertical display for the selected modules :
-
- Modules List 
-    0 : e3-keypress
-    1 : e3-sysfs
-    2 : e3-symbolname
-    3 : e3-memDisplay
-    4 : e3-regdev
-    5 : e3-i2cDev
-```
-
-### IFC Module Group
-
-*N.B.! You need an ESS Bitbucket account in order to access some of these modules.*
-
-```console
-[iocuser@host:e3]$ ./e3.bash -fo vars
->> Vertical display for the selected modules :
-
- Modules List 
-    0 : e3-tsclib
-    1 : e3-ifcdaqdrv2
-    2 : e3-nds3
-    3 : e3-nds3epics
-    4 : e3-ifc14edrv
-    5 : e3-ifcfastint
-```
-
 ### AreaDetector Group
+
+This group contains the necessary modules to work with camera-type sensors. This group also depends on the **core** group.
 
 ```console
 [iocuser@host:e3]$ ./e3.bash -ao vars
 >> Vertical display for the selected modules :
 
  Modules List 
-    0 : e3-ADSupport
-    1 : e3-ADCore
-    2 : e3-ADSimDetector
-    3 : e3-NDDriverStdArrays
-    4 : e3-ADAndor
-    5 : e3-ADAndor3
-    6 : e3-ADPointGrey
-    7 : e3-ADProsilica
-    8 : e3-ADPluginEdge
-    9 : e3-ADPluginCalib
-```
-
-### LLRF Group
-
-```console
-[iocuser@host:e3]$ ./e3.bash -lo vars
->> Vertical display for the selected modules :
-
- Modules List 
-    0 : e3-loki
-    1 : e3-nds
-    2 : e3-sis8300drv
-    3 : e3-sis8300
-    4 : e3-sis8300llrfdrv
-    5 : e3-sis8300llrf
+    0 : area/e3-ADSupport
+    1 : area/e3-ADCore
+    2 : area/e3-ADSimDetector
+    3 : area/e3-ADCSimDetector
+    4 : area/e3-NDDriverStdArrays
+    5 : area/e3-ADAndor
+    6 : area/e3-ADAndor3
+    7 : area/e3-ADPointGrey
+    8 : area/e3-ADProsilica
+    9 : area/e3-ADGenICam
+   10 : area/e3-ADPluginEdge
+   11 : area/e3-ADPluginCalib
 ```
 
 ### Downloading and installing a group
 
 You download, build, and install a group by using the `mod` argument (as in **mod**ules). For example:
 
-* To install the common group:
+* To install the core group:
 
   ```console
   [iocuser@host:e3]$ ./e3.bash -c mod
   ```
 
-* To install the Common, Timing, AreaDetector, and V4 groups:
+* To install the core, timing, and area detector groups
 
-  * for EPICS base 3:
-
-    ```console
-    [iocuser@host:e3]$ ./e3.bash -cta4 mod 
-    ```
-
-  * for EPICS base 7:
-
-    ```console
-    [iocuser@host:e3]$ ./e3.bash -ctao mod
-    ```
+  ```console
+  [iocuser@host:e3]$ ./e3.bash -ctao mod
+  ```
 
 ### Options
 
@@ -464,11 +327,11 @@ The mod argument contain these - individually accessible - steps:
 
 And the *makefile* rules that can be used for a module are:
 
-* `make clean`
-* `make init`
-* `make patch` 
-* `make build`
-* `make install`
+* `make clean` - Cleans the temporary build files which are placed in the `O.*` directories.
+* `make init` - Initialises (clones and checks out) the underlying EPICS module
+* `make patch` - Applies any site-specific patches to the underlying EPICS module.
+* `make build` - Builds the module (but does not install it)
+* `make install` - Installs the built module including performing any specified database expansion.
 
 ### Test your installation
 
