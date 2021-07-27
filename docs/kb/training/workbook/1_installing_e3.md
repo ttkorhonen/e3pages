@@ -63,7 +63,7 @@ Configuring an e3 build with default settings can be done like:
 $ ./e3_building_config.bash setup
 ```
 
-> The utility can be launched with a number of arguments. To see these, simply run the script without any arguments, i.e. `./e3_building_config.bash`; you can modify the building path (e.g. `-t <where-you-want-to-install>`) as well as define versions.
+> The utility can be launched with a number of arguments. To see these, simply run the script without any arguments, i.e. `./e3_building_config.bash`; you can modify the building path (e.g. `-t <path/to/install>`) as well as define versions.
 
 As always with EPICS, versions are important. Especially pay attention to:
 
@@ -413,8 +413,9 @@ iocRun: All initialization complete
 
 * Make sure you understand:
   
-  1. How GNU Make and Makefiles work.
+  1. How GNU Make and Makefiles work. The standard reference for GNU make is [here](https://www.gnu.org/software/make/manual/html_node/index.html).
   2. How git submodules work.
+  3. How git submodules are used in e3.
 
 * Install both EPICS base 7.0.3.1 and 7.0.5 (separately) on your host.
 * See if you can find where the module groups are specified, and try to figure out how you could change these.
