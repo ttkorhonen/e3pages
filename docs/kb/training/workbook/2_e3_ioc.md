@@ -14,12 +14,12 @@ In this lesson, you'll learn how to do the following:
 
 In order to facilitate the development process, e3 supports using multiple EPICS environments. In other words, you can set the environment for a specific terminal by sourcing the relevant `setE3Env.bash`.
 
-> Using a default configuration (presently base 3.15.5 with require 3.0.5 installed at `/epics`) the full path for this script would then be `/epics/base-3.15.5/require/3.0.5/bin/setE3Env.bash`.
+> Using a default configuration (presently base 7.0.5 with require 3.4.1 installed at `/epics`) the full path for this script would then be `/epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash`.
 
 For your convenience, the e3 building system - at the end of installation procedure of require and modules - creates a utility script within the `tools/` directory called `setenv`:
 
 ```console
-[iocuser@host:e3]$ source tools/setenv
+[iocuser@host:e3] source tools/setenv
 ```
 
 *N.B.! If such a file already exists, the old file will be renamed to `setenv_YYMMDDHHMM`.*
@@ -27,17 +27,25 @@ For your convenience, the e3 building system - at the end of installation proced
 Thus, one can easily switch between environments. For example:
 
 ```console
-[iocuser@host:~]$ cd e3-7.0.3.1
-[iocuser@host:e3-7.0.3.1]$ source tools/setenv
+[iocuser@host:e3] source tools/setenv
+[iocuser@host:e3] source /epics/base-7.0.3.1/require/3.4.1/bin/setE3Env.bash
 ```
 
+This will first load the latest environment installed with `e3.bash`, and then it will load the environment corresponding to EPICS base 7.0.3.1 and require 3.4.1 (assuming that that has been installed).
+
 ## Run an example IOC
+
+Starting an IOC in e3 is done by running the script `iocsh.bash` which is installed with require at `/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash`. If you have sourced the correct `setE3Env.bash`,
+then this will be on `$PATH`. `iocsh.bash` is a wrapper to `softIocPVA` from EPICS base and takes a number of possible arguments, the most basic of which is a startup command file, which consists
+of a sequence of commands that will be executed by the IOC upon startup.
+
+> Warning: The last line of the file must end in a newline or that line will not be executed.
 
 0. Go to **E3_TOP**
 1. Run:
 
    ```console
-   [iocuser@host:e3-3.15.5]$ iocsh.bash cmds/iocStats.cmd 
+   [iocuser@host:e3] iocsh.bash cmds/iocStats.cmd 
    ```
 
 2. Check the IOC name:
@@ -51,19 +59,19 @@ Thus, one can easily switch between environments. For example:
 3. Open another terminal and source the same e3 configuration.
 
    ```console
-   [iocuser@host:e3-3.15.5]$ source tools/setenv
+   [iocuser@host:e3] source tools/setenv
    ```
 
 4. Print all of the PVs to a file and skim through it:
 
    ```console
-   [iocuser@host:e3-3.15.5]$ bash caget_pvs.bash -l IOC-9999_PVs.list
+   [iocuser@host:e3] bash caget_pvs.bash -l IOC-9999_PVs.list
    ```
 
 5. Check the heartbeat of your IOC.
 
    ```console
-   [iocuser@host:e3-3.15.5]$ camonitor ${IOCNAME}-IocStats:HEARTBEAT
+   [iocuser@host:e3] camonitor ${IOCNAME}-IocStats:HEARTBEAT
    ```
 
 ## Play around with the example IOC
