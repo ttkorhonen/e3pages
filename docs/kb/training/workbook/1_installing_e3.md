@@ -23,7 +23,7 @@ If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the fo
 all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.
 
 ```bash
-$ sudo yum install -y \
+[iocuser@host:~] sudo yum install -y \
 git tree ipmitool autoconf libtool automake m4 re2c tclx \
 coreutils graphviz patch readline-devel libXt-devel libXp-devel libXmu-devel \
 libXpm-devel lesstif-devel gcc-c++ ncurses-devel perl-devel net-snmp net-snmp-utils \
@@ -42,13 +42,13 @@ boost-devel glib2-devel libtool popt-devel
 
 Start by downloading e3 from GitLab. For the purposes of this documentation, we will be using v0.4.1 of e3.
 ```console
-$ git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git
+[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git
 ```
 
 > As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, it is preferred to clone like:
 
 ```console
-$ git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.3.1
+[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.3.1
 ```
 
 The e3 root directory (`/home/iocuser/e3-7.0.3.1/` in the most recent example) will henceforth be referred to as **E3_TOP**.
@@ -60,7 +60,7 @@ The e3 root directory (`/home/iocuser/e3-7.0.3.1/` in the most recent example) w
 Configuring an e3 build with default settings can be done like:
 
 ```console
-$ ./e3_building_config.bash setup
+[iocuser@host:e3] ./e3_building_config.bash setup
 ```
 
 > The utility can be launched with a number of arguments. To see these, simply run the script without any arguments, i.e. `./e3_building_config.bash`; you can modify the building path (e.g. `-t <path/to/install>`) as well as define versions.
@@ -75,7 +75,7 @@ As always with EPICS, versions are important. Especially pay attention to:
 Examples:
 
 ```console
-$ ./e3_building_config.bash -b 7.0.3.1 setup
+[iocuser@host:e3] ./e3_building_config.bash -b 7.0.3.1 setup
 >> 
   The following configuration for e3 installation
   will be generated :
@@ -95,7 +95,7 @@ $ ./e3_building_config.bash -b 7.0.3.1 setup
 ```
 
 ```console
-$ ./e3_building_config.bash -b 7.0.3.1 -t /opt/epics setup
+[iocuser@host:e3] ./e3_building_config.bash -b 7.0.3.1 -t /opt/epics setup
 >> 
   The following configuration for e3 installation
   will be generated :
@@ -153,11 +153,11 @@ These will help us to change base, require, and all modules' configuration witho
 For EPICS base and *require*, it's as simple as running:
 
 ```console
-$ ./e3.bash base
+[iocuser@host:e3] ./e3.bash base
 ```
 
 ```console
-$ ./e3.bash req
+[iocuser@host:e3] ./e3.bash req
 ```
 
 > Remember to run these with elevated status (`sudo`) if you want to install in `/opt`.
@@ -183,7 +183,7 @@ the groupings themselves are somewhat arbitrary and based on the judgement of th
 
 To see the contents of any of these groups, you can run
 ```console
-$ ./e3.bash -<groups> vars
+[iocuser@host:e3] ./e3.bash -<groups> vars
 ```
 where `<groups>` are in brackets next to the names. Some examples of the groups are as follows; run the command with the other
 groups to see all of what they contain.
@@ -195,7 +195,7 @@ on at least one module in this group, so you will need to install at least some 
 any other groups. Note that there are a few ESS-specific modules in here, most notably `e3-auth` and `e3-essioc`.
 
 ```console
-$ ./e3.bash -c vars
+[iocuser@host:e3] ./e3.bash -c vars
 >> Vertical display for the selected modules :
 
  Modules List 
@@ -224,7 +224,7 @@ $ ./e3.bash -c vars
 This group contains those EPICS modules that are used for communication with specific devices and device types.
 
 ```console
-$ bash e3.bash -n vars
+[iocuser@host:e3] bash e3.bash -n vars
 >> Vertical display for the selected modules :
 
  Modules List 
@@ -261,7 +261,7 @@ $ bash e3.bash -n vars
 > depends on the core group as stated above. If you want to see only those modules that are from this group,
 > you should add the `o` flag like
 > ```console
-> $ bash e3.bash -no vars
+> [iocuser@host:e3] bash e3.bash -no vars
 > >> Vertical display for the selected modules :
 > Modules List 
 >    0 : communication/e3-modbus
@@ -280,7 +280,7 @@ $ bash e3.bash -n vars
 This group contains the necessary modules to work with camera-type sensors. This group also depends on the **core** group.
 
 ```console
-$ ./e3.bash -ao vars
+[iocuser@host:e3] ./e3.bash -ao vars
 >> Vertical display for the selected modules :
 
  Modules List 
@@ -305,13 +305,13 @@ You download, build, and install a group by using the `mod` argument (as in **mo
 * To install the core group:
 
   ```console
-  $ ./e3.bash -c mod
+  [iocuser@host:e3] ./e3.bash -c mod
   ```
 
 * To install the core, timing, and area detector groups
 
   ```console
-  $ ./e3.bash -ctao mod
+  [iocuser@host:e3] ./e3.bash -ctao mod
   ```
 
 ### Options
@@ -338,7 +338,7 @@ And the *makefile* rules that can be used for a module are:
 The following command will load all installed modules within a single `iocsh.bash`. If you after executing `e3.bash -c load` see a clear console prompt (`>`), you have succesfully installed e3 on the host.
 
 ```console
-$ ./e3.bash -c load
+[iocuser@host:e3] ./e3.bash -c load
 
 # --- snip snip ---
 
