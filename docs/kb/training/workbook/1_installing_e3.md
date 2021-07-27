@@ -45,13 +45,13 @@ Start by downloading e3 from GitLab. For the purposes of this documentation, we 
 [iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git
 ```
 
-> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.5, it is preferred to clone like:
+> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, then you should clone it using:
 
 ```console
-[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.5
+[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.3.1
 ```
 
-The e3 root directory (`/home/iocuser/e3-7.0.5/` in the most recent example) will henceforth be referred to as **E3_TOP**.
+Throughout the tutorial, we will assume that the default version of EPICS base is 7.0.5, which has been cloned in the directory `/home/iocuser/e3`. This path will henceforth be referred to as **E3_TOP**.
 
 > Typical paths for EPICS installations tend to be `/epics` or `/opt/epics`. For this tutorial series, e3 will be cloned to `$HOME` and EPICS will be installed at `/epics`.
 
