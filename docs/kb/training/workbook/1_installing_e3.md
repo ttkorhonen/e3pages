@@ -45,13 +45,13 @@ Start by downloading e3 from GitLab. For the purposes of this documentation, we 
 [iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git
 ```
 
-> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, it is preferred to clone like:
+> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.5, it is preferred to clone like:
 
 ```console
-[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.3.1
+[iocuser@host:~] git clone --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.5
 ```
 
-The e3 root directory (`/home/iocuser/e3-7.0.3.1/` in the most recent example) will henceforth be referred to as **E3_TOP**.
+The e3 root directory (`/home/iocuser/e3-7.0.5/` in the most recent example) will henceforth be referred to as **E3_TOP**.
 
 > Typical paths for EPICS installations tend to be `/epics` or `/opt/epics`. For this tutorial series, e3 will be cloned to `$HOME` and EPICS will be installed at `/epics`.
 
@@ -75,7 +75,7 @@ As always with EPICS, versions are important. Especially pay attention to:
 Examples:
 
 ```console
-[iocuser@host:e3] ./e3_building_config.bash -b 7.0.3.1 setup
+[iocuser@host:e3] ./e3_building_config.bash -b 7.0.5 setup
 >> 
   The following configuration for e3 installation
   will be generated :
@@ -83,11 +83,11 @@ Examples:
 >> Set the global configuration as follows:
 >>
   EPICS TARGET                     : /epics
-  EPICS_BASE                       : /epics/base-7.0.3.1
-  EPICS_BASE VERSION               : 7.0.3.1
-  EPICS_MODULE_TAG                 : 7.0.3.1
+  EPICS_BASE                       : /epics/base-7.0.5
+  EPICS_BASE VERSION               : 7.0.5
+  EPICS_MODULE_TAG                 : 7.0.5
   E3_REQUIRE_VERSION               : 3.4.1
-  E3_REQUIRE_LOCATION              : /epics/base-7.0.3.1/require/3.4.1
+  E3_REQUIRE_LOCATION              : /epics/base-7.0.5/require/3.4.1
   E3_CC_IFC14XX_TOOLCHAIN_PATH     : /opt/ifc14xx
   E3_CC_IFC14XX_TOOLCHAIN_VER      : 2.6-4.14
   E3_CC_POKY_TOOLCHAIN_PATH        : /opt/cct
@@ -95,7 +95,7 @@ Examples:
 ```
 
 ```console
-[iocuser@host:e3] ./e3_building_config.bash -b 7.0.3.1 -t /opt/epics setup
+[iocuser@host:e3] ./e3_building_config.bash -b 7.0.5 -t /opt/epics setup
 >> 
   The following configuration for e3 installation
   will be generated :
@@ -103,11 +103,11 @@ Examples:
 >> Set the global configuration as follows:
 >>
   EPICS TARGET                     : /opt/epics
-  EPICS_BASE                       : /opt/epics/base-7.0.3.1
-  EPICS_BASE VERSION               : 7.0.3.1
-  EPICS_MODULE_TAG                 : 7.0.3.1
+  EPICS_BASE                       : /opt/epics/base-7.0.5
+  EPICS_BASE VERSION               : 7.0.5
+  EPICS_MODULE_TAG                 : 7.0.5
   E3_REQUIRE_VERSION               : 3.4.1
-  E3_REQUIRE_LOCATION              : /opt/epics/base-7.0.3.1/require/3.4.1
+  E3_REQUIRE_LOCATION              : /opt/epics/base-7.0.5/require/3.4.1
   E3_CC_IFC14XX_TOOLCHAIN_PATH     : /opt/ifc14xx
   E3_CC_IFC14XX_TOOLCHAIN_VER      : 2.6-4.14
   E3_CC_POKY_TOOLCHAIN_PATH        : /opt/cct
@@ -122,8 +122,8 @@ Configuring EPICS per above directions will generate the following three `*.loca
   
   ```bash
   E3_EPICS_PATH:=/epics
-  EPICS_BASE_TAG:=tags/R7.0.3.1
-  E3_BASE_VERSION:=7.0.3.1
+  EPICS_BASE_TAG:=tags/R7.0.5
+  E3_BASE_VERSION:=7.0.5
   E3_CC_IFC14XX_TOOLCHAIN_PATH:=/opt/ifc14xx
   E3_CC_IFC14XX_TOOLCHAIN_VER:=2.6-4.14
   E3_CC_POKY_TOOLCHAIN_PATH:=/opt/cct
@@ -133,7 +133,7 @@ Configuring EPICS per above directions will generate the following three `*.loca
 * `RELEASE.local`
   
   ```bash
-  EPICS_BASE:=/epics/base-7.0.3.1
+  EPICS_BASE:=/epics/base-7.0.5
   E3_REQUIRE_NAME:=require
   E3_REQUIRE_VERSION:=3.4.1
   ```
