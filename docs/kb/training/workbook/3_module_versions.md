@@ -15,12 +15,11 @@ In this lesson, you'll learn how to do the following:
 
 Various environment variables are used in EPICS and e3, and it is important to be aware of these and their difference(s). Please remember that e3 is a configuration tool around EPICS, and that we thus have some variables which are unique to e3.
 
-0. Make sure you are in **E3_TOP**
+Make sure you are in **E3_TOP**
 
 > *We will reiterate starting directory a few last times, but please pay attention to the current working directory in the command prompt: `[(user)@(hostname):(**current-working-directory**)]$` .*
 
-1. Go to `e3-stream`, which should have been installed with the `core` group in chapter 1.
-2. Run the following command:
+Go to `e3-stream`, which should have been installed with the `core` group in chapter 1. Run the following command.
 
    ```console
    [iocuser@host:e3-stream]$ make vars
@@ -34,31 +33,32 @@ The variables of interest here are:
   only absolute references (either tags or commit hashes) are used, since otherwise it is much more difficult to have reproducible builds. However, in principle, any valid git reference
   works in this place.
 
-These two variables are defined in `configure/CONFIG_MODULE`.
+There us also another variable of interest for this particular module, `E3_MODULE_NAME`. This is the name that is used to install and load the module. For most modules, this will
+be the same as the name of the community module. For some (*StreamDevice* being one such example), the name will be different.
+
+These variables are defined in `configure/CONFIG_MODULE`.
 
 ## List the installed version(s) of a module
 
-0. Make sure you are in `e3-stream/`
-1. Run the following rule:
+Ensure that you are in the directory `e3-stream/`, and run the following command.
 
-   ```console
-   [iocuser@host:e3-stream]$ make existent
-   ```
+```console
+[iocuser@host:e3-stream]$ make existent
+```
 
-2. Look at the output.
-   The result show the installed version(s) of stream modules within e3:
-   
-   ```console
-   /epics/base-7.0.5/require/3.4.1/siteMods/stream
-   `-- 2.8.18+0
-       |-- dbd
-       |-- include
-       |-- lib
-       |-- SetSerialPort.iocsh
-       `-- stream_meta.yaml
-   ```
+The output shows all of the installed version(s) of the *StreamDevice* modules within the current e3 environement:
 
-   > The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed. 
+```console
+/epics/base-7.0.5/require/3.4.1/siteMods/stream
+`-- 2.8.18+0
+      |-- dbd
+      |-- include
+      |-- lib
+      |-- SetSerialPort.iocsh
+      `-- stream_meta.yaml
+```
+
+> The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed. 
 
 ## Load a single module
 
