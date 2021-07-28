@@ -22,7 +22,7 @@ For coding standards see any of the early chapters. Keep it clean and tidy, and 
 
 Each lesson should start with a "Return to ToC", then an overview, and should end with a horizontal rule (`---`) and then a link to the next chapter as well as a "Return to ToC". Each chapter should preferably also contain some assignments.
 
-For commands, the prompt (PS1) should be `[iocuser@host:pwd]`.
+For commands, the prompt (PS1) should be `[iocuser@host:pwd]$`.
 
 Open code blocks should have language definitions for highlighting to whatever degree possible; when the language isn't available, use whatever works the best (see existing chapters for guidance).
 
