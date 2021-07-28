@@ -17,7 +17,7 @@ Various environment variables are used in EPICS and e3, and it is important to b
 
 0. Make sure you are in **E3_TOP**
 
-> *We will reiterate starting directory a few last times, but please pay attention to the current working directory in the command prompt: [(user)@(hostname):(**current-working-directory**)]$ .*
+> *We will reiterate starting directory a few last times, but please pay attention to the current working directory in the command prompt: `[(user)@(hostname):(**current-working-directory**)]$` .*
 
 1. Go to `e3-stream`, which should have been installed with the `core` group in chapter 1.
 2. Run the following command:
@@ -59,6 +59,24 @@ These two variables are defined in `configure/CONFIG_MODULE`.
    ```
 
    > The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed. 
+
+## Load a single module
+
+It is possible to load a single module into an IOC. This is often a good way to to perform a quick minimal test that everything has compiled and linked correctly. The
+syntax (for *StreamDevice*) is
+
+```console
+[iocuser@host:e3-stream]$ iocsh.bash -r stream
+```
+
+Or more generally
+
+```console
+[iocuser@host:e3-stream]$ iocsh.bash -r $MODULE,$VERSION
+```
+
+Once you have loaded *StreamDevice* as above, how can you determine which version you have loaded?
+
 
 ## Check the version of a module
 
@@ -117,32 +135,32 @@ You could instead create a local `CONFIG_MODULE` file, `CONFIG_MODULE.local`, li
 [iocuser@host:e3-stream]$ echo "E3_MODULE_VERSION:=e3training" >> configure/CONFIG_MODULE.local
 ```
 
-Files with the extension `.local` are generally not tracked by git (see the `.gitignore` file in the wrapper), and are
-used to load custom local configuration.
+> Files with the extension `.local` are generally not tracked by git (see the `.gitignore` file in the wrapper), and are
+> used to load custom local configuration.
 
 Finally, verify your configuration with `make vars`.
 
-## Build and install *StreamDevice* `b84655e`
+## Build and install a second version of *StreamDevice*
 
-Time to try out some makefile rules. See if you can spot the difference between before now. From `e3-stream/`, run:
+Having made the modifications above, run the following commands and see what has changed from before.
 
-1. `make vars`
-2. `make init`
-3. `make build`
-4. `make install`
-5. `make existent`
-6. `make dep`
-7. `make vers`
-8. `make dep | head -1`
+```console
+[iocuser@host:e3-stream]$ make vars
+[iocuser@host:e3-stream]$ make init
+[iocuser@host:e3-stream]$ make patch
+[iocuser@host:e3-stream]$ make build
+[iocuser@host:e3-stream]$ make install
+[iocuser@host:e3-stream]$ make existent
+```
 
-And it seldom hurts to try `make help` for new projects.
+What has changed from before?
 
 ---
 
 ## Assignments
 
 * Try out `make existent` with `LEVEL=4`.
-* Do `make init` in **E3_TOP**. What do you see?
+* What does `make init` do?
 * What sort of restrictions exist for valid module names in e3?
 * Which kind of make rule allows us to uninstall the installed module?
 * Can we combine the following two steps? 
@@ -150,3 +168,7 @@ And it seldom hurts to try `make help` for new projects.
   1. `make build`
   2. `make install`
 
+* In the previous steps you should have installed a second version of *StreamDevice*. Which version is loaded when you run the following command?
+  ```console
+  [iocuser@host:e3-stream]$ iocsh.bash -r stream
+  ```
