@@ -331,6 +331,8 @@ And the *makefile* rules that can be used for a module are:
 * `make build` - Builds the module (but does not install it)
 * `make install` - Installs the built module including performing any specified database expansion.
 
+The full installation sequence for building an e3 module is `make init patch build install`. To see a more complete list of possible targets, simply type `make` or `make help` within a module's wrapper directory.
+
 ### Test your installation
 
 > Note: This does not work correctly in e3 0.4.1 due to the capitalisation of `EPICS_MODULE_NAME` for a few of the modules.
