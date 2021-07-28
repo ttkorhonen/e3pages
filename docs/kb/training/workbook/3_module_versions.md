@@ -19,11 +19,11 @@ Various environment variables are used in EPICS and e3, and it is important to b
 
 > *We will reiterate starting directory a few last times, but please pay attention to the current working directory in the command prompt: [(user)@(hostname):(**current-working-directory**)]$ .*
 
-1. Go to `e3-StreamDevice/`
+1. Go to `e3-stream`, which should have been installed with the `core` group in chapter 1.
 2. Run the following rule:
 
    ```console
-   [iocuser@host:e3-StreamDevice]$ make vars
+   [iocuser@host:e3-stream]$ make vars
    ```
 
 The variables of interest here are:
@@ -38,11 +38,11 @@ These two variables are defined in `configure/CONFIG_MODULE` (and in `configure/
 
 ## List the installed version(s) of a module
 
-0. Make sure you are in `e3-StreamDevice/`
+0. Make sure you are in `e3-stream/`
 1. Run the following rule:
 
    ```console
-   [iocuser@host:e3-StreamDevice]$ make existent
+   [iocuser@host:e3-stream]$ make existent
    ```
 
 2. Look at the output.
@@ -64,14 +64,14 @@ These two variables are defined in `configure/CONFIG_MODULE` (and in `configure/
 Let's see what our current version of *StreamDevice* is:
 
 ```console
-[iocuser@host:StreamDevice]$ git describe --tags
+[iocuser@host:stream]$ git describe --tags
 ```
 
 > Pay attention to the current working directory above!
 
 We could here download *StreamDevice* directly from PSI's GitHub account, and switch `EPICS_MODULE_TAG` when `make init` is executed:
 
-1. Go back to `e3-StreamDevice/`
+1. Go back to `e3-stream/`
 2. Run `make init` to see what kind of output you get.
 
    Can you guess what kind of process that is happening behind scenes?
@@ -107,15 +107,15 @@ We could here download *StreamDevice* directly from PSI's GitHub account, and sw
   > You could instead create a local `CONFIG_MODULE` file, `CONFIG_MODULE.local`, like:
 
   > ```bash
-  > [iocuser@host:e3-StreamDevice]$ echo "EPICS_MODULE_TAG:=master" > configure/CONFIG_MODULE.local
-  > [iocuser@host:e3-StreamDevice]$ echo "E3_MODULE_VERSION:=e3training" >> configure/CONFIG_MODULE.local
+  > [iocuser@host:e3-stream]$ echo "EPICS_MODULE_TAG:=master" > configure/CONFIG_MODULE.local
+  > [iocuser@host:e3-stream]$ echo "E3_MODULE_VERSION:=e3training" >> configure/CONFIG_MODULE.local
   > ```
 
 * Verify your configuration with `make vars`.
 
 ## Build and install *StreamDevice* `b84655e`
 
-Time to try out some makefile rules. See if you can spot the difference between before now. From `e3-StreamDevice/`, run:
+Time to try out some makefile rules. See if you can spot the difference between before now. From `e3-stream/`, run:
 
 1. `make vars`
 2. `make init`
