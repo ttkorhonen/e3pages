@@ -20,7 +20,7 @@ Various environment variables are used in EPICS and e3, and it is important to b
 > *We will reiterate starting directory a few last times, but please pay attention to the current working directory in the command prompt: [(user)@(hostname):(**current-working-directory**)]$ .*
 
 1. Go to `e3-stream`, which should have been installed with the `core` group in chapter 1.
-2. Run the following rule:
+2. Run the following command:
 
    ```console
    [iocuser@host:e3-stream]$ make vars
@@ -30,11 +30,11 @@ The variables of interest here are:
 
 * `E3_MODULE_VERSION`  is used as *Module/Application version* with require within an IOC startup script. We recommend using semantic versioning (also known as *semver*) for releases. 
 
-* `EPICS_MODULE_TAG` is the *snapshot* of the source code repository, e.g. `tags/stream_2_7_14`, `tags/2.8.8`, `master`, `branch_name`, or `e0a24fe`.
+* `EPICS_MODULE_TAG` is the *snapshot* of the source code repository, e.g. `tags/stream_2_7_14`, `tags/2.8.18`, `master`, `branch_name`, or `e0a24fe`. It is *strongly* recommended that
+  only absolute references (either tags or commit hashes) are used, since otherwise it is much more difficult to have reproducible builds. However, in principle, any valid git reference
+  works in this place.
 
-These two variables are defined in `configure/CONFIG_MODULE` (and in `configure/CONFIG_MODULE_DEV`).
-
-> Files with a `_DEV` suffix will be explained later when we go through the different modes of e3.
+These two variables are defined in `configure/CONFIG_MODULE`.
 
 ## List the installed version(s) of a module
 
@@ -49,22 +49,24 @@ These two variables are defined in `configure/CONFIG_MODULE` (and in `configure/
    The result show the installed version(s) of stream modules within e3:
    
    ```console
-   /epics/base-3.15.5/require/3.0.5/siteMods/stream
-   └── 2.8.8
-       ├── dbd
-       ├── include
-       ├── lib
-       └── SetSerialPort.iocsh
+   /epics/base-7.0.5/require/3.4.1/siteMods/stream
+   `-- 2.8.18+0
+       |-- dbd
+       |-- include
+       |-- lib
+       |-- SetSerialPort.iocsh
+       `-- stream_meta.yaml
    ```
 
-   > The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`.
+   > The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed. 
 
 ## Check the version of a module
 
 Let's see what our current version of *StreamDevice* is:
 
 ```console
-[iocuser@host:stream]$ git describe --tags
+[iocuser@host:e3-stream]$ cd StreamDevice
+[iocuser@host:StreamDevice]$ git describe --tags
 ```
 
 > Pay attention to the current working directory above!
@@ -79,39 +81,46 @@ We could here download *StreamDevice* directly from PSI's GitHub account, and sw
 3. Check `EPICS_MODULE_TAG` with `make vars`
 4. Have a look at the `configure/CONFIG_MODULE` file
 
-> Running `make init` will download all source files within StreamDevice as a git submodule, and will in our case switch back to the `2.8.8` version of StreamDevice.
+> Running `make init` will download all source files within StreamDevice as a git submodule, and will in our case switch back to the `2.8.18` version of StreamDevice.
 > 
 > *N.B.! You may have different versions than the author of these instructions.*
 
 ## Change `EPICS_MODULE_TAG` and `E3_MODULE_VERSION`
 
-* Use `master` instead of `tags/2.8.8`  
+It is important to understand the relationship between `EPICS_MODULE_TAG` and `E3_MODULE_VERSION` as described above. Let us try to change them and see what happens.
 
-  > If you already have `master` as default, choose an arbitrary version and modify variables accordingly; available tags and branches can be found on the PSI StreamDevice release page: https://github.com/paulscherrerinstitute/StreamDevice/releases
+First, let us modify `EPICS_MODULE_TAG`; Use `master` instead of `tags/2.8.18` (Note that, as above, this is not recommended practice for a release version, but
+often makes sense during development).
 
-* Change `E3_MODULE_VERSION` to a different tag (e.g. `e3training`).  
+> If you already have `master` as default, choose an arbitrary version and modify variables accordingly; available tags and branches can be found on the PSI StreamDevice release page: https://github.com/paulscherrerinstitute/StreamDevice/releases
 
-  > The convention here is to name the e3 module according to the module's version, but any name could technically be used during development.
+Next, change `E3_MODULE_VERSION` to a different tag (e.g. `e3training`).  
+
+> The convention here is to name the e3 module according to the module's version, but any name could technically be used during development. Note that there are some restrictions
+> on valid module names.
   
-* Your modified `configure/CONFIG_MODULE` may then look like:
+Your modified `configure/CONFIG_MODULE` may then look like:
 
-  ```python
-  # --- snip snip ---
+```make
+# --- snip snip ---
 
-  EPICS_MODULE_TAG:=master
-  E3_MODULE_VERSION:=e3training
-  
-  # --- snip snip ---
-  ```
+EPICS_MODULE_TAG:=master
+E3_MODULE_VERSION:=e3training
 
-  > You could instead create a local `CONFIG_MODULE` file, `CONFIG_MODULE.local`, like:
+# --- snip snip ---
+```
 
-  > ```bash
-  > [iocuser@host:e3-stream]$ echo "EPICS_MODULE_TAG:=master" > configure/CONFIG_MODULE.local
-  > [iocuser@host:e3-stream]$ echo "E3_MODULE_VERSION:=e3training" >> configure/CONFIG_MODULE.local
-  > ```
+You could instead create a local `CONFIG_MODULE` file, `CONFIG_MODULE.local`, like:
 
-* Verify your configuration with `make vars`.
+```console
+[iocuser@host:e3-stream]$ echo "EPICS_MODULE_TAG:=master" > configure/CONFIG_MODULE.local
+[iocuser@host:e3-stream]$ echo "E3_MODULE_VERSION:=e3training" >> configure/CONFIG_MODULE.local
+```
+
+Files with the extension `.local` are generally not tracked by git (see the `.gitignore` file in the wrapper), and are
+used to load custom local configuration.
+
+Finally, verify your configuration with `make vars`.
 
 ## Build and install *StreamDevice* `b84655e`
 
@@ -134,6 +143,7 @@ And it seldom hurts to try `make help` for new projects.
 
 * Try out `make existent` with `LEVEL=4`.
 * Do `make init` in **E3_TOP**. What do you see?
+* What sort of restrictions exist for valid module names in e3?
 * Which kind of make rule allows us to uninstall the installed module?
 * Can we combine the following two steps? 
   
