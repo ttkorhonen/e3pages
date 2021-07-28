@@ -4,7 +4,7 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Print out, and understand some of, the various EPICS and e3 variables.
+* Print out and understand some of the various EPICS and e3 variables.
 * Understand how different versions of the same module are mananaged in e3.
 * Understand the difference between two important variables: `E3_MODULE_VERSION` and `EPICS_MODULE_TAG`.
 * Install a different version of *StreamDevice* within e3.
