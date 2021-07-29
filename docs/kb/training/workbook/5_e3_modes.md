@@ -15,13 +15,14 @@ In this lesson, you'll learn how to do the following:
 
 ## No source code - configuration files!
 
-By design, e3 modules and applications have no source code in their repositories, but only configuration files (and utility scripts). These are what allow us consistent building of environments from source code, modules, applications, kernel drivers, etc., which in turn can be hosted elsewhere.
-
-Following the above, e3 is not concerned with each commit nor release in a source code repository, but rather on specific *snapshots* (a particular release version) needed for a certain implementation. For example, at a certain point in time we select *stream* version `2.7.14` as the stable release within e3. Later, we select version `2.8.8` because a subsystem requires it. At that moment, we don't really care about versions `2.8.0`, `2.8.1`, `2.8.2` - and so forth. We don't need to sync their changes into a master branch of a local repository, which we would have to clone or fork. Simply put, we don't need to do any maintenance job. The point is to add dependencies only when we need them, and to reduce unecessary work for maintainers of the code base.
-
-> We will describe how to release a specific version of an e3 module in [Chapter 11](11_release_rules.md). <!-- is this really correct? -->
+By design, e3 modules typically have no source code in their repositories. Instead, they consist of configuration files, utility scripts, and other necessary
+files to build and to load the module functionality. This is what allow us consistent building of environments from source code, modules, applications, kernel
+drivers, etc., which in turn can be hosted elsewhere.
 
 > It should be noted that an e3 module **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
+
+As descrbied in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
+*StreamDevice* 2.8.18 at one point, and to later build 2.8.20 by simply changing a few lines in the configuration files.
 
 ## Directory anatomy
 
@@ -30,36 +31,39 @@ Let's have a look at `e3-iocStats/`:
 ```console
 [iocuser@host:e3-iocStats]$ tree -L 1
 .
-├──  cmds
-├──  configure
-├──  docs
-├──  iocsh
-├──  iocStats
-├──  iocStats.Makefile
-├──  Makefile
-├──  patch
-└──  README.md
+|-- cmds
+|-- configure
+|-- docs
+|-- iocsh
+|-- iocStats
+|-- iocStats.Makefile
+|-- Makefile
+|-- patch
+|-- README.md
+`-- template
 ```
 
-Although there is some variation amongst e3 modules, the majority of them have the following directories:
+Although there is some variation amongst e3 modules, the majority of them have the following contents.
 
-* `cmds/` Customized (typically example) startup scripts.
+* `cmds/` Customized startup scripts that are often used for testing a module.
 
-* `configure/` Configuration files (for e3).
+* `configure/` Configuration files, including information about which version to build and what the module depends on
 
 * `docs/` For documentation, log files, and similar material.
 
-* `iocsh/` Modularized startup scripts should be located here. These will be added to the e3 installation path.
+* `iocsh/` Site-specific startup script "snippets". These should be installed with the module and are, in a sense, the module's API.
 
 * `MODULE_NAME/` A git submodule link to source repository.
 
-* `MODULE_NAME.Makefile` The (e3) makefile for the module.
+* `MODULE_NAME.Makefile` The (e3) makefile for the module. This consists of instructions for which source files to compile, header files to install, etc.
 
-* `Makefile` The global e3 module makefile.
+* `patch/` Site-specific patches can be included here.
 
-* `patch/` For when we need to handle small changes in source code. More on this later.
+* `template/` Site-specific database, template, substitution, and protocol files.
 
-* `template/` Database, template and substitution files.
+Note in general that the wrapper should contain site-specific files that are used to build and to complement a community module - a number
+of these directories will also exist within the module, so there will inevitably be some judgement as to where a given `.iocsh` file should
+be places, for example.
 
 ### Git submodule
 
