@@ -104,7 +104,7 @@ Finally, examine its submodule configuration:
 In this configuration file, you can see where we link to the remote module location. This is where you change the path in case
 the module has moved.
 
-## Deployment mode
+## Standard mode
 
 e3 uses `git submodule` to import one repository (the community EPICS module) into another (the e3 wrapper). However, the commit hash that is used to link
 these two repositories is *not* what is used to build the module. When you build and deploy the module, the submodule will first be checked out at the commit
@@ -130,30 +130,31 @@ The following additional `make` targets are of particular importance while using
 
 ## Development mode
 
-The development mode is instead intended to allow the developer to modify the source module, and utilizes `git clone` over `git submodule`. This provides a method to use a forked copy of the source module, which allows you to commit changes even if you lack permission to push to the remote repository.
+The development mode is instead intended to allow the developer to modify the source module, and utilizes `git clone` instead of `git submodule`. This provides
+a method to use a forked copy of the source module, which allows you to commit changes even if you lack permission to push to the remote repository.
 
-Inside of `configure/`, you will find two files with the suffix `_DEV`: `CONFIG_MODULE_DEV` and `RELEASE_DEV` are the counterparts of `CONFIG_MODULE` and `RELEASE` used in the deployment mode. These counterpart files are nearly identical, except for:
+The configuration for **Development mode** is modified in the files `CONFIG_MODULE_DEV` and `RELEASE_DEV` contained in the `configure/` directory. If
+these files do not exist, you can create them from the original `CONFIG_MODULE` and `RELEASE` files with some minor modifications. They key differences are
 
-* `E3_MODULE_DEV_GITURL`: The remote path to the repository which one would like to download into an e3 module.
+* `E3_MODULE_DEV_GITURL`: The remote path to the module repository. This allows you to use a forked version of a module that you do not have permission to commit to.
 
 * `E3_MODULE_SRC_PATH`: The local path used for the deployment mode, which with default settings is the module's name with the added suffix `-dev`; for example, `e3-iocStats` has `iocStats` source path in the deployment, and `iocStats-dev` one in the development mode. Note that since `-dev` will be added, you can use the same module name as in development mode.
 
-Using development mode thus allows us to develop a module without having to worry about other systems which may be making use of the same module.
+Development mode allows a user to work with (and commit changes to) a remote module without needing to have permissions to commit to the standard one. This is a
+good method to make changes in order to create a pull/merge request to a community EPICS module.
 
----
+To use development mode, you simply prefix the usual commands with `dev`. That is, to build and install a module in development mode you would run
+```console
+[iocuser@host:e3-iocStats]$ make devinit devpatch devbuild devinstall
+```
 
-The following commands are the development mode equivalents of the commands listed above. There is one extra command `make devdistclean` which will remove the cloned source directory (e.g. `iocStats-dev`). 
+As in standard mode, there are also `dev` versions of many targets, such as `devvars, devexistent, devclean`, etc. There is also an additional target,
+`make devdistclean` which removes the cloned source directory.
 
-> The two rules `make existent` and `make devexistent` are identical as they rely on **installed** module versions. 
+Finally, note that `make existent` and `make devexistent` are (essentially) identical in that they both provide information for what has been installed.
 
-- `make devvars`
-- `make devinit`
-- `make devpatch`
-- `make devbuild`
-- `make devinstall`
-- `make devexistent`
-- `make devclean`
-- `make devdistclean`
+Exercise:
+* How are those two commands actually different? That is, when will they produce different output?
 
 ### Git clone
 
