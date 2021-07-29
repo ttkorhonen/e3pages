@@ -65,41 +65,44 @@ Note in general that the wrapper should contain site-specific files that are use
 of these directories will also exist within the module, so there will inevitably be some judgement as to where a given `.iocsh` file should
 be places, for example.
 
-### Git submodule
+### The underlying git submodule
 
-In order to explain how e3 uses *git submodules*, we will do the following exercise.
+In order to allow us to separate the community module from the site-specific build instructions, we include the community module as a
+git submodule. It is important to have at least some passing familiarity with git submodules. If you have not already done the exercise
+from [Chapter 1](1_installing_e3.md) on git submodules, it is encouraged to read more about them from the
+[official git documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
-> For a primer on git submodules, see [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+Assuming that you are still in the `e3-iocStats` directory, let us explore some of the submodule there. Start by running the following command.
 
-1. Run:
+```console
+[iocuser@host:e3-iocStats]$ git submodule status
+```
 
-   ```console
-   [iocuser@host:e3-iocStats]$ git submodule status
-   ```
+The output should be something like ` 4df9e87815f6a9432955a3ddb45fafa9fe4a4d40 iocStats (3.1.15-22-g4df9e87)`.
 
-   You should be seeing something like `ae5d08388ca3d6c48ec0e37787c865c5db18dc8f iocStats (3.1.15-17-gae5d083)`.
+Excercise:
+* What do each of these parts represent?
 
-> Please spend some time to make sure you understand this output.
+Next, look at the wrapper repository for [iocStats](https://gitlab.esss.lu.se/e3/wrappers/core/e3-iocStats.git) on Gitlab.
 
-2. Look at the repository on GitHub.
+The magic number is **4df9e878** - can you see what it refers to? After finding it, verify this number in the output of `git submodule status`. 
 
-   Visit https://github.com/icshwi/e3-iocStats, which is shown in **Figure 1**.
+|![Import Example](imgs/ch5-fig1.png)|
+| :---: |
+|**Figure 1 -** A screenshot from iocStats' Gitlab page. |
 
-   The magic number is **ae5d083** - can you see what it refers to? After finding it, verify this number in the output of `git submodule status`. 
+Finally, examine its submodule configuration:
 
-   |![Import Example](imgs/ch5-fig1.png)|
-   | :---: |
-   |**Figure 1 -** A screenshot from iocStats' GitHub page. |
+```console
+[iocuser@host:e3-iocStats]$ more .gitmodules
+[submodule "iocStats"]
+         path = iocStats
+         url = https://github.com/epics-modules/iocStats
+         ignore = dirty
+```
 
-3. Check its' submodule configuration:
-
-   ```console
-   [iocuser@host:e3-iocStats]$ more .gitmodules
-   [submodule "iocStats"]
-           path = iocStats
-           url = https://github.com/epics-modules/iocStats
-           ignore = dirty
-   ```
+In this configuration file, you can see where we link to the remote module location. This is where you change the path in case
+the module has moved.
 
 ## Deployment mode
 
