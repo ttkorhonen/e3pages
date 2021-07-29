@@ -106,23 +106,27 @@ the module has moved.
 
 ## Deployment mode
 
-As you just saw, `git submodule` is used to import one repository into another, which will allow us to handle source files scattered between different facilities. You also saw that we rely on tags where applicable, albeit as this would require full permissions for all source repositories e3 often uses a more minimalistic feature: the so-called *magic number*--the short version of the *SHA-1 checksum* used by git to identify commits.
+e3 uses `git submodule` to import one repository (the community EPICS module) into another (the e3 wrapper). However, the commit hash that is used to link
+these two repositories is *not* what is used to build the module. When you build and deploy the module, the submodule will first be checked out at the commit
+defined by `EPICS_MODULE_TAG`. In a perfect world these two should point at the same commit, but it is possible that they do not. This can result
+in some strange-looking errors, which can often be resolved by running `make init` upon cloning a wrapper repository.
 
-> An intrinsic property of this architecture is that this essentially makes the source module repository static (as it's a submodule).
+> We should note that this "redundancy" is a curious design feature that is being revisited by the e3 team.
 
-So, we use a specific commit version of *iocStats* within *e3-iocStats*. And if new versions are stable enough, we can use `git submodule update --init` to update the link within an e3 module. We can thus pick which specific version of a module we would like to use for our release. 
+As denoted in [Chapter 1](1_installing_e3.md), the standard make targets to build and deploy a module are
+* `make init`
+* `make patch`
+* `make build`
+* `make install`
 
-This however also means that when source code repositories are changed very often, it creates additional maintenance work where one has to update the SHA-1 checksum in order to match a selected version of a module. Thus, with `make init`, we download the latest version of a module, or switch to a specific version (defined in `configure/CONFIG_MODULE` or in the corresponding `.local` file). <!-- todo: rewrite this -->
+The following additional `make` targets are of particular importance while using development mode.
 
-The following commands utilize `git submodule` and are used for the deployment mode of a module. <!-- todo: rewrite this -->
-
-- `make vars`
-- `make init`
-- `make patch`
-- `make build`
-- `make install`
-- `make existent`
-- `make clean`
+* `make vars`: Prints out a list of relevant environment variables. Useful for debugging the environment.
+* `make debug`: Runs a debug of the build process, printing out the values of certain intermediate build variables.
+* `make clean`: Deletes all of the temporary build files.
+* `make uninstall`: Removes the current module version (as defined in `CONFIG_MODULE`) from the e3 environment.
+* `make test`: Attempts to load the current module into an IOC, and runs any module-specific tests that have been defined.
+* `make cellinstall`: Installs the module in a local path (useful if you do not have write permissions to your e3 environment location). More on this in [Cell Mode](_file_does_not_exist.md)
 
 ## Development mode
 
