@@ -43,56 +43,56 @@ Whenever an e3 module is dynamically loaded, require generates a number of modul
 One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a `/`, but `mrfioc2_DB` does not.
 :::
 
-Let's see these in action:
+Let's see these in action. Copy the following into a new `ch6.cmd` file.
+```bash
+require iocstats
+
+iocInit
+
+echo "E3_IOCSH_TOP       : $(E3_IOCSH_TOP)"
+echo "E3_CMD_TOP         : $(E3_CMD_TOP)"
+echo "iocstats_DIR       : $(iocstats_DIR)"
+echo "iocstats_VERSION   : $(iocstats_VERSION)"
+echo "iocstats_DB        : $(iocstats_DB)"
+echo "iocstats_TEMPLATES : $(iocstats_TEMPLATES)"
+```
 
 ```console
-[iocuser@host:e3training/workbook]$ iocsh.bash ch6_supplementary_path/ch6.cmd
+[iocuser@host:e3training/workbook]$ iocsh.bash ch6.cmd
 
 # --- snip snip ---
 
-epicsEnvSet "EXECUTE_TOP"     /home/jhlee/ics_gitsrc/e3training/workbook
-epicsEnvSet "STARTUP_TOP"     /home/jhlee/ics_gitsrc/e3training/workbook/ch6_supplementary_path
-epicsEnvSet "TOP"             /home/jhlee/ics_gitsrc/e3training/workbook/ch6_supplementary_path/..
-epicsEnvSet "IOCSTATS_MODULE_PATH"          /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/
-epicsEnvSet "IOCSTATS_MODULE_VERSION"       ae5d083
-epicsEnvSet "IOCSTATS_MODULE_DB_PATH"       /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db
-epicsEnvSet "IOCSTATS_MODULE_TEMPLATE_PATH" /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db
-
-# --- snip snip ---
-
-## EPICS Base built Aug  5 2019
+Starting iocInit
+############################################################################
+## EPICS R7.0.5-E3-7.0.5-patch
+## Rev. 2021-03-15T09:48+0100
 ############################################################################
 iocRun: All initialization complete
-#
-echo "E3_IOCSH_TOP       : /home/jhlee/ics_gitsrc/e3training/workbook"
-E3_IOCSH_TOP       : /home/jhlee/ics_gitsrc/e3training/workbook
-#
-echo "E3_CMD_TOP         : /home/jhlee/ics_gitsrc/e3training/workbook/ch6_supplementary_path"
-E3_CMD_TOP         : /home/jhlee/ics_gitsrc/e3training/workbook/ch6_supplementary_path
-#
-echo "iocStats_DIR       : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/"
-iocStats_DIR       : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/
-#
-echo "iocStats_VERSION   : ae5d083"
-iocStats_VERSION   : ae5d083
-#
-echo "iocStats_DB        : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db"
-iocStats_DB        : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db
-#
-echo "iocStats_TEMPLATES : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db"
-iocStats_TEMPLATES : /epics/base-7.0.3/require/3.1.0/siteMods/iocStats/ae5d083/db
-#
+echo "E3_IOCSH_TOP       : /home/simonrose/data/git/e3/modules/core/e3-iocStats"
+E3_IOCSH_TOP       : /home/simonrose/data/git/e3/modules/core/e3-iocStats
+echo "E3_CMD_TOP         : /home/simonrose/data/git/e3/modules/core/e3-iocStats"
+E3_CMD_TOP         : /home/simonrose/data/git/e3/modules/core/e3-iocStats
+echo "iocstats_DIR       : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/"
+iocstats_DIR       : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/
+echo "iocstats_VERSION   : 3.1.16+0"
+iocstats_VERSION   : 3.1.16+0
+echo "iocstats_DB        : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db"
+iocstats_DB        : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
+echo "iocstats_TEMPLATES : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db"
+iocstats_TEMPLATES : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
 
 # --- snip snip ---
 ```
 
-> It is important to remember these variables. Perhaps especially the `*_DB` variable, as one should use this variable as the `STREAM_PROTOCOL_PATH` within startup scripts that utilize the `stream` module. For example:
->
-> ```bash
-> epicsEnvSet("STREAM_PROTOCOL_PATH", "$(AAAAAA_DIR)")
-> ```
+As stated before, these variables are needed if you want to use database or protocol files that have been installed with a given module. For example, *StreamDevice*
+uses a varaible `STREAM_PROTOCOL_PATH` when searching for `.proto` files, and so a common idiom in a startup script is a line such as
 
-Test this out yourself. Copy `ch6.cmd` to `ch6-local.cmd` and add *recsync* 1.3.0, then examine the four aforementioned variables for the recsync module.
+```bash
+epicsEnvSet("STREAM_PROTOCOL_PATH", "$(mymodule_DB)")
+```
+
+Excercise:
+* Modify the above startup script to add some other modules, and look at the resulting paths. For example, load `stream` and see what paths `module_DIR` are available within the IOC shell.
 
 ### EPICS variables, parameters, and environment variables
 
