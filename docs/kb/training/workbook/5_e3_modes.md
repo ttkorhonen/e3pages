@@ -6,10 +6,8 @@ In this lesson, you'll learn how to do the following:
 
 * Understand why e3 doesn't hold any source code.
 * Understand the anatomy of an e3 module's directory.
-* Understand the *Deployment mode*.
-* Understand the *Development mode*.
-* Understand two repositories within e3. 
-* Patch files in EPICS and e3.
+* Understand the difference between *Standard mode* and *Development mode*.
+* Learn how to apply and create patch files for EPICS base and other modules within e3.
 
 ---
 
@@ -19,7 +17,9 @@ By design, e3 modules typically have no source code in their repositories. Inste
 files to build and to load the module functionality. This is what allow us consistent building of environments from source code, modules, applications, kernel
 drivers, etc., which in turn can be hosted elsewhere.
 
-> It should be noted that an e3 module **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
+:::{note}
+It should be noted that an e3 module **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
+:::
 
 As descrbied in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
 *StreamDevice* 2.8.18 at one point, and to later build 2.8.20 by simply changing a few lines in the configuration files.
@@ -387,7 +387,7 @@ explaining the purpose and role of the patch.
   nothing to commit, working directory clean
   ```
 
-* Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? 
+* Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
 * What's the difference between `make existent` and `make devexistent`?
 * What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
 * We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
