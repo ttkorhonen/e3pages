@@ -17,24 +17,31 @@ The following variables are defined when an IOC is running from within startup a
 
 ### General `iocsh.bash` variables
 
-* `REQUIRE_IOC`: A unique name of the IOC that can be used to track certain variables in a certain IOC. For example, there are PVs called `$(REQUIRE_IOC):MODULES` that list the modules that are loaded in a given IOC.
+* `REQUIRE_IOC`: A unique name of the IOC that can be used to track certain variables in a certain IOC. For example, an e3 IOC will generate on startup a number of PVs of the form
+  `$(REQUIRE_IOC):MODULES` that list the modules that are loaded in a given IOC.
+  :::{note}
+  If `IOCNAME` is defined in the environment prior to the IOC starting, then `REQUIRE_IOC` will be a (possibly truncated) copy of that. Otherwise, it will be a name which depends on the process
+  ID for the running IOC and so will not be consistent from one run to the next of the IOC.
+  :::
 
-* `E3_CMD_TOP`: The absolute path to the startup script (cmd file).
+* `E3_CMD_TOP`: The absolute path to the startup script (cmd file), if one exists.
 
-* `E3_IOCSH_TOP`: The absolute path to where `iocsh.bash` is executed.
+* `E3_IOCSH_TOP`: The absolute path to where `iocsh.bash` was exectued from; equivalent to running `pwd`.
 
-* `IOCSH_PS1`: The IOC Prompt String.
+* `IOCSH_PS1`: The IOC Prompt String. Defaults to `$HOSTNAME-$PID > `.
 
-> Note that it is generally useful to access the absolute path when an IOC starts within startup scripts.
+### Variables created by *require*
 
-### Variables used by *require*
+Whenever an e3 module is dynamically loaded, require generates a number of module-specific variables that are useful in scripts. For `mrfioc2` these would be
 
-Require uses a few module specific variables, ending with `_VERSION`, `_DIR`, `_DB`, and `_TEMPLATES`. With `mrfioc2` as example, these would be:
+* `mrfioc2_VERSION` - The version of `mrfioc2` that was loaded.
+* `mrfioc2_DIR` - The absolute path where `mrfioc2` is located. Useful for loading `.iocsh` snippets and other files installed with the module.
+* `mrfioc2_DB` - The absolute path where the database, template, protocol, and substitutions files for `mrfioc2` have been installed.
+* `mrfioc2_TEMPLATES` - Same as above
 
-* `mrfioc2_VERSION`
-* `mrfioc2_DIR`
-* `mrfioc2_DB`
-* `mrfioc2_TEMPLATES`
+:::{note}
+One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a `/`, but `mrfioc2_DB` does not.
+:::
 
 Let's see these in action:
 
