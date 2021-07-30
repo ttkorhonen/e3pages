@@ -106,6 +106,11 @@ the module has moved.
 
 ## Standard mode
 
+:::{note}
+Please note that the *Standard* versus *Development* modes is currently under review within the e3 team. While these
+reflect the current State-Of-The-e3, there is a very strong possibility that this will change in the near future.
+:::
+
 e3 uses `git submodule` to import one repository (the community EPICS module) into another (the e3 wrapper). However, the commit hash that is used to link
 these two repositories is *not* what is used to build the module. When you build and deploy the module, the submodule will first be checked out at the commit
 defined by `EPICS_MODULE_TAG`. In a perfect world these two should point at the same commit, but it is possible that they do not. This can result
@@ -156,85 +161,92 @@ Finally, note that `make existent` and `make devexistent` are (essentially) iden
 Exercise:
 * How are those two commands actually different? That is, when will they produce different output?
 
-### Git clone
+### Setting up the development module
 
-1. Fork your own copy from the community *[iocStats](https://github.com/epics-modules/iocStats)*.
+In order to learn to work both with development mode and with modules in general, we will work with our own forked copy of the
+community EPICS module *iocStats*.
 
-2. Update the `E3_MODULE_DEV_GITURL` to point towards your fork.
+To begin with, fork your own copy from the community *[iocStats](https://github.com/epics-modules/iocStats)*, and then update the
+variable `E3_MODULE_DEV_GITURL` in `CONFIG_MODULE_DEV` to point towards your fork.
 
-3. Run `make devvars`. This will show the e3 module variables with the development mode:
+Begin by running the command `make devvars`. This will show the e3 module variables with the development mode, which should look
+something like the following. Note that this example uses the ESS ICSHWI fork and compares it against the community module, and
+so your output may be different.
 
-   This example uses the ESS ICSHWI fork and compares it against the community module. Your output will be different.
+```console
+[iocuser@host:e3-iocStats]$ make devvars
 
-   ```console
-   [iocuser@host:e3-iocStats]$ make devvars
+------------------------------------------------------------
+>>>>     Current EPICS and E3 Environment Variables     <<<<
+------------------------------------------------------------
 
-   ------------------------------------------------------------
-   >>>>     Current EPICS and E3 Environment Variables     <<<<
-   ------------------------------------------------------------
+BASE_3_14 = NO
+BASE_3_15 = NO
+BASE_3_16 = NO
+BASE_7_0 = YES
+E3_MODULES_INSTALL_LOCATION = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee
+E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/bin
+E3_MODULES_INSTALL_LOCATION_DB = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/db
+E3_MODULES_INSTALL_LOCATION_INC = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/include
+E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/lib
+E3_MODULES_PATH = /epics/base-7.0.5/require/3.4.1/siteMods
+E3_MODULES_VENDOR_LIBS_LOCATION = /epics/base-7.0.5/require/3.4.1/siteLibs/vendor/iocstats/jhlee
+E3_MODULE_DEV_GITURL = "https://github.com/icshwi/iocStats"
+E3_MODULE_MAKEFILE = iocStats.Makefile
+E3_MODULE_MAKE_CMDS = make -C iocStats-dev -f iocStats.Makefile LIBVERSION="jhlee" PROJECT="iocstats" EPICS_MODULES="/epics/base-7.0.5/require/3.4.1/siteMods" EPICS_LOCATION="/epics/base-7.0.5" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-7.0.5/require/3.4.1/siteMods" E3_SITEAPPS_PATH="/epics/base-7.0.5/require/3.4.1/siteApps" E3_SITELIBS_PATH="/epics/base-7.0.5/require/3.4.1/siteLibs" iocstats_E3_GIT_DESC="7.0.5-3.4.1/3.1.16-2fd5f31-20210426T180403-8-gf4f95ba" iocstats_E3_GIT_STATUS="[ \\\" M configure/CONFIG_MODULE_DEV\\\",  \\\" M configure/RELEASE_DEV\\\", ]" iocstats_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-iocStats.git"
+E3_MODULE_NAME = iocstats
+E3_MODULE_SRC_PATH = iocStats-dev
+E3_MODULE_VERSION = jhlee
+E3_MODULE_VERSION_ORIG = jhlee
+E3_REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
+E3_REQUIRE_TOOLS = /epics/base-7.0.5/require/3.4.1/tools
+EPICS_MODULE_NAME = iocStats
+EPICS_MODULE_TAG = master
+EPICS_SHORT_VERSION = 7.0.5
+EPICS_VERSION_NUMBER = 7.0.5
+EPICS_VERSION_STRING = "EPICS Version 7.0.5"
+EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   
+GIT_REMOTE_NAME = origin
+MSI = /epics/base-7.0.5/bin/linux-x86_64/msi
+PROD_BIN_PATH = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/bin/linux-x86_64
+REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
+RMDIR = rm -f -rf
+SUDOBASH = "bash -c"
+TEMP_CELL_PATH = /home/simonrose/data/git/e3/modules/core/e3-iocStats/testMods-210730090422
+```
 
-   E3_MODULES_INSTALL_LOCATION = /epics/base-3.15.5/require/3.0.4/siteMods/iocStats/jhlee
-   E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-3.15.5/require/3.0.4/siteMods/iocStats/jhlee/bin
-   E3_MODULES_INSTALL_LOCATION_BIN_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats_jhlee_bin
-   E3_MODULES_INSTALL_LOCATION_DB = /epics/base-3.15.5/require/3.0.4/siteMods/iocStats/jhlee/db
-   E3_MODULES_INSTALL_LOCATION_DBD_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats.dbd.jhlee
-   E3_MODULES_INSTALL_LOCATION_DB_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats_jhlee_db
-   E3_MODULES_INSTALL_LOCATION_INC = /epics/base-3.15.5/require/3.0.4/siteMods/iocStats/jhlee/include
-   E3_MODULES_INSTALL_LOCATION_INC_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats_jhlee_include
-   E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-3.15.5/require/3.0.4/siteMods/iocStats/jhlee/lib
-   E3_MODULES_INSTALL_LOCATION_LIB_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats_jhlee_lib
-   E3_MODULES_LIBLINKNAME = libiocStats.so.jhlee
-   E3_MODULES_LIBNAME = libiocStats.so
-   E3_MODULES_PATH = /epics/base-3.15.5/require/3.0.4/siteMods
-   E3_MODULES_VENDOR_LIBS_LOCATION = /epics/base-3.15.5/require/3.0.4/siteLibs/vendor/iocStats/jhlee
-   E3_MODULE_DEV_GITURL = "https://github.com/icshwi/iocStats"
-   E3_MODULE_MAKEFILE = iocStats.Makefile
-   E3_MODULE_MAKE_CMDS = make -C iocStats-dev -f iocStats.Makefile LIBVERSION="jhlee" PROJECT="iocStats" EPICS_MODULES="/epics/base-3.15.5/require/3.0.4/siteMods" EPICS_LOCATION="/epics/base-3.15.5" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-3.15.5/require/3.0.4/siteMods" E3_SITEAPPS_PATH="/epics/base-3.15.5/require/3.0.4/siteApps" E3_SITELIBS_PATH="/epics/base-3.15.5/require/3.0.4/siteLibs"
-   E3_MODULE_NAME = iocStats
-   E3_MODULE_SRC_PATH = iocStats-dev
-   E3_MODULE_VERSION = jhlee
-   E3_REQUIRE_CONFIG = /epics/base-3.15.5/require/3.0.4/configure
-   E3_REQUIRE_TOOLS = /epics/base-3.15.5/require/3.0.4/tools
-   EPICS_MODULE_NAME = iocStats
-   EPICS_MODULE_TAG = master
-   EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB_LINK EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_DB E3_REQUIRE_CONFIG E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   SUDO2 SUDO_INFO SUDOBASH SUDO
-   INIT_E3_MODULE_SRC = 1
-   INSTALLED_EPICS_BASE_ARCHS = linux-ppc64e6500 linux-x86_64
-   MSI = /epics/base-3.15.5/bin/linux-x86_64/msi
-   PROD_BIN_PATH = /epics/base-3.15.5/require/3.0.4/siteLibs/iocStats_jhlee_bin/linux-x86_64
-   REQUIRE_CONFIG = /epics/base-3.15.5/require/3.0.4/configure
-   ```
+Next, you must initialise the development mode. This is done using `make devinit`, which will clone your fork into a directory with
+the name of `iocStats-dev`. This is what the file tree will look like after:
 
-4. Run `make devinit`. This will clone your fork into a directory with the name of `iocStats-dev`. This is what the file tree will look like after:
+```console
+[iocuser@host:e3-iocStats]$ tree -L 1
+.
+|-- cmds
+|-- configure
+|-- docs
+|-- iocsh
+|-- iocStats
+|-- iocStats-dev
+|-- iocStats.Makefile
+|-- Makefile
+|-- patch
+|-- README.md
+`-- template
+```
 
-   ```console
-   [iocuser@host:e3-iocStats]$ tree -L 1
-   .
-   ├── cmds
-   ├── configure
-   ├── docs
-   ├── iocsh
-   ├── iocStats
-   ├── iocStats-dev
-   ├── iocStats.Makefile
-   ├── Makefile
-   ├── patch
-   └── README.md
-   ```
+Confirm now that you have dev mod set up correctly by checking the remote urls for both the submodule and development directories by
+using `git remote -v`.
+```console
+[iocuser@host:iocStats]$ git remote -v
+```
 
-5. Execute `git status`. Can you see the difference? 
+```console
+[iocuser@host:iocStats-dev]$ git remote -v 
+```
 
-6. Have a look at both of the iocStats directories to see where they're pointing.
-
-   ```console
-   [iocuser@host:iocStats]$ git remote -v
-   ```
-
-   ```console
-   [iocuser@host:iocStats-dev]$ git remote -v 
-   ```
-
-   > By default, the `*-dev` path within an e3-module is ignored (which you can see in the `.gitignore`). With this workflow, we can expand our repository up to any number of use cases.
+:::{tip}
+Note that by default, the `*-dev` path within an e3-module is ignored (which you can see in the `.gitignore`). With this workflow, we can expand our repository up to any number of use cases.
+:::
 
 ### Consistent build environment
 
