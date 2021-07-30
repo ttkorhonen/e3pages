@@ -368,14 +368,17 @@ If your patches have already been applied, then you will get an error message.
 If you want to create a patch file for an e3 module, run `git diff --no-prefix > ../patch/Site/` from the root directory of the module, e.g.:
 
 ```console
-[iocuser@host:iocStats]$ git diff --no-prefix > ../patch/Site/2.7.14p-add_more_stats.p0.patch
+[iocuser@host:iocStats]$ git diff --no-prefix > ../patch/Site/3.1.16-add_more_stats.p0.patch
 ```
+
+Make sure that the patch file name has the correct version (3.1.16, from `CONFIG_MODULE`) and a useful description, and make sure that you update the `HISTORY.md` file
+explaining the purpose and role of the patch.
 
 ---
 
 ## Assignments
 
-* Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? Try it.
+* Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
   
   ```console
   [iocuser@host:e3-iocstats]$ git status
@@ -386,7 +389,6 @@ If you want to create a patch file for an e3 module, run `git diff --no-prefix >
 
 * Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? 
 * What's the difference between `make existent` and `make devexistent`?
-* Can we overwrite the same version of a module from the Deployment mode with one from the Development mode?
 * What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
 * We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
 
