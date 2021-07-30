@@ -318,51 +318,50 @@ These steps are all performed when you run
 [iocuser@host:e3]$ ./e3.bash base
 ```
 
-### Patch files in e3 modules
+### Patch files for e3 modules
+
+:::{note}
+Note that this is current as of require 3.4.1. The patching system will be slightly modified for require 4.0.0.
+:::
+
+Patch files for EPICS (e3) modules are very similar to those for EPICS base, and are applied with the same method. The main difference is that
+there is no distinction between site-specific patches and community patches, and so all of the patch files are expected to be found in the path
+`patch/Site/` within a given wrapper. 
 
 ```console
-[iocuser@host:e3]$ find . -name *.p0.patch | grep -v base | sort -n
-./e3-ADAndor3/patch/Site/2.2.0-include-stdlin.h.p0.patch
-./e3-ADSupport/patch/Site/1.4.0-tiff_extern_rename.p0.patch
-./e3-calc/patch/Site/3.7.1-cc_linking_release_local.p0.patch
-./e3-modbus/patch/Site/2.11.0p-enable-ft-code16-in-writeUInt32d.p0.patch
-./e3-NDDriverStdArrays/patch/Site/1.2.0-inflating-template.p0.patch
-./e3-nds3/patch/Site/3.0.0-wrong_override_operator_not_error_either.p0.patch
-./e3-nds/patch/Site/2.3.3-suppress-destructor-msg.p0.patch
-./e3-require/patch/Site/3.0.4-tclsh-path-for-readOnlyFS.p0.patch
-./e3-s7plc/patch/Site/1.4.0p-fixed-unsigned-int-array-types.p0.patch
-./e3-s7plc/patch/Site/a713a78-epics7-support.p0.patch
-./e3-StreamDevice/patch/Site/2.7.14p-add_only_communication_debug.p0.patch
-./e3-StreamDevice/patch/Site/2.7.14p-extend_char_length_to_256.p0.patch
-./e3-StreamDevice/patch/Site/2.7.14p-fix_new_delete_mismatch.p0.patch
-./e3-tsclib/patch/Site/2.3.1-include-headers-driver-makefile.p0.patch
+[iocuser@host:e3]$ find . -name *.p0.patch | grep -v e3-base | sort -n
+./area/e3-ADAndor3/patch/Site/2.2.0-include-stdlin.h.p0.patch
+./area/e3-ADSupport/patch/Site/.1.4.0-tiff_extern_rename.p0.patch
+./area/e3-ADSupport/patch/Site/.1.6.0-tiff_extern_renam.p0.patch
+./area/e3-ADSupport/patch/Site/.1.7.0-tiff_extern_renam.p0.patch
+./area/e3-ADSupport/patch/Site/1.9.0-netcdf-config-header-rename.p0.patch
+./area/e3-ADSupport/patch/Site/1.9.0-rename.p0.patch
+
+# --- snip snip ---
 ```
 
-As you can see, every patch file begins with `E3_MODULE_VERSION`, followed by a description of the change. Patches shall also have a listing in the `HISTORY.md` file of the patch directory.
+The format for patch files names is `${E3_MODULE_VERSION}-description.p0.patch`. Patches should have descriptions in the file `HISTORY.md` that describes their purpose.
 
-The purpose of these e3-module patch files is essentially to minimize maintenance work whenever we switch to a new module version. Two good examples would be `e3-mrfioc2` and `e3-StreamDevice`, where there is plenty of community usage.
+In general, if one is providing a genuine fix to a community module then it is best to submit a pull/merge request to that module and fix it for everything. However,
+if the change is truly a site-specific one (for example, ADSupport is built differently in e3 than in EPICS base in a way that requires patching), then one should use
+patch files instead.
 
-> A rule of thumb is to fork and attempt to merge into the community version wherever feasible, and to patch if the changes are very specific to us or if we are unsure if the community want these changes.
+Similar to `e3-base`, one applies the collection of patches for a given version with `make patch`. This means that the correct build sequence for an e3 module is
 
-#### Patch functions for e3 modules
-
-There are four functions defined in `e3-require/configure/modules/DEFINES_FT` which are used for all e3 modules. This file will be located in
-`${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/configure/` after the require module has been installed.
-
-* `patch_site`
-* `patch_revert_site`
-
-> Although these function names are the same as the e3-base ones, but they are actually slightly different. Can you find out which parts are different from each other?
-
-### How to apply and revert patches
-
-You apply patches with `make patch`, and you revert them with `make patchrevert`.
-
-If you see the following messages, your module already has all patch files applied:
-
+```console
+[iocuser@host:e3-iocStats]$ make init
+[iocuser@host:e3-iocStats]$ make patch
+[iocuser@host:e3-iocStats]$ make build
+[iocuser@host:e3-iocStats]$ make install
 ```
-Reversed (or previously applied) patch detected!  Assume -R? [n] 
+
+For both `e3-base` and any e3 module, you revert patches with the command `make patchrevert`. If there are no applicable patches, then you will see the
+message
+```console
+[iocuser@host:e3-iocStats]$ make patch
+>>> No patches to apply
 ```
+If your patches have already been applied, then you will get an error message.
 
 ### How to create a patch file
 
