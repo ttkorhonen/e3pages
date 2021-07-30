@@ -248,44 +248,75 @@ using `git remote -v`.
 Note that by default, the `*-dev` path within an e3-module is ignored (which you can see in the `.gitignore`). With this workflow, we can expand our repository up to any number of use cases.
 :::
 
-### Consistent build environment
-
-Remember that e3 strives to provide user with a consistent interface for downloading, configuring, building, and installing modules and applications. Thus, the difference between the deployment mode and the development mode is only valid while configuring a module. We build and install modules in the exact same way. During building, we use the same `module.Makefile` and the same variables that we have defined in configuration files, and while installing, we install a module based on the variables defined in the same configuration files.
+One important point to remember is that both standard and development mode use much of the same configuration/metadata in order to build and deploy a module. In particular,
+they both use the same `module.Makefile`, even though some of the configuration (`CONFIG_MODULE` versus `CONFIG_MODULE_DEV` and similarly for `RELEASE`) may differ.
 
 ## Patch files
 
-> If you are not have not been introduced to patch files, it is advised to have a look at [this](https://en.wikipedia.org/wiki/Patch_(Unix)) wikipedia page. In short, differences between two versions of a file can be saved separate from the file and applied when necessary.
+Due to the fact that we are working with community modules over which we do not have complete control, we may sometimes need to modify them to fit the needs of
+our specific site. This is done with patch files, which are stored in the `patch/` subdirectory.
 
-There are a number of patch files in EPICS; in EPICS base, in e3, as well as in modules. To deal with these, as well as to deal with the generic issue of straying away from a code base managed by others, we have some utilities to work with patches in e3. Let's have a look at some patch files, as well as what tools we have for what cases.
+:::{note}
+If you are unfamiliar with patch files, take a look at this [wikipedia page](https://en.wikipedia.org/wiki/Patch_(Unix)). In short, differences between two versions of a file can be saved separate from the file and applied when necessary.
+:::
+
+In order to work with patch files, there are a number of commands built into e3. Let us look at a few patch files and see how to work with them.
 
 ### Patch files in EPICS (e3) base
 
 ```console
-$ find e3-base/* -name *.patch | grep 3.15.5
-e3-base/patch/R3.15.5/fix-ipAddrToAscii_p0.patch
-e3-base/patch/R3.15.5/fix-1699445_p0.patch
-e3-base/patch/R3.15.5/fix-1678494_p0.patch
-e3-base/patch/R3.15.5/osiSockOptMcastLoop_p0.patch
-e3-base/patch/R3.15.5/dbCa-warning_p0.patch
-e3-base/patch/Site/R3.15.5/enable_new_dtags.p0.patch
-e3-base/patch/Site/R3.15.5/ppc64e6500_epics_host_arch.p0.patch
-e3-base/patch/Site/R3.15.5/os_class.p0.patch
-
-# --- snip snip ---
+[iocuser@host:e3]$ find e3-base/ -name *.patch | grep "7\.0\.5"
+e3-base/patch/Site/R7.0.5/softIocPVA.p0.patch
+e3-base/patch/Site/R7.0.5/ess_epics_host_arch.p0.patch
+e3-base/patch/Site/R7.0.5/config_site-x86_84_c++11.p0.patch
+e3-base/patch/Site/R7.0.5/enable_new_dtags.p0.patch
+e3-base/patch/Site/R7.0.5/os_class.p0.patch
+e3-base/patch/Site/R7.0.5/remove_mkdir_from_rules_build.p0.patch
+e3-base/patch/Site/R7.0.5/add_pvdatabase_nt_softIocPVA.p0.patch
 ```
 
-Files in `e3-base/patch/R3.15.5` are EPICS community patch files, those in `e3-base/patch/Site/R3.15.5` are for ESS site-specific patches.
+The patch files that would be stored in `e3-base/patch/R7.0.5` are EPICS community patch files. These are due to issues that have been resolved
+at the community level, but have not yet made it into a release of EPICS base. At the moment, new releases of EPICS base are occurring several 
+times per year, so there has been less of a need to populate this directory.
 
-*N.B.! While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatability reasons.*
+The patch files in `e3-base/patch/Site/R7.0.5`, in contrast, are for site-specific purposes. These are changes that are not to fix issues with
+EPICS base that have been identified, but for changes that are necessary for e3 to function properly. An example is `remove_mkdir_from_rules_build.p0.patch`:
+```diff
+diff --git configure/RULES_BUILD configure/RULES_BUILD
+index 0735f5598..3977a6a03 100644
+--- configure/RULES_BUILD
++++ configure/RULES_BUILD
+@@ -327,7 +327,7 @@ $(LOADABLE_SHRLIBNAME): $(LOADABLE_SHRLIB_PREFIX)%$(LOADABLE_SHRLIB_SUFFIX):
+ 
+ $(LIBNAME) $(SHRLIBNAME) $(LOADABLE_SHRLIBNAME): | $(INSTALL_LIB)
+ $(INSTALL_LIB):
+-	@$(MKDIR) $@
++#	@$(MKDIR) $@
+ 
+ #---------------------------------------------------------------
+ # C++ munching for VxWorks
+```
+which modifies the default EPICS build rules in order for e3 to build properly.
 
-#### Patch functions for EPICS base
+:::{note}
+While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatability reasons. <!-- TODO: Figure out what the story behind this is. -->
+:::
 
-There are four functions defined in `configure/E3/DEFINES_FT` for e3-base: 
+In order to apply patches to EPICS base (which one should always do before building), you simply run `make patch`. This will apply all of the patches 
+(both from `patch/` and `patch/Site`) for the current version of EPICS base. Thus, the proper commands to build and install EPICS base with e3 is
 
-* `patch_base`
-* `patch_revert_base`
-* `patch_site`
-* `patch_revert_site`
+```console
+[iocuser@host:e3-base]$ make init
+[iocuser@host:e3-base]$ make patch
+[iocuser@host:e3-base]$ make build
+[iocuser@host:e3-base]$ make install
+```
+
+These steps are all performed when you run
+
+```console
+[iocuser@host:e3]$ ./e3.bash base
+```
 
 ### Patch files in e3 modules
 
