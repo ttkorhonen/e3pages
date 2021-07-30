@@ -4,8 +4,8 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Understand why e3 doesn't hold any source code.
-* Understand the anatomy of an e3 module's directory.
+* Understand why e3 wrappers don't hold any source code.
+* Understand the anatomy of an e3 wrapper.
 * Understand the difference between *Standard mode* and *Development mode*.
 * Learn how to apply and create patch files for EPICS base and other modules within e3.
 
@@ -13,12 +13,12 @@ In this lesson, you'll learn how to do the following:
 
 ## No source code - configuration files!
 
-By design, e3 modules typically have no source code in their repositories. Instead, they consist of configuration files, utility scripts, and other necessary
+By design, e3 wrappers typically have no source code in their repositories. Instead, they consist of configuration files, utility scripts, and other necessary
 files to build and to load the module functionality. This is what allow us consistent building of environments from source code, modules, applications, kernel
 drivers, etc., which in turn can be hosted elsewhere.
 
 :::{note}
-It should be noted that an e3 module **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
+It should be noted that an e3 wrapper **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
 :::
 
 As descrbied in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
