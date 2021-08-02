@@ -264,7 +264,7 @@ Like any well-behaved shell, you should be able to use the up/down arrows to re-
 
 ## Building a module or an application 
 
-Back in [Chapter 3](3_module_versions.md) we looked at the two e3 variables `E3_MODULE_VERSION` and  `EPICS_MODULE_TAG`. As you will see, there are many more environment variables that we can use together with e3 when configuring and installing modules.
+Back in [Chapter 3](3_module_versions.md) we looked at the two e3 variables `E3_MODULE_VERSION` and  `EPICS_MODULE_TAG`. As you will see, there are many more environment variables that are used by e3 for configuring and installing modules.
 
 ### e3 environment variables
 
@@ -277,34 +277,38 @@ You can print out all environment variables of a module with the rule `make vars
 >>>>     Current EPICS and E3 Envrionment Variables     <<<<
 ------------------------------------------------------------
 
-E3_MODULES_INSTALL_LOCATION = /epics/base-3.15.5/require/3.0.4/siteMods/caPutLog/3.6.0
-E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-3.15.5/require/3.0.4/siteMods/caPutLog/3.6.0/bin
-E3_MODULES_INSTALL_LOCATION_BIN_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog_3.6.0_bin
-E3_MODULES_INSTALL_LOCATION_DB = /epics/base-3.15.5/require/3.0.4/siteMods/caPutLog/3.6.0/db
-E3_MODULES_INSTALL_LOCATION_DBD_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog.dbd.3.6.0
-E3_MODULES_INSTALL_LOCATION_DB_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog_3.6.0_db
-E3_MODULES_INSTALL_LOCATION_INC = /epics/base-3.15.5/require/3.0.4/siteMods/caPutLog/3.6.0/include
-E3_MODULES_INSTALL_LOCATION_INC_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog_3.6.0_include
-E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-3.15.5/require/3.0.4/siteMods/caPutLog/3.6.0/lib
-E3_MODULES_INSTALL_LOCATION_LIB_LINK = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog_3.6.0_lib
-E3_MODULES_LIBLINKNAME = libcaPutLog.so.3.6.0
-E3_MODULES_LIBNAME = libcaPutLog.so
-E3_MODULES_PATH = /epics/base-3.15.5/require/3.0.4/siteMods
-E3_MODULES_VENDOR_LIBS_LOCATION = /epics/base-3.15.5/require/3.0.4/siteLibs/vendor/caPutLog/3.6.0
+BASE_3_14 = NO
+BASE_3_15 = NO
+BASE_3_16 = NO
+BASE_7_0 = YES
+E3_MODULES_INSTALL_LOCATION = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0
+E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/bin
+E3_MODULES_INSTALL_LOCATION_DB = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/db
+E3_MODULES_INSTALL_LOCATION_INC = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/include
+E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/lib
+E3_MODULES_PATH = /epics/base-7.0.5/require/3.4.1/siteMods
+E3_MODULES_VENDOR_LIBS_LOCATION = /epics/base-7.0.5/require/3.4.1/siteLibs/vendor/caputlog/3.7.0+0
 E3_MODULE_MAKEFILE = caPutLog.Makefile
-E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.6.0" PROJECT="caPutLog" EPICS_MODULES="/epics/base-3.15.5/require/3.0.4/siteMods" EPICS_LOCATION="/epics/base-3.15.5" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-3.15.5/require/3.0.4/siteMods" E3_SITEAPPS_PATH="/epics/base-3.15.5/require/3.0.4/siteApps" E3_SITELIBS_PATH="/epics/base-3.15.5/require/3.0.4/siteLibs"
-E3_MODULE_NAME = caPutLog
+E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.7.0+0" PROJECT="caputlog" EPICS_MODULES="/epics/base-7.0.5/require/3.4.1/siteMods" EPICS_LOCATION="/epics/base-7.0.5" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-7.0.5/require/3.4.1/siteMods" E3_SITEAPPS_PATH="/epics/base-7.0.5/require/3.4.1/siteApps" E3_SITELIBS_PATH="/epics/base-7.0.5/require/3.4.1/siteLibs" caputlog_E3_GIT_DESC="7.0.5-3.4.1/3.7.0-40af4e4-20210426T180358-6-g8bda15a" caputlog_E3_GIT_STATUS="[ \\\" M caPutLog\\\", ]" caputlog_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-caPutLog.git"
+E3_MODULE_NAME = caputlog
 E3_MODULE_SRC_PATH = caPutLog
-E3_MODULE_VERSION = 3.6.0
-E3_REQUIRE_CONFIG = /epics/base-3.15.5/require/3.0.4/configure
-E3_REQUIRE_TOOLS = /epics/base-3.15.5/require/3.0.4/tools
+E3_MODULE_VERSION = 3.7.0+0
+E3_MODULE_VERSION_ORIG = 3.7.0
+E3_REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
+E3_REQUIRE_TOOLS = /epics/base-7.0.5/require/3.4.1/tools
 EPICS_MODULE_NAME = caPutLog
-EPICS_MODULE_TAG = tags/R3.6
-EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB_LINK EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_DB E3_REQUIRE_CONFIG E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   SUDO2 SUDO_INFO SUDOBASH SUDO
-INSTALLED_EPICS_BASE_ARCHS = linux-ppc64e6500 linux-x86_64
-MSI = /epics/base-3.15.5/bin/linux-x86_64/msi
-PROD_BIN_PATH = /epics/base-3.15.5/require/3.0.4/siteLibs/caPutLog_3.6.0_bin/linux-x86_64
-REQUIRE_CONFIG = /epics/base-3.15.5/require/3.0.4/configure
+EPICS_MODULE_TAG = R3.7
+EPICS_SHORT_VERSION = 7.0.5
+EPICS_VERSION_NUMBER = 7.0.5
+EPICS_VERSION_STRING = "EPICS Version 7.0.5"
+EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   
+GIT_REMOTE_NAME = origin
+MSI = /epics/base-7.0.5/bin/linux-x86_64/msi
+PROD_BIN_PATH = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/bin/linux-x86_64
+REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
+RMDIR = rm -f -rf
+SUDOBASH = "bash -c"
+TEMP_CELL_PATH = /home/simonrose/data/git/e3/modules/core/e3-caPutLog/testMods-210802140617
 ```
 
 ### Customized EPICS environment variables
