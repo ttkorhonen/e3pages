@@ -13,66 +13,81 @@ In this lesson, you'll learn how to do the following:
 
 ## Dependent environment variables
 
-Go to `e3-StreamDevice/`, run `make vars`, and try to find `*_DEP_VERSION` in the output.
+One of the key ideas with e3 (arguably, *the* key idea) is the manage dependencies of a given module in a common, structured way. That is,
+if a module A depends on a module B, then you should only need to load A; module B should be loaded and handled automatically (and so on, 
+recursively). There are a few pieces that manage this.
 
-> These variables are defined in `configure/CONFIG_MODULE` and `StreamDevice.Makefile`.
+Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables `*_DEP_VERSION` in the output:
+```console
+[iocuser@host:e3-stream]$ make vars | grep DEP_VERSION
+ASYN_DEP_VERSION = 4.41.0
+CALC_DEP_VERSION = 3.7.4
+EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET PCRE_DEP_VERSION CALC_DEP_VERSION ASYN_DEP_VERSION  
+PCRE_DEP_VERSION = 8.44.0
+```
+
+These variables are defined and used, respectively, in `configure/CONFIG_MODULE` and `StreamDevice.Makefile`.
 
 ```console
-[iocuser@host:e3-StreamDevice]$ more configure/CONFIG_MODULE | grep "DEP"
-ASYN_DEP_VERSION:=4.33.0
-PCRE_DEP_VERSION:=8.41.0
+[iocuser@host:e3-stream]$ cat configure/CONFIG_MODULE | grep DEP_VERSION
+ASYN_DEP_VERSION:=4.41.0
+PCRE_DEP_VERSION:=8.44.0
+CALC_DEP_VERSION:=3.7.4
 ```
 
 ```console
-[iocuser@host:e3-StreamDevice]$ more StreamDevice.Makefile | grep "DEP_VERSION"
+[iocuser@host:e3-stream]$ cat StreamDevice.Makefile  | grep DEP_VERSION
 ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
 ifneq ($(strip $(PCRE_DEP_VERSION)),)
 pcre_VERSION=$(PCRE_DEP_VERSION)
+ifneq ($(strip $(CALC_DEP_VERSION)),)
+calc_VERSION=$(CALC_DEP_VERSION)
 ```
 
-You now know where these variables are defined, but where are they used in the compilation process (`make build`)? Have a look:
+Let's see where these variables are used. Run `make build` and look for (something like) the following in the output.
 
 ```bash
-/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET               -DUSE_TYPED_RSET   -D_X86_64_  -DUNIX  -Dlinux                 -MD   -O3 -g   -Wall                    -mtune=generic     -m64 -fPIC                -I. -I../src/ -I.././src/    -I/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.33.0/include                        -I/epics/base-3.15.5/require/3.0.4/siteMods/pcre/8.41.0/include         -I/epics/base-3.15.5/include  -I/epics/base-3.15.5/include/compiler/gcc -I/epics/base-3.15.5/include/os/Linux                                    -c .././src/StreamVersion.c
-/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET               -DUSE_TYPED_RSET   -D_X86_64_  -DUNIX  -Dlinux                 -MD   -O3 -g   -Wall                    -mtune=generic     -m64 -fPIC               -I. -I../src/ -I.././src/    -I/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.33.0/include                        -I/epics/base-3.15.5/require/3.0.4/siteMods/pcre/8.41.0/include         -I/epics/base-3.15.5/include  -I/epics/base-3.15.5/include/compiler/gcc -I/epics/base-3.15.5/include/os/Linux                                    -c ../src/AsynDriverInterface.cc
-/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET               -DUSE_TYPED_RSET   -D_X86_64_  -DUNIX  -Dlinux                 -MD   -O3 -g   -Wall                    -mtune=generic     -m64 -fPIC               -I. -I../src/ -I.././src/    -I/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.33.0/include                        -I/epics/base-3.15.5/require/3.0.4/siteMods/pcre/8.41.0/include         -I/epics/base-3.15.5/include  -I/epics/base-3.15.5/include/compiler/gcc -I/epics/base-3.15.5/include/os/Linux                                    -c ../src/RegexpConverter.cc
+make[4]: Entering directory `/home/simonrose/data/git/e3/modules/core/e3-stream/StreamDevice/O.7.0.5_linux-x86_64'
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  .././src/StreamVersion.c
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamFormatConverter.cc
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamProtocol.cc
 ```
 
-Especially note:
+In particular, note the following segments:
 
 ```
--I/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.33.0/include
--I/epics/base-3.15.5/require/3.0.4/siteMods/pcre/8.41.0/include
+-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include
+-I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0/include
+-I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4/include
 ```
 
-And if we unset one of these variables and try to rebuild:
+These variables are used by the build system to locate the necessary header files. To see this, let us clear the definition of `ASYN_DEP_VERSION` and re-run the build.
 
 ```console
-[iocuser@host:e3-StreamDevice]$ echo "ASYN_DEP_VERSION:=" > configure/CONFIG_MODULE.local
-[iocuser@host:e3-StreamDevice]$ make clean
-[iocuser@host:e3-StreamDevice]$ make build
+[iocuser@host:e3-stream]$ echo "ASYN_DEP_VERSION:=" > configure/CONFIG_MODULE.local
+[iocuser@host:e3-stream]$ make clean
+[iocuser@host:e3-stream]$ make build
 
 # --- snip snip ---
 
-Expanding stream.dbd
-/epics/base-3.15.5/require/3.0.4/tools/expandDBD.tcl -3.15 -I ./ -I /epics/base-3.15.5/dbd streamSup.dbd > stream.dbd
-/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET               -DUSE_TYPED_RSET   -D_X86_64_  -DUNIX  -Dlinux                 -MD   -O3 -g   -Wall                    -mtune=generic                   -m64 -fPIC               -I. -I../src/ -I.././src/                            -I/epics/base-3.15.5/require/3.0.4/siteMods/pcre/8.41.0/include         -I/epics/base-3.15.5/include  -I/epics/base-3.15.5/include/compiler/gcc -I/epics/base-3.15.5/include/os/Linux                                    -c ../src/AsynDriverInterface.cc
-../src/AsynDriverInterface.cc:38:24: fatal error: asynDriver.h: No such file or directory
- #include <asynDriver.h>
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/                   -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include                  -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/AsynDriverInterface.cc
+../src/AsynDriverInterface.cc:41:24: fatal error: asynDriver.h: No such file or directory
+ #include "asynDriver.h"
                         ^
 compilation terminated.
 ```
 
-If you look at this output, you'll find that `-I/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.33.0/include` now is missing. At this point, the building system cannot find `asynDriver.h` (which is used in `src/AsynDriverInterface.cc`). 
-
-Roll back the *asynDriver* (henceforth *asyn*) version and rebuild:
+If you look at this output, you'll find that `-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include` now is missing. At this point, the build system cannot find `asynDriver.h` (which is used in `src/AsynDriverInterface.cc`). If you revert your changes and rebuild, then everything should work correctly.
 
 ```console
-[iocuser@host:e3-StreamDevice]$ rm configure/CONFIG_MODULE.local
-[iocuser@host:e3-StreamDevice]$ make clean
-[iocuser@host:e3-StreamDevice]$ make build
+[iocuser@host:e3-stream]$ rm configure/CONFIG_MODULE.local
+[iocuser@host:e3-stream]$ make clean
+[iocuser@host:e3-stream]$ make build
 ```
+
+Exercise:
+* What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
 
 ## New dependency module
 
