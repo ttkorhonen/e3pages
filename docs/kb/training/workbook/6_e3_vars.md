@@ -374,11 +374,8 @@ The following variables are set by require.
 
 ##  Assignments
 
-* Using the startup script in `ch6_supplementary_paht/ch6.cmd`, print out all database files of the *asyn* module within an IOC.
-  
-  > If you get stuck, remember that there's a command to use any UNIX command from within an IOC shell. Can you remember what it is?
+* Use the command `iocsh.bash -r asyn` to load asyn into a fresh IOC. From the IOC shell, print out all of the database files that are included
+  with *asyn*. Hint: There is a command that lets you run an external shell command within an IOC. See [chapter 2](2_e3_ioc.md).
 
-* Can you find out which file it is that allows us to run `make vars` or `make env` within the e3 building system? 
-  
-  > It is the same for all modules and applications, so where could be located?
+* Can you find out which file it is that allows us to run `make vars` within the e3 building system? Try adding the `--debug` flag when executing `make`.
 
