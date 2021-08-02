@@ -96,108 +96,171 @@ Excercise:
 
 ### EPICS variables, parameters, and environment variables
 
-You can see EPICS parameters and environment variables from within an IOC using `epicsParamShow` and `epicsEnvShow`.
+You can see EPICS parameters and environment variables from within an IOC using `epicsParamShow` (or `epicsPrtEnvParams`) and `epicsEnvShow`.
 
 ```console
-# Set the IOC Prompt String One 
-epicsEnvSet IOCSH_PS1 "58bef31.faiserv.18238 > "
-#
-58bef31.faiserv.18238 > epicsParamShow 
-58bef31.faiserv.18238 > epicsEnvShow 
+localhost-15716 > epicsParamShow 
+localhost-15716 > epicsEnvShow 
 ```
- <!-- fixme: clean up above -->
 
-* Run `epicsPrtEnvParams`. Which other command returns the same result?
-
+Excercises:
 * How do we print only one variable - for example `TOP`?
-
-  > For questions on EPICS functions, the [App Developers Guide](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73300018) will usually have your answers.
-
-  > There are four UNIX commands that can be used from within the IOC shell: `date`, `pwd`, `cd`, and `echo`.
-
 * What is the difference between `$(TOP)` and `${TOP}`? Is it the same inside of the IOC shell as in UNIX?
 
-* In the shell, please try to run `var`. What do you see? 
+In the IOC shell, run `var`. This provides a list of variables that are defined within the IOC environment; these can be modified
+or set by running `var <variable> <value>`.
 
-  ```console
-  58bef31.faiserv.18238 > var
-  sandbag = 0
-  atExitDebug = 0
-  boHIGHlimit = 100000
-  boHIGHprecision = 2
-  calcoutODLYlimit = 100000
-  calcoutODLYprecision = 2
-  callbackParallelThreadsDefault = 4
-  dbBptNotMonotonic = 0
-  dbQuietMacroWarnings = 0
-  dbRecordsAbcSorted = 0
-  dbRecordsOnceOnly = 0
-  dbTemplateMaxVars = 100
-  dbThreadRealtimeLock = 1
-  exprDebug = 0
-  histogramSDELprecision = 2
-  requireDebug = 0
-  runScriptDebug = 0
-  seqDLYlimit = 100000
-  seqDLYprecision = 2
-  ```
+```console
+localhost-15716 > var
+CASDEBUG = 0
+PDBProviderDebug = 0
+asCaDebug = 0
+asCheckClientIP = 0
+atExitDebug = 0
+boHIGHlimit = 100000
+boHIGHprecision = 2
+calcoutODLYlimit = 100000
+calcoutODLYprecision = 2
+callbackParallelThreadsDefault = 2
+dbAccessDebugPUTF = 0
+dbBptNotMonotonic = 0
+dbConvertStrict = 0
+dbJLinkDebug = 0
+dbQuietMacroWarnings = 0
+dbRecordsAbcSorted = 0
+dbRecordsOnceOnly = 0
+dbTemplateMaxVars = 100
+dbThreadRealtimeLock = 1
+exprDebug = 0
+histogramSDELprecision = 2
+lnkDebug_debug = 0
+logClientDebug = 0
+pvaLinkNWorkers = 1
+requireDebug = 0
+runScriptDebug = 0
+seqDLYlimit = 100000
+seqDLYprecision = 2
+```
 
-In the running IOC, let's require the recsync module.
+Note that there are four UNIX commands that can be used from within the IOC shell: `date`, `pwd`, `cd`, and `echo`.
 
-1. Run:
+:::{note}
+For more information about EPICS functions, check out the [App Developers Guide](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html).
+:::
 
-   ```console
-   58bef31.faiserv.18238 > require recsync,1.3.0
-   Module recsync version 1.3.0 found in /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/
-   Loading library /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/lib/linux-x86_64/librecsync.so
-   Loaded recsync version 1.3.0
-   Loading dbd file /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/dbd/recsync.dbd
-   Calling function recsync_registerRecordDeviceDriver
-   ```
+As described in the [design documentation](../../../design/2_require.md), *require* is used to dynamically load EPICS modules during the startup of an IOC. This
+is what the line `require iocstats` does above; `iocstats` can be replaced with any other EPICS module that is installed in your e3 environment.
 
-2. Redo require:
+First, let's start up an IOC that has iocstats loaded in it as before. You can do this in one of two ways:
+```console
+[iocuser@host:e3]$ iocsh.bash ch6.cmd
+```
+or
+```console
+[iocuser@host:e3]$ iocsh.bash -r iocstats
+```
 
-   ```console
-   58bef31.faiserv.18238 > require recsync,1.3.0
-   Module recsync version 1.3.0 already loaded
-   ```
+Exercise:
+* What is the difference between these two commands? Take a look at the output of the IOC shell as it starts up.
 
-3. Type in the command `var requireDebug 1`:
+In the running IOC, let us try a few commands. First, try to re-load iocstats:
+```console
+localhost-15965 > require iocstats
+Module iocstats version 3.1.16+0 already loaded
+```
 
-   ```console
-   58bef31.faiserv.18238 > var requireDebug 1
-   ```
+This is due to the fact that *require* will only load a module a single time. It is possible to have multiple configured *instances* of a module
+(for example, an IOC can control multiple copies of the same device) by loading the appropriate `.iocsh` snippet with different parameters, but
+that is a topic for another time.
 
-4. Redo require again:
+Next, in the running IOC, let's try to load the recsync module. Run
+```console
+localhost-15965 > require recsync
+Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
+Loading library /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so
+Loaded recsync version 1.3.0-eb33785
+Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
+Error loading /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
+```
 
-   ```console
-   58bef31.faiserv.18238 > require recsync,1.3.0
-   require: versionstr = "-1.3.0"
-   require: module="recsync" version="1.3.0" args="(null)"
-   require: searchpath=/epics/base-3.15.5/require/3.0.4/siteMods:/epics/base-3.15.5/require/3.0.4/siteApps
-   require: compareVersions(found=1.3.0, request=1.3.0)
-   require: compareVersions: MATCH exactly
-   Module recsync version 1.3.0 already loaded
-   require: library found in /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/
-   require: putenv("MODULE=recsync")
-   require: looking for template directory
-   require: directory /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/db exists
-   require: found template directory /epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/db
-   require: putenv("recsync_DB=/epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/db")
-   require: putenv("recsync_TEMPLATES=/epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/db")
-   require: putenv("TEMPLATES=/epics/base-3.15.5/require/3.0.4/siteMods/recsync/1.3.0/db")
-   ```
+*require* cannot load a module with a `.dbd` (database definition) file once the IOC has been initialised; all of the `require <module>` commands
+must occur *before* `iocInit()` is run.
 
-As you can see, `var` is defined as a variable within the *require* module. This variable is usually used as a debug message control variable, but can be used for more. 
+:::{note}
+Modules that do not have `.dbd` files (for example, those that only have database or template files) can be properly loaded after `iocInit()` is
+called. However, this is not good practice and is strongly discouraged.
+:::
 
-5. Make sure to disable the debugging output again:
+It can be useful to see a bit of extra information when *require* is loading a module to understand exactly where it is coming from (and to see
+why it loads the version that it does). Create a new file, `ch6-2.cmd`, with the following contents:
+```bash
+var requireDebug 1
+require recsync
+```
+and then load it with `iocsh.bash`:
 
-   ```console
-   58bef31.faiserv.18238 > var requireDebug 0
-   58bef31.faiserv.18238 > require recsync,1.3.0
-   ```
+```console
+[iocuser@host:e3]$ iocsh.bash ch6-2.cmd
 
-> Note that the UP and DOWN keys can be used to navigate between historical commands.
+# --- snip snip ---
+
+iocshLoad 'ch6-2.cmd',''
+var requireDebug 1
+require recsync
+require: putenv("T_A=linux-x86_64")
+require: putenv("EPICS_HOST_ARCH=linux-x86_64")
+require: putenv("EPICS_RELEASE=7.0.5")
+require: putenv("OS_CLASS=Linux")
+require: versionstr = ""
+require: module="recsync" version="(null)" args="(null)"
+require: searchpath=/epics/base-7.0.5/require/3.4.1/siteMods:/epics/base-7.0.5/require/3.4.1/siteApps
+require: no recsync version loaded yet
+require: trying /epics/base-7.0.5/require/3.4.1/siteMods
+require: found directory /epics/base-7.0.5/require/3.4.1/siteMods/recsync/
+require: checking version 1.3.0-eb33785 against required (null)
+require: compareVersions(found=1.3.0-eb33785, request=(null))
+require: compareVersions: MATCH empty version requested
+require: recsync 1.3.0-eb33785 may match (null)
+require: directory /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/ exists
+require: recsync 1.3.0-eb33785 looks promising
+require: trying /epics/base-7.0.5/require/3.4.1/siteApps
+require: no /epics/base-7.0.5/require/3.4.1/siteApps/recsync/ directory
+Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
+require: looking for dependency file
+require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/recsync.dep exists, size 31 bytes
+require: parsing dependency file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/recsync.dep
+require: looking for library file
+require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so exists, size 114608 bytes
+Loading library /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so
+Loaded recsync version 1.3.0-eb33785
+require: compare requested version (null) with loaded version 1.3.0-eb33785
+require: compareVersions(found=1.3.0-eb33785, request=(null))
+require: compareVersions: MATCH empty version requested
+require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd exists, size 207 bytes
+Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
+Calling function recsync_registerRecordDeviceDriver
+require: registerModule(recsync,1.3.0-eb33785,/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/)
+require: putenv("MODULE=recsync")
+require: putenv("recsync_VERSION=1.3.0-eb33785")
+require: putenv("recsync_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/")
+require: putenv("SCRIPT_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/:/epics/base-7.0.5/require/3.4.1/")
+Loading module info records for recsync
+
+# --- snip snip ---
+
+```
+As you can see, there is a lot of output that describes, for example, the search process for the requested module as well as information
+about which environment variables are set during the loading process.
+
+It should be noted that `requireDebug` (as its name suggests) is a variable defined within the require module. Other modules have similar
+functionality.
+
+Exercise:
+* Find at least one other **core** module that has a debug variable.
+
+:::{note}
+Like any well-behaved shell, you should be able to use the up/down arrows to re-run previous commands.
+:::
 
 ## Building a module or an application 
 
