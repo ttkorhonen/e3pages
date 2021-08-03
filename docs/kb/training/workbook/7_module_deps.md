@@ -231,29 +231,48 @@ Exercise:
   What simple and reasonalbe action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
   perspective of the maintainer of a shared e3 environment?
 
-## Dependence, dependence, and dependence
+## There are dependencies, and then there are dependencies
 
-In this chapter, we only discuss one kind of dependency that arises when compiling a module, a so-called *build time dependency*. That is, the module `stream` uses functions which are defined in the `asyn` header files. We can see these in certain files that are generated at build-time:
+We have so far only discussed the *build-time dependencies*. These are dependencies that aries when compiling a module, indicated by the inclusion of a `C/C++`
+header file: consider the file `AsynDriverInterface.cc` from *StreamDevice*
+```c
+// --- snip --
 
+#include "asynDriver.h"
+#include "asynOctet.h"
+#include "asynInt32.h"
+#include "asynUInt32Digital.h"
+#include "asynGpibDriver.h"
+
+// --- snip ---
 ```
-e3-StreamDevice/StreamDevice/O.3.15.5_linux-x86_64/AsynDriverInterface.d: 
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynDriver.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynOctet.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynInt32.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynUInt32Digital.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynGpibDriver.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynDriver.h \
-/epics/base-3.15.5/require/3.0.4/siteMods/asyn/4.34.0/include/asynInt32.h \
+When this file is compiled, it generates a `.d` file that describes the depedencies recognized by `make`:
+```console
+[iocuser@host:e3-stream]$ cat StreamDevice/O.7.0.5_linux-x86_64/AsynDriverInterface.d
+AsynDriverInterface.o: ../src/AsynDriverInterface.cc \
+# --- snip ---
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynAPI.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynOctet.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynInt32.h \
+ /epics/base-7.0.5/include/epicsTypes.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynUInt32Digital.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynGpibDriver.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynDriver.h \
+ /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include/asynInt32.h \
 ```
+*require* uses this file to detect build-time dependencies.
 
-By contrast, we also can have *run-time dependencies*. These often arise in particular with *StreamDevice*, and are in this case often signified by the existence of protocol files (`*.proto`), but they can also result from needing to use functionality from another module at run time, for example if you need to use the function `drvAsynIPPortConfigure` during your startup script.
+Exercise:
+* Can you find where the other modules (`calc`, `pcre`) are referenced in order to be included?
 
-In both cases, the module (*StreamDevice*, in this case) must load the correct version of the dependent module (*asyn*, in this case) when the IOC starts up.
+## Assignment
 
----
+There is another kind of dependency, the *run-time dependency*. This is often associated with dependencies such as *StreamDevice* where the dependency is
+based on run-time functionality as connoted by the existence of `.proto` (protocol) files. For example, consider the e3 module for communicating with a
+[FuG power supply](https://gitlab.esss.lu.se/e3/wrappers/ps/e3-fug): if you look at the [underlying module](https://gitlab.esss.lu.se/epics-modules/fug),
+you can see that it includes such a protocol file, [fug.proto](https://gitlab.esss.lu.se/epics-modules/fug/-/tree/master/fugApp/Db).
 
-## Assignments
-
-* Think about how you figure out which versions of modules are available to you.
-* What would a version that looks like `2.8.4-1` mean and imply?
-
+* Clone the e3 wrapper above, and build and install it. Alternatively, `e3-fug` is included in one of the groups that can be installed with `e3.bash`.
+  Which group is it? What are the advantages of installing it as a group versus as a single module?
+* Look through temporary build files. Can you see where it is referenced there?
+* How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
