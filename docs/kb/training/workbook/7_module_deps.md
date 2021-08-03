@@ -4,10 +4,10 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Understand which e3 environment variables that define module dependency.
-* Understand the dependency chain during module building.
-* Change dependency versions when a module needs to be recompiled.
-* Make more informed decisions when deciding on module versions.
+* Understand the environment variables used to manage dependencies
+* Understand how dependencies are determined at build-time
+* Install a new module version with different dependencies
+* Understand how incompatible dependencies can cause issues when loading an IOC
 
 ---
 
