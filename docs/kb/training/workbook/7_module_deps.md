@@ -146,8 +146,8 @@ to `asyn.Makefile`.
 
 This will now allow us to update *StreamDevice*'s dependencies and install it properly. Save the following as `CONFIG_MODULE.local` in `e3-stream/configure/`:
 ```make
-EPICS_MODULE_TAG:=tags/2.8.20
-E3_MODULE_VERSION:=2.8.20
+EPICS_MODULE_TAG:=master
+E3_MODULE_VERSION:=e3training
 ASYN_DEP_VERSION:=4.42.0
 ```
 and then run
@@ -162,7 +162,7 @@ and then run
 |   |-- lib
 |   |-- SetSerialPort.iocsh
 |   `-- stream_meta.yaml
-`-- 2.8.20+0
+`-- e3training
     |-- dbd
     |-- include
     |-- lib
@@ -173,7 +173,7 @@ Once you have installed a module, it is always a good idea to test that it can b
 by running any of the following:
 ```console
 [iocuser@host:~]$ iocsh.bash -r stream,2.8.18
-[iocuser@host:~]$ iocsh.bash -r stream,2.8.20
+[iocuser@host:~]$ iocsh.bash -r stream,e3training
 [iocuser@host:~]$ iocsh.bash -r stream
 ```
 Exercises:
@@ -181,8 +181,8 @@ Exercises:
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
   ```console
-  [iocuser@host:~]$ iocsh.bash -r stream -r asyn,4.41.0
-  [iocuser@host:~]$ iocsh.bash -r asyn,4.41.0 -r stream
+  [iocuser@host:~]$ iocsh.bash -r stream -r asyn
+  [iocuser@host:~]$ iocsh.bash -r asyn -r stream
   ```
   Can you explain the result?
 * Where is the dependency information stored in the installed module?
