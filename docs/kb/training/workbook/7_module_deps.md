@@ -98,6 +98,7 @@ We first need to check that *StreamDevice* is compatible with the current versio
 possible combination has been tried, and this may require some testing on your part.
 
 If the new version of *StreamDevice* and the old version of *asyn* are compatible, then all you need to do is what was done in [Chapter 3](3_module_versions.md).
+
 :::{note}
 This assumes that the list of source files for *StreamDevice* have not changed. If they have, you will have to modify `StreamDevice.Makefile` to account for any new or removed source files.
 :::
@@ -134,6 +135,7 @@ installing the necessary version (4.42.0)
     |-- include
     `-- lib
 ```
+
 :::{note}
 Between *asyn* 4-41 and 4-42 there actually are some source and `.dbd` files that have been added; if this functionality is necessary for your purposes,
 then you will have to add
@@ -228,7 +230,7 @@ Exercise:
   require asyn
   require stream
   ```
-  What simple and reasonalbe action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
+  What simple and reasonable action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
   perspective of the maintainer of a shared e3 environment?
 
 ## Whence cometh the dependencies
