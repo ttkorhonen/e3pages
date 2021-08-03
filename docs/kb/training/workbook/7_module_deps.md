@@ -231,7 +231,7 @@ Exercise:
   What simple and reasonalbe action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
   perspective of the maintainer of a shared e3 environment?
 
-## There are dependencies, and then there are dependencies
+## Whence cometh the dependencies
 
 We have so far only discussed the *build-time dependencies*. These are dependencies that aries when compiling a module, indicated by the inclusion of a `C/C++`
 header file: consider the file `AsynDriverInterface.cc` from *StreamDevice*
