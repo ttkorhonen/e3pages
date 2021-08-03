@@ -89,92 +89,103 @@ If you look at this output, you'll find that `-I/epics/base-7.0.5/require/3.4.1/
 Exercise:
 * What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
 
-## New dependency module
+## Updating a dependency
 
-If we postulate that we (due to new requirements or critical bugs in an existent IOC) need to swap from *StreamDevice* version `2.7.14p` to `2.8.4`, we have to consider two dependency modules (*asyn* and *pcre*). Here, for the sake of brevity, we will only consider the *asyn* dependence. Before swapping, we need to consider if the existing *asyn* module is both sufficient for our needs and compatible with *StreamDevice* `2.8.4`.
+Suppose that for some reason (perhaps due critical bugs in an IOC or new features that are released) we need to upgrade from *StreamDevice* 2.8.18 to 2.8.20. When updating a dependency,
+we also have to consider all of its dependencies (*asyn*, *pcre*, and *calc* in this case), although we will focus only on *asyn*.
 
-* If it is, recall what we did in [Chapter 3](3_module_versions.md).
+We first need to check that *StreamDevice* is compatible with the current version of *asyn*. It is often useful to check release notes in this case, but it is not a given that every
+possible combination has been tried, and this may require some testing on your part.
 
-  > Note that this makes a strong assumption that the list of source files in `2.7.14p` and `2.8.4` are the same. If some files have been added or removed between the versions, we have to modify `StreamDevice.Makefile` accordingly. Whenever this is the case, contact the maintainer of e3.
+If the new version of *StreamDevice* and the old version of *asyn* are compatible, then all you need to do is what was done in [Chapter 3](3_module_versions.md).
+:::{note}
+This assumes that the list of source files for *StreamDevice* have not changed. If they have, you will have to modify `StreamDevice.Makefile` to account for any new or removed source files.
+:::
 
-* If it isn't, we have to install a new *asyn* version using our current e3 environment. The procedure is here the same with *StreamDevice* in [Chapter 3](3_module_versions.md). In our case, there are neither new files nor deleted files between *asyn* versions `4.33` and `4.34`, and we can thus build the new version of asyn with the same `asyn.Makefile`:
+If the new version of *StreamDevice* is not compatible with *asyn*, then you will need to install a new version of *asyn* in the current e3 environment. The 
+procedure for that is also the same as in [Chapter 3](3_module_versions.md). We can start by checking the current version and seeing what is installed, and then
+installing the necessary version (4.42.0)
+```console
+[iocuser@host:e3-asyn]$ make vars # Check the current version
+[iocuser@host:e3-asyn]$ make existent
+/epics/base-7.0.5/require/3.4.1/siteMods/asyn
+`-- 4.41.0+0
+    |-- asyn_meta.yaml
+    |-- db
+    |-- dbd
+    |-- include
+    `-- lib
+[iocuser@host:e3-asyn]$ echo "EPICS_MODULE_TAG:=tags/R4-42" > configure/CONFIG_MODULE.local
+[iocuser@host:e3-asyn]$ echo "E3_MODULE_VERSION:=4.42.0" >> configure/CONFIG_MODULE.local
+[iocuser@host:e3-asyn]$ make vars
+[iocuser@host:e3-asyn]$ make init patch build install # You can do these all at once
+[iocuser@host:e3-asyn]$ make existent
+/epics/base-7.0.5/require/3.4.1/siteMods/asyn
+|-- 4.41.0+0
+|   |-- asyn_meta.yaml
+|   |-- db
+|   |-- dbd
+|   |-- include
+|   `-- lib
+`-- 4.42.0+0
+    |-- asyn_meta.yaml
+    |-- db
+    |-- dbd
+    |-- include
+    `-- lib
+```
+:::{note}
+Between *asyn* 4-41 and 4-42 there actually are some source and `.dbd` files that have been added; if this functionality is necessary for your purposes,
+then you will have to add
+```make
+SOURCES += drvPrologixGPIB.c
+DBDS += drvPrologixGPIB.dbd
+```
+to `asyn.Makefile`.
+:::
 
+This will now allow us to update *StreamDevice*'s dependencies and install it properly. Save the following as `CONFIG_MODULE.local` in `e3-stream/configure/`:
+```make
+EPICS_MODULE_TAG:=tags/2.8.20
+E3_MODULE_VERSION:=2.8.20
+ASYN_DEP_VERSION:=4.42.0
+```
+and then run
+```console
+[iocuser@host:e3-stream]$ make vars # Again, a good sanity check
+[iocuser@host:e3-stream]$ make init patch build install
+[iocuser@host:e3-stream]$ make existent
+/epics/base-7.0.5/require/3.4.1/siteMods/stream
+|-- 2.8.18+0
+|   |-- dbd
+|   |-- include
+|   |-- lib
+|   |-- SetSerialPort.iocsh
+|   `-- stream_meta.yaml
+`-- 2.8.20+0
+    |-- dbd
+    |-- include
+    |-- lib
+    |-- SetSerialPort.iocsh
+    `-- stream_meta.yaml
+```
+Once you have installed a module, it is always a good idea to test that it can be loaded; this is a minimal test that a module must pass! You can do this
+by running any of the following:
+```console
+[iocuser@host:~]$ iocsh.bash -r stream,2.8.18
+[iocuser@host:~]$ iocsh.bash -r stream,2.8.20
+[iocuser@host:~]$ iocsh.bash -r stream
+```
+Exercises:
+* Which version does the last one load, and why?
+* Which version of *asyn* is loaded in each case?
+* What happens if you run either of the following?
   ```console
-  [iocuser@host:e3-asyn]$ make vars
-  [iocuser@host:e3-asyn]$ make existent
-  /epics/base-3.15.5/require/3.0.4/siteMods/asyn
-  └── 4.33.0
-      ├── db
-      ├── dbd
-      ├── include
-      └── lib
-  [iocuser@host:e3-asyn]$ echo "EPICS_MODULE_TAG:=tags/R4-34" > configure/CONFIG_MODULE.local
-  [iocuser@host:e3-asyn]$ echo "E3_MODULE_VERSION:=4.34.0" >> configure/CONFIG_MODULE.local
-  [iocuser@host:e3-asyn]$ make vars
-  [iocuser@host:e3-asyn]$ make init
-  [iocuser@host:e3-asyn]$ make rebuild
-  [iocuser@host:e3-asyn]$ make existent
-  /epics/base-3.15.5/require/3.0.4/siteMods/asyn
-  ├── 4.33.0
-  │   ├── db
-  │   ├── dbd
-  │   ├── include
-  │   └── lib
-  └── 4.34.0
-      ├── db
-      ├── dbd
-      ├── include
-      └── lib
+  [iocuser@host:~]$ iocsh.bash -r stream -r asyn,4.41.0
+  [iocuser@host:~]$ iocsh.bash -r asyn,4.41.0 -r stream
   ```
-
-  Next, we can install *StreamDevice* `2.8.4`, which will be using *asyn* `4.34.0`.
-
-  > This step is exactly the same as we what did in [Chapter 3](3_module_versions.md).
-
-  ```console
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ existent
-  make: Entering directory '/home/iocuser/e3-3.15.5/e3-StreamDevice'
-  /epics/base-3.15.5/require/3.0.4/siteMods/stream
-  └── 2.7.14p
-      ├── dbd
-      ├── include
-      ├── lib
-      └── SetSerialPort.iocsh
-
-  4 directories, 1 file
-  make: Leaving directory '/home/iocuser/e3-3.15.5/e3-StreamDevice'
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ vars
-  [iocuser@host:e3-3.15.5]$ echo "EPICS_MODULE_TAG:=tags/2.8.4" > e3-StreamDevice/configure/CONFIG_MODULE.local
-  [iocuser@host:e3-3.15.5]$ echo "E3_MODULE_VERSION:=2.8.4" >> e3-StreamDevice/configure/CONFIG_MODULE.local
-  [iocuser@host:e3-3.15.5]$ echo "ASYN_DEP_VERSION:=4.34.0" >> e3-StreamDevice/configure/CONFIG_MODULE.local
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice  vars 
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ init
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ rebuild
-  [iocuser@host:e3-3.15.5]$ $ make -C e3-StreamDevice/ existent
-  make: Entering directory '/home/iocuser/e3-3.15.5/e3-StreamDevice'
-  /epics/base-3.15.5/require/3.0.4/siteMods/stream
-  ├── 2.7.14p
-  │   ├── dbd
-  │   ├── include
-  │   ├── lib
-  │   └── SetSerialPort.iocsh
-  └── 2.8.4
-      ├── dbd
-      ├── include
-      ├── lib
-      └── SetSerialPort.iocsh
-
-  8 directories, 2 files
-  make: Leaving directory '/home/iocuser/e3-3.15.5/e3-StreamDevice'
-  ``` 
-
-  Here it is good to validate that *StreamDevice* `2.8.4` can be loaded.
-
-  > Remember that you can initiate an IOC shell just like `iocsh.bash -r stream,2.8.4`.
-
-  > Can you see the *asyn* version you've just set up in the output? Try loading *StreamDevice* version `2.7.14p` to compare.
-
-  As you have just seen, dependencies are defined when we compile the module.
+  Can you explain the result?
+* Where is the dependency information stored in the installed module?
 
 ## Aggressive tests
 
