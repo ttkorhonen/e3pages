@@ -17,7 +17,7 @@ One of the key ideas with e3 (arguably, *the* key idea) is the manage dependenci
 if a module A depends on a module B, then you should only need to load A; module B should be loaded and handled automatically (and so on, 
 recursively). There are a few pieces that manage this.
 
-Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables `*_DEP_VERSION` in the output:
+Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables `*DEP_VERSION` in the output:
 ```console
 [iocuser@host:e3-stream]$ make vars | grep DEP_VERSION
 ASYN_DEP_VERSION = 4.41.0
