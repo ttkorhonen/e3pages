@@ -187,6 +187,33 @@ Exercises:
   Can you explain the result?
 * Where is the dependency information stored in the installed module?
 
+## Dependency resolution limitations
+
+*require* is not perfect when it comes to dependency resolution. Consider the following file:
+```console
+[iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep 
+# Generated file. Do not edit.
+asyn 4.41.0+0
+calc 3.7.4+0
+pcre 8.44.0+0
+```
+This file is generated at build time, and lists the modules and versions that *StreamDevice* depends on. *require* will attempt to load these modules (and
+versions) when `require stream` occurs during IOC startup. In that sense, *require* does not so much *resolve* dependencies as it does load them.
+
+If there are any conflicts in this process, then *require* will shut the IOC down. This is what happens when you run `iocsh.bash -r asyn -r stream` above:
+since no version is specified for *asyn*, the latest version (4.42.0) is loaded. Then when *StreamDevice* is loaded, it depends on *asyn* 4.41.0. The loaded
+version of *asyn* and the requested version of *asyn* differ, so *require* shuts the IOC down.
+
+This is a sneak-preview of so-called *dependency hell*; in this case, the solution is simple. Since *asyn* is only really being loaded due to *StreamDevice*'s
+dependency, the solution is to only load *StreamDevice* directly and let it take care of loading the correct version of *asyn*. However, what happens if you
+need to use *StreamDevice*, which depends on *asyn* 4.42.0, and a version of *modbus* which depends on a different version of *asyn*?
+
+### Build numbers and semantic versioning
+
+*require* prioritises so-called *numeric versions*. These are versions of the form `MAJOR.MINOR.PATCH+BUILD` (where the build number is optional; if none is
+specified then it will be 0 by default)
+
+
 ## Aggressive tests
 
 More technical pitfalls exist when we are building or writing startup scripts. Here we will see some combinations which the current *require* module fails to handle properly.
