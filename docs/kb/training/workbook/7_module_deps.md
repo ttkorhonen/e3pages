@@ -228,7 +228,8 @@ Exercise:
   require asyn
   require stream
   ```
-  What simple and reasonalbe action could you take that would cause this IOC to fail on startup?
+  What simple and reasonalbe action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
+  perspective of the maintainer of a shared e3 environment?
 
 ## Dependence, dependence, and dependence
 
