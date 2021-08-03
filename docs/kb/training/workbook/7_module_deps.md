@@ -208,75 +208,27 @@ This is a sneak-preview of so-called *dependency hell*; in this case, the soluti
 dependency, the solution is to only load *StreamDevice* directly and let it take care of loading the correct version of *asyn*. However, what happens if you
 need to use *StreamDevice*, which depends on *asyn* 4.42.0, and a version of *modbus* which depends on a different version of *asyn*?
 
-### Build numbers and semantic versioning
+In general the best practice when writing a startup script for an IOC is only to require the top-level modules. So instead of
+```bash
+require asyn
+require sequencer
+require sscan
+require calc
+require stream
+```
+it is much simpler to have
+```bash
+require stream
+```
+The resulting startup script will be much more maintainable over time and less prone to errors when new module versions are installed.
 
-*require* prioritises so-called *numeric versions*. These are versions of the form `MAJOR.MINOR.PATCH+BUILD` (where the build number is optional; if none is
-specified then it will be 0 by default)
-
-
-## Aggressive tests
-
-More technical pitfalls exist when we are building or writing startup scripts. Here we will see some combinations which the current *require* module fails to handle properly.
-
-> If you find further cases, please inform the e3 maintainer.
-
-* How modules are loaded.
-
-  Let's first uninstall the `2.8.4` version.
-
-  ```console
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ uninstall
-  [iocuser@host:e3-3.15.5]$ make -C e3-StreamDevice/ existent
+Exercise:
+* Suppose that your IOC starts fine today with the startup script
+  ```bash
+  require asyn
+  require stream
   ```
-
-  Let's try to load the module:
-
-  ```console
-  [iocuser@host:e3-3.15.5]$ iocsh.bash -r stream,2.7.14p
-  ```
-
-  What do you see? What if we don't define a specific version number of the `stream` module?
-
-  > Remember: `iocsh.bash -r stream`.
-
-  And what happens if we do the same after `make install` and `make vars`? (Test it.)
-
-  What you have just seen is the default behavior when a module version number isn't specified; loading a module with no specified version will **only** work when the system has a numeric `X.Y.Z` version. In our last example, the system has *StreamDevice* version `2.8.4`, which **is** numeric, but `2.7.14p` is **not** numeric.
-  
-  > Also note that, in either of these cases, the *StreamDevice* module will use the version of *asyn* which was specified when building the *StreamDevice* module. 
-
-* How we require dependency modules within startup scripts.
-
-  Have a look at the differences between the startup scripts in `ch7_supplementary_path`:
-
-  ```console
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-1.cmd
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-2.cmd
-  ```
-
-  ```console
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-3.cmd 
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-4.cmd
-  ```
-
-  ```console
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-5.cmd 
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-6.cmd 
-  ```
-
-  ```console
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-7.cmd 
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-8.cmd
-  [iocuser@host:e3training]$ iocsh.bash ch7_supplementary_path/7-9.cmd
-  ```
-
-## Identify potential risks early
-
-The current implementation of e3 can't handle these aforementioned cases properly (technically it is *require* that cannot). We must thus attempt to mitigate them, in part by following best practice when writing startup script. 
-
-* Use specific version numbers for modules. That way if something wrong you will not be able to start the IOC.
-
-* Use the highest version dependency module that you know will work. In the above examples, this would mean only using `stream`, and not both `asyn` and `stream` (as *StreamDevice* already depends on *asyn*).
+  What simple and reasonalbe action could you take that would cause this IOC to fail on startup?
 
 ## Dependence, dependence, and dependence
 
