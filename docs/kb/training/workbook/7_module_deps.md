@@ -235,7 +235,7 @@ Exercise:
 
 ## Whence cometh the dependencies
 
-We have so far only discussed the *build-time dependencies*. These are dependencies that aries when compiling a module, indicated by the inclusion of a `C/C++`
+We have so far only discussed the *build-time dependencies*. These are dependencies that arise when compiling a module, indicated by the inclusion of a `C/C++`
 header file: consider the file `AsynDriverInterface.cc` from *StreamDevice*
 ```c
 // --- snip --
@@ -248,7 +248,7 @@ header file: consider the file `AsynDriverInterface.cc` from *StreamDevice*
 
 // --- snip ---
 ```
-When this file is compiled, it generates a `.d` file that describes the depedencies recognized by `make`:
+When this file is compiled, it generates a `.d` file that describes the dependencies recognized by `make`:
 ```console
 [iocuser@host:e3-stream]$ cat StreamDevice/O.7.0.5_linux-x86_64/AsynDriverInterface.d
 AsynDriverInterface.o: ../src/AsynDriverInterface.cc \
