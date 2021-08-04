@@ -26,7 +26,7 @@ The following variables are defined when an IOC is running from within startup a
 
 * `E3_CMD_TOP`: The absolute path to the startup script (cmd file), if one exists.
 
-* `E3_IOCSH_TOP`: The absolute path to where `iocsh.bash` was exectued from; equivalent to running `pwd`.
+* `E3_IOCSH_TOP`: The absolute path to where `iocsh.bash` was executed from; equivalent to running `pwd`.
 
 * `IOCSH_PS1`: The IOC Prompt String. Defaults to `$HOSTNAME-$PID > `.
 
@@ -85,13 +85,13 @@ iocstats_TEMPLATES : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/
 ```
 
 As stated before, these variables are needed if you want to use database or protocol files that have been installed with a given module. For example, *StreamDevice*
-uses a varaible `STREAM_PROTOCOL_PATH` when searching for `.proto` files, and so a common idiom in a startup script is a line such as
+uses a variable `STREAM_PROTOCOL_PATH` when searching for `.proto` files, and so a common idiom in a startup script is a line such as
 
 ```bash
 epicsEnvSet("STREAM_PROTOCOL_PATH", "$(mymodule_DB)")
 ```
 
-Excercise:
+Exercise:
 * Modify the above startup script to add some other modules, and look at the resulting paths. For example, load `stream` and see what paths `module_DIR` are available within the IOC shell.
 
 ### EPICS variables, parameters, and environment variables
@@ -103,7 +103,7 @@ localhost-15716 > epicsParamShow
 localhost-15716 > epicsEnvShow 
 ```
 
-Excercises:
+Exercises:
 * How do we print only one variable - for example `TOP`?
 * What is the difference between `$(TOP)` and `${TOP}`? Is it the same inside of the IOC shell as in UNIX?
 
@@ -344,7 +344,7 @@ These are variables that related to a given e3 module. Most of these are set in 
 
 The following are set in `CONFIG_MODULE` in the wrapper directory.
 
-* `EPICS_MODULE_NAME`: The module name of the *community* module. See also `E3_MODULE_NAME`. <!-- TODO: This should be removed. It serves no puprose -->
+* `EPICS_MODULE_NAME`: The module name of the *community* module. See also `E3_MODULE_NAME`. <!-- TODO: This should be removed. It serves no purpose -->
 * `EPICS_MODULE_TAG`: A string representing a valid git reference to the version of the module that will be built.
   :::{note}
   This can be any valid git reference, but best practice is that this is a commit hash or even better a tag. Mutable references should be avoided.
@@ -363,7 +363,7 @@ The following variables are set by require.
 
 * `E3_MODULES_PATH`: Installation path for the module.
 * `E3_MODULES_LIBNAME`: Name of shared libraries.
-* `E3_MODULES_INSTALL_LOCATION`: Parent path to installation directoriess.
+* `E3_MODULES_INSTALL_LOCATION`: Parent path to installation directories.
 * `E3_MODULES_INSTALL_LOCATION_BIN`: Binary installation path. 
 * `E3_MODULES_INSTALL_LOCATION_DB`: Database installation path. 
 * `E3_MODULES_INSTALL_LOCATION_INC`: Include installation path.
