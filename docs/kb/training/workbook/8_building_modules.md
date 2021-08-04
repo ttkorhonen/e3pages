@@ -11,13 +11,17 @@ In this lesson, you'll learn how to do the following:
 
 ---
 
-## Modules, Applications, and IOCs
+## Modules and IOCs
 
-*Note that as there is no clear boundary between modules, applications, and IOCs in EPICS, usage of these terms tend to vary between facilities.*
+As stated in [the introduction](../../../design/1_intro.md), an EPICS module is a set of code, databases, sequences, and/or startup
+script snippets that provides generic functionality for a particular device type or logical function. In e3, an EPICS module can
+also be specific to one instance of a device type.
 
-Modules within e3 are essentially the core component that enables building of an application, and consist of source code for e.g. specific communication protocols. Modules will often be collected from the EPICS community (and sometimes modified), but are also developed in-house. Typically, modules and applications are both needed to build an IOC. Applications are, however, not strongly defined at ESS at this point in time, so language will be a bit mixed in this chapter. We will, however, often use the term EPICS application, by which we typically refer to both applications and modules.
+An IOC is built up from one or more modules, based on the requirements of that IOC. A module is not a functional IOC application on its own.
 
-> Applications are otherwise often modules with customized features, e.g. unique sequencer files, or database files for specific software.
+Modules within e3 are essentially the core component that enables building of an IOC, and consist of e.g. source code for specific
+communication protocols. Modules will often be collected from the EPICS community (and sometimes modified), but are also developed
+in-house.
 
 ### Modules 
 
