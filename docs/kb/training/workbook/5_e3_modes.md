@@ -53,9 +53,9 @@ Although there is some variation amongst e3 modules, the majority of them have t
 
 * `iocsh/` Site-specific startup script "snippets". These should be installed with the module and are, in a sense, the module's API.
 
-* `MODULE_NAME/` A git submodule link to source repository.
+* `<MODULE_NAME>/` A git submodule link to source repository.
 
-* `MODULE_NAME.Makefile` The (e3) makefile for the module. This consists of instructions for which source files to compile, header files to install, etc.
+* `<MODULE_NAME>.Makefile` The (e3) makefile for the module. This consists of instructions for which source files to compile, header files to install, etc.
 
 * `patch/` Site-specific patches can be included here.
 
@@ -63,7 +63,7 @@ Although there is some variation amongst e3 modules, the majority of them have t
 
 Note in general that the wrapper should contain site-specific files that are used to build and to complement a community module - a number
 of these directories will also exist within the module, so there will inevitably be some judgement as to where a given `.iocsh` file should
-be places, for example.
+be placed, for example.
 
 ### The underlying git submodule
 
