@@ -25,23 +25,22 @@ in-house.
 
 ### Modules 
 
-Most e3 modules originate from the EPICS community, like [iocStats](https://github.com/epics-modules/iocStats), [mrfioc2](https://github.com/epics-modules/mrfioc2), [asyn](https://github.com/epics-modules/asyn), and [autosave](https://github.com/epics-modules/autosave). In e3, the installation location for modules is defined in `E3_SITEMODS_PATH`, as discussed earlier in [Chapter 6](6_e3_vars.md).
+Many module originate from the broader EPICS community. Some examples are [asyn](https://github.com/epics-modules/asyn), 
+[iocStats](https://github.com/epics-modules/iocStats), [mrfioc2](https://github.com/epics-modules/mrfioc2), or any of the
+[Area Detector modules](https://github.com/areaDetector). To see which of these modules are installed in an e3 environment, you can
+simply look at the contents of `E3_SITEMODS_PATH` as previously discussed in [Chapter 6](6_e3_vars.md).
 
-> You should have a look at these aforementioned variables:
->
-> ```console
-> [iocuser@host:e3-3.15.5]$ source tools/setenv
-> [iocuser@host:e3-3.15.5]$ echo ${E3_SITEMODS_PATH}
-> [iocuser@host:e3-3.15.5]$ tree -L 2 ${E3_SITEMODS_PATH}
-> [iocuser@host:e3-3.15.5]$ echo ${E3_SITELIBS_PATH}
-> [iocuser@host:e3-3.15.5]$ tree -L 4 ${E3_SITELIBS_PATH}
-> ```
+You can use this to easily list all of the modules (and versions) that are installed in an e3 environment:
+```console
+[iocuser@host:~]$ echo ${E3_SITEMODS_PATH}
+[iocuser@host:~]$ ls ${E3_SITEMODS_PATH}
+[iocuser@host:~]$ ls ${E3_SITEMODS_PATH}/*
+```
+If `E3_SITEMODS_PATH` is not set, then you must of course first source the appropriate `setenv` or `setE3Env.bash`.
 
-So - as you've seen previously - e3's design is based on having *wrappers* as a common front-end for modules and applications. These wrappers essentially contain our site specific modifications to "standard" EPICS components; in part to support collaboration with the EPICS community while still suporting novel functionality.
-
-### Applications
-
-Although ESS "doesn't have applications", there is still built-in support into e3 for differentiation of modules and applications, available upon need. Praxis is to name e3 applications with the same notation as modules (*e3-applicationName*), and there is a `E3_SITEAPPS_PATH` available for possible future needs. Applications can then be loaded just as modules in the IOC shell (`require application,version`).
+In summary, e3's design is based on having *wrappers* as a front-end for EPICS modules. These can be thought of as storing metadata needed
+to build and deploy a module, together with site-specific modifications to those community modules. This allows an e3 user to work with
+community modules in a maximally flexible way.
 
 ### IOCs
 
