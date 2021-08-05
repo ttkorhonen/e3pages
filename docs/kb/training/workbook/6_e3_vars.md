@@ -49,12 +49,12 @@ require iocstats
 
 iocInit
 
-echo "E3_IOCSH_TOP       : $(E3_IOCSH_TOP)"
-echo "E3_CMD_TOP         : $(E3_CMD_TOP)"
-echo "iocstats_DIR       : $(iocstats_DIR)"
-echo "iocstats_VERSION   : $(iocstats_VERSION)"
-echo "iocstats_DB        : $(iocstats_DB)"
-echo "iocstats_TEMPLATES : $(iocstats_TEMPLATES)"
+epicsEnvShow E3_IOCSH_TOP
+epicsEnvShow E3_CMD_TOP
+epicsEnvShow iocstats_DIR
+epicsEnvShow iocstats_VERSION
+epicsEnvShow iocstats_DB
+epicsEnvShow iocstats_TEMPLATES
 ```
 
 ```console
@@ -68,19 +68,18 @@ Starting iocInit
 ## Rev. 2021-03-15T09:48+0100
 ############################################################################
 iocRun: All initialization complete
-echo "E3_IOCSH_TOP       : /home/simonrose/data/git/e3/modules/core/e3-iocStats"
-E3_IOCSH_TOP       : /home/simonrose/data/git/e3/modules/core/e3-iocStats
-echo "E3_CMD_TOP         : /home/simonrose/data/git/e3/modules/core/e3-iocStats"
-E3_CMD_TOP         : /home/simonrose/data/git/e3/modules/core/e3-iocStats
-echo "iocstats_DIR       : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/"
-iocstats_DIR       : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/
-echo "iocstats_VERSION   : 3.1.16+0"
-iocstats_VERSION   : 3.1.16+0
-echo "iocstats_DB        : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db"
-iocstats_DB        : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
-echo "iocstats_TEMPLATES : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db"
-iocstats_TEMPLATES : /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
-
+epicsEnvShow E3_IOCSH_TOP
+E3_IOCSH_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
+epicsEnvShow E3_CMD_TOP
+E3_CMD_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
+epicsEnvShow iocstats_DIR
+iocstats_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/
+epicsEnvShow iocstats_VERSION
+iocstats_VERSION=3.1.16+0
+epicsEnvShow iocstats_DB
+iocstats_DB=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
+epicsEnvShow iocstats_TEMPLATES
+iocstats_TEMPLATES=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/d
 # --- snip snip ---
 ```
 
