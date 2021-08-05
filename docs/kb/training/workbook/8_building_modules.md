@@ -71,7 +71,158 @@ e3-ioc-<iocname>
 Exercise:
 * When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How
   can you refer to such files in relation to the location of `st.cmd`?
-## How to build a module/application
+
+## How to build a module
+
+The e3 team has developed a number of tools to facilitate creating new e3 wrappers. In particular, we use [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/),
+a Python-based templating utility.
+
+In order to create an e3 wrapper, one should use [this template](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper). This can be installed with
+```console
+[iocuser@host:~]$ pip3 install cookiecutter
+```
+You may need to add a `--user`, depending on your system permissions.
+
+:::{note}
+This wrapper requires that you use Python 3, so when you install cookiecutter make sure you do so with `pip3`, or with a conda/virtual environment
+that has `python3` installed.
+:::
+
+There are two main types of wrappers: wrappers that link to external code (the types that we have seen so far), and wrappers in *local mode*.
+
+### External modules
+
+If you are needing to use a module from the EPICS community or one that may be used outside of a purely e3 context, then the e3 wrapper should point to that
+repository. This could be located e.g. in the [epics-modules](https://github.com/epics-modules) group on Github, or elsewhere.
+
+When you use the cookiecutter recipe it will prompt you for some information needed to build the wrapper.
+```console
+[iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
+company [European Spallation Source ERIC]: 
+module_name [mymodule]: fimscb                                 # Update the module name
+summary [EPICS fimscb module]: 
+full_name [Your name]: 
+email [your.name@ess.eu]: 
+epics_base_version [7.0.5]: 
+epics_base_location [/epics/base-7.0.5]: 
+require_version [3.4.1]: 
+git_repository [ ... ]: https://github.com/icshwi/fimscb.git   # And update the URL
+```
+
+They key things to fill in here are highlighted above, namely the module name and git url.
+
+:::{note}
+If the git repository that you add exists and is public, then cookiecutter will add it as a submodule to the wrapper. Otherwise, a templated *local module* (see
+next section) will be created.
+:::
+
+Congratulations, you have just created an e3 wrapper! However, the wrapper is not configured correctly yet. If you try to build the module then you should see the 
+following output
+```console
+[iocuser@host:e3-fimscb]$ make init patch build install
+[iocuser@host:e3-fimscb]$ make existent LEVEL=4
+/epics/base-7.0.5/require/3.4.1/siteMods/fimscb
+`-- master
+    |-- fimscb_meta.yaml
+    `-- lib
+        `-- linux-x86_64
+            |-- fimscb.dep
+            `-- libfimscb.so
+```
+
+Exercise
+* Why do we do `make init patch` as well as `build install`?
+
+If you explore the `fimscb` you should see the following.
+```console
+[iocuser@host:e3-fimscb]$ tree fimscb
+fimscb
+# --- snip snip ---
+|-- fimscbApp
+|   |-- Db
+|   |   |-- fimscb.db
+|   |   |-- fimscb.proto
+|   |   |-- Makefile
+|   |   |-- stream_raw.proto
+|   |   `-- stream_raw.template
+|   |-- Makefile
+|   `-- src
+|       |-- fimscbMain.cpp
+|       `-- Makefile
+|-- fimscb.Makefile
+|-- iocBoot
+|   |-- iocfimscb
+|   |   |-- Makefile
+|   |   `-- st.cmd
+|   `-- Makefile
+|-- Makefile
+|-- README.md
+# --- snip snip ---
+```
+In particular, the `.db`, `.proto`, and `.template` files have not been installed. Moreover, the `fimscpMain.cpp` file is a generic boilerplate
+file to start an IOC in regular EPICS, and does not need to be comipled in with the e3 module `fimscb` (recall that we use `iocsh.bash` to
+start an IOC instead of compiling a separate executable binary). In order to install the database and other files, as well as remove the
+source file, you must make changes to `fimscb.Makefile`.
+
+In the end, it should look something like
+```make
+where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+include $(E3_REQUIRE_TOOLS)/driver.makefile
+include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+
+
+############################################################################
+#
+# Add any required modules here that come from startup scripts, etc.
+#
+############################################################################
+
+# We will come back to this line later!
+# REQUIRED += stream
+
+
+############################################################################
+#
+# Relevant directories to point to files
+#
+############################################################################
+
+APP:=fimscbApp
+APPDB:=$(APP)/Db
+
+
+############################################################################
+#
+# Add any files that should be copied to $(module)/Db
+#
+############################################################################
+
+TEMPLATES += $(wildcard $(APPDB)/*.db)
+TEMPLATES += $(wildcard $(APPDB)/*.proto)
+TEMPLATES += $(wildcard $(APPDB)/*.template)
+
+.PHONY: db
+db:
+```
+
+If you now re-run the build, you should see the following
+```console
+[iocuser@host:e3-fimscb]$ make clean build install
+[iocuser@host:e3-fimscb]$ make existent LEVEL=4
+/epics/base-7.0.5/require/3.4.1/siteMods/fimscb
+`-- master
+    |-- db
+    |   |-- fimscb.db
+    |   |-- fimscb.proto
+    |   |-- stream_raw.proto
+    |   `-- stream_raw.template
+    |-- fimscb_meta.yaml
+    `-- lib
+        `-- linux-x86_64
+            `-- fimscb.dep
+```
+
+### Local modules
 
 > For convenience, we will henceforth refer to the e3 module or application as an e3 wrapper.
 
