@@ -136,7 +136,6 @@ Exercise
 If you explore the `fimscb` you should see the following.
 ```console
 [iocuser@host:e3-fimscb]$ tree fimscb
-fimscb
 # --- snip snip ---
 |-- fimscbApp
 |   |-- Db
@@ -221,157 +220,20 @@ If you now re-run the build, you should see the following
         `-- linux-x86_64
             `-- fimscb.dep
 ```
+We can check that it works correctly by starting an IOC that loads this module.
+
+```console
+[iocuser@host:e3-fimscb]$ iocsh.bash -r fimscb
+```
+to make sure that it loads correctly. In this case there isn't much that can go wrong as this module consists only of database and
+protocol files. But it is still good practice.
+
+:::{tip}
+Given that we now have a working `fimscb` e3 wrapper, this would be a good time to commit and push your changes to whatever
+remote repository you use.
+:::
 
 ### Local modules
-
-> For convenience, we will henceforth refer to the e3 module or application as an e3 wrapper.
-
-How you build your e3 wrapper will depend on how your application's (or module's) code is arranged. You can have the wrapper contain the application, you can source control the wrapper separately, and if there is an existing application already available in git (see e.g. [epics-modules](https://github.com/epics-modules)), you can simply point towards this. We will now go through how to create wrappers for these cases.
-
-A small note here is that if you're creating from scratch, the recommendation is to use the standard EPICS framework (for consistency with the wider EPICS community), i.e. `makeBaseApp.pl`.
-
-> The purpose of e3 wrappers is to have a standardised interface to modules and applications using the standard EPICS structure. Our wrapper is essentially a front-end for the module/application.
-
-To create an e3 wrapper (`e3-moduleName`), we will use a utility called the *e3TemplateGenerator* (which is part of the [e3-tools](https://github.com/icshwi/e3-tools) repository). Clone e3-tools and inspect it (especially the README.md as always) before continuing.
-
-### Module/application already on git
-
-In `e3-tools/e3TemplateGenerator`, there is a `modules_conf/` directory. If we look at the file `genesysnGEN5kWPS.conf`, we will see:
-
-```python
-EPICS_MODULE_NAME:=genesysGEN5kWPS
-EPICS_MODULE_URL:=https://github.com/icshwi
-E3_TARGET_URL:=https://github.com/icshwi
-E3_MODULE_SRC_PATH:=genesysGEN5kWPS
-```
-
-> You may here recognize the variables `EPICS_MODULE_NAME` and `E3_MODULE_SRC_PATH` from [Chapter 6](6_e3_vars.md).
-
-* `EPICS_MODULE_NAME`: The module name.
-
-* `EPICS_MODULE_URL`: The git project where the module is hosted; the URI to the repository with the module name stripped.
-
-* `E3_TARGET_URL`: The git project that the e3 wrapper should be hosted under.
-
-* `E3_MODULE_SRC_PATH`: The name of the e3 wrapper.
-
-Our config file above thus specifies that we (already) have a standard EPICS module at https://github.com/icshwi/genesysGEN5kWPS, and that we want to create a wrapper for this at https://github.com/icshwi/e3-genesysGEN5kWPS.
-
-Let's now try to run the e3TemplateGenerator with this configuration.
-
-* Run the following command (press `N` when asked if you want to push the local `e3-genesysGEN5kWPS` to the remote repository)):
-
-  > To create the structure elsewhere than `$HOME`, replace `~` with your target destination of choice.
-
-  ```console
-  [iocuser@host:e3TemplateGenerator]$ ./e3TemplateGenerator.bash -m modules_conf/genesysGEN5kWPS.conf -d ~
-  ```
-
-* Look at the file structure of the new wrapper directory:
-
-  ```console
-  [iocuser@host:e3TemplateGenerator]$ tree -L 1 ~/e3-genesysGEN5kWPS
-  .
-  |-- cmds
-  |-- configure
-  |-- docs
-  |-- genesysGEN5kWPS                     # ---> E3_MODULE_SRC_PATH
-  |-- iocsh
-  |-- opi
-  |-- patch
-  |-- template
-  |-- genesysGEN5kWPS.Makefile            # ---> EPICS_MODULE_NAME.Makefile
-  |-- Makefile
-  `-- README.md
-  ```
-
-Ensure that you understand how the four environment variables mentioned earlier (in the configuration file) are used here.
-
-Let's now build an e3 wrapper with a remote repository. The repository we will be using in this tutorial is https://github.com/icshwi/fimscb.
-
-1. Open `fimscb.conf` and modify the `E3_TARGET_URL` to point towards your personal GitHub account.
-
-2. Open GitHub in a browser and create a new repository called `e3-fimscb`.
-
-3. Run e3TemplateGenerator using the `fimscb.conf` configuration file. This time, press `Y` at the first prompt to push all changes to `E3_TARGET_URL`/e3-`EPICS_MODULE_NAME`.
-
-4. Inspect (and initialize) your new e3-wrapper:
-
-   ```console
-   [iocuser@host:e3TemplateGenerator]$ tree -L 1 ~/e3-fimscb
-   ```
-
-   > Of course modify the path if you chose a different target destination (`-d path/to/dir`).
-
-   *N.B.! Before initializing, modify your `configure/RELEASE` and `configure/CONFIG_MODULE` as we've gone through in previous chapters.*
-
-   ```console
-   [iocuser@host:e3-fimscb]$ make init
-   [iocuser@host:e3-fimscb]$ make vars
-   ```
-
-You should now have the e3 wrapper set up. Next is to modify the `*.Makefile` (in this case, `fimscb.Makefile`). The e3TemplateGenerator initiates the wrapper with a boilerplate makefile, that contains default values and commented out code segments (for your convenience). For now, set it up as follows:
-
-```console
-[iocuser@host:e3-fimscb]$ cat fimscb.Makefile
-where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-include $(E3_REQUIRE_TOOLS)/driver.makefile
-include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
-
-APP:=fimscbApp
-APPDB:=$(APP)/Db
-
-TEMPLATES += $(APPDB)/fimscb.db
-TEMPLATES += $(APPDB)/fimscb.proto
-
-db:
-
-.PHONY: db 
-
-vlibs:
-
-.PHONY: vlibs
-```
-
-After this, we will be able to build the wrapper:
-
-```console
-[iocuser@host:e3-fimscb]$ make build
-[iocuser@host:e3-fimscb]$ make install
-[iocuser@host:e3-fimscb]$ make existent LEVEL=3
-/epics/base-3.15.5/require/3.0.4/siteApps/fimscb
-└── master
-    ├── db
-    │   ├── fimscb.db
-    │   └── fimscb.proto
-    └── lib
-        └── linux-x86_64
-
-4 directories, 2 files
-```
-
-And to finish off, let's explore it in `iocsh.bash`:
-
-> Don't forget to source your EPICS environment, or else launch `iocsh.bash` directly (`/path/to/epics/require/require-version/bin/iocsh.bash`).
-
-```console
-[iocuser@host:e3-fimscb] iocsh.bash
-effbc10.kaffee.4837 > require fimscb,master
-Module fimscb version master found in /epics/base-3.15.5/require/3.0.4/siteApps/fimscb/master/
-Module fimscb has no library
-effbc10.kaffee.4837 > require fimscb,master
-Module fimscb version master already loaded
-effbc10.kaffee.4837 > cd $(fimscb_DB)
-effbc10.kaffee.4837 > system (ls)
-effbc10.kaffee.4837 > pwd
-```
-
-> If working on a real module, don't forget proper version control here:
->
-> ```console
-> [iocuser@host:e3-fimscb]$ git commit -am "update makefile"
-> [iocuser@host:e3-fimscb]$ git push
-> ```
 
 ### Module/application with local source code
 
