@@ -44,24 +44,33 @@ community modules in a maximally flexible way.
 
 ### IOCs
 
-In e3, IOCs are primarily just startup scripts. You therefore don't need to use a utilities for this, but can just create a directory with a standardised structure (with some variation as per your requirements). This will commonly look like:
+Unlike standard EPICS where an IOC is a compiled binary, in e3 an IOC is just a startup script. This means that there are no specialised utilities required to build
+an IOC, simply a text-editor.
+
+The simplest such repository can look something like the following.
 
 ```console
 [iocuser@host:iocs]$ tree e3-ioc-<iocname>
 e3-ioc-<iocname>
-├── iocsh
-│   └── .keep
-├── env
-│   └── .keep
-├── .gitignore
-├── README.me
-└── st.cmd
-
-2 directories, 5 files
+|-- README.md
+`-- st.cmd
 ```
 
-> If you have no need for `iocsh/` or `env/` you can of course skip these, just as you can add directories (e.g. `docs/` or `gui/`).
+It is also possible to include some non-binary files such as `.db` files, `.proto` files and the like, depending on your local requirements.
+```console
+[iocuser@host:iocs]$ tree e3-ioc-<iocname>
+e3-ioc-<iocname>
+|-- db
+|   |-- protocol.proto
+|   `-- records.db
+|-- env.sh
+|-- README.md
+`-- st.cmd
+```
 
+Exercise:
+* When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How
+  can you refer to such files in relation to the location of `st.cmd`?
 ## How to build a module/application
 
 > For convenience, we will henceforth refer to the e3 module or application as an e3 wrapper.
