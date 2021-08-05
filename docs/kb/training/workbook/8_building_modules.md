@@ -243,6 +243,70 @@ has been loaded now.
 
 ### Local modules
 
+It may not be the case that every e3 module is one that is expected to be used outside of your local institution. In such cases, separating
+your code into a submodule and a wrapper may not make the most sense, since it adds a fair amount of additional complexity. In that case,
+we can use the the *local source mode* when designing modules and wrappers.
+
+Create a cookiecutter wrapper as above, but this time enter `none` for the git URL.
+```console
+[iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
+company [European Spallation Source ERIC]: 
+module_name [mymodule]: clock                     # Update the module name
+summary [EPICS clock module]: 
+full_name [Your name]: 
+email [your.name@ess.eu]: 
+epics_base_version [7.0.5]: 
+epics_base_location [/epics/base-7.0.5]: 
+require_version [3.4.1]: 
+git_repository [ ... ]: none                      # Leave this as "none" or any non-valid URL
+```
+This will create a new wrapper. The default behaviour of cookiecutter is to put in a template based on `makeBaseApp.pl` from EPICS
+base. In our case we will remove that and download a new set of source files.
+```console
+[iocuser@host:~]$ cd e3-clock
+[iocuser@host:e3-clock]$ rm -rf clock/*  # Remove the generated files
+[iocuser@host:e3-clock]$ wget -c http://www-linac.kek.jp/cont/epics/second/second-devsup.tar.gz
+[iocuser@host:e3-clock]$ tar -zxvf second-devsup.tar.gz -C clock
+```
+
+So how does e3 know that we are in local source mode? The key variables is `EPICS_MODULE_TAG`. When building/initialising etc., the e3 build
+system will check to see if this variable has been set. If it has, then it will try to check out that tag in the submodule. If it is not set,
+then it assume that we are in local source mode. If we look at `CONFIG_MODULE` in the wrapper in this case, we see
+```make
+#
+EPICS_MODULE_NAME:=clock
+
+# EPICS_MODULE_TAG:=master
+#
+E3_MODULE_VERSION:=master
+
+# Dependent module versions
+# For example:
+#ASYN_DEP_VERSION:=4.41.0
+
+# In most cases, we don't need to touch the following variables.
+E3_MODULE_NAME:=$(EPICS_MODULE_NAME)
+E3_MODULE_SRC_PATH:=clock
+E3_MODULE_MAKEFILE:=$(EPICS_MODULE_NAME).Makefile
+
+
+-include $(TOP)/configure/CONFIG_OPTIONS
+# The definitions can also be overridden an untracked CONFIG_MODULE.local
+-include $(TOP)/configure/CONFIG_MODULE.local
+```
+i.e. the line which defines `EPICS_MODULE_TAG` has been commented out, so we are in local source mode.
+:::{tip}
+Even if you are using an external module, you can use this for testing purposes to avoid having the submodule checked out each time that you
+run `make build`. This can be particularly useful if you have local modifications to the submodule.
+:::
+
+We can see that we are in local source mode if we run `make init`:
+```console
+[iocuser@host:e3-clock]$ make init
+>> You are in the local source mode.
+>> Nothing happens.
+```
+
 ### Module/application with local source code
 
 Let's assume that we have found an EPICS application that we would like to integrate into e3, where the source is an archive (e.g. `.tar.gz`) that we received from a collaborator or that we downloaded from a (non-git) internet source.
