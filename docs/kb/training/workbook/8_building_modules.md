@@ -75,16 +75,16 @@ Exercise:
 ## How to build a module
 
 The e3 team has developed a number of tools to facilitate creating new e3 wrappers. In particular, we use [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/),
-a Python-based templating utility.
-
-In order to create an e3 wrapper, one should use [this template](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper). This can be installed with
+a Python-based templating utility. This can be installed with
 ```console
 [iocuser@host:~]$ pip3 install cookiecutter
 ```
 You may need to add a `--user`, depending on your system permissions.
 
+In order to create an e3 wrapper, one should use [this template](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper).
+
 :::{note}
-This wrapper requires that you use Python 3, so when you install cookiecutter make sure you do so with `pip3`, or with a conda/virtual environment
+This cookiecutter recipe requires that you use Python 3, so when you install cookiecutter make sure you do so with `pip3`, or with a conda/virtual environment
 that has `python3` installed.
 :::
 
