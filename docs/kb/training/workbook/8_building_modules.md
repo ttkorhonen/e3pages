@@ -307,6 +307,39 @@ We can see that we are in local source mode if we run `make init`:
 >> Nothing happens.
 ```
 
+As before, in order to build this module we need to tell *require* which sources and other files we want to include from the module subdirectory.
+Modify `clock.Makefile` so as to look like
+```make
+where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+include $(E3_REQUIRE_TOOLS)/driver.makefile
+include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+
+APP:=Clock1App
+APPDB:=$(APP)/Db
+APPSRC:=$(APP)/src
+
+USR_INCLUDES += -I$(where_am_I)$(APPSRC)
+
+TEMPLATES += $(wildcard $(APPDB)/*.db)
+SOURCES += $(APPSRC)/devAiSecond.c
+
+DBDS += $(APPSRC)/aiSecond.dbd
+
+.PHONY: db
+db:
+```
+and then build and install it as usual. To test that your new module works correctly, create a new `ch8.cmd` with the following contents.
+```bash
+require clock
+
+dbLoadRecords($(clock_DB)/aiSecond.db)
+
+iocInit()
+```
+and then run `iocsh.bash ch8.cmd`.
+
+
+
 ### Module/application with local source code
 
 Let's assume that we have found an EPICS application that we would like to integrate into e3, where the source is an archive (e.g. `.tar.gz`) that we received from a collaborator or that we downloaded from a (non-git) internet source.
