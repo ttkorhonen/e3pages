@@ -169,17 +169,6 @@ where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
-
-############################################################################
-#
-# Add any required modules here that come from startup scripts, etc.
-#
-############################################################################
-
-# We will come back to this line later!
-# REQUIRED += stream
-
-
 ############################################################################
 #
 # Relevant directories to point to files
@@ -232,6 +221,25 @@ protocol files. But it is still good practice.
 Given that we now have a working `fimscb` e3 wrapper, this would be a good time to commit and push your changes to whatever
 remote repository you use.
 :::
+
+Given that `e3-fimscb` depends on *StreamDevice* (note the existence of `.proto`) files, it would be good to include that dependency
+so that every time `fimscb` is loaded, so will *StreamDevice*. Since we have no source files, this cannot be a build-time dependency
+as discussed in [the last chapter](7_module_deps.md). Instead, it is a *run-time* dependency.
+
+In order to configure this correctly, you must uncomment the `# REQUIRED += stream` line in `fimscb.Makefile` and, as for any other
+dependency, ensure that the correct version is specified. This is done by adding the following to `CONFIG_MODULE`:
+```make
+STREAM_DEP_VERSION:=2.8.18
+```
+and to `fimscb.Makefile`
+```make
+REQUIRED += stream
+ifneq ($(strip $(STREAM_DEP_VERSION)),)
+stream_VERSION:=$(STREAM_DEP_VERSION)
+endif
+```
+If you uninstall and reinstall `fimscb` and then run `iocsh.bash -r fimscb` you should see that *StreamDevice* and all of its dependencies
+has been loaded now.
 
 ### Local modules
 
