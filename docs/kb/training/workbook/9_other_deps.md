@@ -12,17 +12,16 @@ In this lesson, you'll learn how to do the following:
 
 ## Using a new record type
 
-We will now have an example of *acalcout* use, from the module [calc](https://github.com/epics-modules/calc), for linear conversion of an existent waveform.
+When building an IOC, you may want to include records that are not part of EPICS base. As an example, you may want to use an *acalcout* record (from
+the [calc](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
+example, to perform linear conversions on *waveform* records.
 
 ### Create a new module 
 
-Use this as an exercise. If you need to, go back to the instructions in [Chapter 8](8_building_modules.md). We will consider the module name to be `linconv` and the e3 module `e3-linconv`.
+Let us begin by creating a module to work with, following the instructions in [Chapter 8](8_building_modules.md). We want to create a local module called
+*linconv*, which will sit in a wraper called *e3-linconv*. Within that wrapper, create a `linconv.db` file with the following contents.
 
-### Create the database file with linear conversion
-
-The db file should look like this:
-
-```bash
+```
 record(ao, "OFFSET") {
     field(VAL,"0.5")
     field(PINI,"YES")
@@ -49,11 +48,36 @@ record(waveform, "LINCONV"){
 }
 ```
 
-In this example `OFFSET` will be the offset value and `SLOPE` the slope value applied to a waveform with values `0..99`. The record `LINCONV_create` is the acalcout record which calculates the resultant waveform. Then the resultant waveform is directed to record `LINCONV`.
+:::{note}
+Documentation for the *acalcout* record (a part of [synapps](https://www.aps.anl.gov/BCDA/synApps)) can be found [here](https://epics.anl.gov/bcda/synApps/calc/aCalcoutRecord.html).
 
-> More information about acalcout can be found [here](https://epics.anl.gov/bcda/synApps/calc/calc.html).
+In this example `OFFSET` will be the offset value and `SLOPE` the slope value applied to a waveform with values `0..99`. The record `LINCONV_create` is the acalcout record which
+calculates the resultant waveform. Then the resultant waveform is directed to record `LINCONV`.
 
-Besides the db file itself is expected that you change the `linconv.Makefile` to include the `linconv.db`.
+In order to include the `linconv.db` file into the module, you will have to update `linconv.Makefile` in order to include it as described in [Chapter 8](8_building_modules.md).
+
+Once you have built and installed the module, you should create a basic startup script to load the module, which could look like
+```bash
+require linconv
+dbLoadRecords("$(linconv_DB)/linconv.db")
+```
+
+Let's try run this and see what happens.
+```console
+[iocuser@host:e3-linconv]$ iocsh.bash st.cmd
+# --- snip snip ---
+require linconv
+Module linconv version master found in cellMods//base-7.0.5/require-3.4.1/linconv/master/
+Module linconv has no library
+Loading module info records for linconv
+dbLoadRecords(/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db)
+Record "LINCONV_create" is of unknown type "acalcout"
+Error at or before ")" in file "/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db" line 13
+Error: syntax error
+dbLoadRecords: failed to load '/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db'
+# --- snip snip ---
+```
+Uh, oh, what happened?
 
 ### Change e3-linconv to uses acalcout
  
