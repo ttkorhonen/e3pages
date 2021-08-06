@@ -13,7 +13,7 @@ In this lesson, you'll learn how to do the following:
 
 ## Dependent environment variables
 
-One of the key ideas with e3 (arguably, *the* key idea) is the manage dependencies of a given module in a common, structured way. That is,
+One of the key ideas with e3 (arguably, *the* key idea) is the management of dependencies of a given module in a common, structured way. That is,
 if a module A depends on a module B, then you should only need to load A; module B should be loaded and handled automatically (and so on, 
 recursively). There are a few pieces that manage this.
 
