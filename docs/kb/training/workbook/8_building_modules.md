@@ -159,7 +159,7 @@ If you explore the `fimscb` you should see the following.
 # --- snip snip ---
 ```
 In particular, the `.db`, `.proto`, and `.template` files have not been installed. Moreover, the `fimscpMain.cpp` file is a generic boilerplate
-file to start an IOC in regular EPICS, and does not need to be comipled in with the e3 module `fimscb` (recall that we use `iocsh.bash` to
+file to start an IOC in regular EPICS, and does not need to be compiled in with the e3 module `fimscb` (recall that we use `iocsh.bash` to
 start an IOC instead of compiling a separate executable binary). In order to install the database and other files, as well as remove the
 source file, you must make changes to `fimscb.Makefile`.
 
@@ -245,7 +245,7 @@ has been loaded now.
 
 It may not be the case that every e3 module is one that is expected to be used outside of your local institution. In such cases, separating
 your code into a submodule and a wrapper may not make the most sense, since it adds a fair amount of additional complexity. In that case,
-we can use the the *local source mode* when designing modules and wrappers.
+we can use the *local source mode* when designing modules and wrappers.
 
 Create a cookiecutter wrapper as above, but this time enter `none` for the git URL.
 ```console
