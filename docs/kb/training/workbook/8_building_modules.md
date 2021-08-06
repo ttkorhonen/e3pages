@@ -4,9 +4,9 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Understand the difference between modules and applications.
+* Understand the difference between modules IOCs
 * Understand the e3 wrapper directory structure.
-* Create an e3 wrapper using the *e3TemplateGenerator*.
+* Create an e3 wrapper using *Cookiecutter*
 * Edit a module makefile in order to build and install it into e3.
 
 ---
