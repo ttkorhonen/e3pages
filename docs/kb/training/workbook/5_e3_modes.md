@@ -1,4 +1,4 @@
-# Deployment and Development mode
+# Standard and Development mode
 
 ## Lesson Overview
 
@@ -124,7 +124,7 @@ As denoted in [Chapter 1](1_installing_e3.md), the standard make targets to buil
 * `make build`
 * `make install`
 
-The following additional `make` targets are of particular importance while using development mode.
+The following additional `make` targets are of particular importance while using standard mode.
 
 * `make vars`: Prints out a list of relevant environment variables. Useful for debugging the environment.
 * `make debug`: Runs a debug of the build process, printing out the values of certain intermediate build variables.
