@@ -50,8 +50,9 @@ record(waveform, "LINCONV"){
 
 :::{note}
 Documentation for the *acalcout* record (a part of [synapps](https://www.aps.anl.gov/BCDA/synApps)) can be found [here](https://epics.anl.gov/bcda/synApps/calc/aCalcoutRecord.html).
+:::
 
-In this example `OFFSET` will be the offset value and `SLOPE` the slope value applied to a waveform with values `0..99`. The record `LINCONV_create` is the acalcout record which
+In this example `OFFSET` will be the offset value and `SLOPE` the slope value applied to a waveform with values `0..99`. The record `LINCONV_create` is the *acalcout* record which
 calculates the resultant waveform. Then the resultant waveform is directed to record `LINCONV`.
 
 In order to include the `linconv.db` file into the module, you will have to update `linconv.Makefile` in order to include it as described in [Chapter 8](8_building_modules.md).
@@ -77,74 +78,43 @@ Error: syntax error
 dbLoadRecords: failed to load '/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db'
 # --- snip snip ---
 ```
-Uh, oh, what happened?
 
-### Change e3-linconv to uses acalcout
- 
-So, now with that db file, if you try to run an startup script like this:
+### Fixing the dependency
 
-```bash
-require linconv, 0.0.1
-dbLoadRecords("linconv.db")
-```
+So what happened here? The issue is that we need to also load the *calc* module at the same time in order for the *acalcout* record to be made available. We can do this in
+one of several different ways:
 
-You will receive a message like this:
+* Run `iocsh.bash -r calc st.cmd` instead, to force it to load *calc* on startup. This is the worst of the ways since we have to modify the command we use to start the IOC,
+  but it can be useful for quick and dirty testing.
+* Modify your `st.cmd` to load *calc*:
+  ```bash
+  require calc
+  require linconv
+  dbLoadRecords("$(linconv_DB)/linconv.db")
+  ```
+  This is better, since starting the IOC will always load all of the necessary modules. However, it means that every time you create an IOC that needs this module
+  you must still remember to do include the `require calc` line.
+* The best option is to remember from [Chapter 8](8_building_modules.md) that we can add *calc* as a run-time dependency of *linconv*. We do this by adding
+  `CALC_DEP_VERSION:=3.7.4` to `configure/CONFIG_MODULE`, and then we add
+  ```make
+  REQUIRED += calc
+  ifneq ($(strip $(CALC_DEP_VERSION)),)
+  calc_VERSION:=$(CALC_DEP_VERSION)
+  endif
+  ```
+  to `linconv.Makefile`. This registers `calc` as a (run-time) dependency of *linconv*, ensuring that it will be loaded every time.
 
+If we now re-install the module and re-start it
 ```console
-Record "LINCONV_create" is of unknown type "acalcout"
+[iocuser@host:e3-linconv]$ make uninstall  # A good idea in general
+[iocuser@host:e3-linconv]$ make clean build install
+[iocuser@host:e3-linconv]$ iocsh.bash st.cmd
 ```
+then we should see that the records load as expected. Moreover, you should be able to read the `LINCONV` PV and set `SLOPE` and `OFFSET` to modify it.
 
-This error happens because the definition of acalcout type come from the *calc* module. 
-
-So, what you should do to solve this? One possible approach is include in your startup script something like this:
-
-```bash
-require calc, 3.7.1
-```
-
-The problem with this approach is that every time you use your *linconv* module you need to include this. You would furthermore need to know what *calc* version to use. A better approach is to require the *calc* module when you require *linconv* - and this is the main new point on this lesson. To do this, you need to change a few files in your `e3-linconv` repository. First you need to change your `configure/CONFIG_MODULE` to define what *calc* version you want to use, by adding the following line:
-
-```python
-CALC_DEP_VERSION:=3.7.1
-```
-
-Next you need to change the `linconv Makefile` to recover the *calc* version and to require it, to do this you should add these lines to `linconv.Makefile`:
-
-```bash
-REQUIRED=calc
-
-ifneq ($(strip $(CALC_DEP_VERSION)),)
-calc_VERSION=$(CALC_DEP_VERSION)
-endif
-```
-
-Here is the key line is the **`REQUIRED`** declaration, which allows the building system to add its dependency directly to a generated `dep` file in addition to a compiler calculated dependency. 
-
-Now you can compile and install the module:
-
-```console
-[iocuser@host:e3-linconv]$ make vars
-[iocuser@host:e3-linconv]$ make init
-[iocuser@host:e3-linconv]$ make build
-[iocuser@host:e3-linconv]$ make install
-```
-
-You can check to see if *calc* was included as a dependency for your *linconv* module. In the file `$(E3_REQUIRE_LOCATION)/siteMods/linconv/master/lib/linux-x86_64/linconv.dep` you should see this:
-
-```bash
-calc 3.7.1
-```
-
-### Testing linconv
-
-Having changed this configuration you can try the same startup script:
-
-```bash
-require linconv, 0.0.1
-dbLoadRecords("linconv.db")
-```
-
-Congratulations! Now you should be able to read `LINCONV` PVs and set `SLOPE` and `OFFSET`.
+:::{admonition} Exercise
+Why don't we need to run `make patch` or `make init`?
+:::
 
 ## Using an external db/template file
 
