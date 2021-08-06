@@ -6,7 +6,6 @@ In this lesson, you'll learn how to do the following:
 
 * Use a record type from another module in your module.
 * Use a db or template file from another module to generate a new db file in your module.
-<!-- todo: add contents from 9.md in Han's last commit -->
 
 ---
 
@@ -207,16 +206,12 @@ make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypi
 indicating that the `.substitutions` file has been inflated correctly. You should now be able to look in the installed module directory and see the
 generated `pid.db` file.
 
-## Example files
-
-The example files showed in this tutorial could be found at 
-[e3-moduleexample](https://gitlab.esss.lu.se/epics-examples/e3-moduleexample.git) and [moduleexample](https://gitlab.esss.lu.se/epics-examples/moduleexample.git). Note that the module name is moduleexample, but the db and substitutions
-files are the same as the ones used in this tutorial.
 
 ---
 
 ## Assignments
 
-* What does MSI stand for?
-<!-- todo: figure out proper assignments -->
-
+* If you try to actually load the `pid.db` database file, it does not load. What dependency are you missing?
+* Where is `FETCH_BUILD_NUMBER` defined?
+* Can you think of another way to load the records in the `.substitutions` file that does not involve the
+  build-time database expansion?
