@@ -118,18 +118,15 @@ Why don't we need to run `make patch` or `make init`?
 
 ## Using an external db/template file
 
-For this part of the training we will create a simple PID controller using the record type EPID defined on [std module](https://github.com/epics-modules/std). Besides the EPID record we will use one db file present on std module.
+Another sort of dependency that can occur is due to needing `.db` files from other modules. One common source is from *Area Detector*, but we will use a different
+one in this case. We will create a simple PID (Proportional Integral Derivative) controller using the EPID record defined in the community EPICS module
+[std](https://github.com/epics-modules/std).
 
-In our module we will do something similar to the IOC example present at std module on the files `pid_slow.template` and `st.cmd` on [iocStdTest](https://github.com/epics-modules/std/tree/master/iocBoot/iocStdTest). Our plan is to use the file `pid_control.db` [1] from the std module.
+### Create a new module
 
-### Create a new module 
+This is the same as above. Use *cookicutter* to create a new local e3 module called *mypid*.
 
-To start this you will need to create a new module, to do this follow the instructions on [Chapter 8](8_building_modules.md). For our setup the module name will be considered *mypid*.
-
-### Create a substitution file
-
-Now we will create in our module a substitution file that uses the `pid_control.db` file as a template file (find the file [here](https://github.com/epics-modules/std/blob/master/stdApp/Db/pid_control.db)). You should create a `pid.substitutions` file within this content:
-
+Instead of adding a database file, we will create a substitution file based off of `pid_control.db` from *std*. Create a file with the contents
 ```
 file "pid_control.db"
 {
@@ -137,46 +134,39 @@ pattern { P,        PID,    INP,        OUT,        LOPR,   HOPR,   DRVL,   DRVH
         { mypid:,   PID1,   pidDemoInp, pidDemoOut, 0,      100,    0,      5,      3,      0.2,    3., 0., ".1 second" }
 }
 ```
+and save it as `pid.substitutions` in the `Db/` directory of your new module.
 
-This file is just an example, and uses as `INP` and `OUT` in existent PVs, but it suffices for our test. Note that there is no hard-code path or variable within the substitution file. 
-
-If you change the `mypid.Makefile` and try to compile this module you should receive a message like this:
+In order to inflate the `.substitutions` file, you need to let the e3 build system know about it. The default `mypid.Makefile` is almost correct, with
+the main change that you need to uncommend the line defining the `SUBS` variable near the bottom. Once you do that and try to install it, you should see the 
+following.
 
 ```console
+[iocuser@host:e3-mypid]$ make build install
+# --- snip snip ---
+make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db 
 msi: Can't open file 'pid_control.db'
+input: '' at 
+make[1]: *** [mypidApp/Db/pid.substitutions] Error 1
+make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+make: *** [db] Error 2
 ```
+:::{note}
+The database inflation is performed by `make db`, which is a dependency of the `install` target. So to inflate the `.substitutions` file you can simpy
+run `make db`.
+:::
 
-This is because `MSI` has no idea where `pid_control.db` file is. You need to tell the building system where it is. 
+As in other situations, we need to tell the build system where to look for `pid_control.db` so that the `.substitutions` file can be inflated properly. To
+begin, follow what was done for the *calc* module above, but with the *std* module. That is,
+* Define `STD_DEP_VERSION` in `configure/CONFIG_MODULE`
+* Add a `REQUIRED += std` and other associated lines in `mypid.Makefile`
+* We also need to update `USR_DBFLAGS` so that `msi` can find any necessary `.db` or `.template` files. So add the line
+  ```make
+  USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db
+  ```
+  and then run `make db` again
 
-### Add std as a dependency
-
-To solve the above, the first step is to set *std* as a dependency. As we've see on previous lesson you should edit `mypid.Makefile` and `CONFIGURE_MODULE`.
-
-On `mypid.Makefile` you should add:
-
-```bash
-REQUIRED += std
-
-ifneq ($(strip $(STD_DEP_VERSION)),)
-std_VERSION=$(STD_DEP_VERSION)
-endif
-```
-
-And add the following line into `CONFIG_MODULE`:
-
-```python
-STD_DEP_VERSION:=3.5.0
-```
-
-### Add std on `USR_DBFLAGS`
-
-To allow that your substitutions file uses db files from *std* you should include the std db folder on `USR_DBFLAGS`. So in `mypid.Makefile` you add this line:
-
-```
-USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db
-```
-
-This line will tell to `MSI` where find the `pid_control.db`.
+Unfortunately, this does not work.
 
 ### Checking if everything is ok
 
