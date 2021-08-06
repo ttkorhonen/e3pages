@@ -166,13 +166,46 @@ begin, follow what was done for the *calc* module above, but with the *std* modu
   ```
   and then run `make db` again
 
-Unfortunately, this does not work.
+Unfortunately, this does not work. If you look at the installed versions of *std*, you will see the following:
+```console
+[iocuser@host:e3-mypid]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/std
+3.6.2+0
+```
+What is that `+0` doing there?
+
+### A digression about build numbers
+
+You should have noticed by now that when you install a module (e.g. *asyn* version `4.41.0`) it is actually installed as `4.41.0+0`. What is this `+0`?
+This is the *build number*. These are used in a number of different deployment systems to distinguish between builds where e.g. the source code may not
+have changed but some of the metadata or dependencies have. This allows us to have, for example, two copies of the same version of *StreamDevice* that
+may depend on different versions of *asyn*. 
+
+The default behaviour in e3 is the following.
+* If you request a specific version inclusive of a build number, that version will be loaded or built against.
+* If you do not request a build number, then the highest matchine build number will be used.
+* If you try to build a module but did not include a build number, then the build number 0 will be added.
+
+Most of this all happens under the hood. One main exception is any references to other modules within, e.g. `mypid.Makefile`. To deal with that case,
+there is a function called `FETCH_BUILD_NUMBER` that can be used to determine the correct build number. In this particular case, we need to replace the
+`USR_DBFLAGS` line above with the following.
+```make
+USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(call FETCH_BUILD_NUMBER,$(E3_SITEMODS_PATH),std)/db
+```
+which will take the specified version (`3.6.2` in this case) and add the correct build number.
 
 ### Checking if everything is ok
 
-After these changes you can compile your module and you shouldn't see any error.
-
-If you would like to, you can go to your module folder and see the `pid.db` generated file, the file should be at `$(E3_REQUIRE_LOCATION)/siteMods/mypid/master/db/pid.db`
+After the above changes, you should be able to build your module correctly. That is, you should see the following
+```console
+[iocuser@host:e3-pid]$ make install
+# --- snip snip ---
+make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db 
+make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+# --- snip snip ---
+```
+indicating that the `.substitutions` file has been inflated correctly. You should now be able to look in the installed module directory and see the
+generated `pid.db` file.
 
 ## Example files
 
