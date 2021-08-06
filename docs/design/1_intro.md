@@ -10,7 +10,28 @@ Two of the key design considerations for e3 were dependency management and quali
 Although ESS uses a shared build (using e.g., NFS) and dynamically linked binaries, e3 in itself is not bound to this distribution approach.[^conda] Similarly, there's an associated toolsuite (*systemd*, *procServ*, *conserver*, etc.) used to manage IOCs at ESS, but these are decoupled from e3, just as client and service applications (such as *CS-Studio*, *DisplayBuilder*, *ChannelFinder*, and so on) are.
 :::
 
-Finally, ESS have made some design choices, where at least one is worth mentioning in the context of documentation: at ESS, everything is a **module**---meaning that IOC applications, libraries, and modules all will be referred to as modules on this portal as well as in associated documents. An IOC at ESS is generally just a startup script, since the built application (module) is shared (and thus can be used for several IOCs).
+## Terminology and definitions
+### IOC
 
+An e3 IOC is defined by a startup script that:
+* identifies the modules needed by the IOC,
+* defines the values for variables required by the module startup script snippets, and
+* calls the module startup script snippets.
+
+Database templates and shared libraries are obtained from EPICS modules.
+
+A e3 IOC is started using the `iocsh.bash` script, uses the `softIocPVA` executable from EPICS base, and dynamically loads any additional modules using `require`.
+
+### Module
+
+An EPICS module is a set of code, databases, sequences, and/or startup script snippets that provides generic functionality for a particular device type or logical function. In e3, an EPICS module can also be specific to one instance of a device type.
+
+An IOC is built up from one or more modules, based on the requirements of that IOC. A module is not a functional IOC application on its own.
+
+The databases provided by the module are typically in the form of templates. The template includes macro values for the PV name prefix and potentially other parameters. These macro values must be defined by the IOC.
+
+### EPICS base
+
+EPICS base provides the core EPICS functionality, including database management, a standard set of basic records, IOC functionality, etc. All IOCs require EPICS base.
 
 [^conda]: ESS have also experimented with using *conda* to distribute.
