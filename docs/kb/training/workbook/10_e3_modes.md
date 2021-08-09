@@ -19,9 +19,9 @@ module.
 [iocuser@host:e3-linconv]$ echo "E3_MODULE_VERSION:=celltest" > configure/CONFIG_MODULE.local
 ```
 
-This is simple as running the command
+Installing this new module version locally is as simple as running the following commands.
 ```console
-[iocuser@host:e3-linconv]$ make init patch build
+[iocuser@host:e3-linconv]$ make init patch build   # Of course, you should initialise, patch, and build first
 [iocuser@host:e3-linconv]$ make cellinstall
 ```
 In this case, the *linconv* module will be built and installed into the path `e3-linconv/cellMods`:
@@ -102,8 +102,6 @@ iocRun: All initialization complete
 ```
 These two pieces allow an e3 user to be able to install and load modules even if they do not have write permissions to a shared e3
 environment.
-
-### Configuring cell mode
 
 
 ## Development mode
@@ -238,6 +236,5 @@ they both use the same `module.Makefile`, even though some of the configuration 
 
 * Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
 * What's the difference between `make existent` and `make devexistent`?
-* What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
 * We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
 
