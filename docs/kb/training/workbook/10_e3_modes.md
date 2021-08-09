@@ -2,7 +2,10 @@
 
 ## Lesson overview
 
-In this lesson you'll figure some stuff out.
+In this lesson you will learn about two additional ways to work with e3:
+* Cell mode, where you can install modules locally instead of into the global e3 environment
+* Dev mode, where you can work with a separate copy of the module source repository in order to facilitate
+  module development.
 
 ## Cell mode
 
