@@ -225,6 +225,8 @@ they both use the same `module.Makefile`, even though some of the configuration 
 
 ## Assignments
 
+* Can you change the install path used in *cell mode*?
+* How would you load more than one module installed in *cell mode* at the same time?
 * Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
   
   ```console
