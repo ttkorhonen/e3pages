@@ -6,7 +6,105 @@ In this lesson you'll figure some stuff out.
 
 ## Cell mode
 
-asdf
+Depending on your deployment settings, it is possible that you may have restricted access to deploy modules to an e3 environment. For example, there
+may be a global e3 shared filesystem with read-only privileges. In such a case you might still want to be able to work with e3 without having to build
+an entire environment on your local machine, which is what *cell mode* allows. This is done by the use of several make targets (`cellbuild`, `cellinstall`,
+`cellvars`, and `celluninstall`) that modify the build and install paths for modules.
+
+### Building in cell mode
+
+Suppose that we want to build `e3-linconv` from [the previous chapter](9_other_deps.md) in cell mode. Let us start by modifying the version of the
+module.
+```console
+[iocuser@host:e3-linconv]$ echo "E3_MODULE_VERSION:=celltest" > configure/CONFIG_MODULE.local
+```
+
+This is simple as running the command
+```console
+[iocuser@host:e3-linconv]$ make init patch build
+[iocuser@host:e3-linconv]$ make cellinstall
+```
+In this case, the *linconv* module will be built and installed into the path `e3-linconv/cellMods`:
+
+```console
+[iocuser@host:e3-linconv]$ tree cellMods/
+cellMods/
+`-- base-7.0.5
+    `-- require-3.4.1
+        `-- linconv
+            `-- celltest
+                |-- db
+                |   `-- linconv.db
+                |-- lib
+                |   `-- linux-x86_64
+                |       `-- linconv.dep
+                `-- linconv_meta.yaml
+```
+
+:::{note}
+This includes paths for EPICS base and *require* so that you can build the same module for multiple versions of base/require with no conflict.
+:::
+
+### Running an IOC in cell mode
+
+If you try to run an IOC and load this module with `iocsh.bash -r linconv,celltest` you should see
+```console
+[iocuser@host:e3-linconv]$ iosh.bash -r linconv,celltest
+# --- snip snip ---
+require linconv,celltest
+Module linconv version celltest not available (but other versions are available)
+Aborting startup script
+```
+This fails, since *require* by default will only search in `E3_SITEMODS_PATH` for modules to load, not in your local `cellMods/` path. In order
+to search there, we pass the directory `cellMods` with the flag `-l` to `iocsh.bash`:
+
+```console
+[iocuser@host:e3-linconv]$ iosh.bash -l cellMods -r linconv,celltest
+# --- snip snip ---
+epicsEnvSet EPICS_DRIVER_PATH cellMods/base-7.0.5/require-3.4.1:/epics/base-7.0.5/require/3.4.1/siteMods:/epics/base-7.0.5/require/3.4.1/siteApps
+require linconv,celltest
+Module linconv version celltest found in cellMods/base-7.0.5/require-3.4.1/linconv/celltest/
+Module linconv depends on calc 3.7.4+0
+Module calc version 3.7.4+0 found in /epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/
+Module calc depends on sequencer 2.2.8+0
+Module sequencer version 2.2.8+0 found in /epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/
+Loading library /epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/lib/linux-x86_64/libsequencer.so
+Loaded sequencer version 2.2.8+0
+sequencer has no dbd file
+Loading module info records for sequencer
+Module calc depends on sscan 2.11.4+0
+Module sscan version 2.11.4+0 found in /epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/
+Module sscan depends on sequencer 2.2.8+0
+Module sequencer version 2.2.8+0 already loaded
+Loading library /epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/lib/linux-x86_64/libsscan.so
+Loaded sscan version 2.11.4+0
+Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/dbd/sscan.dbd
+Calling function sscan_registerRecordDeviceDriver
+Loading module info records for sscan
+Loading library /epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/lib/linux-x86_64/libcalc.so
+Loaded calc version 3.7.4+0
+Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/dbd/calc.dbd
+Calling function calc_registerRecordDeviceDriver
+Loading module info records for calc
+Module linconv has no library
+Loading module info records for linconv
+# Set the IOC Prompt String One 
+epicsEnvSet IOCSH_PS1 "localhost-10657 > "
+#
+# 
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R7.0.5-E3-7.0.5-patch
+## Rev. 2021-03-15T09:48+0100
+############################################################################
+iocRun: All initialization complete
+```
+These two pieces allow an e3 user to be able to install and load modules even if they do not have write permissions to a shared e3
+environment.
+
+### Configuring cell mode
+
 
 ## Development mode
 
