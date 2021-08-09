@@ -11,23 +11,25 @@ In this lesson, you'll learn how to do the following:
 
 ---
 
-## A simulated serial device
+## Preliminaries
 
-We will use a simple simulator based on *[Kameleon](https://bitbucket.org/europeanspallationsource/kameleon)* to simulate a serial device, accessible by use of e.g. telnet. More specifically, we will use a forked version, which is already linked into this workbook repository as a git submodule. To fetch it, run:
-
+Before working on this chapter, please clone the following repository, as it has some necessary files to work with.
 ```console
-[iocuser@host:e3training]$ git submodule update --init
+[iocuser@host:~]$ git clone --recursive -b 1.0.0 https://gitlab.esss.lu.se/e3/e3-training-material.git
 ```
+In particular, it includes a simulator based on *[Kameleon](https://github.com/jeonghanlee/kameleon.git)* to simulate
+a serial device for an IOC to communicate with. Note that this repository is already included as a submodule of the
+trianing material, so you do not need to clone it.
 
-> The device that the simulator is based on as well as an EPICS IOC to go with it can be found at https://github.com/jeonghanlee/gconpi. However, all files necessary for this lesson are already included in this workbook.
+:::{note}
+Kameleon has been written for Python2 (tested on 2.7), and so you must have an installation of Python2 installed.
+:::
 
-*N.B.! Kameleon was written for Python2 (tested on 2.7), so make sure you have that installed.*
-
-> Before continuing, you should clone this very tutorial's repository if you haven't already:
-> 
-> ```console
-> [iocuser@host:~]$ git clone --recurse-submodules https://github.com/icshwi/e3training
-> ```
+To begin with, open a separate terminal and run the following to start the simulator.
+```console
+[iocuser@host:e3-training-material]$ bash 4_startup_scripts_in_e3/simulator.bash
+```
+This will start the simulator running, which you can then communicate with via `telnet`.
 
 1. Open a new terminal and go to `~/e3training/ch4_supplementary_path`.
 
@@ -82,6 +84,9 @@ Execute the first script:
 * Did it work?
 * Can you explain why?
 * Could you fix this startup script?
+
+<!-- Note: This will work now because of our changes -->
+
 
 #### Variables
 
@@ -163,6 +168,8 @@ Execute the next script.
 
   > We can print these variables more easily with `make dep`.
 
+<!-- This will do the exact same as above -->
+
 ### 2.cmd
 
 Execute the next script:
@@ -183,6 +190,8 @@ Execute the next script:
 
 *N.B.! Each line in the output of the IOC is important. You should always be careful to ensure that everything looks correct.*
 
+<!-- Same here -->
+
 ### 3-1.cmd
 
 Execute the next command:
@@ -201,6 +210,8 @@ This script contains the correct *Asyn* configuration for the simulated device:
 drvAsynIPPortConfigure("CGONPI", "127.0.0.1:9999", 0, 0, 0)
 ```
 
+<!-- This is pointing out a) we don't have STREAM_PROTOCOL_PATH set and we have not loaded any db files that do anything -->
+
 ### 3-2.cmd
 
 This script contains a fully working IOC - inspect it thouroughly.
@@ -208,6 +219,8 @@ This script contains a fully working IOC - inspect it thouroughly.
 * Can you find the warning? 
 * How does this script use `E3_CMD_TOP`? Is it useful to define where other files are? 
 * What is the *stream protocol* file? 
+
+<!-- Note that this uses random.bash and random.cmd here, which we do not need. So cut those out -->
 
 ### 4.cmd
 
@@ -238,6 +251,8 @@ Spend some time thinking about the following:
 
 * Could you rewrite startup scripts using only one method? 
 
+<!-- This just adds iocstats -->
+
 ### 5.cmd
 
 Here we add `iocStats` in a slightly different way, and have furthermore added more default e3 modules.
@@ -263,6 +278,8 @@ Here we add `iocStats` in a slightly different way, and have furthermore added m
    ```
 
    (where `NNNNNNNN` is your IOC's random number.) 
+
+<!-- This basically adds essioc -->
 
 ---
 
