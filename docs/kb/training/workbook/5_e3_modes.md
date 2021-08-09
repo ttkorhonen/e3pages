@@ -6,7 +6,6 @@ In this lesson, you'll learn how to do the following:
 
 * Understand why e3 wrappers don't hold any source code.
 * Understand the anatomy of an e3 wrapper.
-* Understand the difference between *Standard mode* and *Development mode*.
 * Learn how to apply and create patch files for EPICS base and other modules within e3.
 
 ---
@@ -80,8 +79,9 @@ Assuming that you are still in the `e3-iocStats` directory, let us explore some 
 
 The output should be something like ` 4df9e87815f6a9432955a3ddb45fafa9fe4a4d40 iocStats (3.1.15-22-g4df9e87)`.
 
-Excercise:
-* What do each of these parts represent?
+:::{admonition} Excercise
+What do each of these parts represent?
+:::
 
 Next, look at the wrapper repository for [iocStats](https://gitlab.esss.lu.se/e3/wrappers/core/e3-iocStats.git) on Gitlab.
 
@@ -119,7 +119,7 @@ As denoted in [Chapter 1](1_installing_e3.md), the standard make targets to buil
 * `make build`
 * `make install`
 
-The following additional `make` targets are of particular importance while using standard mode.
+The following additional `make` targets are of particular importance when working with an e3 module.
 
 * `make vars`: Prints out a list of relevant environment variables. Useful for debugging the environment.
 * `make debug`: Runs a debug of the build process, printing out the values of certain intermediate build variables.
@@ -255,7 +255,8 @@ explaining the purpose and role of the patch.
 
 ## Assignments
 
-* Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
+* Where are the e3 make targets defined? What are some other targets that might be of interest?
+* Can you override the `EPICS_MODULE_TAG` to build a different version without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
   
   ```console
   [iocuser@host:e3-iocstats]$ git status
@@ -264,8 +265,5 @@ explaining the purpose and role of the patch.
   nothing to commit, working directory clean
   ```
 
-* Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
-* What's the difference between `make existent` and `make devexistent`?
 * What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
-* We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
 
