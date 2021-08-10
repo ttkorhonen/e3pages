@@ -184,7 +184,7 @@ The default behaviour in e3 is the following.
 * If you do not request a build number, then the highest matching build number will be used.
 * If you try to build a module but did not include a build number, then the build number 0 will be added.
 
-Most of this all happens under the hood. One main exception is any references to other modules within, e.g. `mypid.Makefile`. To deal with that case,
+Most of this all happens under the hood. One main exception is any references to other modules within, for example, `mypid.Makefile`. To deal with that case,
 there is a function called `FETCH_BUILD_NUMBER` that can be used to determine the correct build number. In this particular case, we need to replace the
 `USR_DBFLAGS` line above with the following.
 ```make
