@@ -58,116 +58,28 @@ may have to try a few different options to see what works.
 :::
 
 
-## Startup scripts
+## Example IOCs
 
-In `ch4_supplementary_path/cmds`, you will find a number of (incrementally named) startup scripts that will be used for the following steps.
+In the directory `4_startup_scripts_in_e3/cmds/` you will find a number of startup scripts that can be used for the following steps.
 
-For each of these scripts, you should attempt to first figure out what is happening, or what will happen, before continuing this tutorial. And whenever a question is asked, attempt to answer it before reading the next sentence.
-
-> Before running `iocsh.bash`, don't forget to load your e3 environment:
-> 
-> ```console
-> [iocuser@host:ch4_supplementary_training]$ source ~/e3-3.15.5/tools/setenv
-> ```
->
-> (or by sourcing `SetE3Env.bash` - do you remember where that was located?) 
-
-### 0.cmd
-
-Execute the first script:
-
+For each of these scripts, it will be good practicce to examine the script in order to try to predict what will happen, and then
+examine every line of the output when running the startup script with `iocsh.bash`. Before you begin, of course, make sure that
+you have sourced the correct e3 environment's `setE3Env.bash`, at which point you can start the IOC with
 ```console
-[iocuser@host:ch4_supplementary_training]$ iocsh.bash cmds/0.cmd
+[iocuser@host:cmds]$ iocsh.bash $EXERCISE_NUMBER.cmd
 ```
 
-* Did it work?
-* Can you explain why?
-* Could you fix this startup script?
+### First IOC
 
-<!-- Note: This will work now because of our changes -->
-
-
-#### Variables
-
-* Can you see `E3_IOCSH_TOP` and `E3_CMD_TOP`?
-* How are these two variables changed if you instead execute `iocsh.bash` from within `cmds/`?:
-
+The first startup script is called `1.cmd`. As stated above, you should examine this script first and then start it with
 ```console
-[iocuser@host:cmds]$ iocsh.bash 0.cmd 
+[iocuser@host:cmds]$ iocsh.bash 1.cmd
 ```
 
-* What is `0.cmd` in this context?
-
-  > `0.cmd` is used as an argument for `iocshLoad` internally. Inspect the following line:
-  >
-  > ```bash
-  > iocshLoad '0.cmd',''
-  > ```
-
-### 1.cmd
-
-Execute the next script.
-
-* How many dependency modules of stream are loaded? Look carefully at the output:
-
-  ```console
-  [iocuser@host:ch4_supplementary_training]$ iocsh.bash cmds/1.cmd
-  iocshLoad 'cmds/1.cmd',''
-  require stream,2.8.8
-  Module stream version 2.8.8 found in /epics/base-3.15.5/require/3.0.5/siteMods/stream/2.8.8/
-  Module stream depends on asyn 4.33.0
-  Module asyn version 4.33.0 found in /epics/base-3.15.5/require/3.0.5/siteMods/asyn/4.33.0/
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/asyn/4.33.0/lib/linux-x86_64/libasyn.so
-  Loaded asyn version 4.33.0
-  Loading dbd file /epics/base-3.15.5/require/3.0.5/siteMods/asyn/4.33.0/dbd/asyn.dbd
-  Calling function asyn_registerRecordDeviceDriver
-  Loading module info records for asyn
-  Module stream depends on calc 3.7.1
-  Module calc version 3.7.1 found in /epics/base-3.15.5/require/3.0.5/siteMods/calc/3.7.1/
-  Module calc depends on sequencer 2.2.6
-  Module sequencer version 2.2.6 found in /epics/base-3.15.5/require/3.0.5/siteMods/sequencer/2.2.6/
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/sequencer/2.2.6/lib/linux-x86_64/libsequencer.so
-  Loaded sequencer version 2.2.6
-  sequencer has no dbd file
-  Loading module info records for sequencer
-  Module calc depends on sscan 1339922
-  Module sscan version 1339922 found in /epics/base-3.15.5/require/3.0.5/siteMods/sscan/1339922/
-  Module sscan depends on sequencer 2.2.6
-  Module sequencer version 2.2.6 already loaded
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/sscan/1339922/lib/linux-x86_64/libsscan.so
-  Loaded sscan version 1339922
-  Loading dbd file /epics/base-3.15.5/require/3.0.5/siteMods/sscan/1339922/dbd/sscan.dbd
-  Calling function sscan_registerRecordDeviceDriver
-  Loading module info records for sscan
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/calc/3.7.1/lib/linux-x86_64/libcalc.so
-  Loaded calc version 3.7.1
-  Loading dbd file /epics/base-3.15.5/require/3.0.5/siteMods/calc/3.7.1/dbd/calc.dbd
-  Calling function calc_registerRecordDeviceDriver
-  Loading module info records for calc
-  Module stream depends on pcre 8.41.0
-  Module pcre version 8.41.0 found in /epics/base-3.15.5/require/3.0.5/siteMods/pcre/8.41.0/
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/pcre/8.41.0/lib/linux-x86_64/libpcre.so
-  Loaded pcre version 8.41.0
-  pcre has no dbd file
-  Loading module info records for pcre
-  Loading library /epics/base-3.15.5/require/3.0.5/siteMods/stream/2.8.8/lib/linux-x86_64/libstream.so
-  Loaded stream version 2.8.8
-  Loading dbd file /epics/base-3.15.5/require/3.0.5/siteMods/stream/2.8.8/dbd/stream.dbd
-  Calling function stream_registerRecordDeviceDriver
-  Loading module info records for stream
-  ```
-
-* Is it what we defined? How would we check that?
-
-  > ```console
-  > [iocuser@host:e3-StreamDevice]$ make vars
-  > ```
-
-  *Note `ASYN_DEP_VERSION` and `PCRE_DEP_VERSION`. These dependencies will be described in more detail later on.*
-
-  > We can print these variables more easily with `make dep`.
-
-<!-- This will do the exact same as above -->
+* Can you see where `E3_IOCSH_TOP` and `E3_CMD_TOP` are defined?
+* How are these two variables changed if you instead execute `iocsh.bash` from the parent directory `4_startup_scripts_in_e3/`?
+* How many dependent modules of stream are loaded?
+* Were there any warning messages? What do you think they mean?
 
 ### 2.cmd
 
