@@ -105,7 +105,8 @@ Start the third IOC with the startup script `3.cmd`.
 ```
 This script contains a fully working IOC, and so you should pay thorough attention to it.
 
-* How does this script use `E3_CMD_TOP`? Is it useful to define where other files are? 
+* How does this script use `E3_CMD_TOP`? Is it useful to define where other files are?
+* What is the purpose of `random.bash` and `random.cmd` in this script?
 * What is the *stream protocol* file? 
 
 ### For the fourth
@@ -156,6 +157,7 @@ Run the following command to print your PVs, and inspect the output file:
 
 ## Assignments
 
-* Could you improve on the startup script further? Explain to yourself how.
-* What does the `-C` flag do when used with make rules?
+* What other parameters can be passed to `iocStats`, `recsync`, and `autosave`?
+* Are there any improvements that can be made to the last script, `5.cmd`?
+* Can you modify this script to communicate with more than one simulated device at the same time?
 
