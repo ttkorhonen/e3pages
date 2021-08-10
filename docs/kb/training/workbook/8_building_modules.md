@@ -4,7 +4,7 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Understand the difference between modules IOCs
+* Understand the difference between modules and IOCs
 * Understand the e3 wrapper directory structure.
 * Create an e3 wrapper using *Cookiecutter*
 * Edit a module makefile in order to build and install it into e3.
@@ -44,10 +44,10 @@ community modules in a maximally flexible way.
 
 ### IOCs
 
-Unlike standard EPICS where an IOC is a compiled binary, in e3 an IOC is just a startup script. This means that there are no specialised utilities required to build
+Unlike standard EPICS where an IOC is a compiled binary, in e3 an IOC is just a startup script. This means that there are no specialised utilities required to create
 an IOC, simply a text-editor.
 
-The simplest such repository can look something like the following.
+The simplest IOC repository can look something like the following.
 
 ```console
 [iocuser@host:iocs]$ tree e3-ioc-<iocname>
@@ -93,23 +93,23 @@ There are two main types of wrappers: wrappers that link to external code (the t
 ### External modules
 
 If you are needing to use a module from the EPICS community or one that may be used outside of a purely e3 context, then the e3 wrapper should point to that
-repository. This could be located e.g. in the [epics-modules](https://github.com/epics-modules) group on Github, or elsewhere.
+repository. This could be located e.g. in the epics-modules group on [Github](https://github.com/epics-modules), [Gitlab](https://gitlab.esss.lu.se/epics-modules), or elsewhere.
 
-When you use the cookiecutter recipe it will prompt you for some information needed to build the wrapper.
+When you use the cookiecutter recipe it will prompt you for some information needed to create the wrapper.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]: 
 module_name [mymodule]: fimscb                                 # Update the module name
 summary [EPICS fimscb module]: 
-full_name [Your name]: 
-email [your.name@ess.eu]: 
+full_name [Your name]:                                         # Fill in your name
+email [your.name@ess.eu]:                                      # and email
 epics_base_version [7.0.5]: 
 epics_base_location [/epics/base-7.0.5]: 
 require_version [3.4.1]: 
 git_repository [ ... ]: https://github.com/icshwi/fimscb.git   # And update the URL
 ```
 
-They key things to fill in here are highlighted above, namely the module name and git url.
+They key things to fill in here are highlighted above, namely the module name and git url (as well as your name and email address).
 
 :::{note}
 If the git repository that you add exists and is public, then cookiecutter will add it as a submodule to the wrapper. Otherwise, a templated *local module* (see
@@ -181,7 +181,7 @@ APPDB:=$(APP)/Db
 
 ############################################################################
 #
-# Add any files that should be copied to $(module)/Db
+# Add any files that should be copied to $(module)/db
 #
 ############################################################################
 
