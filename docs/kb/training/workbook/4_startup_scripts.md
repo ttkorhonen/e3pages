@@ -64,15 +64,13 @@ In the directory `4_startup_scripts_in_e3/cmds/` you will find a number of start
 
 For each of these scripts, it will be good practicce to examine the script in order to try to predict what will happen, and then
 examine every line of the output when running the startup script with `iocsh.bash`. Before you begin, of course, make sure that
-you have sourced the correct e3 environment's `setE3Env.bash`, at which point you can start the IOC with
-```console
-[iocuser@host:cmds]$ iocsh.bash $EXERCISE_NUMBER.cmd
-```
+you have sourced the correct e3 environment's `setE3Env.bash`.
 
 ### First IOC
 
 The first startup script is called `1.cmd`. As stated above, you should examine this script first and then start it with
 ```console
+[iocuser@host:e3-training-material]$ cd cmds
 [iocuser@host:cmds]$ iocsh.bash 1.cmd
 ```
 
