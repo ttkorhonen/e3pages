@@ -29,35 +29,34 @@ To begin with, open a separate terminal and run the following to start the simul
 ```console
 [iocuser@host:e3-training-material]$ bash 4_startup_scripts_in_e3/simulator.bash
 ```
-This will start the simulator running, which you can then communicate with via `telnet`.
+This will start the simulator running, which you can then test with `telnet` via
+```console
+[iocuser@host:~]$ telnet 127.0.0.1 9999
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+CPS, 1, CPM, 4, uSv/hr, 0.04, SLOW
+CPS, 4, CPM, 18, uSv/hr, 0.052, SLOW
+CPS, 3, CPM, 19, uSv/hr, 0.035, SLOW
+CPS, 2, CPM, 1, uSv/hr, 0.032, SLOW
+CPS, 4, CPM, 4, uSv/hr, 0.083, SLOW
+# --- snip snip ---
+```
+You can always quit the `telnet` session by hitting `^]`:
+```console
+^]
+telnet> quit
+Connection closed.
+```
+This will likely kill the simulator which you should then restart. In general, this simulator does have a tendency to die and so may 
+need to be restarted between tests.
 
-1. Open a new terminal and go to `~/e3training/ch4_supplementary_path`.
+:::{tip}
+The key combination `^]` will depend a lot on your keyboard layout. For a US keyboard layout, this is Ctrl + `]`. For
+a Swedish keybaord layout, this is Ctrl + `¨` (they are located in the same physical location of they keyboard). You
+may have to try a few different options to see what works.
+:::
 
-2. Run:
-
-   ```console
-   [iocuser@host:ch4_supplementary_training]$ ./simulator.bash
-   ```
-
-3. Open another terminal, and connect to the simulator using telnet:
-
-   ```console
-   [iocuser@host:~]$ telnet 127.0.0.1 9999
-   ```
-
-4. You should be able to interact with the simulator. <!-- try out first -->
-
-5. End the telnet connection 
-
-   ```console
-   ^]
-   telnet> quit
-   Connection closed.
-   ```
-
-   (where ^ is the Ctrl key.)
-
-> The simulator in question has shown a tendency to die every now and then, so go back to verify that the simulator is working before trying out a script - and restart it if not.
 
 ## Startup scripts
 
