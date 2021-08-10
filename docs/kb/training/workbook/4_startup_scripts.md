@@ -81,27 +81,21 @@ The first startup script is called `1.cmd`. As stated above, you should examine 
 * How many dependent modules of stream are loaded?
 * Were there any warning messages? What do you think they mean?
 
-### 2.cmd
+### Second IOC
 
-Execute the next script:
-
+Start the second IOC with the startup script `2.cmd`.
 ```console
-[iocuser@host:ch4_supplementary_training]$ iocsh.bash cmds/2.cmd
+[iocuser@host:cmds]$ iocsh.bash 2.cmd
 ```
 
-* What is `iocInit`?
-
-> If you do not know, you might want to spend some time with the [EPICS Application Developer's Guide](https://epics.anl.gov/base/R3-15/5-docs/AppDevGuide/IOCInitialization.html#x8-2750007.4).
-
-* What is the difference between `1.cmd` and `2.cmd`?
-
-  > e3's `iocsh.bash` will check if `iocInit` is defined within a startup script, and, if it isn't, it will be added automatically. You should, however, always specify `iocInit` explicitly as some functions should be executed after `iocInit`. 
-
+* What is the purpose of `iocInit()`?
+  :::{tip}
+  More information can be found in the [EPICS Application Developer's Guide](https://epics.anl.gov/base/R3-16/2-docs/AppDevGuide/IOCInitialization.html#x8-2810007.4).
+  :::
+* What happens if you remove the `iocInit()` line?
 * Can you spot the warning? And can you explain what kind of warning it is?
-
-*N.B.! Each line in the output of the IOC is important. You should always be careful to ensure that everything looks correct.*
-
-<!-- Same here -->
+* You should have had the simulator running in a separate terminal. If so, what did you notice between the two of these
+  scripts? What was the cause of that?
 
 ### 3-1.cmd
 
