@@ -18,7 +18,7 @@ example, to perform linear conversions on *waveform* records.
 ### Create a new module 
 
 Let us begin by creating a module to work with, following the instructions in [Chapter 8](8_building_modules.md). We want to create a local module called
-*linconv*, which will sit in a wraper called *e3-linconv*. Within that wrapper, create a `linconv.db` file with the following contents.
+*linconv*, which will sit in a wrapper called *e3-linconv*. Within that wrapper, create a `linconv.db` file with the following contents.
 
 ```
 record(ao, "OFFSET") {
@@ -48,7 +48,7 @@ record(waveform, "LINCONV"){
 ```
 
 :::{note}
-Documentation for the *acalcout* record (a part of [synapps](https://www.aps.anl.gov/BCDA/synApps)) can be found [here](https://epics.anl.gov/bcda/synApps/calc/aCalcoutRecord.html).
+Documentation for the *acalcout* record (a part of [synApps](https://www.aps.anl.gov/BCDA/synApps)) can be found [here](https://epics.anl.gov/bcda/synApps/calc/aCalcoutRecord.html).
 :::
 
 In this example `OFFSET` will be the offset value and `SLOPE` the slope value applied to a waveform with values `0..99`. The record `LINCONV_create` is the *acalcout* record which
@@ -123,7 +123,7 @@ one in this case. We will create a simple PID (Proportional Integral Derivative)
 
 ### Create a new module
 
-This is the same as above. Use *cookicutter* to create a new local e3 module called *mypid*.
+This is the same as above. Use *cookiecutter* to create a new local e3 module called *mypid*.
 
 Instead of adding a database file, we will create a substitution file based off of `pid_control.db` from *std*. Create a file with the contents
 ```
@@ -136,7 +136,7 @@ pattern { P,        PID,    INP,        OUT,        LOPR,   HOPR,   DRVL,   DRVH
 and save it as `pid.substitutions` in the `Db/` directory of your new module.
 
 In order to inflate the `.substitutions` file, you need to let the e3 build system know about it. The default `mypid.Makefile` is almost correct, with
-the main change that you need to uncommend the line defining the `SUBS` variable near the bottom. Once you do that and try to install it, you should see the 
+the main change that you need to uncomment the line defining the `SUBS` variable near the bottom. Once you do that and try to install it, you should see the 
 following.
 
 ```console
@@ -151,7 +151,7 @@ make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypi
 make: *** [db] Error 2
 ```
 :::{note}
-The database inflation is performed by `make db`, which is a dependency of the `install` target. So to inflate the `.substitutions` file you can simpy
+The database inflation is performed by `make db`, which is a dependency of the `install` target. So to inflate the `.substitutions` file you can simply
 run `make db`.
 :::
 
@@ -175,13 +175,13 @@ What is that `+0` doing there?
 ### A digression about build numbers
 
 You should have noticed by now that when you install a module (e.g. *asyn* version `4.41.0`) it is actually installed as `4.41.0+0`. What is this `+0`?
-This is the *build number*. These are used in a number of different deployment systems to distinguish between builds where e.g. the source code may not
+This is the *build number*. These are used in a number of different deployment systems to distinguish between builds where, for example, the source code may not
 have changed but some of the metadata or dependencies have. This allows us to have, for example, two copies of the same version of *StreamDevice* that
 may depend on different versions of *asyn*. 
 
 The default behaviour in e3 is the following.
 * If you request a specific version inclusive of a build number, that version will be loaded or built against.
-* If you do not request a build number, then the highest matchine build number will be used.
+* If you do not request a build number, then the highest matching build number will be used.
 * If you try to build a module but did not include a build number, then the build number 0 will be added.
 
 Most of this all happens under the hood. One main exception is any references to other modules within, e.g. `mypid.Makefile`. To deal with that case,
