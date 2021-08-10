@@ -12,17 +12,28 @@ In this lesson, you'll learn how to do the following:
 
 ## Utilities
 
-Typically, IOCs will be running on a dedicated (virtual or physical) machine that you remote (SSH) into. A single machine may host a number of IOCs, which should be running regardless of if you are attached to a session or not. Thus we want to be able to allow the system to run and take care of the IOC itself, we need to be able to easily attach to the IOC if necessary, to access logs, as well as to find IOCs currently running. Historically, common user accounts with screen or tmux sessions have been used towards this purpose, but they come with issues; there are output overflow issues, and what happens if multiple users are attempting to latch on to the same IOC at the same time?
+Typically, IOCs will be running on a dedicated (virtual or physical) machine that you log in remotely to. A single machine may host a number of IOCs, which should be running regardless of if you are attached to a session or not. Thus we want to be able to allow the system to run and take care of the IOC itself. However, we need to be able to easily connect to the IOC if necessary in order to access logs, to check on the status of an IOC, etc. Historically, common user accounts with screen or tmux sessions have been used towards this purpose, but they come with issues.
 
-At ESS, IOCs will run as (templated) instantiated system daemons in procServ containers, which all are managed by conserver.
+One solution is to run IOCs as a (possibly templated) system daemons in procServ container, all of which are managed by conserver.
 
-> Note that these deployments, including set up of these utilities, typically is automated with remote execution and configuration management by use of utilities like *ansible*, *salt* or *puppet*. It is, however, still useful to understand how they work.
+:::{note}
+These deployments (including set up of these utilities) are typically automated with remote execution utilities like *ansible*, *salt* or *puppet*. It is, however, still useful to understand how they work.
+:::
 
 ## Starting an IOC in a procServ container
 
-Per its [documentation](https://linux.die.net/man/1/procserv), procServ "creates a run time environment for a command (e.g. a soft IOC). It forks a server run as a daemon into the background, creates a child process running *command* with all remaining *args* from the command line. The server provides console access (stdin/stdout) to the child process by offering a telnet connection at the specified port."
+`procServ` is a utility that run a specified command as a dæmon process in the background while opening up `telnet` connection at a specified port in
+order to allow users to communicate with the process. For more infomation, see its [documentation](https://linux.die.net/man/1/procserv).
 
-We will now create a procServ container for an "empty" `iocsh.bash` session listening on port 2000, and will then attach to it using telnet.
+Let us create a `procServ` container for a blank IOC using `iocsh.bash` and listening on port 2000, which we will then connect to via `telnet`. First,
+start the `procServ` container:
+```console
+[iocuser@host:~]$ procServ -n iocsh 2000 $(which iocsh.bash)
+```
+
+:::{admonition} Exercise
+What di each of the arguments passed to `procServ` mean?
+:::
 
 1. Start a procServ container:
 
