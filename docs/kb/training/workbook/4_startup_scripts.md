@@ -97,94 +97,60 @@ Start the second IOC with the startup script `2.cmd`.
 * You should have had the simulator running in a separate terminal. If so, what did you notice between the two of these
   scripts? What was the cause of that?
 
-### 3-1.cmd
+### IOC the three
 
-Execute the next command:
-
+Start the third IOC with the startup script `3.cmd`.
 ```console
-[iocuser@host:ch4_supplementary_training]$ iocsh.bash cmds/3-1.cmd 
+[iocuser@host:cmds]$ iocsh.bash 3.cmd
 ```
+This script contains a fully working IOC, and so you should pay thorough attention to it.
 
-* The IOC is running, but it doesn't connect to anything. Can you see anything in the output that explains this?
-
-  > Beware that the application launches regardless of if it finds hardware or not. In `3-1.cmd` there are no `.db.`-files to specify records and fields, which is why no errors appear.
-
-This script contains the correct *Asyn* configuration for the simulated device:
-
-```bash
-drvAsynIPPortConfigure("CGONPI", "127.0.0.1:9999", 0, 0, 0)
-```
-
-<!-- This is pointing out a) we don't have STREAM_PROTOCOL_PATH set and we have not loaded any db files that do anything -->
-
-### 3-2.cmd
-
-This script contains a fully working IOC - inspect it thouroughly.
-
-* Can you find the warning? 
 * How does this script use `E3_CMD_TOP`? Is it useful to define where other files are? 
 * What is the *stream protocol* file? 
 
-<!-- Note that this uses random.bash and random.cmd here, which we do not need. So cut those out -->
+### For the fourth
 
-### 4.cmd
+By now we have a functioning IOC which can communicate with our simulated device. We would, however, generally want to
+tie more EPICS modules into that IOC, such as `iocStats`, `autosave`, and `recsync`. For simplicity, let us start with
+`iocStats`.
 
-By now we have a functioning IOC which can communicate with our simulated device. We would, however, generally want to tie more EPICS modules into that IOC, such as `iocStats`, `autosave`, and `recsync`. For this, we will need the specific module's name, its' version, as well as its' corresponding configuration files (database files and so forth).
+In order to load the functionality from one of these modules, we will need to configure it. This is defined by some mix
+of `.db` files, `.dbd` files, and others.
 
 Execute the next script:
-
 ```console
-[iocuser@host:ch4_supplementary_path]$ iocsh.bash cmds/4.cmd
+[iocuser@host:cmds]$ iocsh.bash 4.cmd
 ```
 
-1. Type `dbl` to see the IOC's PVs.
-2. Get the *heartbeat* of your IOC:
+Start with typing `dbl` at the IOC prompt in order to see a full list of the IOC's PVs. Within those PVs should be a
+*heartbeat* PV, named something like `IOC-80159276:IocStat:HEARTBEAT`. Fetch its value:
+```console
+localhost-1593 > dbpr IOC-80159276:IocStat:HEARTBEAT
+DBF_DOUBLE:         29
+```
+Then fetch it again.
 
-   ```
-   350b5cb.kaffee.4355 > dbpr IOC-80159276:IocStat:HEARTBEAT
-   ```
+* What does this represent? How can the heartbeat of the IOC, much like a real heartbeat, be used?
+* Where does the file `iocAdminSoft.db` come from? Can you find it in your filesystem? Can you guess
+  at how the file was found?
 
-   > The number `80159276` is here randomly generated. If you happen to see the same number on your machine, today is your lucky day!
+### Pleading the fifth
 
-3. Look at the heartbeat again. Is it the same? Why not?
+For this last IOC, we add in the other modules mentioned above, and modify how we load the database file from `iocStats`.
+```console
+[iocuser@host:cmds]$ iocsh.bash 5.cmd
+```
 
-Spend some time thinking about the following:
+* Can you see the how database file for `iocStats` is loaded? Is it the same database file as last time?
 
-* `epicsEnvSet` Can you see two different ways for it to be used? 
+Run the following command to print your PVs, and inspect the output file:
 
-* Can you think of another syntax by which you can call `dbLoadRecords`?
+```console
+[iocuser@home:cmds]$ cd ..
+[iocuser@home:4_startup_scripts_in_e3]$ bash ../tools/caget_pvs.bash -l IOC-NNNNNNNN_PVs.list 
+```
 
-* Could you rewrite startup scripts using only one method? 
-
-<!-- This just adds iocstats -->
-
-### 5.cmd
-
-Here we add `iocStats` in a slightly different way, and have furthermore added more default e3 modules.
-
-0. Go to **E3_TOP** and run the following commands:
-
-    ```console
-   [iocuser@host:e3-3.15.5]$ make -C e3-iocStats/ existent
-   [iocuser@host:e3-3.15.5]$ make -C e3-recsync/  existent
-   [iocuser@host:e3-3.15.5]$ make -C e3-autosave/ existent
-   ```
-
-   * Can we see the `*.iocsh` files with the installation path of e3?
-
-   The e3 function `loadIocsh` is a function similar to EPICS' function `iocshLoad`. It supplies us with a reusable modularized startup script to simplify development.
-
-   > `loadIocsh` can of course still be used, but `iocshLoad` is highly recommended. 
-
-1. Run the following command to print your PVs, and inspect the output file:
-
-   ```console
-   [iocuser@home:ch4_supplementary_path]$ bash ../tools/caget_pvs.bash -l IOC-NNNNNNNN_PVs.list 
-   ```
-
-   (where `NNNNNNNN` is your IOC's random number.) 
-
-<!-- This basically adds essioc -->
+(where `NNNNNNNN` is your IOC's random number.) 
 
 ---
 
