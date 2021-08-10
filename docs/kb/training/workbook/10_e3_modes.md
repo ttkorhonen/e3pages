@@ -113,7 +113,7 @@ The development mode is instead intended to allow the developer to modify the so
 a method to use a forked copy of the source module, which allows you to commit changes even if you lack permission to push to the remote repository.
 
 The configuration for **Development mode** is modified in the files `CONFIG_MODULE_DEV` and `RELEASE_DEV` contained in the `configure/` directory. If
-these files do not exist, you can create them from the original `CONFIG_MODULE` and `RELEASE` files with some minor modifications. They key differences are
+these files do not exist, you can create them from the original `CONFIG_MODULE` and `RELEASE` files with some minor modifications. The key differences are
 
 * `E3_MODULE_DEV_GITURL`: The remote path to the module repository. This allows you to use a forked version of a module that you do not have permission to commit to.
 
@@ -209,7 +209,7 @@ the name of `iocStats-dev`. This is what the file tree will look like after:
 `-- template
 ```
 
-Confirm now that you have dev mod set up correctly by checking the remote urls for both the submodule and development directories by
+Confirm now that you have dev mod set up correctly by checking the remote URLs for both the submodule and development directories by
 using `git remote -v`.
 ```console
 [iocuser@host:iocStats]$ git remote -v
