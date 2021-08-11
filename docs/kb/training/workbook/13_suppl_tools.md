@@ -257,13 +257,13 @@ The main two things to notice above is the location of the default configuration
 
 We will now modify these two files for our setup. As we do not need access control, we will simply allow all users to access conserver without any password. Modify your `conserver.passwd` to look like this:
 
-```csharp
+```cpp
 *any*:
 ```
 
 For the configuration file, we will set up some default values, and then we will use an include directive (`#include`) to be able to inventorize our consoles in a separate file. Modify your `conserver.cf` to look like this:
 
-```csharp
+```cpp
 config * {
 }
 
@@ -286,14 +286,16 @@ Thus we are allowing only local access, and we are specifying to include the fil
 
 Now create the above included `procs.cf`, and populate it with data to describe one of our already-running IOCs:
 
-```csharp
+```cpp
 console test-ioc {
     type uds;
     uds /var/run/procServ/test-ioc/control;
 }
 ```
 
-> We could have inventorized also a console on a TCP port, in which we would set type to `host`, and port to `2000`.
+:::{note}
+We could have inventorized also a console on a TCP port, in which we would set type to `host`, and port to `2000`.
+:::
 
 As we are making changes to the configuration of an already-running system daemon (conserver), we will need to do a soft restart of the systemd manager:
 
@@ -302,7 +304,7 @@ As we are making changes to the configuration of an already-running system daemo
 [iocuser@host:~]$ systemctl status conserver.service
 ```
 
-> Should conserver not already be running on your machine, make sure to start and enable the service: `systemctl start conserver.service`, `systemctl enable conserver.service`.
+If conserver is not already running on your machine, make sure to start and enable it with `systemctl start conserver.service` and `systemctl enable conserver.service`.
 
 We now have conserver running, managing a console on a UDS at `/var/run/procServ/test-ioc/control`. To test, we can attach to this using socat again:
 
@@ -310,7 +312,7 @@ We now have conserver running, managing a console on a UDS at `/var/run/procServ
 [iocuser@host:~]$ socat - UNIX-CONNET:/var/run/procServ/test-ioc/control
 ```
 
-As we will want to use conserver client, also known as *console*, to attach to IOCs, we will need to set it up too. Let's first look at its' settings:
+As we will want to use conserver client, also known as *console*, to attach to IOCs, we will need to set it up too. Let's first look at its settings:
 
 ```console
 [iocuser@host:~]$ console -V
@@ -327,7 +329,7 @@ console: built with `./configure --build=x86_64-redhat-linux-gnu --host=x86_64-r
 
 As you can see, site-wide configurations are kept in `/etc/console.cf`. All we will need to do now to use the service is to define where console should look for consoles:
 
-```csharp
+```cpp
 config * {
         master localhost;
 }
@@ -341,7 +343,9 @@ And voilá ! If we just do a soft reload of the systemd manager again, we should
 [iocuser@host:~]$ console test-ioc
 ```
 
-> You can detach from a console by pressing `^E c .` (note the dot at the end). 
+:::{tip}
+You can detach from a console by pressing `^E c .` (note the dot at the end).
+:::
 
 ## How to monitor your IOC and related processes
 
