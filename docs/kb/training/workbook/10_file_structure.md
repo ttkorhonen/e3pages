@@ -5,9 +5,8 @@
 In this lesson, you'll learn how to do the following:
 
 * Understand all directories within e3.
-* Know how to use `cmds/`.
+* Know how to use `cmds/` from the wrapper versus the underlying module (as well as other related paths)
 * Know how to use `patch/`.
-* Know how to use `template/`.
 * Understand hidden files.
 * Know how to structure an e3 IOC.
 
