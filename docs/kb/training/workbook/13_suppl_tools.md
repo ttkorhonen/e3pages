@@ -32,53 +32,60 @@ start the `procServ` container:
 ```
 
 :::{admonition} Exercise
-What di each of the arguments passed to `procServ` mean?
+What do each of the arguments passed to `procServ` mean?
 :::
 
-1. Start a procServ container:
-
-   > Ensure that you have sourced your e3 environment by e.g. `setenv`, otherwise provide the full path to your `iocsh.bash` executable.
-
-   ```console
-   [iocuser@host:~]$ procServ -n "iocsh" 2000 $(which iocsh.bash)
-   ```
-
-2. Attach using telnet:
-
-   ```console
-   [iocuser@host:~]$ telnet localhost 2000
-   Trying ::1...
-   telnet: connect to address ::1: Connection refused
-   Trying 127.0.0.1...
-   Connected to localhost.
-   Escape character is '^]'.
-   @@@ Welcome to procServ (procServ Process Server 2.7.0)
-   @@@ Use ^X to kill the child, auto restart is ON, use ^T to toggle auto restart
-   @@@ procServ server PID: 1653
-   @@@ Server startup directory: /home/iocuser
-   @@@ Child startup directory: /home/iocuser
-   @@@ Child "testing" started as: /opt/epics/base-7.0.3.1/require/3.1.2/bin/iocsh.bash
-   @@@ Child "testing" PID: 1654
-   @@@ procServ server started at: Mon Aug 24 15:48:56 2020
-   @@@ Child "testing" started at: Mon Aug 24 15:48:56 2020
-   @@@ 0 user(s) and 0 logger(s) connected (plus you)
-   ```
-
-   If you press enter here, you should be seeing the iocsh PS1 (something like `04d5808-ics-alo-1654 >`). If you try to type `exit` (or send a `SIGINT` with `^C`), you will notice that the IOC simply restarts.
-
-   > As this is a telnet session, you can of course leave it as per usual by pressing `^]`, where `^` is your Ctrl key.
-
-3. Kill the container by pressing first `^X` and then `^Q`.
-
-What we just did was thus to start a procServ server, set it to listen to TCP port 2000, and to run `iocsh.bash` with no arguments. A more proper way of starting the server would be to do something like:
+Now, one should be able to connect to the container using telnet.
 
 ```console
-[iocuser@host:~] procServ -n "Test IOC" -i ^D^C -L procServ.log unix:/var/run/procServ/my-ioc $(which iocsh.bash) /path/to/st.cmd
+[iocuser@host:~]$ telnet localhost 2000
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+@@@ Welcome to procServ (procServ Process Server 2.7.0)
+@@@ Use ^X to kill the child, auto restart is ON, use ^T to toggle auto restart
+@@@ procServ server PID: 15539
+@@@ Server startup directory: /home/simonrose/data/git
+@@@ Child startup directory: /home/simonrose/data/git
+@@@ Child "iocsh" started as: /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash
+@@@ Child "iocsh" PID: 15549
+@@@ procServ server started at: Wed Aug 11 13:38:00 2021
+@@@ Child "iocsh" started at: Wed Aug 11 13:38:01 2021
+@@@ 0 user(s) and 0 logger(s) connected (plus you)
+```
+No other text occurs, since the IOC is up and running. If you press enter, or type `dbl` (or any other IOC command)
+then you can interact with the IOC.
+
+:::{note}
+As in [Chapter 4](4_startup_scripts.md), the command to escape to the `telnet` console is `^]`. 
+:::
+
+If you try to exit the IOC by typing `exit` or with `^C`, then the default behaviour of `procServ` is to restart the IOC.
+In order to kill the IOC, one should instead first press `^X` and then `^Q`.
+
+The above process starts an blank e3 IOC and opens up TCP port 2000 for communication. In general you will want to do a bit more:
+* Use a named Unix Domain Socket (UDS) so that you don't have to separately configure a port for each IOC running on a machine
+* Run an actual meaningful startup script
+* Keep a log of the output
+* Block certain control commands from being sent to the IOC (e.g. `^C` (SIGINT) and `^D` (EOF))
+
+This can be acheived with
+```console
+[iocuser@host:~]$ procServ -n "Test IOC" -i ^D^C -L procServ.log \
+                  unix:/var/run/procServ/my-ioc $(which iocsh.bash) /path/to/st.cmd
 ```
 
-, where we specify to ignore end of file (`^D`) and SIGINT (`^C`), to log all output to a file `procServ.log`, to use a UNIX domain socket (UDS) at `/var/run/procServ/my-ioc`, and to use a startup script at `/path/to/st.cmd`.
+:::{note}
+You will have to have write permission to the path specified by the UDS.
+:::
 
-> If you want to easily connect to a UDS, you can use *socat*: `socat - UNIX-CONNECT:/var/run/procServ/my-ioc`.
+If you want to connect to the UDS, you can use `socat` via
+```console
+[iocuser@host:~]$ socat - UNIX-CONNECT:/var/run/procServ/my-ioc
+```
+However, we will discuss another option below to manage connections to IOCs started with `procServ`, namely `conserver`.
 
 ## Letting the system manage our processes
 
