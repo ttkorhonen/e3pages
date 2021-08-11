@@ -91,107 +91,105 @@ However, we will discuss another option below to manage connections to IOCs star
 
 One of systemd's primary components is a system and service manager. We want to let our system manage our IOCs as services. We do this by creating *unit files* (more on those [here](https://www.freedesktop.org/software/systemd/man/systemd.unit.html)) that encode information about our service.
 
-We will now set up a simplistic system daemon to run an IOC.
+We will now set up a simplistic system daemon to run an IOC. Begin by saving the following as `/etc/systemd/system/test-ioc.service`.
+```
+[Unit]
+Description=procServ container for test IOC
+After=network.target remote-fs.target
 
-1. Create a text file and save it as `/etc/systemd/system/test-ioc.service`, with the following contents:
+[Service]
+User=iocuser
+ExecStart=/usr/bin/procServ \
+                     --foreground \
+                     --name=test-ioc \
+                     --logfile=/home/iocuser/test-ioc.log \
+                     --ignore=^C^D \
+                     --port=2000 \
+                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash
 
-   ```csharp
-   [Unit]
-   Description=procServ container for test IOC
-   After=network.target remote-fs.target
-  
-   [Service]
-   User=iocuser
-   ExecStart=/usr/bin/procServ \
-                       --foreground \
-                       --name=test-ioc \
-                       --logfile=/home/iocuser/test-ioc.log \
-                       --ignore=^C^D \
-                       --port=2000 \
-                       /opt/epics/base-7.0.3.1/require/3.1.2/bin/iocsh.bash
-  
-   [Install]
-   WantedBy=multi-user.target
-   ```
+[Install]
+WantedBy=multi-user.target
+```
 
-   > Note that you need to provide the full path to `iocsh.bash` as command substitution doesn't work in unit files. Instead, systemd offers its own minimalistic shell-style command line parsing - if interested, see more [here](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Command%20lines).
+:::{note}
+Note that you need to provide the full path to `iocsh.bash` as command substitution doesn't work in unit files. Instead, systemd offers its own minimalistic shell-style command line parsing - if interested, see more [here](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Command%20lines).
+:::
 
-2. Start up and inspect your service:
+Next, start up and inspect your service:
 
-   ```console
-   [iocuser@host:~]$ systemctl start test-ioc.service
-   [iocuser@host:~]$ systemctl status test-ioc.service
-   ```
+```console
+[iocuser@host:~]$ systemctl start test-ioc.service
+[iocuser@host:~]$ systemctl status test-ioc.service
+```
+If you want the system to keep the process alive and start it on boot, enable it: `systemctl enable test-ioc.service`.
 
-   > If you want the system to keep the process alive and start it on boot, enable it: `systemctl enable test-ioc.service`.
-
-3. Stop (and disable) your service.
-
-   ```console
-   [iocuser@host:~]$ systemctl stop test-ioc.service
-   ```
+Once you have confirmed that your IOC is running properly, you can stop and disable your service with the following.
+```console
+[iocuser@host:~]$ systemctl stop test-ioc.service
+```
 
 As you can see from the unit file, most of the parameters are fairly generic, and can be used for all IOCs. This allows us to use *template* unit files, and to instantiate daemons for our IOCs. We can thus create a single file called `ioc@.service`, and start any number of processes of the format `ioc@<instance_name>.service`. As we will want to be able to have different processes listen at different ports, we can use a few different specifiers supported by systemd.
 
-1. Create a template file called `ioc@.service`:
+In order to do so, create a template file called `ioc@.service`:
+```
+[Unit]
+Description=procServ container for IOC %i
+Documentation=file:/opt/iocs/e3-ioc-%i/README.md
+Before=conserver.service
+After=network.target remote-fs.target
+AssertPathExists=/opt/iocs/e3-ioc-%i
 
-   ```csharp
-   [Unit]
-   Description=procServ container for IOC %i
-   Documentation=file:/opt/iocs/e3-ioc-%i/README.md
-   Before=conserver.service
-   After=network.target remote-fs.target
-   AssertPathExists=/opt/iocs/e3-ioc-%i
-  
-   [Service]
-   User=iocuser
-   Group=iocgroup
-   PermissionsStartOnly=true
- 
-   ExecStartPre=/bin/mkdir -p /var/log/procServ/%i
-   ExecStartPre=/bin/chown -R iocuser:iocgroup /var/log/procServ/%i
-   ExecStartPre=/bin/mkdir -p /var/run/procServ/%i
-   ExecStartPre=/bin/chown -R iocuser:iocgroup /var/run/procServ/%i
- 
-   ExecStart=/usr/bin/procServ \
-                       --foreground \
-                       --name=%i \
-                       --logfile=/var/log/procServ/%i/out.log \
-                       --info-file=/var/run/procServ/%i/info \
-                       --ignore=^C^D \
-                       --logoutcmd=^Q \
-                       --chdir=/var/run/procServ/%i \
-                       --port=unix:/var/run/procServ/%i/control \
-                       /opt/epics/base-7.0.3.1/require/3.1.2/bin/iocsh.bash \
-                       /opt/iocs/e3-ioc-%i/st.cmd
-  
-   [Install]
-   WantedBy=multi-user.target
-   ```
+[Service]
+User=iocuser
+Group=iocgroup
+PermissionsStartOnly=true
 
-   In this file, `%i` is the instance name (character escaped; `%I` is verbatim), and you can also see that we've added some requirements for where the startup script shall be located, etc.
+ExecStartPre=/bin/mkdir -p /var/log/procServ/%i
+ExecStartPre=/bin/chown -R iocuser:iocgroup /var/log/procServ/%i
+ExecStartPre=/bin/mkdir -p /var/run/procServ/%i
+ExecStartPre=/bin/chown -R iocuser:iocgroup /var/run/procServ/%i
 
-   > Note that we now are using UDS instead of TCP ports, which allows us to name the socket.
+ExecStart=/usr/bin/procServ \
+                     --foreground \
+                     --name=%i \
+                     --logfile=/var/log/procServ/%i/out.log \
+                     --info-file=/var/run/procServ/%i/info \
+                     --ignore=^C^D \
+                     --logoutcmd=^Q \
+                     --chdir=/var/run/procServ/%i \
+                     --port=unix:/var/run/procServ/%i/control \
+                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash \
+                     /opt/iocs/e3-ioc-%i/st.cmd
 
-2. Create a simple startup script at `/opt/iocs/` with the format `e3-ioc-<iocname>/st.cmd`:
+[Install]
+WantedBy=multi-user.target
+```
 
-   ```bash
-   require stream,2.8.4
+In the above template file, `%i` is the instance name (character escaped; `%I` is verbatim). You can also see that we've added some requirements for where the startup script shall be located, etc.
 
-   iocInit()
+:::{note}
+As suggested above, we now are using UDS instead of TCP ports, which allows us to name the socket.
+:::
 
-   dbl > PV.list
-   ```
+With the template created, all that we need to do is create a startup script for the service to load. Create a simple startup script at `/opt/iocs/` with the format `e3-ioc-<iocname>/st.cmd`.
 
-3. Start an instantiated system daemon:
+```bash
+require stream
 
-   ```console
-   [iocuser@host:~]$ systemctl start ioc@test-ioc.service
-   ```
+iocInit()
 
-   > Here you could also *enable* the service so that it autostarts on boot.
+dbl > PV.list
+```
 
-4. Check the status of the process:
+Finally, start an instantiated system daemon.
+
+```console
+[iocuser@host:~]$ systemctl start ioc@test-ioc.service
+```
+
+As above, you could also *enable* the service so that it autostarts on boot.
+
+2. Check the status of the process:
 
    ```console
    [iocuser@host:~]$ systemctl status ioc@test-ioc.service
