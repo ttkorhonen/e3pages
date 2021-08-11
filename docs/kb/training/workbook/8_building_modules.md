@@ -44,8 +44,9 @@ community modules in a maximally flexible way.
 
 ### IOCs
 
-Unlike standard EPICS where an IOC is a compiled binary, in e3 an IOC is just a startup script. This means that there are no specialised utilities required to create
-an IOC, simply a text-editor.
+Unlike standard EPICS, where creating an IOC requires compiling a custom executable file, within e3 we use the standard executable `softIocPVA`
+from EPICS base. Thus, in order to create an IOC, all one needs to do is to create an appropriate startup script. This means that there are no
+specialised utilities necessary, simply a text editor.
 
 The simplest IOC repository can look something like the following.
 
