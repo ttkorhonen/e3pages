@@ -47,8 +47,8 @@ Escape character is '^]'.
 @@@ Welcome to procServ (procServ Process Server 2.7.0)
 @@@ Use ^X to kill the child, auto restart is ON, use ^T to toggle auto restart
 @@@ procServ server PID: 15539
-@@@ Server startup directory: /home/simonrose/data/git
-@@@ Child startup directory: /home/simonrose/data/git
+@@@ Server startup directory: /home/iocuser/data/git
+@@@ Child startup directory: /home/iocuser/data/git
 @@@ Child "iocsh" started as: /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash
 @@@ Child "iocsh" PID: 15549
 @@@ procServ server started at: Wed Aug 11 13:38:00 2021
@@ -186,15 +186,46 @@ Finally, start an instantiated system daemon.
 ```console
 [iocuser@host:~]$ systemctl start ioc@test-ioc.service
 ```
-
 As above, you could also *enable* the service so that it autostarts on boot.
 
-2. Check the status of the process:
+Finaly, check the status of the process.
+```console
+[iocuser@host:~]$ systemctl status ioc@test-ioc.service
+● ioc@test-ioc.service - procServ container for IOC test-ioc
+   Loaded: loaded (/etc/systemd/system/ioc@.service; disabled; vendor preset: disabled)
+   Active: active (running) since Wed 2021-08-11 15:42:46 CEST; 1min 3s ago
+     Docs: file:/opt/iocs/e3-ioc-test-ioc/README.md
+  Process: 20432 ExecStartPre=/bin/chown -R iocuser /var/run/procServ/%i (code=exited, status=0/SUCCESS)
+  Process: 20430 ExecStartPre=/bin/mkdir -p /var/run/procServ/%i (code=exited, status=0/SUCCESS)
+  Process: 20428 ExecStartPre=/bin/chown -R iocuser /var/log/procServ/%i (code=exited, status=0/SUCCESS)
+  Process: 20427 ExecStartPre=/bin/mkdir -p /var/log/procServ/%i (code=exited, status=0/SUCCESS)
+ Main PID: 20435 (procServ)
+   CGroup: /system.slice/system-ioc.slice/ioc@test-ioc.service
+           ├─20435 /usr/bin/procServ --foreground --name=test-ioc --logfile=/var/log/procServ/test-ioc/out.log --info-file=/var/run/procServ/test-ioc/inf...
+           ├─20447 /bin/bash /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash /opt/iocs/e3-ioc-test-ioc/st.cmd
+           └─20482 /epics/base-7.0.5/bin/linux-x86_64/softIocPVA -D /epics/base-7.0.5/dbd/softIocPVA.dbd /tmp/systemd-private-e3-iocsh-iocuser/tm...
 
-   ```console
-   [iocuser@host:~]$ systemctl status ioc@test-ioc.service
-   ```
-   <!-- todo: add output from status -->
+Aug 11 15:42:46 localhost.localdomain systemd[1]: Starting procServ container for IOC test-ioc...
+Aug 11 15:42:46 localhost.localdomain systemd[1]: Started procServ container for IOC test-ioc.
+```
+We can see from the above that the IOC is up and running. You can do a quick further test without logging in by checking for any of the PVs that should
+be visible from the IOC with `pvlist`.
+
+```console
+[iocuser@host:~]$ pvlist localhost
+REQMOD:localhost-20447:MODULES
+REQMOD:localhost-20447:VERSIONS
+REQMOD:localhost-20447:MOD_VER
+REQMOD:localhost-20447:exit
+REQMOD:localhost-20447:BaseVersion
+REQMOD:localhost-20447:require_VER
+REQMOD:localhost-20447:asyn_VER
+REQMOD:localhost-20447:sequencer_VER
+REQMOD:localhost-20447:sscan_VER
+REQMOD:localhost-20447:calc_VER
+REQMOD:localhost-20447:pcre_VER
+REQMOD:localhost-20447:stream_VER
+```
 
 As you saw, we added no specifics to our templated unit file, but instead used essentially macros. By having a template, we can instantiate as many IOCs as we want and have them appear and behave consistently.
 
