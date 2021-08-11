@@ -23,7 +23,7 @@ These deployments (including set up of these utilities) are typically automated 
 ## Starting an IOC in a procServ container
 
 `procServ` is a utility that run a specified command as a dæmon process in the background while opening up `telnet` connection at a specified port in
-order to allow users to communicate with the process. For more infomation, see its [documentation](https://linux.die.net/man/1/procserv).
+order to allow users to communicate with the process. For more information, see its [documentation](https://linux.die.net/man/1/procserv).
 
 Let us create a `procServ` container for a blank IOC using `iocsh.bash` and listening on port 2000, which we will then connect to via `telnet`. First,
 start the `procServ` container:
@@ -71,7 +71,7 @@ The above process starts an blank e3 IOC and opens up TCP port 2000 for communic
 * Keep a log of the output
 * Block certain control commands from being sent to the IOC (e.g. `^C` (SIGINT) and `^D` (EOF))
 
-This can be acheived with
+This can be achieved with
 ```console
 [iocuser@host:~]$ procServ -n "Test IOC" -i ^D^C -L procServ.log \
                   unix:/var/run/procServ/my-ioc $(which iocsh.bash) /path/to/st.cmd
@@ -188,7 +188,7 @@ Finally, start an instantiated system daemon.
 ```
 As above, you could also *enable* the service so that it autostarts on boot.
 
-Finaly, check the status of the process.
+Finally, check the status of the process.
 ```console
 [iocuser@host:~]$ systemctl status ioc@test-ioc.service
 ● ioc@test-ioc.service - procServ container for IOC test-ioc
