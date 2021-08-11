@@ -116,8 +116,9 @@ The configuration for **Development mode** is modified in the files `CONFIG_MODU
 these files do not exist, you can create them from the original `CONFIG_MODULE` and `RELEASE` files with some minor modifications. The key differences are
 
 * `E3_MODULE_DEV_GITURL`: The remote path to the module repository. This allows you to use a forked version of a module that you do not have permission to commit to.
-
-* `E3_MODULE_SRC_PATH`: The local path used for the deployment mode, which with default settings is the module's name with the added suffix `-dev`; for example, `e3-iocStats` has `iocStats` source path in the deployment, and `iocStats-dev` one in the development mode. Note that since `-dev` will be added, you can use the same module name as in development mode.
+* `E3_MODULE_SRC_PATH`: The path used for the local clone of the module source code repository. Note that this appears in both `CONFIG_MODULE` and `CONFIG_MODULE_DEV`, and
+  the value in these two should be different. For example, for `e3-iocStats` in `CONFIG_MODULE` we define `E3_MODULE_SRC_PATH` as `iocStats`, while in 
+  `CONFIG_MODULE_DEV` we define it as `iocStats-dev`.
 
 Development mode allows a user to work with (and commit changes to) a remote module without needing to have permissions to commit to the standard one. This is a
 good method to make changes in order to create a pull/merge request to a community EPICS module.
