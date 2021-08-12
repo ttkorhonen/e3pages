@@ -51,7 +51,7 @@ need to be restarted between tests.
 
 :::{tip}
 The key combination `^]` will depend a lot on your keyboard layout. For a US keyboard layout, this is Ctrl + `]`. For
-a Swedish keybaord layout, this is Ctrl + `¨` (they are located in the same physical location of they keyboard). You
+a Swedish keyboard layout, this is Ctrl + `¨` (they are located in the same physical location of they keyboard). You
 may have to try a few different options to see what works.
 :::
 
