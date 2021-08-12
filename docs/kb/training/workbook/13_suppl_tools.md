@@ -14,16 +14,16 @@ In this lesson, you'll learn how to do the following:
 
 Typically, IOCs will be running on a dedicated (virtual or physical) machine that you log in remotely to. A single machine may host a number of IOCs, which should be running regardless of if you are attached to a session or not. Thus we want to be able to allow the system to run and take care of the IOC itself. However, we need to be able to easily connect to the IOC if necessary in order to access logs, to check on the status of an IOC, etc. Historically, common user accounts with screen or tmux sessions have been used towards this purpose, but they come with issues.
 
-One solution is to run IOCs as a (possibly templated) system daemons in procServ container, all of which are managed by conserver.
+One solution is to run each IOC in a procServ container as a (possibly templated) system daemon. The system daemons are managed by `systemd`, and the IOC consoles accessed by conserver.
 
 :::{note}
-These deployments (including set up of these utilities) are typically automated with remote execution utilities like *ansible*, *salt* or *puppet*. It is, however, still useful to understand how they work.
+These deployments (including set up of these utilities) are typically automated with configuration management/remote execution utilities like *ansible*, *salt* or *puppet*. It is, however, still useful to understand how they work.
 :::
 
 ## Starting an IOC in a procServ container
 
-`procServ` is a utility that run a specified command as a dæmon process in the background while opening up `telnet` connection at a specified port in
-order to allow users to communicate with the process. For more information, see its [documentation](https://linux.die.net/man/1/procserv).
+`procServ` is a utility that runs a specified command as a dæmon process in the background while opening up either a`telnet` connection at a specified port or
+a Unix Domain Socket in order to allow users to communicate with the process. For more information, see its [documentation](https://linux.die.net/man/1/procserv).
 
 Let us create a `procServ` container for a blank IOC using `iocsh.bash` and listening on port 2000, which we will then connect to via `telnet`. First,
 start the `procServ` container:
