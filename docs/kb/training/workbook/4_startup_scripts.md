@@ -13,19 +13,23 @@ In this lesson, you'll learn how to do the following:
 
 Before working on this chapter, please clone the following repository, as it has some necessary files to work with.
 ```console
-[iocuser@host:~]$ git clone --recursive -b 1.0.0 https://gitlab.esss.lu.se/e3/e3-training-material.git
+[iocuser@host:~]$ git clone -b 1.0.0 https://gitlab.esss.lu.se/e3/e3-training-material.git
 ```
-In particular, it includes a simulator based on *[Kameleon](https://github.com/jeonghanlee/kameleon.git)* to simulate
-a serial device for an IOC to communicate with. Note that this repository is already included as a submodule of the
-trianing material, so you do not need to clone it.
-
-:::{note}
-Kameleon has been written for Python2 (tested on 2.7), and so you must have an installation of Python2 installed.
-:::
-
-To begin with, open a separate terminal and run the following to start the simulator.
+You will also need to install the [LeWIS](https://lewis.readthedocs.io/en/latest/index.html) simulator, which is used
+to simulate a device that your IOC will communicate with.
 ```console
-[iocuser@host:e3-training-material]$ bash 4_startup_scripts_in_e3/simulator.bash
+[iocuser@host:~]$ pip install lewis
+```
+
+To start the simulator, open another terminal and run
+```console
+[iocuser@host:~]$ lewis -k lewis.examples example_motor
+2021-08-12 17:15:48,902 INFO lewis.DeviceBase: Creating device, setting up state machine
+2021-08-12 17:15:48,903 INFO lewis.Simulation: Changed cycle delay to 0.1
+2021-08-12 17:15:48,903 INFO lewis.Simulation: Changed speed to 1.0
+2021-08-12 17:15:48,903 INFO lewis.Simulation: Starting simulation
+2021-08-12 17:15:48,903 INFO lewis.AdapterCollection: Connecting device interface for protocol 'stream'
+2021-08-12 17:15:48,904 INFO lewis.ExampleMotorStreamInterface.StreamServer: Listening on 0.0.0.0:9999
 ```
 This will start the simulator running, which you can then test with `telnet` via
 ```console
@@ -33,21 +37,18 @@ This will start the simulator running, which you can then test with `telnet` via
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
 Escape character is '^]'.
-CPS, 1, CPM, 4, uSv/hr, 0.04, SLOW
-CPS, 4, CPM, 18, uSv/hr, 0.052, SLOW
-CPS, 3, CPM, 19, uSv/hr, 0.035, SLOW
-CPS, 2, CPM, 1, uSv/hr, 0.032, SLOW
-CPS, 4, CPM, 4, uSv/hr, 0.083, SLOW
-# --- snip snip ---
+P?
+0.0
 ```
+The commands that the motor takes are `P?`, `T?`, and `S?` to query information, `T=<num>` to set its target, and `H` to halt the
+motor from moving.
+
 You can always quit the `telnet` session by hitting `^]`:
 ```console
 ^]
 telnet> quit
 Connection closed.
 ```
-This will likely kill the simulator which you should then restart. In general, this simulator does have a tendency to die and so may 
-need to be restarted between tests.
 
 :::{tip}
 The key combination `^]` will depend a lot on your keyboard layout. For a US keyboard layout, this is Ctrl + `]`. For
