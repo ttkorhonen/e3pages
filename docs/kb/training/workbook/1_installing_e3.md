@@ -1,4 +1,4 @@
- # Installing e3 
+# Installing e3 
 
 ## Lesson overview
 
@@ -15,9 +15,13 @@ In this lesson, you'll learn how to do the following:
 
 ## Downloading e3
 
-*N.B.! ESS' EPICS environment e3 is developed primarily for CentOS, and it is thus recommended two use CentOS7 whilst exercising this tutorial.*
+:::{note}
+ESS' EPICS environment e3 is developed primarily for CentOS, and it is thus recommended to use CentOS7 while working through this tutorial.
+:::
 
-> As e3 heavily relies on git, it's recommended to first be familiar with especially git submodules.
+:::{note}
+As e3 heavily relies on git, it is recommended to first be familiar with git, and especially git submodules.
+:::
 
 If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning. This will install
 all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.
@@ -45,7 +49,7 @@ Start by downloading e3 from GitLab. For the purposes of this documentation, we 
 [iocuser@host:~]$ git clone --depth 1 --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git
 ```
 
-> As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, then you should clone it using:
+As e3 by design can have multiple different configurations in a host, it is recommended to use self-explanatory source directory names. This will allow you to easily switch between e.g. EPICS base versions 7.0.3.1 and 7.0.5 during development. For example, if one would like to use EPICS base 7.0.3.1, then you should clone it using:
 
 ```console
 [iocuser@host:~]$ git clone --depth 1 --branch 0.4.1 https://gitlab.esss.lu.se/e3/e3.git e3-7.0.3.1
@@ -53,7 +57,7 @@ Start by downloading e3 from GitLab. For the purposes of this documentation, we 
 
 Throughout the tutorial, we will assume that the default version of EPICS base is 7.0.5, which has been cloned in the directory `/home/iocuser/e3`. This path will henceforth be referred to as **E3_TOP**.
 
-> Typical paths for EPICS installations tend to be `/epics` or `/opt/epics`. For this tutorial series, e3 will be cloned to `$HOME` and EPICS will be installed at `/epics`.
+Typical paths for EPICS installations tend to be `/epics` or `/opt/epics`. For this tutorial series, e3 will be cloned to `$HOME` and EPICS will be installed at `/epics`.
 
 ## Configure e3
 
@@ -63,7 +67,7 @@ Configuring an e3 build with default settings can be done like:
 [iocuser@host:e3]$ ./e3_building_config.bash setup
 ```
 
-> The utility can be launched with a number of arguments. To see these, simply run the script without any arguments, i.e. `./e3_building_config.bash`; you can modify the building path (e.g. `-t <path/to/install>`) as well as define versions.
+The utility can be launched with a number of arguments. To see these, simply run the script without any arguments, i.e. `./e3_building_config.bash`; you can modify the building path (e.g. `-t <path/to/install>`) as well as define versions.
 
 As always with EPICS, versions are important. Especially pay attention to:
 
@@ -146,7 +150,9 @@ Configuring EPICS per above directions will generate the following three `*.loca
 
 These will help us to change base, require, and all modules' configuration without having to change any source files.
 
-*N.B.! Modifying versions in the `*.local` files above will override versions listed in the module configuration files.*
+:::{note}
+Modifying versions in the `*.local` files above will override versions listed in the module configuration files.
+:::
 
 ## Building and installing EPICS base and require
 
@@ -160,7 +166,7 @@ For EPICS base and *require*, it's as simple as running:
 [iocuser@host:e3]$ ./e3.bash req
 ```
 
-> Remember to run these with elevated status (`sudo`) if you want to install in `/opt`.
+Remember to run these with elevated status (`sudo`) if you want to install in `/opt`.
 
 ## Module packs
 
@@ -257,23 +263,25 @@ This group contains those EPICS modules that are used for communication with spe
    26 : communication/e3-snmp
 ```
 
-> Note that this includes a duplication of the core modules: this is due to the fact that this module group
-> depends on the core group as stated above. If you want to see only those modules that are from this group,
-> you should add the `o` flag like
-> ```console
-> [iocuser@host:e3]$ bash e3.bash -no vars
-> >> Vertical display for the selected modules :
-> Modules List 
->    0 : communication/e3-modbus
->    1 : communication/e3-ipmiComm
->    2 : communication/e3-motor
->    3 : communication/e3-ip
->    4 : communication/e3-delaygen
->    5 : communication/e3-s7plc
->    6 : communication/e3-opcua
->    7 : communication/e3-mca
->    8 : communication/e3-snmp
-> ```
+:::{note}
+Note that this includes a duplication of the core modules: this is due to the fact that this module group
+depends on the core group as stated above. If you want to see only those modules that are from this group,
+you should add the `-o` flag like
+```console
+[iocuser@host:e3]$ bash e3.bash -no vars
+>> Vertical display for the selected modules :
+Modules List 
+   0 : communication/e3-modbus
+   1 : communication/e3-ipmiComm
+   2 : communication/e3-motor
+   3 : communication/e3-ip
+   4 : communication/e3-delaygen
+   5 : communication/e3-s7plc
+   6 : communication/e3-opcua
+   7 : communication/e3-mca
+   8 : communication/e3-snmp
+```
+:::
 
 ### AreaDetector Group
 
@@ -302,17 +310,17 @@ This group contains the necessary modules to work with camera-type sensors. This
 
 You download, build, and install a group by using the `mod` argument (as in **mod**ules). For example:
 
-* To install the core group:
+To install the core group:
 
-  ```console
-  [iocuser@host:e3]$ ./e3.bash -c mod
-  ```
+```console
+[iocuser@host:e3]$ ./e3.bash -c mod
+```
 
-* To install the core, timing, and area detector groups
+To install the core, timing, and area detector groups
 
-  ```console
-  [iocuser@host:e3]$ ./e3.bash -ctao mod
-  ```
+```console
+[iocuser@host:e3]$ ./e3.bash -ctao mod
+```
 
 ### Options
 
@@ -335,9 +343,11 @@ The full installation sequence for building an e3 module is `make init patch bui
 
 ### Test your installation
 
-> Note: This does not work correctly in e3 0.4.1 due to the capitalisation of `EPICS_MODULE_NAME` for a few of the modules.
+:::{note}
+This does not work correctly in e3 0.4.1 due to the capitalisation of `EPICS_MODULE_NAME` for a few of the modules.
+:::
 
-The following command will load all installed modules within a single `iocsh.bash`. If you after executing `e3.bash -c load` see a clear console prompt (`>`), you have succesfully installed e3 on the host.
+The following command will load all installed modules within a single `iocsh.bash`. If, after executing `e3.bash -c load`, you see a clear console prompt (`>`), you have succesfully installed e3 on the host.
 
 ```console
 [iocuser@host:e3]$ ./e3.bash -c load
