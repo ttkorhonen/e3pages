@@ -104,7 +104,14 @@ This script contains a fully working IOC, and so you should pay thorough attenti
 
 * How does this script use `E3_CMD_TOP`? Is it useful to define where other files are?
 * What is the purpose of `random.bash` and `random.cmd` in this script?
-* What is the *stream protocol* file? 
+* What is the *stream protocol* file?
+* If you have your simulator running in another terminal, what do you notice about it?
+* Try running the following commands in the IOC shell:
+  ```console
+  localhost-10414 > dbpf IOC-NNNNNNNN:SetTarget 100
+  localhost-10414 > dbgf IOC-NNNNNNNN:State
+  localhost-10414 > dbpf IOC-NNNNNNNN:Halt 1
+  ```
 
 ### For the fourth
 
