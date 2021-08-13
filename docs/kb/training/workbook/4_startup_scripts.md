@@ -91,8 +91,8 @@ Start the second IOC with the startup script `2.cmd`.
   :::
 * What happens if you remove the `iocInit()` line?
 * Can you spot the warning? And can you explain what kind of warning it is?
-* You should have had the simulator running in a separate terminal. If so, what did you notice between the two of these
-  scripts? What was the cause of that?
+* You should have had the simulator running in a separate terminal. If so, what changed between when you ran the first script and
+  when you ran the second? What could have been the cause of that change?
 
 ### IOC the three
 
