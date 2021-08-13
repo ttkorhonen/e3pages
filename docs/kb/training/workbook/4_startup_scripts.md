@@ -100,9 +100,9 @@ Start the third IOC with the startup script `3.cmd`.
 ```console
 [iocuser@host:cmds]$ iocsh.bash 3.cmd
 ```
-This script contains a fully working IOC, and so you should pay thorough attention to it.
+This script contains a fully working IOC, and so you should read through the startup script carefully in order to understand what it is doing.
 
-* How does this script use `E3_CMD_TOP`? Is it useful to define where other files are?
+* How does this script use `E3_CMD_TOP`?
 * What is the purpose of `random.bash` and `random.cmd` in this script?
 * What is the *stream protocol* file?
 * If you have your simulator running in another terminal, what do you notice about it?
@@ -116,7 +116,7 @@ This script contains a fully working IOC, and so you should pay thorough attenti
 ### For the fourth
 
 By now we have a functioning IOC which can communicate with our simulated device. We would, however, generally want to
-tie more EPICS modules into that IOC, such as `iocStats`, `autosave`, and `recsync`. For simplicity, let us start with
+tie more EPICS modules into that IOC, for example `iocStats`, `autosave`, and `recsync`. For simplicity, let us start with
 `iocStats`.
 
 In order to load the functionality from one of these modules, we will need to configure it. This is defined by some mix
@@ -128,7 +128,7 @@ Execute the next script:
 ```
 
 Start with typing `dbl` at the IOC prompt in order to see a full list of the IOC's PVs. Within those PVs should be a
-*heartbeat* PV, named something like `IOC-80159276:IocStat:HEARTBEAT`. Fetch its value:
+*heartbeat* PV, named something like `IOC-80159276:IocStats:HEARTBEAT`. Fetch its value:
 ```console
 localhost-1593 > dbpr IOC-80159276:IocStat:HEARTBEAT
 DBF_DOUBLE:         29
