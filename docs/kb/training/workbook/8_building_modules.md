@@ -78,7 +78,7 @@ Exercise:
 The e3 team has developed a number of tools to facilitate creating new e3 wrappers. In particular, we use [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/),
 a Python-based templating utility. This can be installed with
 ```console
-[iocuser@host:~]$ pip3 install cookiecutter
+[iocuser@host:~]$ python3 -m pip install cookiecutter
 ```
 You may need to add a `--user`, depending on your system permissions.
 
@@ -279,7 +279,7 @@ EPICS_MODULE_NAME:=clock
 
 # EPICS_MODULE_TAG:=master
 #
-E3_MODULE_VERSION:=master
+E3_MODULE_VERSION:=1.0.0
 
 # Dependent module versions
 # For example:
@@ -345,9 +345,9 @@ and then run `iocsh.bash ch8.cmd`.
 ##  Assignments
 
 * Write a startup script for `e3-fimscb`.
-* Create an e3 wrapper for the EPICS module [e3-ch8](https://github.com/icshwi/ch8).
+* Create an e3 wrapper for the EPICS module [e3-ch8](https://gitlab.esss.lu.se/epics-modules/training/ch8).
 * Create a startup script for this module that will load all of the necessary functionality
-* Create an e3 wrapper for the EPICS module [e3-myexample](https://github.com/icshwi/myexample), as well as an associated IOC 
+* Create an e3 wrapper for the EPICS module [e3-myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated IOC 
   (i.e. a startup script that loads the necessary functionality)
   :::{hint}
   This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
