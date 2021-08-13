@@ -96,6 +96,10 @@ There are two main types of wrappers: wrappers that link to external code (the t
 If you are needing to use a module from the EPICS community or one that may be used outside of a purely e3 context, then the e3 wrapper should point to that
 repository. This could be located e.g. in the epics-modules group on [Github](https://github.com/epics-modules), [Gitlab](https://gitlab.esss.lu.se/epics-modules), or elsewhere.
 
+:::{note}
+The idea behind this is that you do not need to maintain a local fork, but that you can simply point at existing repositories that are used within the community.
+:::
+
 When you use the cookiecutter recipe it will prompt you for some information needed to create the wrapper.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
@@ -247,6 +251,11 @@ has been loaded now.
 It may not be the case that every e3 module is one that is expected to be used outside of your local institution. In such cases, separating
 your code into a submodule and a wrapper may not make the most sense, since it adds a fair amount of additional complexity. In that case,
 we can use the *local source mode* when designing modules and wrappers.
+
+:::{note}
+That said, one advantage of separating the wrapper from the repository is that this ensures that your in-house developed
+EPICS functionality can be shared with the broader community, instead of just those that use e3.
+:::
 
 Create a cookiecutter wrapper as above, but this time enter `none` for the git URL.
 ```console
