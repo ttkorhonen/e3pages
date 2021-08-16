@@ -50,12 +50,17 @@ This is the most obviously visible part of *require* from the perspective of an 
 
 Versioning of modules follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
 
-* MAJOR.MINOR.PATCH e.g. `require asyn,4.37.0`
-* MAJOR.MINOR.PATCH-BUILD e.g. `require sis8300llrf,3.17.1-1`
+* MAJOR.MINOR.PATCH e.g. `require asyn,4.41.0`
+* MAJOR.MINOR.PATCH+BUILD e.g. `require sis8300llrf,3.17.1+1`
 
 If you do not specify a BUILD number, then *require* will load the version with the highest build number. Otherwise, *require* will match the version exactly.
 
-Note that `1.0.0 < 1.0.0-0 < 1.0.0-1 < ... < 1.0.1 < ...`.
+Note that `1.0.0 < 1.0.0+0 < 1.0.0+1 < ... < 1.0.1 < ...`.
+
+:::{note}
+The syntax for build numbers changed between require 3.3.0 and require 3.4.0. Initially the separator was a `-`, but in order to be more consisten with 
+[semantic versioning](https://semver.org/), the e3 team decided to change it to a `+`.
+:::
 
 #### Test versions
 
@@ -67,15 +72,15 @@ As *require* will load the first test version it finds when there are no numeric
 
 ### Dependency resolution
 
-If one module depends on another one, both of these will be loaded. For example, *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.10 in its current incarnation has been built against *asyn* 4.37.0---if you load that version of *StreamDevice* then it will try to load specifically version 4.37.0 of *asyn*, and if it cannot find that version, or if another version of *asyn* has already been loaded, then the IOC will exit with an error.
+If one module depends on another one, both of these will be loaded. For example, *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.18 in its current incarnation has been built against *asyn* 4.41.0---if you load that version of *StreamDevice* then it will try to load specifically version 4.41.0 of *asyn*, and if it cannot find that version, or if another version of *asyn* has already been loaded, then the IOC will exit with an error.
 
-These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for StreamDevice 2.8.10 are (directly from the aforementioned file):
+These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for StreamDevice 2.8.18 are (directly from the aforementioned file):
 
 ```bash
 # Generated file. Do not edit.
-asyn 4.37.0
-calc 3.7.3
-pcre 8.41.0
+asyn 4.41.0+0
+calc 3.7.4+0
+pcre 8.44.0+0
 ```
 
 The reader should be aware that *require* is limited in the degree to which it can perform dependency resolution; all it can do is a simple check against existing loaded versions. This is why build numbers are necessary. As an example, consider the following scenario.
@@ -86,4 +91,4 @@ The module *sis8300llrf* version 3.16.1 depends on the module *scaling*, and has
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
 2. We could try to update the version of *sis8300llrf* to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
-3. We could instead update the version to 3.16.1-1, i.e., add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
+3. We could instead update the version to 3.16.1+1, i.e., add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
