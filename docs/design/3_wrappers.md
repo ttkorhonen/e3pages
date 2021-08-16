@@ -6,9 +6,9 @@ Another key feature of e3 is the module wrapper. This allows us to apply site sp
 
 The template structure for an e3 wrapper is as follows:
 
-```bash
-$ tree
-.
+```console
+[iocuser@host:~]$ tree e3-${MODULE}
+e3-${MODULE}
 ├── Makefile
 ├── README.md
 ├── cmds
@@ -42,20 +42,20 @@ If your module depends on other modules (for example, it may depend on *asyn*, *
 
 ```makefile
 # DEPENDENT MODULE VERSION
-ASYN_DEP_VERSION:=4.37.0
-STREAM_DEP_VERSION:=2.8.10
-ADCORE_DEP_VERSION:=3.9.0
+ASYN_DEP_VERSION:=4.41.0
+STREAM_DEP_VERSION:=2.8.18
+ADCORE_DEP_VERSION:=3.10.0
 ```
 
 (iocstats_tree)=
 
 ## The module Makefile
 
-The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, built for *require* 3.3.0.
+The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, built for *require* 3.4.1.
 
 At the top of the makefile there is some boilerplate code which sets the build stage correctly:
 
-```bash
+```makefile
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include ${E3_REQUIRE_TOOLS}/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
@@ -63,11 +63,11 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
 ---
 
-Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.3.0, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.4.1, we find the following:
 
-```bash
-$ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
-/epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/
+```console
+[iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
+/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
 ├── db
 |   ├── access.db
 |   ├── ...
@@ -135,9 +135,9 @@ HEADERS += $(DEVIOCSTATS)/devIocStats.h
 :::{warning}
 By default, the headers are all flatly installed into the `include/` directory; that is, the two files listed are both installed directly as follows:
 
-```bash
-$ tree /epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
-/epics/base-7.0.4/require/3.3.0/siteMods/iocstats/3.1.16/include/
+```console
+[iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/include/
+/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/include/
 ├── devIocStats.h
 └── devIocStatsOSD.h
 ```
@@ -150,8 +150,6 @@ From require 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in
 KEEP_HEADER_SUBDIRS += $(GMTOP)
 ```
 where you have defined `GMTOP` elsewhere in the module Makefile.
-
-
 :::
 
 ### Compiled libraries
