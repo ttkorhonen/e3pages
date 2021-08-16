@@ -58,7 +58,7 @@ If you do not specify a BUILD number, then *require* will load the version with 
 Note that `1.0.0 < 1.0.0+0 < 1.0.0+1 < ... < 1.0.1 < ...`.
 
 :::{note}
-The syntax for build numbers changed between require 3.3.0 and require 3.4.0. Initially the separator was a `-`, but in order to be more consisten with 
+The syntax for build numbers changed between require 3.3.0 and require 3.4.0. Initially the separator was a `-`, but in order to be more consistent with 
 [semantic versioning](https://semver.org/), the e3 team decided to change it to a `+`.
 :::
 
