@@ -206,12 +206,12 @@ make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypi
 indicating that the `.substitutions` file has been inflated correctly. You should now be able to look in the installed module directory and see the
 generated `pid.db` file.
 
-
 ---
 
 ## Assignments
 
-* If you try to actually load the `pid.db` database file, it does not load. What dependency are you missing?
-* Where is `FETCH_BUILD_NUMBER` defined?
-* Can you think of another way to load the records in the `.substitutions` file that does not involve the
+1. If you try to actually load the `pid.db` database file, it does not load. What dependency are you missing?
+2. Where is `FETCH_BUILD_NUMBER` defined?
+3. Can you think of another way to load the records in the `.substitutions` file that does not involve the
   build-time database expansion?
+

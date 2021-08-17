@@ -229,18 +229,17 @@ they both use the same `module.Makefile`, even though some of the configuration 
 
 ## Assignments
 
-* Can you change the install path used in *cell mode*?
-* How would you load more than one module installed in *cell mode* at the same time?
-* Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
-  
-  ```console
-  [iocuser@host:e3-iocstats]$ git status
-  On branch master
-  Your branch is up-to-date with 'origin/master'.
-  nothing to commit, working directory clean
-  ```
+1. Can you change the install path used in *cell mode*?
+2. How would you load more than one module installed in *cell mode* at the same time?
+3. Can you override the default `E3_MODULE_DEV_GITURL` with your own forked repository without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
+   ```console
+   [iocuser@host:e3-iocstats]$ git status
+   On branch master
+   Your branch is up-to-date with 'origin/master'.
+   nothing to commit, working directory clean
+   ```
 
-* Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
-* What's the difference between `make existent` and `make devexistent`?
-* We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
+4. Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
+5. What's the difference between `make existent` and `make devexistent`?
+6. We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
 

@@ -269,12 +269,12 @@ Exercise:
 
 ## Assignment
 
-There is another kind of dependency, the *run-time dependency*. This is often associated with dependencies such as *StreamDevice* where the dependency is
-based on run-time functionality as connoted by the existence of `.proto` (protocol) files. For example, consider the e3 module for communicating with a
-[FuG power supply](https://gitlab.esss.lu.se/e3/wrappers/ps/e3-fug): if you look at the [underlying module](https://gitlab.esss.lu.se/epics-modules/fug),
-you can see that it includes such a protocol file, [fug.proto](https://gitlab.esss.lu.se/epics-modules/fug/-/tree/master/fugApp/Db).
+There is another kind of dependency, the *run-time dependency*. This is often associated with dependencies such as *StreamDevice* where the dependency is based on run-time functionality as connoted by the existence of `.proto` (protocol) files. For example, consider the e3 module for communicating with a [FuG power supply](https://gitlab.esss.lu.se/e3/wrappers/ps/e3-fug): if you look at the [underlying module](https://gitlab.esss.lu.se/epics-modules/fug), you can see that it includes such a protocol file, [fug.proto](https://gitlab.esss.lu.se/epics-modules/fug/-/tree/master/fugApp/Db).
 
-* Clone the e3 wrapper above, and build and install it. Alternatively, `e3-fug` is included in one of the groups that can be installed with `e3.bash`.
-  Which group is it? What are the advantages of installing it as a group versus as a single module?
-* Look through temporary build files. Can you see where it is referenced there?
-* How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
+1. Clone the e3 wrapper above, and build and install it. Alternatively, `e3-fug` is included in one of the groups that can be installed with `e3.bash`.
+   a) Which group is it?
+   b) What are the advantages of installing it as a group versus as a single module?
+
+2. Look through temporary build files. Can you see where it is referenced there?
+3. How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
+

@@ -255,15 +255,14 @@ explaining the purpose and role of the patch.
 
 ## Assignments
 
-* Where are the e3 make targets defined? What are some other targets that might be of interest?
-* Can you override the `EPICS_MODULE_TAG` to build a different version without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
-  
-  ```console
-  [iocuser@host:e3-iocstats]$ git status
-  On branch master
-  Your branch is up-to-date with 'origin/master'.
-  nothing to commit, working directory clean
-  ```
+1. Where are the e3 make targets defined? What are some other targets that might be of interest?
+2. Can you override the `EPICS_MODULE_TAG` to build a different version without any `git status` changes in `e3-iocStats`? The output of `git status` should look like
+   ```console
+   [iocuser@host:e3-iocstats]$ git status
+   On branch master
+   Your branch is up-to-date with 'origin/master'.
+   nothing to commit, working directory clean
+   ```
 
-* What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
+3. What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
 
