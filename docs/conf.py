@@ -70,3 +70,6 @@ myst_admonition_enable = True
 
 # Enable definition lists (Term\n: Definition)
 myst_deflist_enable = True
+
+# Allow colon fencing of directives
+myst_enable_extensions = ["colon_fence",]
