@@ -157,8 +157,8 @@ Having made the modifications above, run the following commands and see what has
 3. What sort of restrictions exist for valid module names in e3?
 4. Which kind of make rule allows us to uninstall the installed module?
 5. Can we combine the following two steps? 
-   a) `make build`
-   b) `make install`
+   1. `make build`
+   2. `make install`
 
 6. In the previous steps you should have installed a second version of *StreamDevice*. Which version is loaded when you run the following command?
    ```console

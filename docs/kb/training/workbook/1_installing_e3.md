@@ -424,9 +424,9 @@ iocRun: All initialization complete
 ## Assignments
 
 1. Make sure you understand:
-   a. How GNU Make and Makefiles work. The standard reference for GNU make is [here](https://www.gnu.org/software/make/manual/html_node/index.html).
-   b) How git submodules work.
-   c) How git submodules are used in e3.
+   1. How GNU Make and Makefiles work. The standard reference for GNU make is [here](https://www.gnu.org/software/make/manual/html_node/index.html).
+   2. How git submodules work.
+   3. How git submodules are used in e3.
 
 2. Install both EPICS base 7.0.3.1 and 7.0.5 (separately) on your host.
 3. See if you can find where the module groups are specified, and try to figure out how you could change these.
