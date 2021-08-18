@@ -170,17 +170,7 @@ None
 5.
 6.
 
-## Installing other versions of modules
-### Exercises
-None
-
-### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
 
 
->>>>>>> Stashed changes
+
+
