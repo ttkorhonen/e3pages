@@ -145,13 +145,13 @@ If the IOC starts up correctly (you will have to have installed the core modules
 ## Assignments
 
 1. What is the meaning of each of the following expressions in a startup script? What function do they serve, or what action do they perform?
-   1. `require`
-   2. `E3_CMD_TOP`
-   3. `system`
-   4. `iocshLoad`
-   5. `iocInit`
-   6. `>`
-   7. `<` 
+   - `require`
+   - `E3_CMD_TOP`
+   - `system`
+   - `iocshLoad`
+   - `iocInit`
+   - `>`
+   - `<` 
 
 2. What happens if you place the commands in a different order in the startup script?
 
