@@ -52,29 +52,29 @@ None
 ### Assignments
 1. A brief description of each expression meaning, function, and/or action
    follows, along with references for more details.
-   * `require` is the keyword used by the require module to indicate that a
+   - `require` is the keyword used by the require module to indicate that a
 	 module needs to be loaded into this IOC. When the IOC starts, the require
 	 module will load all modules identified in the startup script, along with
 	 any dependencies.
-   * `E3_CMD_TOP` is the path to the directory holding the startup script used
+   - `E3_CMD_TOP` is the path to the directory holding the startup script used
 	 to launch the IOC.
-   * `system` is an IOC function used to execute an operating system command.
+   - `system` is an IOC function used to execute an operating system command.
 	 [EPICS system utility
 	 command](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-74000018.2.5)
-   * `iocshLoad` loads a startup script snippet. This allows each module to
+   - `iocshLoad` loads a startup script snippet. This allows each module to
 	 define the required IOC startup script commands for the module in a file
 	 which is loaded by the IOC. [EPICS iocshLoad
 	 description](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-74400018.3.1)
-   * `iocInit` tells the IOC to perform all initialisation tasks, including
+   - `iocInit` tells the IOC to perform all initialisation tasks, including
 	 driver and database initialisation. All database files must be loaded prior
 	 to calling `iocInit`.
 	 [iocInit](https://docs.epics-controls.org/en/latest/specs/IOCInit.html)
-   * `>` is the output redirect command. It will send any `stdout` output to the
+   - `>` is the output redirect command. It will send any `stdout` output to the
 	 location following the `>`. If it is writing to a file, it will overwrite
 	 any existing contents of the file. Use `>>` to append to any existing
 	 contents in a file. [Redirection
 	 commands](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73900018.2.4)
-   * `<` is the input redirect command. In an IOC, this is used to read in the
+   - `<` is the input redirect command. In an IOC, this is used to read in the
 	 contents of another file and execute those commands in the IOC shell. We
 	 recommend using `iocshLoad` instead of `<`. [Redirection
 	 commands](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73900018.2.4)
