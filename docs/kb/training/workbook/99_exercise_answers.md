@@ -44,3 +44,143 @@ None
    * `e3.bash`
    * `tools/e3_modules_list.sh`
    * `tools/e3-inventory.yaml`
+
+## An e3 IOC
+### Exercises
+None
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Installing other versions of modules
+### Exercises
+None
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Anatomy of an e3 module
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Variables within e3
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Understanding module dependence
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Building an e3 module
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Other dependencies
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Additional working modes
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
+## Supplementary tools
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+## Installing other versions of modules
+### Exercises
+None
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+>>>>>>> Stashed changes
