@@ -244,7 +244,7 @@ None
   - `sscan`
   - `sequencer`
 
-[env.sh warning]:
+(env_sh_warning)=
 - You may see a warning like
   ```console
   Warning: environment file /home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
@@ -274,7 +274,7 @@ None
   complete the IOC startup.
 
 - There are two warnings in this IOC. The first is the one listed
-  [above][env.sh warning].
+  {ref}`above <env_sh_warning>`.
 
   The second warning is:
   ```
@@ -334,7 +334,7 @@ None
 
   ```
   localhost-1593 > epicsEnvShow("EPICS_DB_INCLUDE_PATH")
-EPICS_DB_INCLUDE_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/db
+  EPICS_DB_INCLUDE_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/db
   localhost-1593 >
   ```
 
