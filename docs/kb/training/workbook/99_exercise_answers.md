@@ -117,6 +117,20 @@ None
 
 
 
+## Startup scripts in e3
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
+
 ## Anatomy of an e3 module
 ### Exercises
 
