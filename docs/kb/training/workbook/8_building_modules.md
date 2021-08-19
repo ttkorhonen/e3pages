@@ -4,7 +4,7 @@
 
 In this lesson, you'll learn how to do the following:
 
-* Understand the difference between modules IOCs
+* Understand the difference between modules and IOCs
 * Understand the e3 wrapper directory structure.
 * Create an e3 wrapper using *Cookiecutter*
 * Edit a module makefile in order to build and install it into e3.
@@ -44,10 +44,11 @@ community modules in a maximally flexible way.
 
 ### IOCs
 
-Unlike standard EPICS where an IOC is a compiled binary, in e3 an IOC is just a startup script. This means that there are no specialised utilities required to build
-an IOC, simply a text-editor.
+Unlike standard EPICS, where creating an IOC requires compiling a custom executable file, within e3 we use the standard executable `softIocPVA`
+from EPICS base. Thus, in order to create an IOC, all one needs to do is to create an appropriate startup script. This means that there are no
+specialised utilities necessary, simply a text editor.
 
-The simplest such repository can look something like the following.
+The simplest IOC repository can look something like the following.
 
 ```console
 [iocuser@host:iocs]$ tree e3-ioc-<iocname>
@@ -77,7 +78,7 @@ Exercise:
 The e3 team has developed a number of tools to facilitate creating new e3 wrappers. In particular, we use [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/),
 a Python-based templating utility. This can be installed with
 ```console
-[iocuser@host:~]$ pip3 install cookiecutter
+[iocuser@host:~]$ python3 -m pip install cookiecutter
 ```
 You may need to add a `--user`, depending on your system permissions.
 
@@ -93,23 +94,27 @@ There are two main types of wrappers: wrappers that link to external code (the t
 ### External modules
 
 If you are needing to use a module from the EPICS community or one that may be used outside of a purely e3 context, then the e3 wrapper should point to that
-repository. This could be located e.g. in the [epics-modules](https://github.com/epics-modules) group on Github, or elsewhere.
+repository. This could be located e.g. in the epics-modules group on [Github](https://github.com/epics-modules), [Gitlab](https://gitlab.esss.lu.se/epics-modules), or elsewhere.
 
-When you use the cookiecutter recipe it will prompt you for some information needed to build the wrapper.
+:::{note}
+The idea behind this is that you do not need to maintain a local fork, but that you can simply point at existing repositories that are used within the community.
+:::
+
+When you use the cookiecutter recipe it will prompt you for some information needed to create the wrapper.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]: 
 module_name [mymodule]: fimscb                                 # Update the module name
 summary [EPICS fimscb module]: 
-full_name [Your name]: 
-email [your.name@ess.eu]: 
+full_name [Your name]:                                         # Fill in your name
+email [your.name@ess.eu]:                                      # and email
 epics_base_version [7.0.5]: 
 epics_base_location [/epics/base-7.0.5]: 
 require_version [3.4.1]: 
 git_repository [ ... ]: https://github.com/icshwi/fimscb.git   # And update the URL
 ```
 
-They key things to fill in here are highlighted above, namely the module name and git url.
+They key things to fill in here are highlighted above, namely the module name and git url (as well as your name and email address).
 
 :::{note}
 If the git repository that you add exists and is public, then cookiecutter will add it as a submodule to the wrapper. Otherwise, a templated *local module* (see
@@ -181,7 +186,7 @@ APPDB:=$(APP)/Db
 
 ############################################################################
 #
-# Add any files that should be copied to $(module)/Db
+# Add any files that should be copied to $(module)/db
 #
 ############################################################################
 
@@ -247,6 +252,11 @@ It may not be the case that every e3 module is one that is expected to be used o
 your code into a submodule and a wrapper may not make the most sense, since it adds a fair amount of additional complexity. In that case,
 we can use the *local source mode* when designing modules and wrappers.
 
+:::{note}
+That said, one advantage of separating the wrapper from the repository is that this ensures that your in-house developed
+EPICS functionality can be shared with the broader community, instead of just those that use e3.
+:::
+
 Create a cookiecutter wrapper as above, but this time enter `none` for the git URL.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
@@ -278,7 +288,7 @@ EPICS_MODULE_NAME:=clock
 
 # EPICS_MODULE_TAG:=master
 #
-E3_MODULE_VERSION:=master
+E3_MODULE_VERSION:=1.0.0
 
 # Dependent module versions
 # For example:
@@ -344,9 +354,9 @@ and then run `iocsh.bash ch8.cmd`.
 ##  Assignments
 
 1. Write a startup script for `e3-fimscb`.
-2. Build an e3 wrapper for the EPICS module [e3-ch8](https://github.com/icshwi/ch8).
+2. Create an e3 wrapper for the EPICS module [e3-ch8](https://gitlab.esss.lu.se/epics-modules/training/ch8).
 3. Create a startup script for this module that will load all of the necessary functionality
-4. Build an e3 wrapper for the EPICS module [e3-myexample](https://github.com/icshwi/myexample), as well as an associated IOC 
+4. Create an e3 wrapper for the EPICS module [e3-myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated IOC 
    (i.e. a startup script that loads the necessary functionality)
    :::{hint}
    This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
@@ -357,4 +367,3 @@ and then run `iocsh.bash ch8.cmd`.
    ```
    You may need to modify the configuration files included in this repository in order to get it to build correctly.
    :::
-
