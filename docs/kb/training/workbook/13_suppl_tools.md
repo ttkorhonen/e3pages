@@ -366,7 +366,7 @@ As we're now dealing with multiple system daemons, yet another useful troublesho
 
 ## Assignments
 
-* Try to set up a unit file to execute procServ to listen to a TCP socket instead of an UDS. Can you also get conserver to work with this?
-* Let's assume you had your e3 installation on a NFS server. Explain to yourself what you would modify to get above examples to work with this.
-* The template unit file we created could be improved in many ways. Can you think of a few?
+1. Try to set up a unit file to execute procServ to listen to a TCP socket instead of an UDS. Can you also get conserver to work with this?
+2. Let's assume you had your e3 installation on a NFS server. Explain to yourself what you would modify to get above examples to work with this.
+3. The template unit file we created could be improved in many ways. Can you think of a few?
 

@@ -373,8 +373,6 @@ The following variables are set by require.
 
 ##  Assignments
 
-* Use the command `iocsh.bash -r asyn` to load asyn into a fresh IOC. From the IOC shell, print out all of the database files that are included
-  with *asyn*. Hint: There is a command that lets you run an external shell command within an IOC. See [chapter 2](2_e3_ioc.md).
-
-* Can you find out which file it is that allows us to run `make vars` within the e3 building system? Try adding the `--debug` flag when executing `make`.
+1. Use the command `iocsh.bash -r asyn` to load asyn into a fresh IOC. From the IOC shell, print out all of the database files that are included with *asyn*. Hint: There is a command that lets you run an external shell command within an IOC. See [chapter 2](2_e3_ioc.md).
+2. Can you find out which file it is that allows us to run `make vars` within the e3 building system? Try adding the `--debug` flag when executing `make`.
 

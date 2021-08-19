@@ -152,16 +152,16 @@ Having made the modifications above, run the following commands and see what has
 
 ## Assignments
 
-* Try out `make existent` with `LEVEL=4`.
-* What does `make init` do?
-* What sort of restrictions exist for valid module names in e3?
-* Which kind of make rule allows us to uninstall the installed module?
-* Can we combine the following two steps? 
-  
-  1. `make build`
-  2. `make install`
+1. Try out `make existent` with `LEVEL=4`.
+2. What does `make init` do?
+3. What sort of restrictions exist for valid module names in e3?
+4. Which kind of make rule allows us to uninstall the installed module?
+5. Can we combine the following two steps? 
+   - `make build`
+   - `make install`
 
-* In the previous steps you should have installed a second version of *StreamDevice*. Which version is loaded when you run the following command?
-  ```console
-  [iocuser@host:e3-stream]$ iocsh.bash -r stream
-  ```
+6. In the previous steps you should have installed a second version of *StreamDevice*. Which version is loaded when you run the following command?
+   ```console
+   [iocuser@host:e3-stream]$ iocsh.bash -r stream
+   ```
+

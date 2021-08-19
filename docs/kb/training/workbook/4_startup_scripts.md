@@ -161,7 +161,7 @@ Run the following command to print your PVs, and inspect the output file:
 
 ## Assignments
 
-* What other parameters can be passed to `iocStats`, `recsync`, and `autosave`?
-* Are there any improvements that can be made to the last script, `5.cmd`?
-* Can you modify this script to communicate with more than one simulated device at the same time?
+1. What other parameters can be passed to `iocStats`, `recsync`, and `autosave`?
+2. Are there any improvements that can be made to the last script, `5.cmd`?
+3. Can you modify this script to communicate with more than one simulated device at the same time?
 

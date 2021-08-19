@@ -343,17 +343,18 @@ and then run `iocsh.bash ch8.cmd`.
 
 ##  Assignments
 
-* Write a startup script for `e3-fimscb`.
-* Build an e3 wrapper for the EPICS module [e3-ch8](https://github.com/icshwi/ch8).
-* Create a startup script for this module that will load all of the necessary functionality
-* Build an e3 wrapper for the EPICS module [e3-myexample](https://github.com/icshwi/myexample), as well as an associated IOC 
-  (i.e. a startup script that loads the necessary functionality)
-  :::{hint}
-  This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
-  by switching into the `myexample/` directory and trying to build it there to see how that works.
-  ```console
-  [iocuser@host:e3-myexample]$ cd myexample
-  [iocuser@host:e3-myexample]$ make build
-  ```
-  You may need to modify the configuration files included in this repository in order to get it to build correctly.
-  :::
+1. Write a startup script for `e3-fimscb`.
+2. Build an e3 wrapper for the EPICS module [e3-ch8](https://github.com/icshwi/ch8).
+3. Create a startup script for this module that will load all of the necessary functionality
+4. Build an e3 wrapper for the EPICS module [e3-myexample](https://github.com/icshwi/myexample), as well as an associated IOC 
+   (i.e. a startup script that loads the necessary functionality)
+   :::{hint}
+   This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
+   by switching into the `myexample/` directory and trying to build it there to see how that works.
+   ```console
+   [iocuser@host:e3-myexample]$ cd myexample
+   [iocuser@host:e3-myexample]$ make build
+   ```
+   You may need to modify the configuration files included in this repository in order to get it to build correctly.
+   :::
+
