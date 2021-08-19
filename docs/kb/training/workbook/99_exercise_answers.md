@@ -432,17 +432,81 @@ None
 
 ## Variables within e3
 ### Exercises
+#### Variables created by `require`
+- Add the following to the top of the IOC startup script:
+  ```
+  require stream
+  ```
+
+  There will be a few new *module_*DIR environment variables:
+  ```
+  <snip>
+  localhost-1593 > epicsEnvShow
+  <snip>
+  asyn_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/
+  pcre_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/
+  stream_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
+  <snip>
+  ```
+
+#### EPICS variables, parameters, and environment variables
+- Single variables can be printed by passing the variable name to
+  `epicsEnvShow`:
+  ```
+  localhost-1593 > epicsEnvShow("stream_DIR")
+  stream_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
+  localhost-1593 >
+  ```
+
+- From the IOC's perspective, the parentheses `()` and braces `{}` are
+  considered to be equivalent. See
+  [here](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73600018.2.1}
+  for more information.
+
+  Unix shells do not require the parentheses or braces when referencing an
+  environment variable. The name is prefixed with the `$` symbol only.
+
+- Apart from the fact that the startup script includes some `epicsEnvShow`
+  commands, the main difference is that the version using the `ch6.cmd` file
+  sets the `E3_CMD_TOP` variable to the path for the startup script file.
+
+- The `stream` module has the `streamDebug` variable.
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. The `asyn_DB` EPICS environment variable defines the location for asyn
+   databases.
 
+   The `system` command can be used to access shell commands.
+   ```
+   localhost-1593 > system "ls $(asyn_DB)"
+   asynFloat64TimeSeries.db  asynInt32TimeSeries.db  asynRecord.db
+   localhost-1593 >
+   ```
 
+2. Use the `--debug` flag to `make`:
+   ```console
+   [iocuser@localhost:e3-asyn]$ make --debug vars
+   <snip>
+   Reading makefiles...
+   Updating goal targets....
+   File `vars' does not exist.
+   File `header' does not exist.
+   Must remake target `header'.
+   Invoking recipe from /epics/base-7.0.5/require/3.4.1/configure/RULES_VARS:34 to update target `header'.
+   <snip>
+   ```
+   The `Invoking recipe` line provides a clue to the location of the `vars` make
+   rule.
 
+   In the `/epics/base-7.0.5/require/3.4.1/configure/RULES_VARS` file, the
+   `vars` rule is as follows:
+
+   ```make
+   ## Print relevant environment variables
+   .PHONY: vars
+   vars: header
+   		$(foreach v, $(E3_MODULES_VARIABLES), $(info $(v) = $($(v)))) @#noop
+   ```
 
 ## Understanding module dependence
 ### Exercises
