@@ -115,8 +115,7 @@ None
    for each architecture in the `lib` directory.
 
    ```console
-    ✔ ~/git/e3/modules-20210709/core/e3-stream [7.0.5-3.4.1/2.8.18-64f00a0-20210426T180418|✚ 1]
-	[test-vm-wl02] 19:23 $ make existent LEVEL=4
+    [iocuser@host:e3-stream]$ make existent LEVEL=4
 	/epics/base-7.0.5/require/3.4.1/siteMods/stream
 	└── 2.8.18+0
 		├── dbd
@@ -145,8 +144,7 @@ None
 		└── stream_meta.yaml
 
 	7 directories, 18 files
-	✔ ~/git/e3/modules-20210709/core/e3-stream [7.0.5-3.4.1/2.8.18-64f00a0-20210426T180418|✚ 1]
-	[test-vm-wl02] 19:23 $
+    [iocuser@host:e3-stream]$
    ```
 
 2. `make init` performs the following functions to set up the e3 wrapper and
