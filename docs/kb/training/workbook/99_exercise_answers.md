@@ -438,7 +438,7 @@ None
   require stream
   ```
 
-  There will be a few new *module_*DIR environment variables:
+  There will be a few new \<module\>\_DIR environment variables:
   ```
   <snip>
   localhost-1593 > epicsEnvShow
@@ -460,7 +460,7 @@ None
 
 - From the IOC's perspective, the parentheses `()` and braces `{}` are
   considered to be equivalent. See
-  [here](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73600018.2.1}
+  [here](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73600018.2.1)
   for more information.
 
   Unix shells do not require the parentheses or braces when referencing an
