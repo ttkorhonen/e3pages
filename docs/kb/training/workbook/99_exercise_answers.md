@@ -156,15 +156,6 @@ None
    - enter the submodule directory and clones the reference provided in the
 	 wrapper configuration file (`CONFIG_MODULE` or `CONFIG_MODULE_DEV`)
 
-   :::{Note}
-   The current use of submodules (as of require-3.4.1) in the e3 wrappers is not
-   consistent with normal submodule usage. The submodule reference update is
-   overridden by the subsequent `git checkout` command, which makes the step
-   where the submodule is updated (step 4 above) redundant. The use of
-   submodules may change in a future release of e3, which will change the
-   behaviour of the `make init` command.
-   :::
-
 3. e3 installed module names must consist only of:
    - lower-case characters in the a-z range (no accents or Unicode characters)
    - numbers
