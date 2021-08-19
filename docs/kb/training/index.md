@@ -1,29 +1,35 @@
 # Training
 
-```{admonition} Under Construction
+:::{admonition} Under Construction
 :class: warning
 
-This workbook is a work-in-progress and is therefore still missing information. Please create an issue or submit a pull request with a suggested change if you noticy something being awry or have an improvement in mind.
+The workbook has been extensively updated in August 2021, and reflects the
+state of e3 as of that date.
 
-Please also note that some chapters still have to be populated, and that the content of others already is out-of-date (as e3 itself still is under development).
-```
+e3 is still under development, so future changes to e3 may result in parts of
+this training becoming outdated.
+:::
 
-This is a training series for using ESS' EPICS environment [e3](https://gitlab.esss.lu.se/e3/e3). The series assumes at least familiarity with [EPICS](https://epics-controls.org), albeit you may be able to follow along regardless.
+:::{admonition} Feedback request
+We welcome suggestions for corrections and improvements to this training. Please
+create either a merge request or an issue
+[here](https://gitlab.esss.lu.se/e3/e3.pages.esss.lu.se).
+:::
 
----
+This is a training series for using ESS' EPICS environment
+[e3](https://gitlab.esss.lu.se/e3/e3). The series assumes some familiarity with
+[EPICS](https://epics-controls.org), although you may be able to follow along
+regardless.
 
-Note that this workbook primarily is intended for e3 app developers and integrators at ESS (and consequently also contains some site specific processes and standards).
-
-For some of the chapters there are supplementary directories containing code and utilities, so it's recommended to clone <https://gitlab.esss.lu.se/e3/e3-training-material> prior to starting.
-
-:::{tip}
-It is recommended to instead follow the tutorial directly in <https://gitlab.esss.lu.se/e3/e3training>, while the content is being adapted to fit into this portal.
+:::{note}
+This workbook has been developed at ESS, so it contains some site-specific
+processes and standards. The ESS-specific components have been identified.  
 :::
 
 ---
 
 ```{toctree}
-:caption: Table of Content
+:caption: Table of Contents
 :maxdepth: 1
 :glob:
 workbook/1_*
