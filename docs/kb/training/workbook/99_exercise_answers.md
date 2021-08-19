@@ -69,6 +69,10 @@ None
 	 driver and database initialisation. All database files must be loaded prior
 	 to calling `iocInit`.
 	 [iocInit](https://docs.epics-controls.org/en/latest/specs/IOCInit.html)
+
+	 `iocInit` must be executed to start the IOC. `iocsh.bash` adds `iocInit` to
+	 the generated startup script if it is not present in the user-provided
+	 startup script.
    - `>` is the output redirect command. It will send any `stdout` output to the
 	 location following the `>`. If it is writing to a file, it will overwrite
 	 any existing contents of the file. Use `>>` to append to any existing
