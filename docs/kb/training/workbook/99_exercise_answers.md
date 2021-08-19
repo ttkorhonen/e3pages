@@ -224,7 +224,7 @@ None
   <snip>
   # Set E3_CMD_TOP for the absolute path where 1.cmd exists
   epicsEnvSet E3_CMD_TOP "/home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/cmds"
-  <snip>a 
+  <snip>
   ```
 
 - The definition of `E3_IOCSH_TOP` will change to the directory from which you
@@ -250,7 +250,7 @@ None
   Warning: environment file /home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
   ```
   `iocsh.bash` is looking for an `env.sh` file to define a custom environment
-  for the IOC. This warning can be ignored if you are not needing to define any 
+  for the IOC. This warning can be ignored if you are not needing to define any
   custom environment variables.
 
   It is good practice to check the IOC startup messages for any warnings, and
@@ -269,9 +269,9 @@ None
   ```
   #iocInit()
   ```
-  then the IOC will be only partially started, as `iocInit()` will not be
-  executed. You can run `iocInit()` yourself from the IOC shell prompt to
-  complete the IOC startup.
+  then `iocsh.bash` will not add the iocInit command, and the IOC will be only
+  partially started, as `iocInit()` will not be executed. You can run
+  `iocInit()` yourself from the IOC shell prompt to complete the IOC startup.
 
 - There are two warnings in this IOC. The first is the one listed
   {ref}`above <env_sh_warning>`.
@@ -319,7 +319,7 @@ None
 
   This PV value increments once per second while the IOC is running. It can be
   used by other applications to confirm that the IOC is executing by monitoring
-  for continuous changes in the value. 
+  for continuous changes in the value.
 
 - `iocAdminSoft.db` is located in the `db` directory in the `iocstats` module in
   your e3 environment. On the shared file system, the location is:
@@ -327,7 +327,7 @@ None
   [iocuser@host]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   ```
-  
+
   `require` generates a database search path variable, `EPICS_DB_INCLUDE_PATH`,
   which is used by the `dbLoadRecords` command as the list of paths to search
   for database files.
@@ -344,13 +344,15 @@ None
    - `iocStats.iocsh`
    - `autosave.iocsh`
    - `recsync.iocsh`
-   from each module. 
+
+   from each module.
 
    Most module startup script snippets expect something like an IOCNAME
    variable, as this is used to create the fully expanded PV names.
 
    Some variables can have defaults defined in the startup script snippet, which
-   can be overridden. See the `recsync.iocsh` snippet for examples of this:
+   can be overridden. See the `recsync.iocsh` snippet for examples of this, such
+   as:
    ```
    var(reccastTimeout, "$(TIMEOUT=5.0)")
    ```
@@ -364,7 +366,7 @@ None
    - a production IOC would not use random numbers for PV names, as clients
 	 would need to be updated each time the IOC is restarted.
    - using the `essioc` module to load the standard set of IOC modules (for ESS
-	 IOCs), which includes:
+     IOCs), which includes:
 	 - `iocstats`
 	 - `autosave`
 	 - `recsync`
