@@ -123,6 +123,18 @@ The targets fall into several categories.
 
 ### Main targets
 
+These are the targets that are used in most cases when building, debugging, testing, and deploying a module. They are related to the EPICS targets of the same names, but with some differences.
+
+* `make init`: This target depends on whether you are in local mode or not. If you are not in local mode, then this will initialise and clone the EPICS submodule in order to allow it to be built, as well as check out the correct commit hash. This is a necessary first stage for these modules. For local mode, this target does nothing.
+* `make patch`: This target will apply any module-specific patches to the wrapper, which are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly.
+* `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
+* `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template ans substitution file expansion.
+
+:::{note}
+`build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during the development phase.
+:::
+
+### Additional targets
 ### Cellmode targets
 
 ### Dev targets
