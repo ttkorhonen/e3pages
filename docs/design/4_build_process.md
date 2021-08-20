@@ -162,9 +162,9 @@ A few variations on this are the following.
 
 These are targets that are useful to help diagnose issues, debug, or display information about the module.
 
-* `make debug`
-* `make vars`
-* `make existent`
+* `make debug`: Runs through the build process, but instead displays data that is collected and used throughout the build process (e.g. exactly which files are compiled, etc.)
+* `make vars`: Displays a list of environment variables including the module install locations, etc.
+* `make existent`: Displays the installed versions of the given module. 
 
 ### Cellmode targets
 
