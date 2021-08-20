@@ -2,11 +2,7 @@
 
 # Building and installing
 
-```{admonition} Under Construction
-:class: warning
-
-This page is still being written.
-```
+This page contains information about how to build and install an EPICS module into an e3 environment.
 
 ## The EPICS tree
 
@@ -89,4 +85,44 @@ Each `MODULE_VERSION` then contains the database files, templates, snippets, hea
 
 ## The build tool
 
-Due to its origin, e3 makes use of *require*'s build facilities. For a dive into *require*'s build facilities, visit {ref}`require_build`.
+e3 makes use of *require*'s build facilities. For a dive into *require*'s build facilities, visit {ref}`require_build`. We will in this section give a brief description and overview of some of the targets that are available in e3.
+
+To begin with, if you are in an e3 wrapper directory you can see some of the main targets available by typing `make help`
+```console
+[iocuser@host:e3-iocStats]$ make help
+--------------------------------------- 
+Available targets
+--------------------------------------- 
+install         Install current module to $(EPICS_BASE)/require/$(E3_REQUIRE_VERSION)/siteMods
+uninstall       Uninstall the current module
+build           Build current module
+prebuild        Run module-specific commands before building
+debug           Displays information about the build process
+rebuild         Clean, build, and install the current module
+clean           Deletes temporary build files
+all             Initializes, patches, builds, and installs
+init            Syncs and checks out the tag $(EPICS_MODULE_TAG) for the submodule 
+cellbuild       Builds the module while also searching in $(E3_CELL_PATH) for dependencies
+cellinstall     Installs the module in a local directory $(E3_CELL_PATH)
+celluninstall   Remove the module from the local directory $(E3_CELL_PATH)
+cellvars        Print relevant environment variables for the local install
+patch           Apply Patch Files 
+patchrevert     Revert Patch Files 
+test            Tests the current build
+existent        Show installed versions of the current module
+devinit         Initializes a dev setup, defined with configure/CONFIG_MODULE_DEV and configure/RELEASE_DEV
+devdebug        Displays information about the build process (development mode)
+devbuild        Build current module (development mode)
+devclean        Deletes temporary build files (development mode)
+devinstall      Install the current module (development mode)
+devuninstall    Uninstall the current module (development mode)
+```
+Note that this list will depend on the version of require specified in `configure/RELEASE`.
+
+The targets fall into several categories.
+
+### Main targets
+
+### Cellmode targets
+
+### Dev targets
