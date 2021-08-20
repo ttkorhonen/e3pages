@@ -198,20 +198,6 @@ None
 
 ## Startup scripts in e3
 ### Exercises
-
-### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
-
-
-
-
-## Anatomy of an e3 module
-### Exercises
 #### First IOC
 - You should see lines like the following in the output of your IOC that show
   the variables being defined. These are created by `iocsh.bash`, not by the
@@ -385,6 +371,20 @@ None
 
    Note how the same commands are used, the only changes are in the values of
    the variables so that the port name and PV names are unique.
+
+## Anatomy of an e3 module
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
+
+
 
 ## Variables within e3
 ### Exercises
