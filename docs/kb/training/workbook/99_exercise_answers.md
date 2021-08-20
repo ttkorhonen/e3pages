@@ -104,15 +104,94 @@ None
 
 ## Installing other versions of modules
 ### Exercises
-None
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. The command is:
+   ```console
+   $ make existent LEVEL=4
+   ```
+   The output should look something like the following, with the `LEVEL=4`
+   selection additionally (compared with `LEVEL=3`) showing the installed files
+   for each architecture in the `lib` directory.
+
+   ```console
+    [iocuser@host:e3-stream]$ make existent LEVEL=4
+	/epics/base-7.0.5/require/3.4.1/siteMods/stream
+	└── 2.8.18+0
+		├── dbd
+		│   └── stream.dbd
+		├── include
+		│   ├── devStream.h
+		│   ├── MacroMagic.h
+		│   ├── StreamBuffer.h
+		│   ├── StreamBusInterface.h
+		│   ├── StreamCore.h
+		│   ├── StreamError.h
+		│   ├── StreamFormatConverter.h
+		│   ├── StreamFormat.h
+		│   └── StreamProtocol.h
+		├── lib
+		│   ├── linux-corei7-poky
+		│   │   ├── libstream.so
+		│   │   └── stream.dep
+		│   ├── linux-ppc64e6500
+		│   │   ├── libstream.so
+		│   │   └── stream.dep
+		│   └── linux-x86_64
+		│       ├── libstream.so
+		│       └── stream.dep
+		├── SetSerialPort.iocsh
+		└── stream_meta.yaml
+
+	7 directories, 18 files
+    [iocuser@host:e3-stream]$
+   ```
+
+2. `make init` performs the following functions to set up the e3 wrapper and
+   submodule for the subsequent steps:
+   - de-initialise and remove any stored data for the submodule
+   - re-initialise the submodule
+   - clone the submodule
+   - update the submodule to the required reference
+   - enter the submodule directory and clones the reference provided in the
+	 wrapper configuration file (`CONFIG_MODULE` or `CONFIG_MODULE_DEV`)
+
+3. e3 installed module names must consist only of:
+   - lower-case characters in the a-z range (no accents or Unicode characters)
+   - numbers
+   - the underscore `_` character
+
+   The module name must begin with a character between 'a' and 'z'.
+
+   :::{Note}
+   There are no restrictions on the repository or wrapper names. However, e3
+   best practice is to make the wrapper name, and the repository names/URLs,
+   consistent with the installed module name where possible. This is not always
+   possible for community-sourced modules, where upper-case characters are often
+   used.
+   :::
+
+4. `make uninstall`
+
+5. The commands can be combined as:
+   ```console
+   $ make build install
+   ```
+
+   Alternatively, the `make rebuild` command will call the following targets in
+   order:
+   - `clean`
+   - `build`
+   - `install`
+
+6. `require` will default to loading the latest version that matches the
+   `major.minor.patch` format, as these are considered the production releases
+   of the module. To load a version that does not match this format, specify the
+   version name explicitly when starting the IOC:
+
+   ```console
+   [iocuser@host:e3-stream]$ iocsh.bash -r stream,e3training
+   ```
 
 
 
