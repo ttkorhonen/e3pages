@@ -230,7 +230,7 @@ None
   - `sscan`
   - `sequencer`
 
-(env_sh_warning)=
+(warnings)=
 - You may see a warning like
   ```console
   Warning: environment file /home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
@@ -238,6 +238,16 @@ None
   `iocsh.bash` is looking for an `env.sh` file to define a custom environment
   for the IOC. This warning can be ignored if you are not needing to define any
   custom environment variables.
+
+  The second warning is:
+  ```
+  drvStreamInit: Warning! STREAM_PROTOCOL_PATH not set. Defaults to "."
+  ```
+
+  This is referring to a specific streamdevice requirement for the
+  `STREAM_PROTOCOL_PATH` environment variable so that it knows where to search
+  for protocol files. This will cause run-time issues with the IOC if there are
+  protocol files that the IOC cannot find.
 
   It is good practice to check the IOC startup messages for any warnings, and
   make sure that you understand the implications of any warnings. Some, like the
@@ -259,17 +269,7 @@ None
   partially started, as `iocInit()` will not be executed. You can run
   `iocInit()` yourself from the IOC shell prompt to complete the IOC startup.
 
-- There are two warnings in this IOC. The first is the one listed
-  {ref}`above <env_sh_warning>`.
-
-  The second warning is:
-  ```
-  drvStreamInit: Warning! STREAM_PROTOCOL_PATH not set. Defaults to "."
-  ```
-  This is referring to a specific streamdevice requirement for the
-  `STREAM_PROTOCOL_PATH` environment variable so that it knows where to search
-  for protocol files. This will cause run-time issues with the IOC if there are
-  protocol files that the IOC cannot find.
+- There are two warnings in this IOC. They are described {ref}`above <warnings>`.
 
 - The second script establishes a communications link to the simulator, so you
   should expect to see some information printed to the simulator console
@@ -310,7 +310,7 @@ None
 - `iocAdminSoft.db` is located in the `db` directory in the `iocstats` module in
   your e3 environment. On the shared file system, the location is:
   ```
-  [iocuser@host]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
+  [iocuser@host:~]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   ```
 
