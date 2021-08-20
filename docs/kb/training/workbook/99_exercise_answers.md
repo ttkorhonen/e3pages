@@ -449,6 +449,9 @@ None
   <snip>
   ```
 
+  `iocstats_DIR`, `sequencer_DIR`, `sscan_DIR`, and `calc_DIR` were all created
+  when the `iocstats` module was loaded in the original script.
+
 #### EPICS variables, parameters, and environment variables
 - Single variables can be printed by passing the variable name to
   `epicsEnvShow`:
@@ -464,7 +467,15 @@ None
   for more information.
 
   Unix shells do not require the parentheses or braces when referencing an
-  environment variable. The name is prefixed with the `$` symbol only.
+  environment variable. The name is prefixed with the `$` symbol only. Braces
+  can also be used around the variable name in a Unix shell. See the 'Brace
+  Expansion' section on the [bash man
+  page](https://man7.org/linux/man-pages/man1/bash.1.html).
+
+  The `$(command)` form in Bash creates a subshell and executes the `command`
+  part, so has a completely different effect to the EPICS usage.  See the
+  'Command Substitution' section in the [bash man
+  page](https://man7.org/linux/man-pages/man1/bash.1.html).
 
 - Apart from the fact that the startup script includes some `epicsEnvShow`
   commands, the main difference is that the version using the `ch6.cmd` file
