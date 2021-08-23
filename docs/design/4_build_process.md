@@ -129,6 +129,18 @@ These are the targets that are used in most cases when building, debugging, test
 * `make patch`: This target will apply any module-specific patches to the wrapper, which are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly. Patches can be removed with `make patchrevert`.
 * `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
 * `make test`: This will perform a local installation of the module, and then try to start an IOC with that module. It will also perform any module-specific tests that are defined for that module.
+  
+  These tests should be specified in `configure/module/RULES_MODULE` as dependencies of the target `module_tests`. For example,
+  ```make
+  module_tests: passing_test failing_test
+
+  passing_test:
+      true
+
+  failing_test:
+      false
+  ```
+  For a more detailed example, see [the opcua module](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21).
 * `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template ans substitution file expansion.
 
 :::{note}
@@ -164,7 +176,7 @@ These are targets that are useful to help diagnose issues, debug, or display inf
 
 * `make debug`: Runs through the build process, but instead displays data that is collected and used throughout the build process (e.g. exactly which files are compiled, etc.)
 * `make vars`: Displays a list of environment variables including the module install locations, etc.
-* `make existent`: Displays the installed versions of the given module. 
+* `make existent`: Displays the installed versions of the given module.
 
 ### Cellmode targets
 
