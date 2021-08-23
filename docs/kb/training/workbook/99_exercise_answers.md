@@ -309,7 +309,7 @@ None
 
 - `iocAdminSoft.db` is located in the `db` directory in the `iocstats` module in
   your e3 environment. On the shared file system, the location is:
-  ```
+  ```console
   [iocuser@host:~]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   ```
