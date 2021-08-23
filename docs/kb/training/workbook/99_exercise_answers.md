@@ -198,17 +198,179 @@ None
 
 ## Startup scripts in e3
 ### Exercises
+#### First IOC
+- You should see lines like the following in the output of your IOC that show
+  the variables being defined. These are created by `iocsh.bash`, not by the
+  startup script.
+  ```console
+  [iocuser@host:cmds]$ iocsh.bash 1.cmd
+  <snip>
+  # Set E3_IOCSH_TOP for the absolute path where iocsh.bash is executed.
+  epicsEnvSet E3_IOCSH_TOP "/home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/cmds"
+  <snip>
+  # Set E3_CMD_TOP for the absolute path where 1.cmd exists
+  epicsEnvSet E3_CMD_TOP "/home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/cmds"
+  <snip>
+  ```
+
+- The definition of `E3_IOCSH_TOP` will change to the directory from which you
+  call `iocsh.bash`.
+
+  The definition of `E3_CMD_TOP` will not change, as it is the path to the
+  startup script file.
+
+- The following additional modules will be loaded as direct dependencies of
+  `stream`:
+  - `asyn`
+  - `calc`
+  - `pcre`
+
+  Additional modules that are indirect dependencies (via the direct
+  dependencies) are also loaded:
+  - `sscan`
+  - `sequencer`
+
+(warnings)=
+- You may see a warning like
+  ```console
+  Warning: environment file /home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
+  ```
+  `iocsh.bash` is looking for an `env.sh` file to define a custom environment
+  for the IOC. This warning can be ignored if you are not needing to define any
+  custom environment variables.
+
+  The second warning is:
+  ```
+  drvStreamInit: Warning! STREAM_PROTOCOL_PATH not set. Defaults to "."
+  ```
+
+  This is referring to a specific streamdevice requirement for the
+  `STREAM_PROTOCOL_PATH` environment variable so that it knows where to search
+  for protocol files. This will cause run-time issues with the IOC if there are
+  protocol files that the IOC cannot find.
+
+  It is good practice to check the IOC startup messages for any warnings, and
+  make sure that you understand the implications of any warnings. Some, like the
+  one above, can be safely ignored, but others may have an impact on the
+  operation of the IOC.
+
+#### Second IOC
+- The official description of the IOC initialisation process is
+  [here](https://docs.epics-controls.org/en/latest/specs/IOCInit.html).
+
+- If you delete the `iocInit()` line from the startup script, `iocsh.bash` will
+  add it in to the generated startup script used to start the IOC.
+
+  If you comment out the `iocInit()` line:
+  ```
+  #iocInit()
+  ```
+  then `iocsh.bash` will not add the iocInit command, and the IOC will be only
+  partially started, as `iocInit()` will not be executed. You can run
+  `iocInit()` yourself from the IOC shell prompt to complete the IOC startup.
+
+- There are two warnings in this IOC. They are described {ref}`above <warnings>`.
+
+- The second script establishes a communications link to the simulator, so you
+  should expect to see some information printed to the simulator console
+  indicating that the connection has occurred.
+
+#### IOC the three
+- `E3_CMD_TOP` is used to define the value of the `TOP` environment variable.
+  ```
+  epicsEnvSet("TOP","$(E3_CMD_TOP)/..")
+  ```
+  `TOP` is then used as the location for a number of other files in other
+  commands in the startup script.
+
+- `random.bash` generates a random number and stores it in `random.cmd`.
+
+  `random.cmd` is an IOC startup script snippet that sets an environment
+  variable to the generated random number.
+
+- The stream protocol file is `db/example_motor.proto`. This is listed in the
+  INP or OUT field each of the records in `db/example_motor.db`:
+  ```
+  field( INP, "@example_motor.proto read_position $(PORT)")
+  ```
+
+- There should be some diagnostic printouts in the simulator reflecting the
+  communications from the IOC.
+
+#### For the fourth
+- You can locate the PV using
+  ```
+  localhost-1593 > dbgrep *HEART*
+  ```
+
+  This PV value increments once per second while the IOC is running. It can be
+  used by other applications to confirm that the IOC is executing by monitoring
+  for continuous changes in the value.
+
+- `iocAdminSoft.db` is located in the `db` directory in the `iocstats` module in
+  your e3 environment. On the shared file system, the location is:
+  ```console
+  [iocuser@host:~]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
+  /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
+  ```
+
+  `require` generates a database search path variable, `EPICS_DB_INCLUDE_PATH`,
+  which is used by the `dbLoadRecords` command as the list of paths to search
+  for database files.
+
+  ```
+  localhost-1593 > epicsEnvShow("EPICS_DB_INCLUDE_PATH")
+  EPICS_DB_INCLUDE_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/db
+  localhost-1593 >
+  ```
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. The list of parameters that can be passed to each module is usually defined
+   in the startup script snippet associated with each module. Refer to:
+   - `iocStats.iocsh`
+   - `autosave.iocsh`
+   - `recsync.iocsh`
 
+   from each module.
 
+   Most module startup script snippets expect something like an IOCNAME
+   variable, as this is used to create the fully expanded PV names.
 
+   Some variables can have defaults defined in the startup script snippet, which
+   can be overridden. See the `recsync.iocsh` snippet for examples of this, such
+   as:
+   ```
+   var(reccastTimeout, "$(TIMEOUT=5.0)")
+   ```
+
+   The `autosave.iocsh` file has a long list of variables that can be defined.
+   Most are optional. Refer to the documentation at the top of the
+   `autosave.iocsh` file for the list of variables and their functions.
+
+2. Potential improvements include:
+   - commenting.
+   - a production IOC would not use random numbers for PV names, as clients
+	 would need to be updated each time the IOC is restarted.
+   - using the `essioc` module to load the standard set of IOC modules (for ESS
+     IOCs), which includes:
+	 - `iocstats`
+	 - `autosave`
+	 - `recsync`
+	 - `auth`
+	 - `caputlog`
+
+3. Add the following lines before the `iocInit` line:
+   ```
+   epicsEnvSet("IOCNAME2", "$(P)-2")
+   epicsEnvSet("PORT2", "MOTOR2")
+
+   drvAsynIPPortConfigure("$(PORT2)", "127.0.0.1:9998", 0, 0, 0)
+
+   dbLoadRecords("$(TOP)/db/example_motor.db", "P=$(IOCNAME2),S=:,PORT=$(PORT2)")
+   ```
+
+   Note how the same commands are used, the only changes are in the values of
+   the variables so that the port name and PV names are unique.
 
 ## Anatomy of an e3 module
 ### Exercises
