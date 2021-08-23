@@ -189,7 +189,7 @@ Cellmode is used to allow for local builds of an e3 module. This can be for test
 
 ### Dev targets
 
-Dev mode is used to allow for separate development and installation of an e3 module in parallel to the main installation. It uses the variables defined in `CONFIG_MODULE_DEV` and `RELEASE_DEV`.
+Development (dev) mode is used to allow for separate development and installation of an e3 module in parallel to the main installation. It uses the variables defined in `CONFIG_MODULE_DEV` and `RELEASE_DEV`.
 
 * `make devinit`: Initialises the development module. This clones the URL specified in `E3_MODULE_DEV_GITURL` in `CONFIG_MODULE_DEV`. This needs to be run before any other `dev` targets can be run.
 
