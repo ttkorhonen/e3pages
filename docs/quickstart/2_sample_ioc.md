@@ -2,7 +2,7 @@
 
 The following assumes that you already have EPICS base, *require* (`3.3.0` or later as the module version has been left out in the `require` call[^require]), and *iocStats* installed.
 
-An IOC in e3 is typically (minimally) just a startup script---passed to `softIocPVA`[^epics7]---preferably also with an `env.sh` file to define environment variables (such as `${IOCNAME}`, and/or the architecture and versions to be used when calling `iocsh.bash` using macros).
+An IOC in e3 is typically (minimally) just a startup script which is passed to `softIocPVA`[^epics7].
 
 ## Create the startup script
 
@@ -19,18 +19,11 @@ $ echo "require iocstats" >> st.cmd  # iocInit() is called implicitly
 $ ./opt/epics/base-7.0.4/require/3.3.0/bin/iocsh.bash st.cmd
 ```
 
-:::{tip}
-With macros set in an environment file, you could instead do something like:
-
-```bash
-$ source env.sh
-$ ./epics/${BASE_VERSION}/require/${REQUIRE_VERSION}/bin/iocsh.bash st.cmd
-```
-:::
-
 ## Conventions
 
-As mentioned above, there should be an `env.sh` together with the startup script, that at minimum defines the `$IOCNAME`. There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
+To set correct PV-names, the environment variable `$IOCNAME` must be set before starting your IOC. Up until *require* 3.4.1, this could be done in a file `env.sh` which needed to be in the same directory as your startup script. For later versions of require, the variable must be set through other mechanisms (where the easiest option is to just write `export IOCNAME=yourIocName` prior to starting the IOC).
+
+There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
 
 Thus you may end up with something like the following:
 
@@ -40,7 +33,7 @@ Thus you may end up with something like the following:
 $ tree e3-ioc-test
 e3-ioc-test
 ├── README.md
-├── env.sh
+├── env.sh  # depending on the version of require you are using
 └── st.cmd
 ```
 
