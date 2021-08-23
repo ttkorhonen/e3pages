@@ -141,7 +141,7 @@ These are the targets that are used in most cases when building, debugging, test
       false
   ```
   For a more detailed example, see [the opcua module](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21).
-* `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template ans substitution file expansion.
+* `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template and substitution file expansion.
 
 :::{note}
 `build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during the development phase.
@@ -156,7 +156,7 @@ A few variations on this are the following.
   prebuild:
       @echo ">>> This is the prebuild target <<<"
   ```
-  which will run before you run build.
+  which will run automatically before you run build.
   ```console
   [iocuser@host:e3-iocStats]$ make build
   cd iocStats && git checkout tags/3.1.16
