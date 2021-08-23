@@ -168,4 +168,23 @@ These are targets that are useful to help diagnose issues, debug, or display inf
 
 ### Cellmode targets
 
+Cellmode is used to allow for local builds of an e3 module. This can be for testing purposes, or because you do not have permission to deploy modules to the e3 environment. As such, there are a separate set of targets that are used to create these local builds.
+
+* `make cellinstall`: Installs the module in the path defined by `$(E3_CELL_PATH)`. The default is `$(TOP)/cellMods`. An IOC can be loaded with this module by running `iocsh.bash -l ${E3_CELL_PATH}` to allow require to search in that path.
+* `make cellbuild`: In case you have multiple modules that you are testing locally that all depend on each other, `cellbuild` will use `$(E3_CELL_PATH)` to search for module dependencies.
+* `make cellvars`: Same as `make vars`, but uses `$(E3_CELL_PATH)` as the installation path.
+* `make celluninstall`: Uninstalls the module from the installed location in `$(E3_CELL_PATH)`.
+
 ### Dev targets
+
+Dev mode is used to allow for separate development and installation of an e3 module in parallel to the main installation. It uses the variables defined in `CONFIG_MODULE_DEV` and `RELEASE_DEV`.
+
+* `make devinit`: Initialises the development module. This clones the URL specified in `E3_MODULE_DEV_GITURL` in `CONFIG_MODULE_DEV`. This needs to be run before any other `dev` targets can be run.
+
+The following targets, once `make devinit` has been run, are available. They each do the same as the regular targets, but they instead use the cloned `dev` version.
+
+* `make devdebug`
+* `make devbuild`
+* `make devclean`
+* `make devinstall`
+* `make devuninstall`
