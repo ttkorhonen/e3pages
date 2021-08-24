@@ -446,11 +446,14 @@ None
   asyn_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/
   pcre_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/
   stream_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
+  sequencer_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/
+  sscan_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/
+  calc_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/
   <snip>
   ```
-
-  `iocstats_DIR`, `sequencer_DIR`, `sscan_DIR`, and `calc_DIR` were all created
-  when the `iocstats` module was loaded in the original script.
+  
+  `asyn`, `pcre`, and `calc` are all dependencies of `stream`, while `sscan` and `sequencer` are dependencies of `calc`.
+  All of these modules must then be loaded, and *require* will then specify the respective paths.
 
 #### EPICS variables, parameters, and environment variables
 - Single variables can be printed by passing the variable name to
