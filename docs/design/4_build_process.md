@@ -125,7 +125,7 @@ The targets fall into several categories.
 
 These are the targets that are used in most cases when building, debugging, testing, and deploying a module. They are related to the EPICS targets of the same names, but with some differences.
 
-* `make init`: This target depends on whether you are in local mode or not. If you are not in local mode, then this will initialise and clone the EPICS submodule in order to allow it to be built, as well as check out the correct commit hash. This is a necessary first stage for these modules. For local mode, this target does nothing.
+* `make init`: This target depends on whether the wrapper includes a submodule or not. If it does, then this will initialise and clone the EPICS submodule in order to allow it to be built, as well as check out the correct commit hash. This is a necessary first stage for these modules. Otherwise, this target does nothing.
 * `make patch`: This target will apply any module-specific patches to the wrapper, which are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly. Patches can be removed with `make patchrevert`.
 * `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
 * `make test`: This will perform a local installation of the module, and then try to start an IOC with that module. It will also perform any module-specific tests that are defined for that module.
