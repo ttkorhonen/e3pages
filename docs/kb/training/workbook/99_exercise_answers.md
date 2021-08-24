@@ -374,14 +374,58 @@ None
 
 ## Anatomy of an e3 module
 ### Exercises
+None
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. e3 make targets are defined a number of locations, including:
+   - `/epics/base-7.0.5/require/3.4.1/configure/RULES_*`
+   - `/epics/base-7.0.5/require/3.4.1/tools/driver.makefile`
+
+   Running `make help` gives a list of the commonly used targets.
+
+2. Create a `CONFIG_MODULE.local` file in the `e3-<module>/configure` directory,
+   and set the new `EPICS_MODULE_TAG` value in this file. This will override the
+   value in `CONFIG_MODULE`.
+
+   It is possible for the `git status` to not show a completely clean response,
+   as it may identify two potential changes, one to the submodule contents, and
+   one identifying the new `CONFIG_MODULE.local` file as being untracked. This
+   is OK.
+
+   ```console
+   [iocuser@localhost:e3-iocStats]$ git st
+   # HEAD detached at 7.0.5-3.4.1/3.1.16-2fd5f31-20210426T180403
+   # Changes not staged for commit:
+   #   (use "git add <file>..." to update what will be committed)
+   #   (use "git checkout -- <file>..." to discard changes in working directory)
+   #
+   #	modified:   iocStats (new commits)
+   #
+   # Untracked files:
+   #   (use "git add <file>..." to include in what will be committed)
+   #
+   #	configure/CONFIG_MODULE.local
+   no changes added to commit (use "git add" and/or "git commit -a")
+   [iocuser@localhost:e3-iocStats]$ cat configure/CONFIG_MODULE.local
+   EPICS_MODULE_TAG:=tags/3.1.15
+   [iocuser@localhost:e3-iocStats]$
+   ```
+
+	Another method of changing the reference is to define it on the command line
+	when issuing the `make init` command:
+	```console
+   [iocuser@localhost:e3-iocStats]$ make init EPICS_MODULE_TAG:=tags/3.1.15
+   ```
+
+3. A `p0` patch uses the paths exactly as defined in the patch file, while the
+   `p1` patch strips any leading slash from the paths in the patch file, making
+   it a relative path. Run the `man patch` command and look for the
+   documentation for the `-p` option.
+
+   For details of what happens behind the scenes, see the `RULES_PATCH` and
+   `DEFINES_FT` in `/epics/base-7.0.5/require/3.4.1/configure` for the actual
+   commands being executed.
+
 
 
 
