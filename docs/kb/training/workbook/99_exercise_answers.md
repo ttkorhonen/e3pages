@@ -237,7 +237,7 @@ None
   ```
   `iocsh.bash` is looking for an `env.sh` file to define a custom environment
   for the IOC. This warning can be ignored if you are not needing to define any
-  custom environment variables.
+  custom environment variables. Note that this warning only will turn up if you are using a version of require < 4.0.0; otherwise the corresponding check will be for whether the variable `IOCNAME` has been defined.
 
   The second warning is:
   ```

@@ -64,7 +64,7 @@ e3-ioc-<iocname>
 |-- db
 |   |-- protocol.proto
 |   `-- records.db
-|-- env.sh
+|-- env.sh  # if you are using require versions lower than 4.0.0
 |-- README.md
 `-- st.cmd
 ```
