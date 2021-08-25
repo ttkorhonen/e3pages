@@ -227,14 +227,15 @@ require stream
 ```
 The resulting startup script will be much more maintainable over time and less prone to errors when new module versions are installed.
 
-Exercise:
-* Suppose that your IOC starts fine today with the startup script
-  ```bash
-  require asyn
-  require stream
-  ```
-  What simple and reasonable action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
-  perspective of the maintainer of a shared e3 environment?
+:::{admonition} Exercise
+Suppose that your IOC starts fine today with the startup script
+```bash
+require asyn
+require stream
+```
+What simple and reasonable action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
+perspective of the maintainer of a shared e3 environment?
+:::
 
 ## Whence cometh the dependencies
 
@@ -267,8 +268,9 @@ AsynDriverInterface.o: ../src/AsynDriverInterface.cc \
 ```
 *require* uses this file to detect build-time dependencies.
 
-Exercise:
-* Can you find where the other modules (`calc`, `pcre`) are referenced in order to be included?
+:::{admonition} Exercise
+Can you find where the other modules (`calc`, `pcre`) are referenced in order to be included?
+:::
 
 ## Assignment
 

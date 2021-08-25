@@ -610,6 +610,18 @@ then you can modify a single file in order to update the dependency versions of 
   pcre 8.44.0+0
   ```
 
+#### Dependency resolution limitations
+
+- If you were to release a new version of asyn after the IOC has been developed then as in the example above, you will have an inconsistency in loaded and dependent versions of *asyn*, causing the IOC to fail to start up.
+  
+  This is a challenge for a maintainer of a shared environment because this means that a functional IOC can fail due to changes in the environment that seem unrelated to the IOC.
+
+  In this case, the fix is simple. An IOC should only load top-level moduels (i.e. *stream*, but not *asyn*). However, this does not address all cases
+
+#### Whence cometh the dependencies
+
+- *calc* is referenced in the file `devscalcoutStreamc`, and *pcre* is referenced in `RegexpConverter.cc`.
+
 ### Assignments
 1.
 2.
