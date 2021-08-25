@@ -670,12 +670,60 @@ then you can modify a single file in order to update the dependency versions of 
   Without these two steps, it is possible that the module you are trying to build might not build as expected, or could even fail to build at all.
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. There is an `st.cmd` included with the repository that we can use as a basis for our e3 startup script. One possibility is
+   ```sh
+   require stream
+   require fimscb
+   epicsEnvSet("STREAM_PROTOCOL_PATH", "$(fimscb_DB)")
+
+   epicsEnvSet(P, FIMSCB)
+   epicsEnvSet(R, KAM)
+
+   epicsEnvSet("PORT", "FIMSCB")
+
+   drvAsynIPPortConfigure($(PORT), "127.0.0.1:9999", 0, 0, 0)
+   asynOctetSetInputEos($(PORT), 0, "\r\n")
+   asynOctetSetOutputEos($(PORT), 0, "\r")
+
+   dbLoadRecords("db/fimscb.db",     "P=$(P)-$(R):FimSCB:,PORT=FIMSCB")
+
+   iocInit
+
+   dbl > "$(TOP)/PVs.list"
+   ```
+   Note that the *fimscb* module defined in this chapter does *not* add *stream* as a dependency, and so for the IOC to run correctly we need to include `require stream` in the startup script. A better solution, of course, is to add *stream* as a run-time dependency.
+2. One should use the cookiecutter for this, same as for `e3-fimscb`.
+3. One possible startup script could be the following.
+   ```sh
+   require ch8
+
+   epicsEnvSet("IOCNAME", "test_ioc")
+
+   dbLoadRecords("$(ch8_DB)/dbExample1.db", "user=$(IOCNAME)")
+   dbLoadRecords("$(ch8_DB)/dbExample2.db", "user=$(IOCNAME),no=1,scan=1 Second")
+   dbLoadRecords("$(ch8_DB)/dbSubExample.db", "user=$(IOCNAME)")
+
+   iocInit
+
+   seq sncExample "user=$(IOCNAME)"
+   ```
+   If you run this IOC, you should see output like this after a few seconds.
+   ```console
+   [iocuser@host:e3-ch8]$ make cellinstall
+   [iocuser@host:e3-ch8]$ iocsh.bash -l cellMods st.cmd
+   # --- snip snip ---
+   iocRun: All initialization complete
+   seq sncExample "user=test_ioc"
+   sevr=info Sequencer release 2.2.8+0, compiled Fri May  7 14:04:03 2021
+   sevr=info Spawning sequencer program "sncExample", thread 0x189bc90: "sncExample"
+   # Set the IOC Prompt String One 
+   epicsEnvSet IOCSH_PS1 "localhost-5721 > "
+   #
+   sevr=info sncExample[0]: all channels connected & received 1st monitor
+   localhost-5721 > sncExample: Startup delay over
+   sncExample: Changing to high
+   sncExample: Changing to low
+   ```
 
 
 
