@@ -567,14 +567,31 @@ None
 ## Additional working modes
 ### Exercises
 
-### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+#### Fixing the dependency
 
+- We do not need to run `make init` or `make patch` since there is no embedded git submodule. `make init` does nothing in this case, and it would be extremely weird to apply patches from your own repository to the same repository.
+
+### Assignments
+1. If you look at the output from an IOC trying to load `pid.db`, you should see the following.
+   ```
+   dbLoadRecords("/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db")
+   Record "mypid:PID1_limits" is of unknown type "transform"
+   Error at or before ")" in file "/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db" line 22
+   Error: syntax error
+   dbLoadRecords: failed to load '/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db'
+   ```
+   The database file uses the `transform` record type, which is not a part of EPICS base. How can we determine which module contains this? Consider
+   ```console
+   [iocuser@host:e3-mypid]$ grep -nr "\btransform\b" /epics/base-7.0.5/require/3.4.1/siteMods/ --include=*.dbd
+   /epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/dbd/calc.dbd:15:recordtype(transform) {
+   ```
+   Note that this pinpoints that the record type `transform` is defined in `calc.dbd`. This means that we need to also include the *calc* module.
+2. `FETCH_BUILD_NUMBER` is a macro defined in `driver.makefile`, which is the main build engine in *require*
+3. EPICS base also include the function `dbLoadTemplate` which can be used to load `.substitution` files instead of just `.db` files. Hence the line
+   ```sh
+   dbLoadTemplate("$(mypid_DB)/pid.substitutions")
+   ```
+   will produce the same output.
 
 
 
