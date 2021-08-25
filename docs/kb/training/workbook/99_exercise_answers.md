@@ -692,7 +692,31 @@ then you can modify a single file in order to update the dependency versions of 
    dbl > "$(TOP)/PVs.list"
    ```
    Note that the *fimscb* module defined in this chapter does *not* add *stream* as a dependency, and so for the IOC to run correctly we need to include `require stream` in the startup script. A better solution, of course, is to add *stream* as a run-time dependency.
-2. One should use the cookiecutter for this, same as for `e3-fimscb`.
+2. One should use the cookiecutter for this, same as for `e3-fimscb`. A minimal module makefile could look something like the following.
+   ```make
+   where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+   include $(E3_REQUIRE_TOOLS)/driver.makefile
+   include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+
+   REQUIRED += sequencer
+   sequencer_VERSION:=2.2.8
+
+   APP:=ch8App
+   APPDB:=$(APP)/Db
+   APPSRC:=$(APP)/src
+
+   TEMPLATES += $(wildcard $(APPDB)/*.db)
+
+   SOURCES   += $(APPSRC)/dbSubExample.c
+   SOURCES   += $(APPSRC)/myexampleHello.c
+   SOURCES   += $(APPSRC)/sncExample.stt
+
+   DBDS   += $(APPSRC)/dbSubExample.dbd
+   DBDS   += $(APPSRC)/myexampleHello.dbd
+   DBDS   += $(APPSRC)/sncExample.dbd
+
+   db:
+   ```
 3. One possible startup script could be the following.
    ```sh
    require ch8
