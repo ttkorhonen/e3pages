@@ -658,6 +658,17 @@ then you can modify a single file in order to update the dependency versions of 
 ## Building an e3 module
 ### Exercises
 
+#### IOCs
+
+- As seen in [An e3 IOC](2_e3_ioc.md), you can use the variable `$(E3_CMD_TOP)` to refer to the directory which holds `st.cmd`.
+
+#### External modules
+
+- `make init patch` should always be run before building a new module. This will do two things:
+  1. Make sure that the submodule is initialised correctly 
+  2. Make sure that all of the correct patches have been applied
+  Without these two steps, it is possible that the module you are trying to build might not build as expected, or could even fail to build at all.
+
 ### Assignments
 1.
 2.

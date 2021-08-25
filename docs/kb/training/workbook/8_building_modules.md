@@ -69,9 +69,9 @@ e3-ioc-<iocname>
 `-- st.cmd
 ```
 
-Exercise:
-* When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How
-  can you refer to such files in relation to the location of `st.cmd`?
+:::{admonition} Exercise
+When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How can you refer to such files in relation to the location of `st.cmd`?
+:::
 
 ## How to build a module
 
@@ -135,8 +135,9 @@ following output
             `-- libfimscb.so
 ```
 
-Exercise
-* Why do we do `make init patch` as well as `build install`?
+:::{admonition} Exercise
+Why do we do `make init patch` as well as `build install`?
+:::
 
 If you explore the `fimscb` you should see the following.
 ```console
