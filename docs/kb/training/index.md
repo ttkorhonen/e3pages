@@ -1,8 +1,6 @@
 # Training
 
-:::{admonition} Under Construction
-:class: warning
-
+:::{warning} Under Construction
 The workbook has been extensively updated in August 2021, and reflects the
 state of e3 as of that date.
 

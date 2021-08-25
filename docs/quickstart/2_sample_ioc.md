@@ -8,15 +8,15 @@ An IOC in e3 is typically (minimally) just a startup script which is passed to `
 
 A very minimal startup script to illustrate what "a typical" IOC in e3 looks like:
 
-```bash
-$ touch st.cmd
-$ echo "require iocstats" >> st.cmd  # iocInit() is called implicitly
+```console
+[iocuser@host:~]$ touch st.cmd
+[iocuser@host:~]$ echo "require iocstats" >> st.cmd  # iocInit() is called implicitly
 ```
 
 ## Start the IOC
 
-```bash
-$ ./opt/epics/base-7.0.4/require/3.3.0/bin/iocsh.bash st.cmd
+```console
+[iocuser@host:~]$ /opt/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash st.cmd
 ```
 
 ## Conventions
@@ -29,8 +29,8 @@ Thus you may end up with something like the following:
 
 ### Directory
 
-```bash
-$ tree e3-ioc-test
+```console
+[iocuser@host:~]$ tree e3-ioc-test
 e3-ioc-test
 ├── README.md
 ├── env.sh  # depending on the version of require you are using
@@ -39,8 +39,9 @@ e3-ioc-test
 
 ### Startup script (`st.cmd`)
 
-```bash
-$ cat st.cmd
+```console
+[iocuser@host:~]$ cd e3-ioc-test
+[iocuser@host:e3-ioc-test]$ cat st.cmd
 require common
 require module
 
@@ -60,9 +61,9 @@ Note that `st.cmd` must end with a newline---this will be explained in {ref}`the
 
 ### Environment file (`env.sh`)
 
-```sh
-$ cat env.sh
-IOCNAME="SomeName"
+```console
+[iocuser@host:e3-ioc-test]$ cat env.sh
+export IOCNAME="SomeName"
 ```
 
 
