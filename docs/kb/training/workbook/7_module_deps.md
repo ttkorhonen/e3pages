@@ -86,8 +86,9 @@ If you look at this output, you'll find that `-I/epics/base-7.0.5/require/3.4.1/
 [iocuser@host:e3-stream]$ make build
 ```
 
-Exercise:
-* What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
+:::{admonition} Exercise
+What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
+:::
 
 ## Updating a dependency
 
@@ -178,7 +179,8 @@ by running any of the following:
 [iocuser@host:~]$ iocsh.bash -r stream,e3training
 [iocuser@host:~]$ iocsh.bash -r stream
 ```
-Exercises:
+
+:::{admonition} Exercises
 * Which version does the last one load, and why?
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
@@ -188,6 +190,7 @@ Exercises:
   ```
   Can you explain the result?
 * Where is the dependency information stored in the installed module?
+:::
 
 ## Dependency resolution limitations
 
