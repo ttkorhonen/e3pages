@@ -623,12 +623,34 @@ then you can modify a single file in order to update the dependency versions of 
 - *calc* is referenced in the file `devscalcoutStreamc`, and *pcre* is referenced in `RegexpConverter.cc`.
 
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. `e3-fug` is contained in the group `ps` (loaded with `-s`):
+   ```console
+   [iocuser@host:e3]$ ./e3.bash -so vars
+   >> Vertical display for the selected modules :
+
+    Modules List 
+       0 : ps/e3-caenelsmagnetps
+       1 : ps/e3-fug      # Here it is! 
+       2 : ps/e3-sairem
+       3 : ps/e3-sorensen
+       4 : ps/e3-tdklambdagenesys
+       5 : ps/e3-magnetps
+       6 : ps/e3-caenelfastps
+       7 : ps/e3-caensyproxy
+   ```
+   If you install it as a part of a group, you are certain to get all of the necerssary dependencies installed as well - both from the dependent groups, but also from any modules within that group that may be necessary.
+2. The only place that it is referenced in the temporary build fils is in `fug.dep`:
+   ```console
+   [iocuser@host:e3-fug]$ grep -nr stream fug/O.7.0.5_linux-x86_64/
+   fug/O.7.0.5_linux-x86_64/fug.dep:2:stream 2.8.18+0
+   ```
+3. `e3-fug` knows that stream is a dependency due to the variable `REQUIRED` used in `fug.Makefile`:
+   ```make
+   [iocuser@host:e3-fug]$ grep  stream fug.Makefile 
+   REQUIRED += stream
+   stream_VERSION=$(STREAM_DEP_VERSION)
+   ```
+   This allows *require* to keep track of run-time dependencies.
 
 
 
