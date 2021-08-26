@@ -567,13 +567,22 @@ None
 ## Additional working modes
 ### Exercises
 
+#### Development mode
+
+- `make existent` and `make devexistent` both run the command `tree` in the directory `${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/siteMods/${E3_MODULE_NAME}`. So these will only differ if any of those variables differ between the regular and `_DEV` configure files.
+
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_TOP`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
+2. Assuming the modules are in different locations, then it is simply a matter of running
+   ```console
+   [iocuser@host:~]$ iocsh.bash -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
+   ```
+   Note that the module search will prioritise the last specified path.
+3. We have seen a similar question before, in [Chapter 5](5_module_anatomy.md). One should create a `CONFIG_MODULE_DEV.local` file with an updated `E3_MODULE_DEV_GITURL`, which git will ignore.
+4. Technically, `make devdistclean` does two things: it runs `make devclean` and then deletes the dev source directory. However, that first step is not relevant as deleting the source tree also gets rid of the temporary files.
+   
+   This is not really a necessary make target, but there is some value in having a common interface for building, cleaning, installing, etc. a module.
+5. Like all development mode tasks, there is a target for this: if you have patch files in `e3-module/patch/Site`, then running `make devpatch` will apply them to the development source files.
 
 
 
