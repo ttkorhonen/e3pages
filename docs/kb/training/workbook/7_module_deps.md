@@ -269,7 +269,7 @@ AsynDriverInterface.o: ../src/AsynDriverInterface.cc \
 *require* uses this file to detect build-time dependencies.
 
 :::{admonition} Exercise
-Can you find where the other modules (`calc`, `pcre`) are referenced in order to be included?
+Similar to *asyn*, there are header files from *calc* and *pcre* that are included which result in them being build-time dependencies. Determine which files include header files from both *calc* and *pcre*.
 :::
 
 ## Assignment
@@ -280,6 +280,6 @@ There is another kind of dependency, the *run-time dependency*. This is often as
    - Which group is it?
    - What are the advantages of installing it as a group versus as a single module?
 
-2. Look through temporary build files. Can you see where it is referenced there?
+2. Look through temporary build files. Can you see where *stream* is referenced there?
 3. How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
 

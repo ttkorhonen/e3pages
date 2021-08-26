@@ -616,11 +616,11 @@ then you can modify a single file in order to update the dependency versions of 
   
   This is a challenge for a maintainer of a shared environment because this means that a functional IOC can fail due to changes in the environment that seem unrelated to the IOC.
 
-  In this case, the fix is simple. An IOC should only load top-level moduels (i.e. *stream*, but not *asyn*). However, this does not address all cases
+  In this case, the fix is simple. An IOC should only load top-level modules (i.e. *stream*, but not *asyn*). However, this does not address all cases
 
 #### Whence cometh the dependencies
 
-- *calc* is referenced in the file `devscalcoutStreamc`, and *pcre* is referenced in `RegexpConverter.cc`.
+- *calc* is referenced in the file `devscalcoutStream.c`, and *pcre* is referenced in `RegexpConverter.cc`.
 
 ### Assignments
 1. `e3-fug` is contained in the group `ps` (loaded with `-s`):
@@ -638,8 +638,8 @@ then you can modify a single file in order to update the dependency versions of 
        6 : ps/e3-caenelfastps
        7 : ps/e3-caensyproxy
    ```
-   If you install it as a part of a group, you are certain to get all of the necerssary dependencies installed as well - both from the dependent groups, but also from any modules within that group that may be necessary.
-2. The only place that it is referenced in the temporary build fils is in `fug.dep`:
+   If you install it as a part of a group, you are certain to get all of the necessary dependencies installed as well - both from the dependent groups, but also from any modules within that group that may be necessary.
+2. The only place that it is referenced in the temporary build files is in `fug.dep`:
    ```console
    [iocuser@host:e3-fug]$ grep -nr stream fug/O.7.0.5_linux-x86_64/
    fug/O.7.0.5_linux-x86_64/fug.dep:2:stream 2.8.18+0
