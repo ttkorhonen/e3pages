@@ -154,7 +154,7 @@ Note that you can also include sequencer files or C++ files here as well. The bu
 Any `.dbd` files that you would like to add are combined into a single module `.dbd` file that is loaded when the module is loaded at IOC startup. These are governed by the variable `${DBDS}`:
 
 ```makefile
-DBDS    += $(DEVIOCSTATS)/devIocStats.dbd
+DBDS += $(DEVIOCSTATS)/devIocStats.dbd
 ```
 
 ### Dependencies
