@@ -212,6 +212,5 @@ generated `pid.db` file.
 
 1. If you try to actually load the `pid.db` database file, it does not load. What dependency are you missing?
 2. Where is `FETCH_BUILD_NUMBER` defined?
-3. Can you think of another way to load the records in the `.substitutions` file that does not involve the
-  build-time database expansion?
-
+3. Can you think of another way to load the records in the `.substitutions` file that does not involve the build-time database expansion?
+4. Find all other modules that arise as run-time dependencies of the modules in each of the module groups that can be installed with `e3.bash`, and determine why each dependency is required by the top-level module.

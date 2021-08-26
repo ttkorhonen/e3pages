@@ -592,6 +592,19 @@ None
    dbLoadTemplate("$(mypid_DB)/pid.substitutions")
    ```
    will produce the same output.
+4. If you have the `ps` modules cloned in a common directory (as would be done by running `e3.bash -s mod`), then the following will display all of the run-time dependencies.
+   ```console
+   [iocuser@host:e3]$ grep -nr "^REQUIRED\b" ps --include=*.Makefile
+   ps/e3-magnetps/magnetps.Makefile:33:REQUIRED += iocshutils
+   ps/e3-sorensen/sorensen.Makefile:39:REQUIRED += stream
+   ps/e3-caenelfastps/caenelfastps.Makefile:39:REQUIRED += stream
+   ps/e3-fug/fug/fug.Makefile:39:REQUIRED += stream
+   ps/e3-fug/fug.Makefile:39:REQUIRED += stream
+   ps/e3-caenelsmagnetps/caenelsmagnetps.Makefile:39:REQUIRED += stream
+   ps/e3-sairem/sairem.Makefile:39:REQUIRED += modbus
+   ps/e3-tdklambdagenesys/tdklambdagenesys.Makefile:39:REQUIRED += stream
+   ```
+   We can see that the only dependent modules are *stream*, *modbus*, and *iocshutils*. *stream* and *modbus* are pretty common dependencies, but what is *iocshutils*? It turns out that it includes a utility to update database definitions after the IOC has started (but before it has run `iocInit`), which is what is used in that case. See the file [magnetps.iocsh](https://gitlab.esss.lu.se/epics-modules/magnetps/-/blob/master/iocsh/magnetps.iocsh).
 
 
 
