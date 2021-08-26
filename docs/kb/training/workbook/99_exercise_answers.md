@@ -569,7 +569,7 @@ None
 
 #### Fixing the dependency
 
-- We do not need to run `make init` or `make patch` since there is no embedded git submodule. `make init` does nothing in this case, and it would be extremely weird to apply patches from your own repository to the same repository.
+- We do not need to run `make init` or `make patch` since there is no embedded git submodule; `make init` does nothing in this case, and it would be extremely weird to apply patches from your own repository to the same repository.
 
 ### Assignments
 1. If you look at the output from an IOC trying to load `pid.db`, you should see the following.
@@ -587,7 +587,7 @@ None
    ```
    Note that this pinpoints that the record type `transform` is defined in `calc.dbd`. This means that we need to also include the *calc* module.
 2. `FETCH_BUILD_NUMBER` is a macro defined in `driver.makefile`, which is the main build engine in *require*
-3. EPICS base also include the function `dbLoadTemplate` which can be used to load `.substitution` files instead of just `.db` files. Hence the line
+3. EPICS base also include the function `dbLoadTemplate` which can be used to load `.substitution` files instead of just `.db` files (and which does so at run-time). Hence the line
    ```sh
    dbLoadTemplate("$(mypid_DB)/pid.substitutions")
    ```
