@@ -383,6 +383,7 @@ None
 
    Running `make help` gives a list of the commonly used targets.
 
+(dot_local_file)=
 2. Create a `CONFIG_MODULE.local` file in the `e3-<module>/configure` directory,
    and set the new `EPICS_MODULE_TAG` value in this file. This will override the
    value in `CONFIG_MODULE`.
@@ -584,7 +585,7 @@ None
    [iocuser@host:~]$ iocsh.bash -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
    ```
    Note that the module search will prioritise the last specified path.
-3. We have seen a similar question before, in [Chapter 5](5_module_anatomy.md). One should create a `CONFIG_MODULE_DEV.local` file with an updated `E3_MODULE_DEV_GITURL`, which git will ignore.
+3. As seen {ref}`before <dot_local_file>`, one should create a `CONFIG_MODULE_DEV.local` file with an updated `E3_MODULE_DEV_GITURL`, which git will ignore.
 4. Technically, `make devdistclean` does two things: it runs `make devclean` and then deletes the dev source directory. However, that first step is not relevant as deleting the source tree also gets rid of the temporary files.
    
    This is not really a necessary make target, but there is some value in having a common interface for building, cleaning, installing, etc. a module.
