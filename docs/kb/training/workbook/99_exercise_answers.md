@@ -572,7 +572,7 @@ None
 - `make existent` and `make devexistent` both run the command `tree` in the directory `${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/siteMods/${E3_MODULE_NAME}`. So these will only differ if any of those variables differ between the regular and `_DEV` configure files.
 
 ### Assignments
-1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_TOP`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
+1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_PATH`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
 2. Assuming the modules are in different locations, then it is simply a matter of running
    ```console
    [iocuser@host:~]$ iocsh.bash -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
