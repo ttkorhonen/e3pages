@@ -573,6 +573,12 @@ None
 
 ### Assignments
 1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_PATH`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
+   
+   Alternatively, you can also just export the variable into the environment via e.g.
+   ```console
+   [iocuser@host:e3-module]$ export E3_CELL_PATH=/absolute/path/to/cellMods
+   [iocuser@host:e3-module]$ make cellinstall
+   ```
 2. Assuming the modules are in different locations, then it is simply a matter of running
    ```console
    [iocuser@host:~]$ iocsh.bash -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
