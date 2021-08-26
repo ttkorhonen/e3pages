@@ -881,15 +881,17 @@ then you can modify a single file in order to update the dependency versions of 
 ## Supplementary tools
 ### Exercises
 
+#### Starting an IOC in a procServ container
+
+- The syntax for `procServ` is
+  ```
+  procServ [options] <endpoint> <command args ...>
+  ```
+  In this case, `[options]` is `-n iocsh`, which is the child process' name. `<endpoint>` is 2000, which is the port to connect to, and the output of `which iocsh.bash` (i.e. the absolute path of `iocsh.bash`) is the command to run in the child container.
+
 ### Assignments
 1.
 2.
 3.
-4.
-5.
-6.
-
-
-
 
 
