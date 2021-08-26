@@ -2,12 +2,6 @@
 
 # Article: Configuring your wrapper
 
-```{admonition} Under Construction
-:class: warning
-
-This page is still being written.
-```
-
 To create a wrapper, you should use *[cookiecutter](https://github.com/cookiecutter/cookiecutter)* (see {ref}`cookiecutter_wrapper`), or you could just create all the folders and the files yourself. After having created the folder structure and the relevant configuration files (in `configure/`), you would generally set up the `${MODULE}.Makefile`.
 
 ## The `configure/` directory

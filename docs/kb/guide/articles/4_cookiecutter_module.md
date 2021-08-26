@@ -2,12 +2,6 @@
 
 # How to: Create an e3 wrapper with cookiecutter
 
-```{admonition} Under Construction
-:class: warning
-
-This page is still being written.
-```
-
 ## What is cookiecutter?
 
 Cookiecutter is a templating utility built in python. Cookiecutter is already extensively used within ICS to help standardize the creation of multiple projects, see <https://gitlab.esss.lu.se/ics-cookiecutter>. For an e3 wrapper, we will be using the cookiecutter template located at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper>, which has some instructions for use, which we will repeat below.
