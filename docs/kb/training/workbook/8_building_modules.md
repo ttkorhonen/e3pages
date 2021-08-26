@@ -357,8 +357,7 @@ and then run `iocsh.bash ch8.cmd`.
 1. Write a startup script for `e3-fimscb`.
 2. Create an e3 wrapper for the EPICS module [ch8](https://gitlab.esss.lu.se/epics-modules/training/ch8).
 3. Create a startup script for this module that will load all of the necessary functionality
-4. Create an e3 wrapper for the EPICS module [myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated IOC 
-   (i.e. a startup script that loads the necessary functionality)
+4. Create an e3 wrapper for the EPICS module [myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated startup script that loads the necessary functionality (i.e an e3 IOC).
    :::{hint}
    This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
    by switching into the `myexample/` directory and trying to build it there to see how that works.
