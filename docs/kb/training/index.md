@@ -1,3 +1,5 @@
+(training_series)=
+
 # Training
 
 :::{warning} Under Construction

@@ -2,17 +2,11 @@
 
 # How to: Create an e3 wrapper with cookiecutter
 
-```{admonition} Under Construction
-:class: warning
+*[Cookiecutter](https://github.com/cookiecutter/cookiecutter)* is a templating utility built in python. Cookiecutter is already extensively used within ICS to help standardize the creation of multiple projects, see <https://gitlab.esss.lu.se/ics-cookiecutter>. To create an e3 wrapper, we will be using [a template designed for that](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper).
 
-This page is still being written.
-```
-
-## What is cookiecutter?
-
-Cookiecutter is a templating utility built in python. Cookiecutter is already extensively used within ICS to help standardize the creation of multiple projects, see <https://gitlab.esss.lu.se/ics-cookiecutter>. For an e3 wrapper, we will be using the cookiecutter template located at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper>, which has some instructions for use, which we will repeat below.
-
+:::{note}
 The following is based on the e3TemplateGenerator that is part of the [e3-tools repository](https://github.com/icshwi/e3-tools).
+:::
 
 ## Prerequisites
 
@@ -20,16 +14,12 @@ The following is based on the e3TemplateGenerator that is part of the [e3-tools 
 
 Cookiecutter requires Python to be installed, but does not require any knowledge of Python to use. From the terminal, run the following:
 
-``` bash
-$ pip3 install cookiecutter
+```console
+$ pip3 install cookiecutter --user
 ```
 
 :::{warning}
-If you are using CentOS 7, you will first need to install Python3.
-:::
-
-:::{note}
-If you are using conda with Python3 installed, then you can simply use pip instead of pip3.
+Beware that you will need to have Python 3 as well as pip installed on your machine.
 :::
 
 :::{tip}
@@ -45,16 +35,14 @@ Assuming that you have an existing EPICS module you would like to create a wrapp
 ## Creating the e3 wrapper
 
 Run the following command in the terminal to create a cookiecutter:
-
-```bash
+```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 ```
 
 If you have run it before, it will ask if you want to re-download the template; you should answer the default of "yes", which ensures that you will use an up-to-date template.
 
 Cookiecutter then provides a list of prompts:
-
-```bash
+```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 You've downloaded /Users/simonrose/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
 company [European Spallation Source ERIC]:
@@ -74,8 +62,7 @@ Above, I have chosen the defaults for most of the responses other than the modul
 2. The git repository does not exist, or is not public.
 
 In the first case, you will see the following:
-
-```console
+```
 git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]: https://gitlab.esss.lu.se/simonrose/http
 Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
 >>>> git repository has been initialized.
@@ -92,8 +79,7 @@ Resolving deltas: 100% (129/129), done.
 This means that the e3 wrapper has successfully added the epics module as a submodule, and is ready to work with.
 
 In the second case, you will see something like the following.
-
-```console
+```
 git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
 Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
 >>>> git repository has been initialized.
@@ -103,8 +89,7 @@ Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
 ```
 
 In this case, either the epics modules you are looking for was not found (it may be private), or it does not exist. A temporary module has been added which displays the expected structure of an EPICS module. This is created using the cookiecutter template for EPICS modules found at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was not what you intended, you can delete the local directory, confirm that your EPICS module is available, and run:
-
-```bash
+```console
 $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
 ```
 
@@ -143,4 +128,4 @@ When you have created an e3-wrapper as above, it is only a local git repository 
 
 ## Next steps
 
-Once you have created your template, you will want to customize it. For this, please see the e3 training, as well as {ref}`wrappers` and {ref}`require_build`.
+Once you have created your template, you will want to customize it. For this, please see the e3 training, as well as {ref}`wrappers`, {ref}`require_build`, and {ref}`wrapper_config`.
