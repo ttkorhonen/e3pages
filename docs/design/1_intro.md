@@ -25,7 +25,7 @@ A e3 IOC is started using the `iocsh.bash` script, uses the `softIocPVA` executa
 
 ### Module
 
-An EPICS module is a set of code, databases, sequences, and/or startup script snippets that provides generic functionality for a particular device type or logical function. In e3, an EPICS module can also be specific to one instance of a device type. At ESS we do not differentiate between types of EPICS modules (applications, libraries).
+An EPICS module is a set of code, databases, sequences, and/or startup script snippets that provides generic functionality for a particular device type or logical function. In e3, an EPICS module can also be specific to one instance of a device type. Of note here is that e3 does not differentiate between types of EPICS modules (applications, libraries).
 
 An IOC is built up from one or more modules, based on the requirements of that IOC. A module is not a functional IOC application on its own.
 
