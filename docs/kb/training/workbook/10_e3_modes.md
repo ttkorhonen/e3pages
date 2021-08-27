@@ -240,6 +240,5 @@ they both use the same `module.Makefile`, even though some of the configuration 
    ```
 
 4. Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
-5. What's the difference between `make existent` and `make devexistent`?
-6. We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
+5. We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
 
