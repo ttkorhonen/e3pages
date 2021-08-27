@@ -33,7 +33,7 @@ The databases provided by the module are typically in the form of templates. The
 
 ### Wrapper
 
-An e3 wrapper is a separate (from the source EPICS module) repository containing Site-specific modifications; configuration files, source code modifications in the form of patches, and essentially an API to the module to use with ESS IOC management systems through what we call *snippets*.
+An e3 wrapper is a separate (from the source EPICS module) repository containing Site-specific modifications; configuration files, source code modifications in the form of patches, and essentially an API to the module through what we call *snippets*.
 
 
 [^conda]: ESS have also experimented with using *conda* to distribute and some of our work packages still make use of it. This approach uses a separate wrapper (making it decoupled from the non-conda ones) which are referred to as recipes.
