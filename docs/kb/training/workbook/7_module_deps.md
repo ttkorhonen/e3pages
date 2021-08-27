@@ -86,8 +86,9 @@ If you look at this output, you'll find that `-I/epics/base-7.0.5/require/3.4.1/
 [iocuser@host:e3-stream]$ make build
 ```
 
-Exercise:
-* What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
+:::{admonition} Exercise
+What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify `ASYN_DEP_VERSION` there instead of just modifying `CONFIG_MODULE`?
+:::
 
 ## Updating a dependency
 
@@ -178,7 +179,8 @@ by running any of the following:
 [iocuser@host:~]$ iocsh.bash -r stream,e3training
 [iocuser@host:~]$ iocsh.bash -r stream
 ```
-Exercises:
+
+:::{admonition} Exercises
 * Which version does the last one load, and why?
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
@@ -188,6 +190,7 @@ Exercises:
   ```
   Can you explain the result?
 * Where is the dependency information stored in the installed module?
+:::
 
 ## Dependency resolution limitations
 
@@ -224,14 +227,15 @@ require stream
 ```
 The resulting startup script will be much more maintainable over time and less prone to errors when new module versions are installed.
 
-Exercise:
-* Suppose that your IOC starts fine today with the startup script
-  ```bash
-  require asyn
-  require stream
-  ```
-  What simple and reasonable action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
-  perspective of the maintainer of a shared e3 environment?
+:::{admonition} Exercise
+Suppose that your IOC starts fine today with the startup script
+```bash
+require asyn
+require stream
+```
+What simple and reasonable action could you take that would cause this IOC to fail on startup without changing this script? Why is this a problem from the
+perspective of the maintainer of a shared e3 environment?
+:::
 
 ## Whence cometh the dependencies
 
@@ -264,8 +268,9 @@ AsynDriverInterface.o: ../src/AsynDriverInterface.cc \
 ```
 *require* uses this file to detect build-time dependencies.
 
-Exercise:
-* Can you find where the other modules (`calc`, `pcre`) are referenced in order to be included?
+:::{admonition} Exercise
+Similar to *asyn*, there are header files from *calc* and *pcre* that are included which result in them being build-time dependencies. Determine which files include header files from both *calc* and *pcre*.
+:::
 
 ## Assignment
 
@@ -275,6 +280,6 @@ There is another kind of dependency, the *run-time dependency*. This is often as
    - Which group is it?
    - What are the advantages of installing it as a group versus as a single module?
 
-2. Look through temporary build files. Can you see where it is referenced there?
+2. Look through temporary build files. Can you see where *stream* is referenced there?
 3. How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
 
