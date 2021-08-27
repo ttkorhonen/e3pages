@@ -553,20 +553,6 @@ None
 ## Other dependencies
 ### Exercises
 
-### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
-
-
-
-
-## Additional working modes
-### Exercises
-
 #### Fixing the dependency
 
 - We do not need to run `make init` or `make patch` since there is no embedded git submodule; `make init` does nothing in this case, and it would be extremely weird to apply patches from your own repository to the same repository.
@@ -605,6 +591,21 @@ None
    ps/e3-tdklambdagenesys/tdklambdagenesys.Makefile:39:REQUIRED += stream
    ```
    We can see that the only dependent modules are *stream*, *modbus*, and *iocshutils*. *stream* and *modbus* are pretty common dependencies, but what is *iocshutils*? It turns out that it includes a utility to update database definitions after the IOC has started (but before it has run `iocInit`), which is what is used in that case. See the file [magnetps.iocsh](https://gitlab.esss.lu.se/epics-modules/magnetps/-/blob/master/iocsh/magnetps.iocsh).
+
+
+
+
+## Additional working modes
+### Exercises
+
+### Assignments
+1.
+2.
+3.
+4.
+5.
+6.
+
 
 
 
