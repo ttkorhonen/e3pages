@@ -1,4 +1,5 @@
 # Answers to exercises, assignments, and questions
+# Answers to exercises, assignments, and questions
 
 ## Installing e3
 
@@ -749,6 +750,57 @@ then you can modify a single file in order to update the dependency versions of 
    sncExample: Changing to high
    sncExample: Changing to low
    ```
+4. In order to include all of the requisite functionality, your `myexample.Makefile` should have the following lines (with `$(APPSRC)` defined appropriately).
+   ```make
+   TEMPLATES += $(wildcard $(APPDB)/*.db)
+   TEMPLATES += $(wildcard $(APPDB)/*.substitutions)
+
+   SOURCES   += $(APPSRC)/dbSubExample.c
+   SOURCES   += $(APPSRC)/devXxxSoft.c
+   SOURCES   += $(APPSRC)/initTrace.c
+   SOURCES   += $(APPSRC)/myexampleHello.c
+   SOURCES   += $(APPSRC)/sncExample.stt
+   SOURCES   += $(APPSRC)/xxxRecord.c
+
+   DBDS   += $(APPSRC)/dbSubExample.dbd
+   DBDS   += $(APPSRC)/myexampleHello.dbd
+   DBDS   += $(APPSRC)/sncExample.dbd
+   DBDS   += $(APPSRC)/xxxRecord.dbd
+   DBDS   += $(APPSRC)/xxxSupport.dbd
+   ```
+   Note that you should _not_ include both `sncExample.stt` and `sncExample.st` (why not? What error do you get if you do?).
+
+   If you run `make build` now, you should see something a little bit surprising:
+   ```
+   make[4]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-myexample/myexample/O.7.0.5_linux-x86_64'
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../myexampleApp/src/xxxRecord.c
+   ../myexampleApp/src/xxxRecord.c:21:23: fatal error: xxxRecord.h: No such file or directory
+   #include "xxxRecord.h"
+                        ^
+   compilation terminated.
+   ```
+   The issue here is that the source files `xxxRecord.c` and `devXxxSoft.c` both require `xxxRecord.h` which does not exist: it is generated at build-time from `xxxRecord.dbd` by the EPICS utility `dbdToRecordtypeH.pl`.
+
+   However, the build actually works correctly! If you check the full output, you can see that the following happens a few lines later:
+   ```
+   perl -CSD /epics/base-7.0.5/bin/linux-x86_64/dbdToRecordtypeH.pl  -I ../myexampleApp/src/ -I ./ -I /epics/base-7.0.5/dbd  -I. -I.. -I../O.7.0.5_Common -I/epics/base-7.0.5/require/3.4.1/siteMods/myexample/master/dbd -o xxxRecord.h ../myexampleApp/src/xxxRecord.dbd
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/devXxxSoft.c
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/xxxRecord.c
+   ```
+   So the module builds correctly after all.
+
+   As for the startup script, you can look inside the directory `iocBoot/iocmyexample` at the existing `st.cmd` file for inspritation, which could yield for example the following startup script for an IOC:
+   ```sh
+   require myexample
+
+   dbLoadTemplate("$(myexample_DB)/user.substitutions")
+   dbLoadRecords("$(myexample_DB)/dbSubExample.db", "user=jhlee")
+
+   iocInit
+
+   seq sncExample, "user=jhlee"
+   ```
+
 
 
 

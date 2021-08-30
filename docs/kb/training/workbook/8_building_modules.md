@@ -363,7 +363,7 @@ and then run `iocsh.bash ch8.cmd`.
    by switching into the `myexample/` directory and trying to build it there to see how that works.
    ```console
    [iocuser@host:e3-myexample]$ cd myexample
-   [iocuser@host:e3-myexample]$ make build
+   [iocuser@host:myexample]$ make build
    ```
    You may need to modify the configuration files included in this repository in order to get it to build correctly.
    :::
