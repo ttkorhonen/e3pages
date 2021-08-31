@@ -1,5 +1,4 @@
 # Answers to exercises, assignments, and questions
-# Answers to exercises, assignments, and questions
 
 ## Installing e3
 
@@ -789,7 +788,7 @@ then you can modify a single file in order to update the dependency versions of 
    ```
    So the module builds correctly after all.
 
-   As for the startup script, you can look inside the directory `iocBoot/iocmyexample` at the existing `st.cmd` file for inspritation, which could yield for example the following startup script for an IOC:
+   As for the startup script, you can look inside the directory `iocBoot/iocmyexample` at the existing `st.cmd` file for inspiration, which could yield for example the following startup script for an IOC:
    ```sh
    require myexample
 
