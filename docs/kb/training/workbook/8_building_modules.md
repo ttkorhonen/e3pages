@@ -69,9 +69,9 @@ e3-ioc-<iocname>
 `-- st.cmd
 ```
 
-Exercise:
-* When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How
-  can you refer to such files in relation to the location of `st.cmd`?
+:::{admonition} Exercise
+When loading a module, you should use `$(module_DIR)` or `$(module_DB)` to refer to database and protocol files that are a part of that module. How can you refer to files in relation to the location of `st.cmd`?
+:::
 
 ## How to build a module
 
@@ -135,8 +135,9 @@ following output
             `-- libfimscb.so
 ```
 
-Exercise
-* Why do we do `make init patch` as well as `build install`?
+:::{admonition} Exercise
+Why do we do `make init patch` as well as `build install`?
+:::
 
 If you explore the `fimscb` you should see the following.
 ```console
@@ -354,16 +355,15 @@ and then run `iocsh.bash ch8.cmd`.
 ##  Assignments
 
 1. Write a startup script for `e3-fimscb`.
-2. Create an e3 wrapper for the EPICS module [e3-ch8](https://gitlab.esss.lu.se/epics-modules/training/ch8).
+2. Create an e3 wrapper for the EPICS module [ch8](https://gitlab.esss.lu.se/epics-modules/training/ch8).
 3. Create a startup script for this module that will load all of the necessary functionality
-4. Create an e3 wrapper for the EPICS module [e3-myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated IOC 
-   (i.e. a startup script that loads the necessary functionality)
+4. Create an e3 wrapper for the EPICS module [myexample](https://gitlab.esss.lu.se/epics-modules/training/myexample), as well as an associated startup script that loads the necessary functionality (i.e an e3 IOC).
    :::{hint}
    This task is a lot more challenging. To get some ideas, try to build the module as a regular EPICS module
    by switching into the `myexample/` directory and trying to build it there to see how that works.
    ```console
    [iocuser@host:e3-myexample]$ cd myexample
-   [iocuser@host:e3-myexample]$ make build
+   [iocuser@host:myexample]$ make build
    ```
    You may need to modify the configuration files included in this repository in order to get it to build correctly.
    :::

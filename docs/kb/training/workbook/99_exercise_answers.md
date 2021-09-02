@@ -658,13 +658,148 @@ then you can modify a single file in order to update the dependency versions of 
 ## Building an e3 module
 ### Exercises
 
+#### IOCs
+
+- As seen in [An e3 IOC](2_e3_ioc.md), you can use the variable `$(E3_CMD_TOP)` to refer to the directory which holds `st.cmd`.
+
+#### External modules
+
+- `make init patch` should always be run before building a new module. This will do two things:
+  1. Make sure that the submodule is initialised correctly 
+  2. Make sure that all of the correct patches have been applied
+  Without these two steps, it is possible that the module you are trying to build might not build as expected, or could even fail to build at all.
+
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. There is an `st.cmd` included with the repository that we can use as a basis for our e3 startup script. One possibility is
+   ```sh
+   require stream
+   require fimscb
+   epicsEnvSet("STREAM_PROTOCOL_PATH", "$(fimscb_DB)")
+
+   epicsEnvSet(P, FIMSCB)
+   epicsEnvSet(R, KAM)
+
+   epicsEnvSet("PORT", "FIMSCB")
+
+   drvAsynIPPortConfigure($(PORT), "127.0.0.1:9999", 0, 0, 0)
+   asynOctetSetInputEos($(PORT), 0, "\r\n")
+   asynOctetSetOutputEos($(PORT), 0, "\r")
+
+   dbLoadRecords("db/fimscb.db",     "P=$(P)-$(R):FimSCB:,PORT=FIMSCB")
+
+   iocInit
+
+   dbl > "$(TOP)/PVs.list"
+   ```
+   Note that the *fimscb* module defined in this chapter does *not* add *stream* as a dependency, and so for the IOC to run correctly we need to include `require stream` in the startup script. A better solution, of course, is to add *stream* as a run-time dependency.
+2. One should use cookiecutter for this, same as for `e3-fimscb`. A minimal module makefile could look something like the following.
+   ```make
+   where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+   include $(E3_REQUIRE_TOOLS)/driver.makefile
+   include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+
+   REQUIRED += sequencer
+   # This, of course, should be defined in CONFIG_MODULE
+   sequencer_VERSION:=$(SEQUENCER_DEP_VERSION)
+
+   APP:=ch8App
+   APPDB:=$(APP)/Db
+   APPSRC:=$(APP)/src
+
+   TEMPLATES += $(wildcard $(APPDB)/*.db)
+
+   SOURCES   += $(APPSRC)/dbSubExample.c
+   SOURCES   += $(APPSRC)/myexampleHello.c
+   SOURCES   += $(APPSRC)/sncExample.stt
+
+   DBDS   += $(APPSRC)/dbSubExample.dbd
+   DBDS   += $(APPSRC)/myexampleHello.dbd
+   DBDS   += $(APPSRC)/sncExample.dbd
+
+   db:
+   ```
+3. One possible startup script could be the following.
+   ```sh
+   require ch8
+
+   epicsEnvSet("IOCNAME", "test_ioc")
+
+   dbLoadRecords("$(ch8_DB)/dbExample1.db", "user=$(IOCNAME)")
+   dbLoadRecords("$(ch8_DB)/dbExample2.db", "user=$(IOCNAME),no=1,scan=1 Second")
+   dbLoadRecords("$(ch8_DB)/dbSubExample.db", "user=$(IOCNAME)")
+
+   iocInit
+
+   seq sncExample "user=$(IOCNAME)"
+   ```
+   If you run this IOC, you should see output like this after a few seconds.
+   ```console
+   [iocuser@host:e3-ch8]$ make cellinstall
+   [iocuser@host:e3-ch8]$ iocsh.bash -l cellMods st.cmd
+   # --- snip snip ---
+   iocRun: All initialization complete
+   seq sncExample "user=test_ioc"
+   sevr=info Sequencer release 2.2.8+0, compiled Fri May  7 14:04:03 2021
+   sevr=info Spawning sequencer program "sncExample", thread 0x189bc90: "sncExample"
+   # Set the IOC Prompt String One 
+   epicsEnvSet IOCSH_PS1 "localhost-5721 > "
+   #
+   sevr=info sncExample[0]: all channels connected & received 1st monitor
+   localhost-5721 > sncExample: Startup delay over
+   sncExample: Changing to high
+   sncExample: Changing to low
+   ```
+4. In order to include all of the requisite functionality, your `myexample.Makefile` should have the following lines (with `$(APPSRC)` defined appropriately).
+   ```make
+   TEMPLATES += $(wildcard $(APPDB)/*.db)
+   TEMPLATES += $(wildcard $(APPDB)/*.substitutions)
+
+   SOURCES   += $(APPSRC)/dbSubExample.c
+   SOURCES   += $(APPSRC)/devXxxSoft.c
+   SOURCES   += $(APPSRC)/initTrace.c
+   SOURCES   += $(APPSRC)/myexampleHello.c
+   SOURCES   += $(APPSRC)/sncExample.stt
+   SOURCES   += $(APPSRC)/xxxRecord.c
+
+   DBDS   += $(APPSRC)/dbSubExample.dbd
+   DBDS   += $(APPSRC)/myexampleHello.dbd
+   DBDS   += $(APPSRC)/sncExample.dbd
+   DBDS   += $(APPSRC)/xxxRecord.dbd
+   DBDS   += $(APPSRC)/xxxSupport.dbd
+   ```
+   Note that you should _not_ include both `sncExample.stt` and `sncExample.st` (why not? What error do you get if you do?).
+
+   If you run `make build` now, you should see something a little bit surprising:
+   ```
+   make[4]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-myexample/myexample/O.7.0.5_linux-x86_64'
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../myexampleApp/src/xxxRecord.c
+   ../myexampleApp/src/xxxRecord.c:21:23: fatal error: xxxRecord.h: No such file or directory
+   #include "xxxRecord.h"
+                        ^
+   compilation terminated.
+   ```
+   The issue here is that the source files `xxxRecord.c` and `devXxxSoft.c` both require `xxxRecord.h` which does not exist: it is generated at build-time from `xxxRecord.dbd` by the EPICS utility `dbdToRecordtypeH.pl`.
+
+   However, the build actually works correctly! If you check the full output, you can see that the following happens a few lines later:
+   ```
+   perl -CSD /epics/base-7.0.5/bin/linux-x86_64/dbdToRecordtypeH.pl  -I ../myexampleApp/src/ -I ./ -I /epics/base-7.0.5/dbd  -I. -I.. -I../O.7.0.5_Common -I/epics/base-7.0.5/require/3.4.1/siteMods/myexample/master/dbd -o xxxRecord.h ../myexampleApp/src/xxxRecord.dbd
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/devXxxSoft.c
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/xxxRecord.c
+   ```
+   So the module builds correctly after all.
+
+   As for the startup script, you can look inside the directory `iocBoot/iocmyexample` at the existing `st.cmd` file for inspiration, which could yield for example the following startup script for an IOC:
+   ```sh
+   require myexample
+
+   dbLoadTemplate("$(myexample_DB)/user.substitutions")
+   dbLoadRecords("$(myexample_DB)/dbSubExample.db", "user=jhlee")
+
+   iocInit
+
+   seq sncExample, "user=jhlee"
+   ```
+
 
 
 
