@@ -91,19 +91,26 @@ If the IOC starts up correctly (you will have to have installed the core modules
 
    This should output IOC-9999.
 
-2. Open another terminal and source the same e3 configuration.
+2. Run the following command:
+
+   ```console
+   localhost-31462> system "ls $(E3_CMD_TOP)"
+   ```
+   What does it represent?
+
+3. Open another terminal and source the same e3 configuration.
 
    ```console
    [iocuser@host:e3]$ source tools/setenv
    ```
 
-3. Print all of the PVs to a file and skim through it:
+4. Print all of the PVs to a file and skim through it:
 
    ```console
    [iocuser@host:e3]$ while IFS= read -r pv; do caget $pv; done < IOC-9999_PVs.list
    ```
 
-4. Check the heartbeat of your IOC.
+5. Check the heartbeat of your IOC.
 
    ```console
    [iocuser@host:e3]$ camonitor ${IOCNAME}:HEARTBEAT
