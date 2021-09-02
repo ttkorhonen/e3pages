@@ -881,15 +881,70 @@ then you can modify a single file in order to update the dependency versions of 
 ## Supplementary tools
 ### Exercises
 
+#### Starting an IOC in a procServ container
+
+- The syntax for `procServ` is
+  ```
+  procServ [options] <endpoint> <command args ...>
+  ```
+  In this case, `[options]` is `-n iocsh`, which is the child process' name. `<endpoint>` is 2000, which is the port to connect to, and the output of `which iocsh.bash` (i.e. the absolute path of `iocsh.bash`) is the command to run in the child container.
+
 ### Assignments
-1.
-2.
-3.
-4.
-5.
-6.
+1. In order to have procServ listen to a TCP socket instead of a UDS, you simply need to change the argument to `--port` to be the port you wish to listen on. If you only intend to have a single IOC on each host, then it is possible to statically assign this in the `ExecStart` directive via, e.g.
+   ```
+   ExecStart=/usr/bin/procServ \
+                     --foreground \
+                     --name=%i \
+                     --logfile=/var/log/procServ/%i/out.log \
+                     --info-file=/var/run/procServ/%i/info \
+                     --ignore=^C^D \
+                     --logoutcmd=^Q \
+                     --chdir=/var/run/procServ/%i \
+                     --port=2000 \
+                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash \
+                     /opt/iocs/e3-ioc-%i/st.cmd
+   ```
+2. If your e3 installation is on an NFS server, you should make sure that the NFS share is mounted _before_ the IOC starts up. You can do this with an explicit call to `mount`.
+   ```console
+   [iocuser@host:~]$ mount -r "nfs-host.xxx.xxx.xxx:$MOUNT_POINT" "/path/to/local/mount"
+   ```
+   One can also add the mount points to `/etc/fstab`, which ensures that the mount will persist upon rebooting the machine. This should have an entry that looks something like
+   ```
+   nfs-host.xxx.xxx.xxx:/e3-mount-point /epics nfs ro 0 0
+   ```
+   for a read-only mount point. See [fstab](https://man7.org/linux/man-pages/man5/fstab.5.html) for more information about the remaining syntax.
 
+   Note that it is possible to mount an NFS share via systemd, but it is suggested to use fstab unless you have a particularly complicated setup.
+3. One issue with the above solution is that we have hard-coded the versions of EPICS base and require, as well as (in the solution to assignment 1) the procServ port.
 
+   To get around this, one can use the `EnvironmentFile` directive to load an environment file that could be deployed with the IOC to set these variables. For example, your IOC could also come with an `env.sh` file that looks like
+   ```sh
+   EPICS_BASE=/epics/base-7.0.5
+   E3_REQUIRE_VERSION=3.4.1
+   PROCSERV_PORT=2000
+   ```
+   and then you could modify the `Service` section to be
+   ```
+   User=iocuser
+   Group=iocgroup
+   PermissionsStartOnly=true
 
+   ExecStartPre=/bin/mkdir -p /var/log/procServ/%i
+   ExecStartPre=/bin/chown -R iocuser:iocgroup /var/log/procServ/%i
+   ExecStartPre=/bin/mkdir -p /var/run/procServ/%i
+   ExecStartPre=/bin/chown -R iocuser:iocgroup /var/run/procServ/%i
 
+   EnvironmentFile=/opt/iocs/e3-ioc-%i/env.sh
+   ExecStart=/usr/bin/procServ \
+                        --foreground \
+                        --name=%i \
+                        --logfile=/var/log/procServ/%i/out.log \
+                        --info-file=/var/run/procServ/%i/info \
+                        --ignore=^C^D \
+                        --logoutcmd=^Q \
+                        --chdir=/var/run/procServ/%i \
+                        --port=${PROCSERV_PORT} \
+                        ${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/bin/iocsh.bash \
+                        /opt/iocs/e3-ioc-%i/st.cmd
+   ```
 
