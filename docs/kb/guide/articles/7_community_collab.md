@@ -36,3 +36,4 @@ If you are designing a new module for your site, then you do not strictly speaki
 
 It is still recommended, however, to separate the two repositories other than in certain exceptional cases. This facilitates working with the broader EPICS community in terms of sharing resources and skills: if you create some functionality that can only be used in an e3 context, then there is extra work that needs to be done in order to allow users at sites which do not use e3 to allow them to use your module.
 
+EPICS is a large community-driven open source project, and so the best practice is to always make sure to give back to that community wherever possible.
