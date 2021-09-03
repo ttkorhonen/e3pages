@@ -235,7 +235,7 @@ GUID 0x000000006130B9CD20A10E23 version 2: tcp@[ 172.30.6.131:5075 ]
 GUID 0x006F2F6100000000F1893C25 version 2: tcp@[ 172.30.6.131:47078 ]
 # --- snip snip ---
 ```
-where you can see that there is at least one IOC running on 172.30.5.209, and two IOCs running on 172.30.6.131. You can then query the PVs from those IOCs either using the GUID (0x00000000612FF55911A8B7E9) or by specifying the ip:port.
+where you can see that there is at least one IOC running on `172.30.5.209`, and two IOCs running on `172.30.6.131`. You can then query the PVs from those IOCs either using the GUID (`0x00000000612FF55911A8B7E9`) or by specifying the `ip:port`.
 :::
 
 As you saw, we added no specifics to our templated unit file, but instead used essentially macros. By having a template, we can instantiate as many IOCs as we want and have them appear and behave consistently.
