@@ -20,3 +20,19 @@ If you cannot find the information that you are looking for within the links abo
 
 Of course, as a part of a community, it is also a good place to offer your help and experience in return!
 
+## Working with community modules
+
+As stated in {ref}`wrappers`, one of the key design features of e3 is the idea of using a _wrapper_ to allow for the import of EPICS modules into an e3 environment. In particular, it allows for site-specific modifications, patches, and configuration in a manner that allows for ease of re-use within multiple dynamically or statically generated IOCs.
+
+### Working with an existing community module
+
+If you are working with a module that already exists within the community and would like to be able to work with it in e3 as well as contribute to the community at large, then {ref}`development_mode` is the ideal way to work. This allows you to have a cloned version of the module that you can commit to as well as push your changes to the remote, as well as install your latest versions for testing purposes.
+
+One your changes have been merged in to the main branch and tagged, then you can update `configure/CONFIG_MODULE` in order to update `EPICS_MODULE_TAG` and release a new version of the module into your e3 environment.
+
+### Working with a new module
+
+If you are designing a new module for your site, then you do not strictly speaking need to separate the module and wrapper repositories: you can simply work with {ref}`local_modules`.
+
+It is still recommended, however, to separate the two repositories other than in certain exceptional cases. This facilitates working with the broader EPICS community in terms of sharing resources and skills: if you create some functionality that can only be used in an e3 context, then there is extra work that needs to be done in order to allow users at sites which do not use e3 to allow them to use your module.
+

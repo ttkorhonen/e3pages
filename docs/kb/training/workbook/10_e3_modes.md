@@ -106,7 +106,7 @@ iocRun: All initialization complete
 These two pieces allow an e3 user to be able to install and load modules even if they do not have write permissions to a shared e3
 environment.
 
-
+(development_mode)=
 ## Development mode
 
 The development mode is instead intended to allow the developer to modify the source module, and utilizes `git clone` instead of `git submodule`. This provides

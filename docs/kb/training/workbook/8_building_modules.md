@@ -247,6 +247,7 @@ endif
 If you uninstall and reinstall `fimscb` and then run `iocsh.bash -r fimscb` you should see that *StreamDevice* and all of its dependencies
 has been loaded now.
 
+(local_modules)=
 ### Local modules
 
 It may not be the case that every e3 module is one that is expected to be used outside of your local institution. In such cases, separating
