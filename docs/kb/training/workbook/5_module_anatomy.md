@@ -128,6 +128,7 @@ The following additional `make` targets are of particular importance when workin
 * `make test`: Attempts to load the current module into an IOC, and runs any module-specific tests that have been defined.
 * `make cellinstall`: Installs the module in a local path (useful if you do not have write permissions to your e3 environment location). More on this in [Cell Mode](_file_does_not_exist.md)
 
+(patch_files)=
 ## Patch files
 
 Due to the fact that we are working with community modules over which we do not have complete control, we may sometimes need to modify them to fit the needs of

@@ -10,7 +10,7 @@ The main EPICS [website](https://epics-controls.org/) is the best source for all
 * A list of [projects](https://epics-controls.org/epics-users/projects/) that use EPICS
 * [News and events](https://epics-controls.org/news-and-events/), listing upcoming and past events, as well as information about the latests releases of EPICS
 
-And of course, much more.
+There is also the Argonne National Labs EPICS [website](https://epics.anl.gov/index.php), which has a lot of documentation for previous versions of EPICS.
 
 Note that e3 is designed to work with the EPICS base 7 series, and we have dropped support for base 3.x.
 
@@ -27,6 +27,8 @@ As stated in {ref}`wrappers`, one of the key design features of e3 is the idea o
 ### Working with an existing community module
 
 If you are working with a module that already exists within the community and would like to be able to work with it in e3 as well as contribute to the community at large, then {ref}`development_mode` is the ideal way to work. This allows you to have a cloned version of the module that you can commit to as well as push your changes to the remote, as well as install your latest versions for testing purposes.
+
+If your changes are of interest to the broader community (instead of being purely site-specific), then you can try to merge them into the parent repository with a pull/merge request. If not, you will have to create appropriate patch files and add them into the wrapper. Please see {ref}`patch_files` for more information.
 
 One your changes have been merged in to the main branch and tagged, then you can update `configure/CONFIG_MODULE` in order to update `EPICS_MODULE_TAG` and release a new version of the module into your e3 environment.
 
