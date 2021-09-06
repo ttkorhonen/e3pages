@@ -18,6 +18,7 @@ Here is an inventory of existing user guides. For information on more ESS-specif
 articles/4*
 articles/5*
 articles/6*
+articles/7*
  ```
 
 
