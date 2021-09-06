@@ -69,7 +69,7 @@ you have sourced the correct e3 environment's `setE3Env.bash`.
 
 The first startup script is called `1.cmd`. As stated above, you should examine this script first and then start it with
 ```console
-[iocuser@host:e3-training-material]$ cd cmds
+[iocuser@host:e3-training-material]$ cd 4_startup_scripts_in_e3/cmds
 [iocuser@host:cmds]$ iocsh.bash 1.cmd
 ```
 

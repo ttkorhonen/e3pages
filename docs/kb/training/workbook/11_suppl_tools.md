@@ -208,8 +208,7 @@ Finally, check the status of the process.
 Aug 11 15:42:46 localhost.localdomain systemd[1]: Starting procServ container for IOC test-ioc...
 Aug 11 15:42:46 localhost.localdomain systemd[1]: Started procServ container for IOC test-ioc.
 ```
-We can see from the above that the IOC is up and running. You can do a quick further test without logging in by checking for any of the PVs that should
-be visible from the IOC with `pvlist`.
+We can see from the above that the IOC is up and running. You can do a quick further test without logging in by checking for any of the PVs that should be visible from the IOC with `pvlist`.
 
 ```console
 [iocuser@host:~]$ pvlist localhost
@@ -226,6 +225,18 @@ REQMOD:localhost-20447:calc_VER
 REQMOD:localhost-20447:pcre_VER
 REQMOD:localhost-20447:stream_VER
 ```
+
+:::{note}
+`pvlist` is a utility (installed with EPICS base 7) that allows you to list pvs on a given host as well as what pvs are reachable via PVAccess. For example, running `pvlist` on a network with several running IOCs could yield something like
+```console
+[iocuser@host:~]$ pvlist
+GUID 0x00000000612FF55911A8B7E9 version 2: tcp@[ 172.30.5.209:5075 ]
+GUID 0x000000006130B9CD20A10E23 version 2: tcp@[ 172.30.6.131:5075 ]
+GUID 0x006F2F6100000000F1893C25 version 2: tcp@[ 172.30.6.131:47078 ]
+# --- snip snip ---
+```
+where you can see that there is at least one IOC running on `172.30.5.209`, and two IOCs running on `172.30.6.131`. You can then query the PVs from those IOCs either using the GUID (`0x00000000612FF55911A8B7E9`) or by specifying the `ip:port`.
+:::
 
 As you saw, we added no specifics to our templated unit file, but instead used essentially macros. By having a template, we can instantiate as many IOCs as we want and have them appear and behave consistently.
 
