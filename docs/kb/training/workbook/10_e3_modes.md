@@ -7,6 +7,11 @@ In this lesson you will learn about two additional ways to work with e3:
 * Dev mode, where you can work with a separate copy of the module source repository in order to facilitate
   module development.
 
+:::{note}
+This chapter covers several ways to work with e3 when building modules. If you are working with a pre-built environment, then this chapter can be omitted.
+:::
+
+---
 ## Cell mode
 
 Depending on your deployment settings, it is possible that you may have restricted access to deploy modules to an e3 environment. For example, there
