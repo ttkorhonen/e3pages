@@ -11,6 +11,10 @@ In this lesson, you'll learn how to do the following:
 * Set up common e3 module packs.
 * Test your installation.
 
+:::{note}
+This chapter teaches you how to create your own e3 environment from scratch. If you are working with a pre-built e3 environment, then this chapter can be skimmed or skipped.
+:::
+
 ---
 
 ## Downloading e3

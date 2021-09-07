@@ -8,6 +8,10 @@ In this lesson, you'll learn how to do the following:
 * Run processes as system daemons.
 * Use conserver to manage procServ containers.
 
+:::{note}
+This chapter deals with external utilities that are used to facilitate in running and maintaining IOCs. It is by nature somewhat more technical and in some sense separate to e3, and can potentially be skipped.
+:::
+
 ---
 
 ## Utilities
