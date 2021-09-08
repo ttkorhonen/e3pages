@@ -226,7 +226,7 @@ The simplest way of including a header file is to add the line `HEADERS += heade
 
    We have implemented a mechanism to get around this, please see the [changelog](https://gitlab.esss.lu.se/e3/e3-require/-/blob/master/CHANGELOG.md) for *require* 3.3.0.
 
-### Compiling a .c file
+### Compiling a `.c` file
 
 Building source files at its heart is similar to the above, but the chain of dependencies is significantly more complicated. As above however, the inclusion of a source file to be compiled into the shared library is simple: add the line `SOURCES += $(APPSRC)/file.c` in your module makefile.
 
