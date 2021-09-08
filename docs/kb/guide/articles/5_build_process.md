@@ -220,7 +220,7 @@ The simplest way of including a header file is to add the line `HEADERS += heade
         @$(INSTALL) -d -m $(INSTALL_PERMISSIONS) $< $(@D)
    ```
 
-   which says that any target within the directory `$(INSTALL_INCLUDE)` has the target as a dependency i.e. `$(INSTALL_INCLUDE)/header.h` depends on `header.h`
+   which says that any target within the directory `$(INSTALL_INCLUDE)` has the target as a dependency, i.e. `$(INSTALL_INCLUDE)/header.h` depends on `header.h`
 
 4. Finally, the `vpath` line above tells `make` where to search for that file, and then the instructions tell `make` to run the program defined by `$(INSTALL)` to install the file in the target location. Note however that there is one potential source of problems here: the dependency is just the filename alone, and so if you have the following two header files you would like to include: `dir1/header.h` `dir2/header.h` i.e. the same filename, but different locations, then only one of these two will be installed.
 
