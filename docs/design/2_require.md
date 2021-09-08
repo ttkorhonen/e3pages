@@ -74,7 +74,7 @@ As *require* will load the first test version it finds when there are no numeric
 
 If one module depends on another one, both of these will be loaded. For example, *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.18 in its current incarnation has been built against *asyn* 4.41.0---if you load that version of *StreamDevice* then it will try to load specifically version 4.41.0 of *asyn*, and if it cannot find that version, or if another version of *asyn* has already been loaded, then the IOC will exit with an error.
 
-These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for StreamDevice 2.8.18 are (directly from the aforementioned file):
+These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for *StreamDevice* 2.8.18 are (directly from the aforementioned file):
 
 ```bash
 # Generated file. Do not edit.
