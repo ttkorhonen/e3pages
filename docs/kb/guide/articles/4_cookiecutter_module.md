@@ -15,7 +15,7 @@ $ pip3 install cookiecutter --user
 ```
 
 :::{warning}
-Beware that you will need to have Python 3 as well as pip installed on your machine.
+Beware that you will need to have Python 3 as well as *pip* installed on your machine.
 :::
 
 :::{tip}
