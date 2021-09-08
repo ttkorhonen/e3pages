@@ -140,7 +140,7 @@ These are the targets that are used in most cases when building, debugging, test
   failing_test:
       false
   ```
-  For a more detailed example, see [the opcua module](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21).
+  For a more detailed example, see the *[opcua](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21)* module.
 * `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template and substitution file expansion.
 
 :::{note}
