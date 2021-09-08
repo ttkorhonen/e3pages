@@ -172,7 +172,7 @@ We will provide a few examples of how `make` processes the data and produces the
 
 ### Installing a header file
 
-Before we go on to the more complicated case of compiling source files, let us go over the simpler step of having header files be installed so that other modules may include them. As an example, there are many .h files that are installed with `asyn` and are used by lots of other modules.
+Before we go on to the more complicated case of compiling source files, let us go over the simpler step of having header files be installed so that other modules may include them. As an example, there are many `.h` files that are installed with *asyn* and are used by lots of other modules.
 
 The simplest way of including a header file is to add the line `HEADERS += header.h` into your `$(module).Makefile`. Having done this, the build/install process runs as follows.
 
