@@ -4,10 +4,6 @@
 
 *[Cookiecutter](https://github.com/cookiecutter/cookiecutter)* is a templating utility built in python. Cookiecutter is already extensively used within ICS to help standardize the creation of multiple projects, see <https://gitlab.esss.lu.se/ics-cookiecutter>. To create an e3 wrapper, we will be using [a template designed for that](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper).
 
-:::{note}
-The following is based on the e3TemplateGenerator that is part of the [e3-tools repository](https://github.com/icshwi/e3-tools).
-:::
-
 ## Prerequisites
 
 ### Installing cookiecutter
