@@ -22,13 +22,13 @@ Of course, as a part of a community, it is also a good place to offer your help 
 
 ## Working with community modules
 
-As stated in {ref}`wrappers`, one of the key design features of e3 is the idea of using a _wrapper_ to allow for the import of EPICS modules into an e3 environment. In particular, it allows for site-specific modifications, patches, and configuration in a manner that allows for ease of re-use within multiple dynamically or statically generated IOCs.
+As stated in {ref}`wrappers`, one of the key design features of e3 is the idea of using a _wrapper_ to allow for the import of EPICS modules into an e3 environment. In particular, it allows for Site-specific modifications, patches, and configuration in a manner that allows for ease of re-use within multiple dynamically or statically generated IOCs.
 
 ### Working with an existing community module
 
 If you are working with a module that already exists within the community and would like to be able to work with it in e3 as well as contribute to the community at large, then {ref}`development_mode` is the ideal way to work. This allows you to have a cloned version of the module that you can commit to as well as push your changes to the remote, as well as install your latest versions for testing purposes.
 
-If your changes are of interest to the broader community (instead of being purely site-specific), then you can try to merge them into the parent repository with a pull/merge request. If not, you will have to create appropriate patch files and add them into the wrapper. Please see {ref}`patch_files` for more information.
+If your changes are of interest to the broader community (instead of being purely Site-specific), then you can try to merge them into the parent repository with a pull/merge request. If not, you will have to create appropriate patch files and add them into the wrapper. Please see {ref}`patch_files` for more information.
 
 One your changes have been merged in to the main branch and tagged, then you can update `configure/CONFIG_MODULE` in order to update `EPICS_MODULE_TAG` and release a new version of the module into your e3 environment.
 
