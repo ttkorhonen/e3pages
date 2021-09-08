@@ -31,6 +31,7 @@ Assuming that you have an existing EPICS module you would like to create a wrapp
 ## Creating the e3 wrapper
 
 Run the following command in the terminal to create a cookiecutter:
+
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 ```
@@ -38,6 +39,7 @@ $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wr
 If you have run it before, it will ask if you want to re-download the template; you should answer the default of "yes", which ensures that you will use an up-to-date template.
 
 Cookiecutter then provides a list of prompts:
+
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 You've downloaded /Users/simonrose/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
@@ -54,7 +56,7 @@ git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
 
 Above, I have chosen the defaults for most of the responses other than the module name. In the last step, there are two possibilities:
 
-1. The git repository that you provide exists and is public on either gitlab or github.
+1. The git repository that you provide exists and is public.
 2. The git repository does not exist, or is not public.
 
 In the first case, you will see the following:
