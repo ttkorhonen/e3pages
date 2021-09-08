@@ -67,6 +67,6 @@ export IOCNAME="SomeName"
 ```
 
 
-[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e., from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
+[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
 
 [^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`. Earlier iterations of e3 also supported use of `softIoc`, but that functionality has been removed from scope.
