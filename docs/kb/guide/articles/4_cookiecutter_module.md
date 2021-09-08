@@ -132,4 +132,4 @@ When you have created an e3-wrapper as above, it is only a local git repository 
 
 ## Next steps
 
-Once you have created your template, you will want to customize it. For this, please see the e3 training, as well as {ref}`wrappers`, {ref}`require_build`, and {ref}`wrapper_config`.
+Once you have created your template, you will want to customise it. For this, please see the e3 training, as well as {ref}`wrappers`, {ref}`require_build`, and {ref}`wrapper_config`.
