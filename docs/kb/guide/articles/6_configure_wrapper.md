@@ -114,7 +114,7 @@ By default, the headers are all flatly installed into the `include/` directory; 
 
 If you have two files in separate directories but with the same name, then you cannot install them this way. 
 
-From *require* 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile; `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process. <!-- TODO: find link and fixme -->
+From *require* 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile; `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process.
 
 ```makefile
 KEEP_HEADER_SUBDIRS += $(GMTOP)
