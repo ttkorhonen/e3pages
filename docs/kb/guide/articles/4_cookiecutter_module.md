@@ -74,7 +74,7 @@ Receiving objects: 100% (237/237), 46.63 KiB | 2.74 MiB/s, done.
 Resolving deltas: 100% (129/129), done.
 ```
 
-This means that the e3 wrapper has successfully added the epics module as a submodule, and is ready to work with.
+This means that the e3 wrapper has successfully added the EPICS module as a submodule, and is ready to work with.
 
 In the second case, you will see something like the following.
 ```
