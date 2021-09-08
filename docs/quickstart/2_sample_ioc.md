@@ -2,7 +2,7 @@
 
 The following assumes that you already have EPICS base, *require* (`3.3.0` or later as the module version has been left out in the `require` call[^require]), and *iocStats* installed.
 
-An IOC in e3 is typically (minimally) just a startup script which is passed to `softIocPVA`[^epics7].
+An IOC in e3 is typically (minimally) just a startup script which is passed to `softIocPVA`.[^epics7]
 
 ## Create the startup script
 
