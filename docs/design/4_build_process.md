@@ -128,7 +128,7 @@ These are the targets that are used in most cases when building, debugging, test
 * `make init`: This target depends on whether the wrapper includes a submodule or not. If it does, then this will initialise and clone the EPICS submodule in order to allow it to be built, as well as check out the correct commit hash. This is a necessary first stage for these modules. Otherwise, this target does nothing.
 * `make patch`: This target will apply any module-specific patches to the wrapper, which are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly. Patches can be removed with `make patchrevert`.
 * `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
-* `make test`: This will perform a local installation of the module, and then try to start an IOC with that module. It will also perform any module-specific tests that are defined for that module.
+* `make test`: This will perform a local installation of the module, and then try to start an IOC with that module.[^runiocsh] It will also perform any module-specific tests that are defined for that module.
   
   These tests should be specified in `configure/module/RULES_MODULE` as dependencies of the target `module_tests`. For example,
   ```make
@@ -200,3 +200,6 @@ The following targets, once `make devinit` has been run, are available. They eac
 * `make devclean`
 * `make devinstall`
 * `make devuninstall`
+
+
+[^runiocsh]: In order to use this, you first need to have installed [run-iocsh](https://gitlab.esss.lu.se/ics-infrastructure/run-iocsh).
