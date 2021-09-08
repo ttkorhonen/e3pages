@@ -8,10 +8,10 @@
 This page is still being written.
 ```
 
-The E3 build process is a complicated bit of work. To recap, the overview is as follows:
+The e3 build process is a complicated bit of work. To recap, the overview is as follows:
 
 1. In the e3-wrapper directory: we collect some information and decide what build process we will perform (from `RULES_E3`), calling `make` in the module directory with information passed as in `CONFIG_E3_MAKEFILE`.
-2. In the module directory: EPICSVERSION has not been defined, so determine which versions to build for.
+2. In the module directory: `EPICSVERSION` has not been defined, so determine which versions to build for.
 3. In the module directory: Target architecture `${T_A}` has not been defined, so determine the architectures to build for.
 4. In the module directory: Perform a final collection of the relevant files, create the directories `O.${EPICSVERSION}_Common` and `O.${EPICSVERSION}_${T_A}`.
 5. In the directories `O.*`: Build/Install all of the required shared libraries and other files for the given version of EPICS base and target architecture.
