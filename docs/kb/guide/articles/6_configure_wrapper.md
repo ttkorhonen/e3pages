@@ -6,7 +6,7 @@ To create a wrapper, you should use *[cookiecutter](https://github.com/cookiecut
 
 ## The `configure/` directory
 
-If you used one of the template generators, the configuration of the EPICS base, require version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
+If you used one of the template generators, the configuration of the EPICS base, *require* version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
 
 If your module depends on other modules (for example, it may depend on *asyn*, *StreamDevice*, *areaDetector*, or any other number of modules), then you should specify the dependencies in `configure/CONFIG_MODULE`. This is done like so:
 
