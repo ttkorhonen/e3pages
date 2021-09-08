@@ -1,6 +1,6 @@
 # Installing e3
 
-Building EPICS with the "core" modules (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically isn't what you would use for a production build.
+Building EPICS with the so-called *core* modules (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically isn't what you would use for a production build.
 
 ## Prerequisites
 
