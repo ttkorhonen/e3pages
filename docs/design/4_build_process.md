@@ -144,7 +144,7 @@ These are the targets that are used in most cases when building, debugging, test
 * `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template and substitution file expansion.
 
 :::{note}
-`build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during the development phase.
+`build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during development.
 :::
 
 A few variations on this are the following.
