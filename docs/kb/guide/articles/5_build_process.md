@@ -103,7 +103,7 @@ export SRCS
 ```
 
 Note in particular the `export SRCS` line: when make is called recursively, variables from one run to the next do not persist unless they are `export`ed. It is also extremely important to note when the variable being exported
-is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the E3 build process), it will `export` correctly.
+is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the e3 build process), it will `export` correctly.
 
 The cross-compiler target architectures `CROSS_COMPILER_TARGET_ARCHS` are defined in `$(EPICS_LOCATION)/configure/CONFIG_SITE`, which is generated when you build EPICS base for the first time.
 
