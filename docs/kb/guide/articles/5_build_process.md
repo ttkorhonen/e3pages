@@ -120,7 +120,7 @@ install build debug::
 ### Stage 4: Preparing to build `T_A`
 
 For this stage of the build process, we are still in the module directory; the next stages will be done in the directories `O.$(EPICSVERSION)_Common` or `O.$(EPICSVERSION)_$(T_A)`, respectively. These directories will also be
-created at this point, and are the destination of all intermediate and final output files (e.g. any generated .db or .dbd files, .o files, and `lib$(module).so`)
+created at this point, and are the destination of all intermediate and final output files (e.g. any generated `.db` or `.dbd` files, `.o` files, and `lib$(module).so`)
 
 > Note that `make clean` simply deletes these directories, removing all generated files.
 
