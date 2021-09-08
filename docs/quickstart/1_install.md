@@ -48,7 +48,7 @@ or, alternatively:
 
 ## Installing an e3 module
 
-To install an existing e3 module in *deployment mode*[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* module for this example):
+To install an existing e3 module in *deployment mode*[^depmode], only a few steps are required. First clone the repository (we will use use the [*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps) module for this example):
 
 ```console
 [iocuser@host:e3]$ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
