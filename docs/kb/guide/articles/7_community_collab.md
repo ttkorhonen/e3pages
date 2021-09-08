@@ -8,7 +8,7 @@ The main EPICS [website](https://epics-controls.org/) is the best source for all
 * [Frequently Asked Questions](https://epics-controls.org/resources-and-support/documents/epics-faq/)
 * [Documentation](https://epics-controls.org/resources-and-support/documents/) for different versions of EPICS base
 * A list of [projects](https://epics-controls.org/epics-users/projects/) that use EPICS
-* [News and events](https://epics-controls.org/news-and-events/), listing upcoming and past events, as well as information about the latests releases of EPICS
+* [News and events](https://epics-controls.org/news-and-events/), listing upcoming and past events, as well as information about the latest releases of EPICS
 
 There is also the Argonne National Labs EPICS [website](https://epics.anl.gov/index.php), which has a lot of documentation for previous versions of EPICS.
 
