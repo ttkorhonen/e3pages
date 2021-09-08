@@ -22,7 +22,7 @@ e3-${MODULE}
 └── tools                       # additional tools or utilities
 ```
 
-In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e., both the wrapper and the wrapped module are controlled in the same repository).
+In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
 :::{note}
 We generally prefer "decoupled" modules---where the wrapper and the module are in separate repositories---as that allows for more flexibility (for e.g. community usage).
