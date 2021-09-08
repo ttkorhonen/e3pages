@@ -10,7 +10,7 @@ You should start with a mostly blank CentOS 7 machine, and then install all the 
 ```
 
 :::{note}
-Note that this package list is more than is strictly needed to install e3, but also contains the necessary packages for many of the e3 modules that are supported.
+Note that this package list is more than is strictly needed to install e3, but also contains the necessary packages for many of the e3 modules that are supported. ethercat-generic-dkms-1.5.2.ESS1-1 is an ESS internal package. It can be found at: <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS internal users, this package can be installed the same way as installing standard CentOS packages. For external users, one will need to add this repository to package manager's repository-search-list to install this package.
 :::
 
 ## Building a local e3 environment
