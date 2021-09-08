@@ -84,7 +84,7 @@ Note that `build`, `install`, and `debug` all use the same recursive call to `ma
 
 ### Stage 3: Defining `T_A`
 
-Now that we know which version of EPICS to build for, we go on to determine the target architectures to build for. In this case, we may build for more than one architecture at a time; at the moment, ESS supports `linux-x86_64` and `linux-ppc64e6500`. This is also where we include the EPICS build rules: see the sequence
+Now that we know which version of EPICS to build for, we go on to determine the target architectures to build for. In this case, we may build for more than one architecture at a time; at the moment, ESS supports `linux-x86_64`, `linux-corei7-poky`, and `linux-ppc64e6500`. This is also where we include the EPICS build rules: see the sequence
 
 ```makefile
 EB:=${EPICS_BASE}
