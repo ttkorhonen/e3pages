@@ -128,7 +128,7 @@ When you have created an e3-wrapper as above, it is only a local git repository 
    $ git push -u origin master
    ```
    If you use https and not ssh, then you will have to enter your username and password.
-4. If all has gone well, you can see your new module on gitlab, and share it with others.
+4. If all has gone well, you can see your new module on GitLab, and share it with others.
 
 ## Next steps
 
