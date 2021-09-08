@@ -57,7 +57,6 @@ To install an existing e3 module in *deployment mode*,[^depmode] only a few step
 Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should look like the following:
 
 ```makefile
-#
 EPICS_BASE:=/opt/epics/base-7.0.5
 
 E3_REQUIRE_NAME:=require
