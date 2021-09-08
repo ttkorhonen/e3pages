@@ -66,7 +66,7 @@ which first makes sure that `conf` and `checkout` are up to date (these copy the
 
 ### Stage 2: Defining `EPICSVERSION`
 
-The first pass through is to determine the EPICS version that we are building for. In E3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
+The first pass through is to determine the EPICS version that we are building for. In e3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
 
 ```makefile
 E3_EPICS_VERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
