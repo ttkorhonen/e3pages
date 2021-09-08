@@ -91,7 +91,7 @@ SCRIPTS += $(IOCADMINSRC)/iocReleaseCreateDb.py
 SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
-Note that the second line refers to the parent directory of the module, i.e., the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
+Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
 
 ### Header files
 
