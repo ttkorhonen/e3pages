@@ -60,6 +60,7 @@ Above, I have chosen the defaults for most of the responses other than the modul
 2. The git repository does not exist, or is not public.
 
 In the first case, you will see the following:
+
 ```
 git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]: https://gitlab.esss.lu.se/simonrose/http
 Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
@@ -77,6 +78,7 @@ Resolving deltas: 100% (129/129), done.
 This means that the e3 wrapper has successfully added the EPICS module as a submodule, and is ready to work with.
 
 In the second case, you will see something like the following.
+
 ```
 git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
 Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
@@ -87,6 +89,7 @@ Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
 ```
 
 In this case, either the EPICS modules you are looking for was not found (it may be private), or it does not exist. A temporary module has been added which displays the expected structure of an EPICS module. This is created using the cookiecutter template for EPICS modules found at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was not what you intended, you can delete the local directory, confirm that your EPICS module is available, and run:
+
 ```console
 $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
 ```
@@ -97,10 +100,13 @@ When you have created an e3-wrapper as above, it is only a local git repository 
 
 1. Create the remote repository by choosing "New project" from the menu on <https://gitlab.esss.lu.se>.
 2. The repository should be named *e3-testmodule*, and (although not necessary) should be public, at least if you want to share it with anyone else. However, you can change this at a later date. 
+
    :::{warning}
-   It is best to leave the box "Initialize repository with a README" unchecked.
+   It is best to leave the box "Initialise repository with a README" unchecked.
    :::
-3. As the repository has already been initialized, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name "simonrose" to your account or to the target group where you have created your repository, and change the name "e3-testmodule" to the name you have chosen:
+
+3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name "simonrose" to your account or to the target group where you have created your repository, and change the name "e3-testmodule" to the name you have chosen:
+
    ```bash
    $ # You do not need to switch into the directory if you are already there
    $ cd existing_folder
