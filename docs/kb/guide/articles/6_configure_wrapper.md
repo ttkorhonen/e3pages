@@ -79,7 +79,7 @@ TEMPLATES += $(wildcard $(IOCADMINDB)/*.template)
 ```
 
 :::{note}
-Make allows for wildcards using the function above, so this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
+As *make* allows for wildcards using the function above, this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
 :::
 
 ### Snippets
