@@ -33,7 +33,7 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
 ---
 
-Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.4.1, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.4.1, we find the following:
 
 ```console
 [iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
