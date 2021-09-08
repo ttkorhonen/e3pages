@@ -91,7 +91,7 @@ The module *sis8300llrf* version 3.16.1 depends on the module *scaling*, and has
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
 2. We could try to update the version of *sis8300llrf* to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
-3. We could instead update the version to 3.16.1+1, i.e., add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
+3. We could instead update the version to 3.16.1+1, i.e. add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
 
 
 [^envsh]: support for an environment-file (`env.sh`) is deprecated after *require* 3.4.1.
