@@ -51,7 +51,7 @@ The key is in how `make` generates its dependency tree. Unlike many programming 
 
 ### Stage 1: The e3-wrapper
 
-We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify dependencies and for which version of base/require we are building, as well as `CONFIG` from the require module (located in `configure/modules/CONFIG` in this repository).
+We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify dependencies and for which version of EPICS base and *require* we are building, as well as `CONFIG` from the *require* module (located in `configure/modules/CONFIG` in this repository).
 
 We also load `RULES` which similarly loads a number of rules-related configure files installed with `require`. The most important one in `RULES_E3` which initiates most of the E3 build process. As an example, we have:
 
