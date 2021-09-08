@@ -8,6 +8,10 @@ In this lesson, you'll learn how to do the following:
 * Understand the anatomy of an e3 wrapper.
 * Learn how to apply and create patch files for EPICS base and other modules within e3.
 
+:::{note}
+This chapter contains detailed information as to the structure of e3 modules and wrappers. If you intend to work solely with a pre-built environment, then this chapter can be skipped.
+:::
+
 ---
 
 ## No source code - configuration files!

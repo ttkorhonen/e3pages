@@ -9,6 +9,10 @@ In this lesson, you'll learn how to do the following:
 * Understand the difference between two important variables: `E3_MODULE_VERSION` and `EPICS_MODULE_TAG`.
 * Install a different version of *StreamDevice* within e3.
 
+:::{note}
+This chapter deals with installing custom versions of modules. If you intend to work with an existing environment as-is, then this chapter can be skimmed or omitted.
+:::
+
 ---
 
 ## The version variables within e3
