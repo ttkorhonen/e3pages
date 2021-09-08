@@ -62,11 +62,11 @@ The build process installs (potentially) several things to be available at run-t
 - Database/template/substitution/protocol files
 - DBD (database definition) files
 - Header files for dependent modules
-- iocsh snippets
+- Snippets
 - Compiled libraries
 
 :::{note}
-At ESS, startup scripts are modularized, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
+At ESS, startup scripts are modularised, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
 :::
 
 ### Database files
