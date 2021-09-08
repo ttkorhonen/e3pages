@@ -105,7 +105,7 @@ When you have created an e3-wrapper as above, it is only a local git repository 
    It is best to leave the box "Initialise repository with a README" unchecked.
    :::
 
-3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name "simonrose" to your account or to the target group where you have created your repository, and change the name "e3-testmodule" to the name you have chosen:
+3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name `simonrose` to your account or to the target group where you have created your repository, and change the name `e3-testmodule` to the name you have chosen:
 
    ```bash
    $ # You do not need to switch into the directory if you are already there
