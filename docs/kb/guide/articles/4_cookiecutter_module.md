@@ -86,7 +86,7 @@ Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
 >>>> A template module has been included in the meantime.
 ```
 
-In this case, either the epics modules you are looking for was not found (it may be private), or it does not exist. A temporary module has been added which displays the expected structure of an EPICS module. This is created using the cookiecutter template for EPICS modules found at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was not what you intended, you can delete the local directory, confirm that your EPICS module is available, and run:
+In this case, either the EPICS modules you are looking for was not found (it may be private), or it does not exist. A temporary module has been added which displays the expected structure of an EPICS module. This is created using the cookiecutter template for EPICS modules found at <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was not what you intended, you can delete the local directory, confirm that your EPICS module is available, and run:
 ```console
 $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
 ```
