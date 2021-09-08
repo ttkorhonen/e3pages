@@ -20,7 +20,7 @@ We will go over each of these steps in more detail, as well as go over an exampl
 
 ## Some details about `make`
 
-Before we can describe the build process, we have to talk a little about how `make` works. If you don't understand `make`, it is very *very* hard to understand the E3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
+Before we can describe the build process, we have to talk a little about how `make` works. If you do not understand `make`, it is very *very* hard to understand the E3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
 
 `make` does two things:
 
