@@ -224,7 +224,7 @@ The simplest way of including a header file is to add the line `HEADERS += heade
 
 4. Finally, the `vpath` line above tells `make` where to search for that file, and then the instructions tell `make` to run the program defined by `$(INSTALL)` to install the file in the target location. Note however that there is one potential source of problems here: the dependency is just the filename alone, and so if you have the following two header files you would like to include: `dir1/header.h` `dir2/header.h` i.e. the same filename, but different locations, then only one of these two will be installed.
 
-   We have implemented a mechanism to get around this, please see the release notes for *require* 3.3.0.
+   We have implemented a mechanism to get around this, please see the [changelog](https://gitlab.esss.lu.se/e3/e3-require/-/blob/master/CHANGELOG.md) for *require* 3.3.0.
 
 ### Compiling a .c file
 
