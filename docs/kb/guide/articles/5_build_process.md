@@ -47,9 +47,7 @@ value
 
 The key is in how `make` generates its dependency tree. Unlike many programming languages (of which `make` is... not necessarily one?), `make` is decidedly non-procedural: since lines are not evaluated and actions are not performed in a linear order, it can be very difficult to trace exactly how a variable has obtained its value, or why certain actions have been performed.
 
-<!-- Perhaps we can expand this more, but I will leave it like this for now. -->
-
-## The `make` process for E3
+## The `make` process for e3
 
 ### Stage 1: The e3-wrapper
 
