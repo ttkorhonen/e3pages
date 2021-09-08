@@ -28,7 +28,7 @@ There are number of option flags and arguments that `iocsh.bash` accepts, the mo
 * `iocsh.bash st.cmd`---Run the commands in `st.cmd`.
 * `iocsh.bash -r module[,version]`---Load the given module/version upon startup. Equivalent to including the line `require module[,version]` in your startup script.
 * `iocsh.bash -c 'some command'`---Executes the command `some command` in the IOC shell.
-* `iocsh.bash filename` -- If the file is a .db file, a .dbd file, a .subs file, or a .subst file, then the file will be appropriately loaded at startup.
+* `iocsh.bash filename` -- If the file is a `.db` file, a `.dbd` file, a `.subs` file, or a `.subst` file, then the file will be appropriately loaded at startup.
 
 :::{note}
 If the command `iocInit` is not explicitly called in `st.cmd`, it will be implicitly called by the end of the process (after running the contents of `st.cmd`).
