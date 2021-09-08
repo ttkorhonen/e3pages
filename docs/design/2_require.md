@@ -48,7 +48,7 @@ This is the most obviously visible part of *require* from the perspective of an 
 
 #### Numerical versions
 
-Versioning of modules follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
+Versioning of modules mostly follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
 
 * MAJOR.MINOR.PATCH e.g. `require asyn,4.41.0`
 * MAJOR.MINOR.PATCH+BUILD e.g. `require sis8300llrf,3.17.1+1`
