@@ -157,7 +157,7 @@ Note that due to the argument `-C O.${EPICSVERSION}_${T_A}` we switch to that di
 
 ### Stage 5: Building `T_A`
 
-We have now collected the majority of the information that we need to build our module. We will do a little more  organization and preparation, and then the process will be handed over to the EPICS build system. Note that this part of `driver.makefile` is by far the most complicated section, and takes some time to digest.
+We have now collected the majority of the information that we need to build our module. We will do a little more organisation and preparation, and then the process will be handed over to the EPICS build system. Note that this part of `driver.makefile` is by far the most complicated section, and takes some time to digest.
 
 To begin with, I would like to point out a couple sections of interest, followed by tracing through what happens when you include a line such as `SOURCES += file.c` in your `$(module).Makefile`.
 
