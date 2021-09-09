@@ -102,7 +102,7 @@ When you have created an e3-wrapper as above, it is only a local git repository 
 2. The repository should be named *e3-testmodule*, and (although not necessary) should be public, at least if you want to share it with anyone else. However, you can change this at a later date. 
 
    :::{warning}
-   It is best to leave the box "Initialise repository with a README" unchecked.
+   It is best to leave the box "Initialize repository with a README" unchecked.
    :::
 
 3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name `simonrose` to your account or to the target group where you have created your repository, and change the name `e3-testmodule` to the name you have chosen:
