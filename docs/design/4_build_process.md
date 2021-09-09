@@ -6,7 +6,7 @@ This page contains information about how to build and install an EPICS module in
 
 ## The EPICS tree
 
-Building EPICS with e3 generates a hierarchical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS, we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` has also been used previously, when we differentiated between module types. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:
+Building EPICS with e3 generates a hierarchical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS, we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` have also previously been used, when we differentiated between module types. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:
 
 ```console
 [iocuser@host:~]$ tree /epics
