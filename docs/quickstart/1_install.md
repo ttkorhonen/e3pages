@@ -4,7 +4,7 @@ Building EPICS with the "core" modules (to see what the various module groups co
 
 ## Prerequisites
 
-You should start with a mostly blank CentOS 7 machine, and then install all the necessary packages via the following *command*[^prereqlist].
+You should start with a mostly blank CentOS 7 machine, and then install all the necessary packages via the following *command.*[^prereqlist]
 
 ```{include} ../includes/deps.md
 ```
