@@ -114,7 +114,7 @@ When you have created an e3-wrapper as above, it is only a local git repository 
    $ # You do not need to initialize the git repo; this has already been done
    $ # git init
    $
-   $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to gitlab:
+   $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to GitLab:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
    $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-testmodule.git
    $ # Otherwise, you can do this:
