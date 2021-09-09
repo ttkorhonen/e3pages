@@ -26,7 +26,7 @@ It is highly recommended to use virtual environments (using, for example, the `v
 
 This step is not technically a prerequisite; if you do not have an EPICS module built already, then the steps below will construct a template EPICS module which you can modify to suit your needs. This uses a cookiecutter that is based on `makeBaseApp.pl` from EPICS base: <https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>.
 
-Assuming that you have an existing EPICS module you would like to create a wrapper for, it should be made publicly available on the ESS GitLab, although both GitHub and GitLab will work. Note that the configuration and *make* files that are used to build this EPICS module will not be used in the e3 build process.
+Assuming that you have an existing EPICS module you would like to create a wrapper for, it should be available on the ESS GitLab, although both GitHub and GitLab will work. Note that the configuration and *make* files that are used to build this EPICS module will not be used in the e3 build process.
 
 ## Creating the e3 wrapper
 
