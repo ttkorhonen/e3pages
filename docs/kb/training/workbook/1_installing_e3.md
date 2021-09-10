@@ -28,7 +28,7 @@ As e3 heavily relies on git, it is recommended to first be familiar with git, an
 :::
 
 If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning. This will install
-all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.[^prereqlist]
+all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.[^prereqpkg]
 
 ```{include} ../../../includes/deps.md
 ```
@@ -420,6 +420,5 @@ iocRun: All initialization complete
 4. Install both EPICS base 7.0.3.1 and 7.0.5 (separately) on your host.
 5. See if you can find where the module groups are specified, and try to figure out how you could change these.
 
----
 
-[^prereqlist]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package. It can be found at: <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS internal users, this package can be installed the same way as installing standard CentOS packages. For external users, one will need to add this repository to package manager’s repository-search-list to install this package.
+[^prereqpkg]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package. It can be found at: <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS internal users, this package can be installed the same way as installing standard CentOS packages. For external users, one will need to add this repository to package manager’s repository-search-list to install this package.
