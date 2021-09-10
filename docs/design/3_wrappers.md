@@ -2,7 +2,7 @@
 
 # Module wrappers
 
-Another key feature of e3 is the module wrapper. This allows us to apply Site-specific changes---whether those are source code changes in the form of patches, separate database and substitution files to enable ESS-compliant Process Variable (PV) naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
+Another key feature of e3 is the module wrapper. This allows us to apply site-specific changes---whether those are source code changes in the form of patches, separate database and substitution files to enable ESS-compliant Process Variable (PV) naming structure, or custom GUIs---to modules of any source without needing to modify that source directly.
 
 The template structure for an e3 wrapper is as follows:
 ```console

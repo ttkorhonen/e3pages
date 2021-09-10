@@ -28,7 +28,7 @@ As stated in {ref}`wrappers`, one of the key design features of e3 is the idea o
 
 If you are working with a module that already exists within the community and would like to be able to work with it in e3 as well as contribute to the community at large, then {ref}`development_mode` is the ideal way to work. This allows you to have a cloned version of the module that you can commit to as well as push your changes to the remote, as well as install your latest versions for testing purposes.
 
-If your changes are of interest to the broader community (instead of being purely Site-specific), then you can try to merge them into the parent repository with a pull/merge request. If not, you will have to create appropriate patch files and add them into the wrapper. Please see {ref}`patch_files` for more information.
+If your changes are of interest to the broader community (instead of being purely site-specific), then you can try to merge them into the parent repository with a pull/merge request. If not, you will have to create appropriate patch files and add them into the wrapper. Please see {ref}`patch_files` for more information.
 
 One your changes have been merged in to the main branch and tagged, then you can update `configure/CONFIG_MODULE` in order to update `EPICS_MODULE_TAG` and release a new version of the module into your e3 environment.
 
