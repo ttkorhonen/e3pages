@@ -4,7 +4,7 @@ Building EPICS with the "core" modules (to see what the various module groups co
 
 ## Prerequisites
 
-You should start with a mostly blank CentOS 7 machine, and then install all the necessary packages via the following command.
+You should start with a mostly blank CentOS 7 machine, and then install all the necessary packages via the following command.[^prereqlist]
 
 ```{include} ../includes/deps.md
 ```
@@ -95,5 +95,5 @@ If you here wanted to use a different version of the module than the most recent
 :::
 
 
-
+[^prereqlist]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package. It can be found at: <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS internal users, this package can be installed the same way as installing standard CentOS packages. For external users, one will need to add this repository to package manager’s repository-search-list to install this package.
 [^depmode]: More on this in the e3 tutorial.
