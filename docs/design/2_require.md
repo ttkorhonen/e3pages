@@ -13,11 +13,11 @@ Each of the above-mentioned features are linked to each other; the dynamic loadi
 ## IOC startup
 
 IOC startup is run from the bash script `iocsh.bash`, which is installed in `${E3_REQUIRE_LOCATION}/bin/iocsh.bash`. This script generates a temporary startup script which is passed to `softIocPVA` from EPICS base. This temporary startup script:
-* Tries to load an environment file, if it exists
+* Tries to load an environment file, if it exists[^envsh]
 * Sets some environment variables, e.g. `${IOCSH_TOP}` and `${REQUIRE_IOC}`
 * Prints a list of EPICS environment variables into the startup log
 * Loads *require*
-* Initializes PVs to track which modules and versions are loaded
+* Initialises PVs to track which modules and versions are loaded
 
 :::{note}
 As we at ESS have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
@@ -28,7 +28,7 @@ There are number of option flags and arguments that `iocsh.bash` accepts, the mo
 * `iocsh.bash st.cmd`---Run the commands in `st.cmd`.
 * `iocsh.bash -r module[,version]`---Load the given module/version upon startup. Equivalent to including the line `require module[,version]` in your startup script.
 * `iocsh.bash -c 'some command'`---Executes the command `some command` in the IOC shell.
-* `iocsh.bash filename` -- If the file is a .db file, a .dbd file, a .subs file, or a .subst file, then the file will be appropriately loaded at startup.
+* `iocsh.bash filename` -- If the file is a `.db` file, a `.dbd` file, a `.subs` file, or a `.subst` file, then the file will be appropriately loaded at startup.
 
 :::{note}
 If the command `iocInit` is not explicitly called in `st.cmd`, it will be implicitly called by the end of the process (after running the contents of `st.cmd`).
@@ -48,7 +48,7 @@ This is the most obviously visible part of *require* from the perspective of an 
 
 #### Numerical versions
 
-Versioning of modules follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
+Versioning of modules mostly follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
 
 * MAJOR.MINOR.PATCH e.g. `require asyn,4.41.0`
 * MAJOR.MINOR.PATCH+BUILD e.g. `require sis8300llrf,3.17.1+1`
@@ -74,7 +74,7 @@ As *require* will load the first test version it finds when there are no numeric
 
 If one module depends on another one, both of these will be loaded. For example, *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.18 in its current incarnation has been built against *asyn* 4.41.0---if you load that version of *StreamDevice* then it will try to load specifically version 4.41.0 of *asyn*, and if it cannot find that version, or if another version of *asyn* has already been loaded, then the IOC will exit with an error.
 
-These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for StreamDevice 2.8.18 are (directly from the aforementioned file):
+These dependencies are generated at build time and are stored in `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies for *StreamDevice* 2.8.18 are (directly from the aforementioned file):
 
 ```bash
 # Generated file. Do not edit.
@@ -91,4 +91,7 @@ The module *sis8300llrf* version 3.16.1 depends on the module *scaling*, and has
 
 1. We could uninstall it and rebuild/install it against the new version of scaling. However, this prevents anyone who needs that version combination for any reason from being able to use it. In general, we want to avoid removing any installed modules---we should only add new versions.
 2. We could try to update the version of *sis8300llrf* to 3.16.2 despite the fact that no changes have been made. If this is an ESS module, then this is possible, but not ideal. It is particularly bad if it is a module that is not being developed in-house, as our version will be out of sync with the community module.
-3. We could instead update the version to 3.16.1+1, i.e., add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
+3. We could instead update the version to 3.16.1+1, i.e. add a build number. This way, the existing version has not been modified. Moreover, you can use *sis8300llrf* version 3.16.1 with either version of scaling by specifying the build number.
+
+
+[^envsh]: support for an environment-file (`env.sh`) is deprecated after *require* 3.4.1.

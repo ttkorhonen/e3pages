@@ -14,6 +14,4 @@ EEE was initially developed by Cosylab for ESS. Han-Lee Jeong (ESS) then revampe
 
 ## License and copyright
 
-Copyright (c) 2020 by European Spallation Source ERIC.
-
-<!-- what license do we use? -->
+Copyright (c) 2021 by European Spallation Source ERIC.

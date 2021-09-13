@@ -1,6 +1,6 @@
 # Installing e3
 
-Building EPICS with the "core" modules (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically isn't what you would do for a production build.
+Building EPICS with the so-called *core* modules (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically is not what you would use for a production build.
 
 ## Prerequisites
 
@@ -48,7 +48,7 @@ or, alternatively:
 
 ## Installing an e3 module
 
-To install an existing e3 module in *deployment mode*[^depmode], only a few steps are required. First clone the repository (we will use use the *caenelfastps* module for this example):
+To install an existing e3 module in *deployment mode*,[^depmode] only a few steps are required. First clone the repository (we will use use the [*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps) module for this example):
 
 ```console
 [iocuser@host:e3]$ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
@@ -57,7 +57,6 @@ To install an existing e3 module in *deployment mode*[^depmode], only a few step
 Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should look like the following:
 
 ```makefile
-#
 EPICS_BASE:=/opt/epics/base-7.0.5
 
 E3_REQUIRE_NAME:=require

@@ -6,7 +6,7 @@ To create a wrapper, you should use *[cookiecutter](https://github.com/cookiecut
 
 ## The `configure/` directory
 
-If you used one of the template generators, the configuration of the EPICS base, require version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
+If you used one of the template generators, the configuration of the EPICS base, *require* version, and module version should have already been done for you. In case you need to change them, the most important ones are typically `configure/RELEASE` and `configure/CONFIG_MODULE`.
 
 If your module depends on other modules (for example, it may depend on *asyn*, *StreamDevice*, *areaDetector*, or any other number of modules), then you should specify the dependencies in `configure/CONFIG_MODULE`. This is done like so:
 
@@ -33,7 +33,7 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
 ---
 
-Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e., a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.4.1, we find the following:
+Before we move on, we should take a brief detour to look at the output of this process (this will be covered more in-depth in {ref}`build_process`), i.e. a compiled and installed module. For *iocStats* 3.1.16 built under *require* 3.4.1, we find the following:
 
 ```console
 [iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
@@ -62,11 +62,11 @@ The build process installs (potentially) several things to be available at run-t
 - Database/template/substitution/protocol files
 - DBD (database definition) files
 - Header files for dependent modules
-- iocsh snippets
+- Snippets
 - Compiled libraries
 
 :::{note}
-At ESS, startup scripts are modularized, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
+At ESS, startup scripts are modularised, and the convention is to separate out functionality into separate startup *snippets*, that are named `*.iocsh`.[^ccdb] These are often colloquially referred to as *iocsh files*.
 :::
 
 ### Database files
@@ -79,7 +79,7 @@ TEMPLATES += $(wildcard $(IOCADMINDB)/*.template)
 ```
 
 :::{note}
-Make allows for wildcards using the function above, so this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
+As *make* allows for wildcards using the function above, this will include all `.db` and `.template` files included in the directory specified by the variable `${IOCADMINDB}`.
 :::
 
 ### Snippets
@@ -91,7 +91,7 @@ SCRIPTS += $(IOCADMINSRC)/iocReleaseCreateDb.py
 SCRIPTS += ../iocsh/iocStats.iocsh
 ```
 
-Note that the second line refers to the parent directory of the module, i.e., the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
+Note that the second line refers to the parent directory of the module, i.e. the wrapper directory. It may often be the case that we want to install ESS-specific iocsh files, which are best kept in the e3 wrapper and not the module directory itself.
 
 ### Header files
 
@@ -114,7 +114,7 @@ By default, the headers are all flatly installed into the `include/` directory; 
 
 If you have two files in separate directories but with the same name, then you cannot install them this way. 
 
-From require 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile. `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process. <!-- TODO: find link and fixme -->
+From *require* 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile; `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process.
 
 ```makefile
 KEEP_HEADER_SUBDIRS += $(GMTOP)
@@ -174,7 +174,7 @@ Note that `${CALC_DEP_VERSION}` should be specified in `configure/CONFIG_MODULE`
 Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module. 
 
 :::{warning}
-Joint with the release of *require* 3.3.0 there was a switch to all modules being lowercase. So if you have a dependency on ADCore, then from *require* 3.3.0 onwards you should use the definition:
+Joint with the release of *require* 3.3.0 there was a switch to all modules being lowercase. So if you have a dependency on *ADCore*, then from *require* 3.3.0 onwards you should use the definition:
 
 ```makefile
 adcore_VERSION=$(ADCORE_DEP_VERSION)

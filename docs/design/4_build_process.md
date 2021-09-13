@@ -6,7 +6,7 @@ This page contains information about how to build and install an EPICS module in
 
 ## The EPICS tree
 
-Building EPICS with e3 generates a hierarchical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS, we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` could also be used. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:
+Building EPICS with e3 generates a hierarchical tree, where different versions of base form individual sub-trees, and different versions of *require* form sub-trees within these sub-trees. At ESS we only use `${siteMods}`, but `${siteApps}` and `${siteLibs}` have also previously been used when we differentiated between module types. A graphical representation of this (where `MODULE` and `MODULE_VERSION` are placeholders) is:
 
 ```console
 [iocuser@host:~]$ tree /epics
@@ -35,7 +35,7 @@ Building EPICS with e3 generates a hierarchical tree, where different versions o
 
 A real tree is of course orders of magnitude larger than the above example, with many instances of `MODULE`, and potentially multiple `MODULE_VERSION`s for some modules, and would not fit very well on this page.
 
-One benefit of having this approach is that we easily can "keep tabs" of what version (of base and *require*) a module has been built for. We can thus fairly easily move from using e.g., *asyn* 4.36.0 with base 7.0.3.1 and *require* 3.2.0 to using *asyn* 4.41.0 with the same versions of base and *require*, or use the same version of *asyn* with base 7.0.5 with *require* 3.4.1. Once we have migrated away from older versions, we can simply delete that entire sub-tree.
+One benefit of having this approach is that we easily can "keep tabs" of what version (of EPICS base and *require*) a module has been built for. We can thus fairly easily move from using e.g., *asyn* 4.36.0 with base 7.0.3.1 and *require* 3.2.0 to using *asyn* 4.41.0 with the same versions of base and *require*, or use the same version of *asyn* with base 7.0.5 with *require* 3.4.1. Once we have migrated away from older versions, we can simply delete that entire sub-tree.
 
 Each `MODULE` will then, as indicated above, contain all of the built versions of that module. This could look like the following:
 
@@ -128,7 +128,7 @@ These are the targets that are used in most cases when building, debugging, test
 * `make init`: This target depends on whether the wrapper includes a submodule or not. If it does, then this will initialise and clone the EPICS submodule in order to allow it to be built, as well as check out the correct commit hash. This is a necessary first stage for these modules. Otherwise, this target does nothing.
 * `make patch`: This target will apply any module-specific patches to the wrapper, which are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly. Patches can be removed with `make patchrevert`.
 * `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
-* `make test`: This will perform a local installation of the module, and then try to start an IOC with that module. It will also perform any module-specific tests that are defined for that module.
+* `make test`: This will perform a local installation of the module, and then try to start an IOC with that module.[^runiocsh] It will also perform any module-specific tests that are defined for that module.
   
   These tests should be specified in `configure/module/RULES_MODULE` as dependencies of the target `module_tests`. For example,
   ```make
@@ -140,11 +140,11 @@ These are the targets that are used in most cases when building, debugging, test
   failing_test:
       false
   ```
-  For a more detailed example, see [the opcua module](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21).
+  For a more detailed example, see the *[opcua](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21)* module.
 * `make install`: This will install the compiled and generated files into the target location described above. This will also perform any template and substitution file expansion.
 
 :::{note}
-`build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during the development phase.
+The target `build` is a dependency of `install` within *require*, so you can technically run `make init patch install`. However, it can be beneficial to separate these two stages, particularly during development.
 :::
 
 A few variations on this are the following.
@@ -182,7 +182,7 @@ These are targets that are useful to help diagnose issues, debug, or display inf
 
 Cellmode is used to allow for local builds of an e3 module. This can be for testing purposes, or because you do not have permission to deploy modules to the e3 environment. As such, there are a separate set of targets that are used to create these local builds.
 
-* `make cellinstall`: Installs the module in the path defined by `$(E3_CELL_PATH)`. The default is `$(TOP)/cellMods`. An IOC can be loaded with this module by running `iocsh.bash -l ${E3_CELL_PATH}` to allow require to search in that path.
+* `make cellinstall`: Installs the module in the path defined by `$(E3_CELL_PATH)`. The default is `$(TOP)/cellMods`. An IOC can be loaded with this module by running `iocsh.bash -l ${E3_CELL_PATH}` to allow *require* to search in that path.
 * `make cellbuild`: In case you have multiple modules that you are testing locally that all depend on each other, `cellbuild` will use `$(E3_CELL_PATH)` to search for module dependencies.
 * `make cellvars`: Same as `make vars`, but uses `$(E3_CELL_PATH)` as the installation path.
 * `make celluninstall`: Uninstalls the module from the installed location in `$(E3_CELL_PATH)`.
@@ -200,3 +200,6 @@ The following targets, once `make devinit` has been run, are available. They eac
 * `make devclean`
 * `make devinstall`
 * `make devuninstall`
+
+
+[^runiocsh]: In order to use this, you first need to have installed [run-iocsh](https://gitlab.esss.lu.se/ics-infrastructure/run-iocsh).

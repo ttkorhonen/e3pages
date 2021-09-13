@@ -8,10 +8,10 @@
 This page is still being written.
 ```
 
-The E3 build process is a complicated bit of work. To recap, the overview is as follows:
+The e3 build process is a complicated bit of work. To recap, the overview is as follows:
 
 1. In the e3-wrapper directory: we collect some information and decide what build process we will perform (from `RULES_E3`), calling `make` in the module directory with information passed as in `CONFIG_E3_MAKEFILE`.
-2. In the module directory: EPICSVERSION has not been defined, so determine which versions to build for.
+2. In the module directory: `EPICSVERSION` has not been defined, so determine which versions to build for.
 3. In the module directory: Target architecture `${T_A}` has not been defined, so determine the architectures to build for.
 4. In the module directory: Perform a final collection of the relevant files, create the directories `O.${EPICSVERSION}_Common` and `O.${EPICSVERSION}_${T_A}`.
 5. In the directories `O.*`: Build/Install all of the required shared libraries and other files for the given version of EPICS base and target architecture.
@@ -20,9 +20,9 @@ We will go over each of these steps in more detail, as well as go over an exampl
 
 ## Some details about `make`
 
-Before we can describe the build process, we have to talk a little about how `make` works. If you don't understand `make`, it is very *very* hard to understand the E3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
+Before we can describe the build process, we have to talk a little about how `make` works. If you do not understand `make`, it is very *very* hard to understand the e3 build process. For a reference, I can suggest [GNU make reference](https://www.gnu.org/software/make/manual/html_node/index.html).
 
-`make` does two things:
+In short, `make` does two things:
 
 1. It provides a framework to describe the tree structure of dependencies of a given project
 2. It provides a way to give instructions how to build those dependencies if they are missing or out of date
@@ -47,15 +47,13 @@ value
 
 The key is in how `make` generates its dependency tree. Unlike many programming languages (of which `make` is... not necessarily one?), `make` is decidedly non-procedural: since lines are not evaluated and actions are not performed in a linear order, it can be very difficult to trace exactly how a variable has obtained its value, or why certain actions have been performed.
 
-<!-- Perhaps we can expand this more, but I will leave it like this for now. -->
-
-## The `make` process for E3
+## The `make` process for e3
 
 ### Stage 1: The e3-wrapper
 
-We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify dependencies and for which version of base/require we are building, as well as `CONFIG` from the require module (located in `configure/modules/CONFIG` in this repository).
+We start in the e3-wrapper directory, and run (for example) `make build`. The first thing that happens is that we load the makefiles from the configure directory; these in turn load `CONFIG_MODULE` and `RELEASE` which specify dependencies and for which version of EPICS base and *require* we are building, as well as `CONFIG` from the *require* module (located in `configure/modules/CONFIG` in this repository).
 
-We also load `RULES` which similarly loads a number of rules-related configure files installed with `require`. The most important one in `RULES_E3` which initiates most of the E3 build process. As an example, we have:
+We also load `RULES` which similarly loads a number of rules-related configure files installed with `require`. The most important one in `RULES_E3` which initiates most of the e3 build process. As an example, we have:
 
 ```makefile
 ## Build the EPICS Module : $(E3_MODULE_NAME)
@@ -68,7 +66,7 @@ which first makes sure that `conf` and `checkout` are up to date (these copy the
 
 ### Stage 2: Defining `EPICSVERSION`
 
-The first pass through is to determine the EPICS version that we are building for. In E3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
+The first pass through is to determine the EPICS version that we are building for. In e3, we build for one version at a time; this is taken from `EPICS_LOCATION`:
 
 ```makefile
 E3_EPICS_VERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
@@ -86,7 +84,7 @@ Note that `build`, `install`, and `debug` all use the same recursive call to `ma
 
 ### Stage 3: Defining `T_A`
 
-Now that we know which version of EPICS to build for, we go on to determine the target architectures to build for. In this case, we may build for more than one architecture at a time; at the moment, ESS supports `linux-x86_64` and `linux-ppc64e6500`. This is also where we include the EPICS build rules: see the sequence
+Now that we know which version of EPICS to build for, we go on to determine the target architectures to build for. In this case, we may build for more than one architecture at a time; at the moment, ESS supports `linux-x86_64`, `linux-corei7-poky`, and `linux-ppc64e6500`. This is also where we include the EPICS build rules: see the sequence
 
 ```makefile
 EB:=${EPICS_BASE}
@@ -105,7 +103,7 @@ export SRCS
 ```
 
 Note in particular the `export SRCS` line: when make is called recursively, variables from one run to the next do not persist unless they are `export`ed. It is also extremely important to note when the variable being exported
-is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the E3 build process), it will `export` correctly.
+is expanded: this happens right before the next iteration of recursive `make` is called, so even if `SOURCES` will only be defined later (as is the case with the e3 build process), it will `export` correctly.
 
 The cross-compiler target architectures `CROSS_COMPILER_TARGET_ARCHS` are defined in `$(EPICS_LOCATION)/configure/CONFIG_SITE`, which is generated when you build EPICS base for the first time.
 
@@ -122,7 +120,7 @@ install build debug::
 ### Stage 4: Preparing to build `T_A`
 
 For this stage of the build process, we are still in the module directory; the next stages will be done in the directories `O.$(EPICSVERSION)_Common` or `O.$(EPICSVERSION)_$(T_A)`, respectively. These directories will also be
-created at this point, and are the destination of all intermediate and final output files (e.g. any generated .db or .dbd files, .o files, and `lib$(module).so`)
+created at this point, and are the destination of all intermediate and final output files (e.g. any generated `.db` or `.dbd` files, `.o` files, and `lib$(module).so`)
 
 > Note that `make clean` simply deletes these directories, removing all generated files.
 
@@ -159,7 +157,7 @@ Note that due to the argument `-C O.${EPICSVERSION}_${T_A}` we switch to that di
 
 ### Stage 5: Building `T_A`
 
-We have now collected the majority of the information that we need to build our module. We will do a little more  organization and preparation, and then the process will be handed over to the EPICS build system. Note that this part of `driver.makefile` is by far the most complicated section, and takes some time to digest.
+We have now collected the majority of the information that we need to build our module. We will do a little more organisation and preparation, and then the process will be handed over to the EPICS build system. Note that this part of `driver.makefile` is by far the most complicated section, and takes some time to digest.
 
 To begin with, I would like to point out a couple sections of interest, followed by tracing through what happens when you include a line such as `SOURCES += file.c` in your `$(module).Makefile`.
 
@@ -174,7 +172,7 @@ We will provide a few examples of how `make` processes the data and produces the
 
 ### Installing a header file
 
-Before we go on to the more complicated case of compiling source files, let us go over the simpler step of having header files be installed so that other modules may include them. As an example, there are many .h files that are installed with `asyn` and are used by lots of other modules.
+Before we go on to the more complicated case of compiling source files, let us go over the simpler step of having header files be installed so that other modules may include them. As an example, there are many `.h` files that are installed with *asyn* and are used by lots of other modules.
 
 The simplest way of including a header file is to add the line `HEADERS += header.h` into your `$(module).Makefile`. Having done this, the build/install process runs as follows.
 
@@ -222,13 +220,13 @@ The simplest way of including a header file is to add the line `HEADERS += heade
         @$(INSTALL) -d -m $(INSTALL_PERMISSIONS) $< $(@D)
    ```
 
-   which says that any target within the directory `$(INSTALL_INCLUDE)` has the target as a dependency i.e. `$(INSTALL_INCLUDE)/header.h` depends on `header.h`
+   which says that any target within the directory `$(INSTALL_INCLUDE)` has the target as a dependency, i.e. `$(INSTALL_INCLUDE)/header.h` depends on `header.h`
 
 4. Finally, the `vpath` line above tells `make` where to search for that file, and then the instructions tell `make` to run the program defined by `$(INSTALL)` to install the file in the target location. Note however that there is one potential source of problems here: the dependency is just the filename alone, and so if you have the following two header files you would like to include: `dir1/header.h` `dir2/header.h` i.e. the same filename, but different locations, then only one of these two will be installed.
 
-   We have implemented a mechanism to get around this, please see the release notes for require 3.3.0.
+   We have implemented a mechanism to get around this, please see the [changelog](https://gitlab.esss.lu.se/e3/e3-require/-/blob/master/CHANGELOG.md) for *require* 3.3.0.
 
-### Compiling a .c file
+### Compiling a `.c` file
 
 Building source files at its heart is similar to the above, but the chain of dependencies is significantly more complicated. As above however, the inclusion of a source file to be compiled into the shared library is simple: add the line `SOURCES += $(APPSRC)/file.c` in your module makefile.
 

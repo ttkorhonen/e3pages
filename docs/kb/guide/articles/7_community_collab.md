@@ -1,6 +1,6 @@
 # Article: Community collaboration
 
-e3 is a custom set of tools designed to facilitate the deployment and maintaintance of EPICS environments. Since at its heart, this is still an EPICS environment that uses tools and functionality built by member of the EPICS community, it is important to know how to work with that community in order to get help, to troubleshoot, and to contribute in order to give back to said community.
+Although e3 is a custom set of tools designed to facilitate the deployment and maintaintance of EPICS environments, this is still an EPICS environment that uses tools and functionality built by member of the EPICS community. It is important to know how to work with that community in order to get help, to troubleshoot, and to contribute in order to give back to said community.
 
 ## EPICS Community resources
 
@@ -8,7 +8,7 @@ The main EPICS [website](https://epics-controls.org/) is the best source for all
 * [Frequently Asked Questions](https://epics-controls.org/resources-and-support/documents/epics-faq/)
 * [Documentation](https://epics-controls.org/resources-and-support/documents/) for different versions of EPICS base
 * A list of [projects](https://epics-controls.org/epics-users/projects/) that use EPICS
-* [News and events](https://epics-controls.org/news-and-events/), listing upcoming and past events, as well as information about the latests releases of EPICS
+* [News and events](https://epics-controls.org/news-and-events/), listing upcoming and past events, as well as information about the latest releases of EPICS
 
 There is also the Argonne National Labs EPICS [website](https://epics.anl.gov/index.php), which has a lot of documentation for previous versions of EPICS.
 
@@ -22,7 +22,7 @@ Of course, as a part of a community, it is also a good place to offer your help 
 
 ## Working with community modules
 
-As stated in {ref}`wrappers`, one of the key design features of e3 is the idea of using a _wrapper_ to allow for the import of EPICS modules into an e3 environment. In particular, it allows for site-specific modifications, patches, and configuration in a manner that allows for ease of re-use within multiple dynamically or statically generated IOCs.
+As stated in {ref}`wrappers`, one of the key design features of e3 is the idea of using a _wrapper_ to allow for the import of EPICS modules into an e3 environment. In particular, it allows for Site-specific modifications, patches, and configuration in a manner that allows for ease of re-use within multiple dynamically or statically generated IOCs.
 
 ### Working with an existing community module
 

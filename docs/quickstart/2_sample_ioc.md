@@ -2,11 +2,11 @@
 
 The following assumes that you already have EPICS base, *require* (`3.3.0` or later as the module version has been left out in the `require` call[^require]), and *iocStats* installed.
 
-An IOC in e3 is typically (minimally) just a startup script which is passed to `softIocPVA`[^epics7].
+An IOC in e3 is typically (minimally) just a startup script which is passed to `softIocPVA`.[^epics7]
 
 ## Create the startup script
 
-A very minimal startup script to illustrate what "a typical" IOC in e3 looks like:
+A very minimal startup script to illustrate what a "typical" IOC in e3 looks like:
 
 ```console
 [iocuser@host:~]$ touch st.cmd
@@ -23,7 +23,7 @@ A very minimal startup script to illustrate what "a typical" IOC in e3 looks lik
 
 To set correct PV-names, the environment variable `$IOCNAME` must be set before starting your IOC. Up until *require* 3.4.1, this could be done in a file `env.sh` which needed to be in the same directory as your startup script. For later versions of require, the variable must be set through other mechanisms (where the easiest option is to just write `export IOCNAME=yourIocName` prior to starting the IOC).
 
-There should preferably also be a `README.md` documenting the controlled hardware, the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
+There should preferably also be a `README.md` documenting the controlled system(s), the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
 
 Thus you may end up with something like the following:
 
@@ -67,6 +67,6 @@ export IOCNAME="SomeName"
 ```
 
 
-[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e., from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
+[^require]: In version 3.3.0 of *require*, version pinning became optional; i.e. from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.
 
 [^epics7]: ESS only uses EPICS base 7 for production, and thus only uses `softIocPVA`. Earlier iterations of e3 also supported use of `softIoc`, but that functionality has been removed from scope.
