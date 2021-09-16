@@ -1,6 +1,8 @@
 # Article: e3 Makefile Cheatsheet
 
-## Module makefile cheatsheet
+
+(makefile_vars_cheatsheet)=
+## Module makefile variables cheatsheet
 
 The `<module>.Makefile` that is used to build an e3 module has a number of standard variables that are used to direct the build process. The main variables that are relevant are the following. For more detail, see {ref}`makefile_variables`.
 
@@ -70,3 +72,13 @@ If you do not have any `.template` or `.substitutions` files that you will expan
 .PHONY: db
 db:
 ```
+
+## Prebuild target
+
+In case you need to have any tasks run *before* the build process, there is a `prebuild` target that runs before the build. For example, if you need to have some external utility compiled before the build happens (perhaps in order to install it using `BINS` as described in {ref}`makefile_vars_cheatsheet`), then you can use `prebuild`:
+```makefile
+prebuild:
+    # some tasks to perform before build
+    echo "What a wonderful prebuild task"
+```
+Note that this will be run each time before the build phase.
