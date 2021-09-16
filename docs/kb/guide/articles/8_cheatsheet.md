@@ -33,3 +33,12 @@ There are also the following variables/macros of interest
   USR_DBFLAGS += -I$(E3_SITEMODS_PATH)/<other_module>$(call FETCH_BUILD_NUMBER,$(E3_SITEMODS_PATH),<other_module>/db)
   ```
   which will set the inclue path that is passed to `MSI` correctly.
+
+## Configuring the cell path
+
+By default, the cell path for running `cellinstall` (and all of its friends) is `$(TOP)/cellMods`, where `$(TOP)` is the current module wrapper path. This can be configured either by adding the line
+```make
+E3_CELL_PATH:=/absolute/path/to/new/cellMods
+```
+to either `configure/CONFIG_CELL.local` or to a `CONFIG_CELL.local` file one directory up from the wrapper directory. Note that the path listed in the configure file must be absolute.
+
