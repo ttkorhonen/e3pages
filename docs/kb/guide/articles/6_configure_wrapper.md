@@ -58,6 +58,8 @@ Before we move on, we should take a brief detour to look at the output of this p
 
 ---
 
+(makefile_variables)=
+
 The build process installs (potentially) several things to be available at run-time:
 - Database/template/substitution/protocol files
 - DBD (database definition) files
