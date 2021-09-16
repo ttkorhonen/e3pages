@@ -18,7 +18,7 @@ The following variables affect which architectures are built.
 
 The following variables are related to module dependencies.
 * `<module>_VERSION` - This defines which version of a dependent module to link or compile against. This should be specified with the boilerplate
-  ```make
+  ```makefile
   ifneq ($(strip <MODULE>_DEP_VERSION),)
   <module>_VERSION:=$(<MODULE>_DEP_VERSION)
   endif
@@ -37,8 +37,36 @@ There are also the following variables/macros of interest
 ## Configuring the cell path
 
 By default, the cell path for running `cellinstall` (and all of its friends) is `$(TOP)/cellMods`, where `$(TOP)` is the current module wrapper path. This can be configured either by adding the line
-```make
+```makefile
 E3_CELL_PATH:=/absolute/path/to/new/cellMods
 ```
 to either `configure/CONFIG_CELL.local` or to a `CONFIG_CELL.local` file one directory up from the wrapper directory. Note that the path listed in the configure file must be absolute.
 
+## Database inflation
+
+In *require* version `3.4.1` and earlier, it was necessary to have the target `db` specified in the module makefile (this is triggered by the `db` rule in `configure/module/RULES_MODULE`, and is a dependency of `install`). This allows for database expansion to occur at install time.
+
+The default rule that is added by the cookiecutter recipe is
+```makefile
+.PHONY: db
+db: $(SUBS) $(TMPS)
+
+.PHONY: $(SUBS)
+$(SUBS):
+	@printf "Inflating database ... %44s >>> %40s \n" "$@" "$(basename $(@)).db"
+	@rm -f  $(basename $(@)).db.d  $(basename $(@)).db
+	@$(MSI) -D $(USR_DBFLAGS) -o $(basename $(@)).db -S $@ > $(basename $(@)).db.d
+	@$(MSI)    $(USR_DBFLAGS) -o $(basename $(@)).db -S $@
+
+.PHONY: $(TMPS)
+$(TMPS):
+	@printf "Inflating database ... %44s >>> %40s \n" "$@" "$(basename $(@)).db"
+	@rm -f  $(basename $(@)).db.d  $(basename $(@)).db
+	@$(MSI) -D $(USR_DBFLAGS) -o $(basename $(@)).db $@  > $(basename $(@)).db.d
+	@$(MSI)    $(USR_DBFLAGS) -o $(basename $(@)).db $@
+```
+If you do not have any `.template` or `.substitutions` files that you will expand at install time, then all of this can be replace by
+```makefile
+.PHONY: db
+db:
+```
