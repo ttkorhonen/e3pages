@@ -1,6 +1,6 @@
 # Article: Community collaboration
 
-Although e3 is a custom set of tools designed to facilitate the deployment and maintaintance of EPICS environments, this is still an EPICS environment that uses tools and functionality built by member of the EPICS community. It is important to know how to work with that community in order to get help, to troubleshoot, and to contribute in order to give back to said community.
+Although e3 is a custom set of tools designed to facilitate the deployment and maintenance of EPICS environments, this is still an EPICS environment that uses tools and functionality built by member of the EPICS community. It is important to know how to work with that community in order to get help, to troubleshoot, and to contribute in order to give back to said community.
 
 ## EPICS Community resources
 
