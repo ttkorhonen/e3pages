@@ -62,7 +62,8 @@ Note that `st.cmd` must end with a newline---this will be explained in {ref}`the
 ### Environment file (`env.sh`)
 
 :::{warning}
-The use of `env.sh` is deprecated in _require_ version 3.4.1 and later versions.
+_require_ version 3.4.1 is the last version that will support the use of
+`env.sh`.
 :::
 
 ```console
