@@ -2,7 +2,7 @@
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Run IOCs in procServ containers.
 * Run processes as system daemons.
@@ -70,7 +70,7 @@ If you try to exit the IOC by typing `exit` or with `^C`, then the default behav
 In order to kill the IOC, one should instead first press `^X` and then `^Q`.
 
 The above process starts an blank e3 IOC and opens up TCP port 2000 for communication. In general you will want to do a bit more:
-* Use a named Unix Domain Socket (UDS) so that you don't have to separately configure a port for each IOC running on a machine
+* Use a named Unix Domain Socket (UDS) so that you do not have to separately configure a port for each IOC running on a machine
 * Run an actual meaningful startup script
 * Keep a log of the output
 * Block certain control commands from being sent to the IOC (e.g. `^C` (SIGINT) and `^D` (EOF))
@@ -116,7 +116,7 @@ WantedBy=multi-user.target
 ```
 
 :::{note}
-Note that you need to provide the full path to `iocsh.bash` as command substitution doesn't work in unit files. Instead, systemd offers its own minimalistic shell-style command line parsing - if interested, see more [here](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Command%20lines).
+Note that you need to provide the full path to `iocsh.bash` as command substitution does not work in unit files. Instead, systemd offers its own minimalistic shell-style command line parsing - if interested, see more [here](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Command%20lines).
 :::
 
 Next, start up and inspect your service:
@@ -169,7 +169,7 @@ ExecStart=/usr/bin/procServ \
 WantedBy=multi-user.target
 ```
 
-In the above template file, `%i` is the instance name (character escaped; `%I` is verbatim). You can also see that we've added some requirements for where the startup script shall be located, etc.
+In the above template file, `%i` is the instance name (character escaped; `%I` is verbatim). You can also see that we have added some requirements for where the startup script shall be located, etc.
 
 :::{note}
 As suggested above, we now are using UDS instead of TCP ports, which allows us to name the socket.
@@ -327,7 +327,7 @@ We now have conserver running, managing a console on a UDS at `/var/run/procServ
 [iocuser@host:~]$ socat - UNIX-CONNET:/var/run/procServ/test-ioc/control
 ```
 
-As we will want to use conserver client, also known as *console*, to attach to IOCs, we will need to set it up too. Let's first look at its settings:
+As we will want to use conserver client, also known as *console*, to attach to IOCs, we will need to set it up too. Let us first look at its settings:
 
 ```console
 [iocuser@host:~]$ console -V
@@ -364,9 +364,9 @@ You can detach from a console by pressing `^E c .` (note the dot at the end).
 
 ## How to monitor your IOC and related processes
 
-So, as we've set things up, systemd starts and manages procServ processes that run our IOC(s). A conserver server is also run as a system daemon, and currently we have conserver client (also a daemon) attach to local IOCs. In our templated unit file, we specified that logging from procServ would go to `/var/log/procServ/<iocname>` (which we inspect with e.g. `less` or could monitor like `tail -f /path/to/logfile`), and since we included `dbl > PV.list` in the startup script, we will also print out a database list upon IOC initialization. This will be placed in `/var/run/procServ/<iocname>` since we executed procServ with `--chdir=/var/run/procServ/%i` in the unit file.
+So, as we have set things up, systemd starts and manages procServ processes that run our IOC(s). A conserver server is also run as a system daemon, and currently we have conserver client (also a daemon) attach to local IOCs. In our templated unit file, we specified that logging from procServ would go to `/var/log/procServ/<iocname>` (which we inspect with e.g. `less` or could monitor like `tail -f /path/to/logfile`), and since we included `dbl > PV.list` in the startup script, we will also print out a database list upon IOC initialization. This will be placed in `/var/run/procServ/<iocname>` since we executed procServ with `--chdir=/var/run/procServ/%i` in the unit file.
 
-As we're now dealing with multiple system daemons, yet another useful troubleshooting utility is *journalctl*, which is used to query the contents of the systemd journal. We will not go in-depth into how to use journalctl, but here are some examples of how we could use it to troubleshoot our services:
+As we are now dealing with multiple system daemons, yet another useful troubleshooting utility is *journalctl*, which is used to query the contents of the systemd journal. We will not go in-depth into how to use journalctl, but here are some examples of how we could use it to troubleshoot our services:
 
 ```console
 [iocuser@host:~]$ sudo journalctl --since yesterday
@@ -374,14 +374,15 @@ As we're now dealing with multiple system daemons, yet another useful troublesho
 [iocuser@host:~]$ sudo journalctl conserver.service --since today
 [iocuser@host:~]$ sudo journalctl _UID=1001 -n 10 -f
 ```
-
-> In the above examples, 1001 is the user ID of this author's `iocuser` account.
+:::{note}
+In the above examples, 1001 is the user ID of this author's `iocuser` account.
+:::
 
 ---
 
 ## Assignments
 
 1. Try to set up a unit file to execute procServ to listen to a TCP socket instead of an UDS. Can you also get conserver to work with this?
-2. Let's assume you had your e3 installation on a NFS server. Explain to yourself what you would modify to get above examples to work with this.
+2. Let us assume you had your e3 installation on a NFS server. Explain to yourself what you would modify to get above examples to work with this.
 3. The template unit file we created could be improved in many ways. Can you think of a few?
 
