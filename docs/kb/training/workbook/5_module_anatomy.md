@@ -4,7 +4,7 @@
 
 In this lesson, you will learn how to do the following:
 
-* Understand why e3 wrappers don't hold any source code.
+* Understand why e3 wrappers do not hold any source code.
 * Understand the anatomy of an e3 wrapper.
 * Learn how to apply and create patch files for EPICS base and other modules within e3.
 
@@ -29,7 +29,7 @@ As described in [Chapter 3](3_module_versions.md), an e3 module wrapper links to
 
 ## Directory anatomy
 
-Let's have a look at `e3-iocStats/`:
+Let us have a look at `e3-iocStats/`:
 
 ```console
 [iocuser@host:e3-iocStats]$ tree -L 1
