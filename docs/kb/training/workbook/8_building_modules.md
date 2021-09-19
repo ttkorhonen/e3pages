@@ -19,7 +19,7 @@ also be specific to one instance of a device type.
 
 An IOC is built up from one or more modules, based on the requirements of that IOC. A module is not a functional IOC application on its own.
 
-Modules within e3 are essentially the core component that enables building of an IOC, and consist of e.g. source code for specific
+Modules within e3 are essentially the core component that enables building of an IOC and consist of, for example, source code for specific
 communication protocols. Modules will often be collected from the EPICS community (and sometimes modified), but are also developed
 in-house.
 
@@ -94,7 +94,7 @@ There are two main types of wrappers: wrappers that link to external code (the t
 ### External modules
 
 If you are needing to use a module from the EPICS community or one that may be used outside of a purely e3 context, then the e3 wrapper should point to that
-repository. This could be located e.g. in the epics-modules group on [Github](https://github.com/epics-modules), [Gitlab](https://gitlab.esss.lu.se/epics-modules), or elsewhere.
+repository. This could be located, for example, in the epics-modules group on [Github](https://github.com/epics-modules), [Gitlab](https://gitlab.esss.lu.se/epics-modules), or elsewhere.
 
 :::{note}
 The idea behind this is that you do not need to maintain a local fork, but that you can simply point at existing repositories that are used within the community.
