@@ -61,6 +61,10 @@ Note that `st.cmd` must end with a newline---this will be explained in {ref}`the
 
 ### Environment file (`env.sh`)
 
+:::{warning}
+The use of `env.sh` is deprecated in _require_ version 3.4.1 and later versions.
+:::
+
 ```console
 [iocuser@host:e3-ioc-test]$ cat env.sh
 export IOCNAME="SomeName"
