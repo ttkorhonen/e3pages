@@ -23,7 +23,7 @@ A very minimal startup script to illustrate what a "typical" IOC in e3 looks lik
 
 To set correct PV names, the environment variable `$IOCNAME` must be set before starting your IOC. Up until *require* 3.4.1, this could be done in a file `env.sh` which needed to be in the same directory as your startup script. For later versions of require, the variable must be set through other mechanisms (where the easiest option is to just write `export IOCNAME=yourIocName` prior to starting the IOC).
 
-There should preferably also be a `README.md` documenting the controlled system(s), the host machine (if the IOC is running in a lab), and any other relevant information useful for future IOC maintainersr. The IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
+There should preferably also be a `README.md` documenting the controlled system(s), the host machine (if the IOC is running in a lab), and any other relevant information useful for future IOC maintainers. The IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
 
 Thus you may end up with something like the following:
 
