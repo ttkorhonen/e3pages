@@ -2,7 +2,7 @@
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Understand the environment variables used to manage dependencies
 * Understand how dependencies are determined at build-time
@@ -45,7 +45,7 @@ ifneq ($(strip $(CALC_DEP_VERSION)),)
 calc_VERSION=$(CALC_DEP_VERSION)
 ```
 
-Let's see where these variables are used. Run `make build` and look for (something like) the following in the output.
+Let us see where these variables are used. Run `make build` and look for (something like) the following in the output.
 
 ```
 make[4]: Entering directory `/home/simonrose/data/git/e3/modules/core/e3-stream/StreamDevice/O.7.0.5_linux-x86_64'
@@ -78,7 +78,7 @@ These variables are used by the build system to locate the necessary header file
 compilation terminated.
 ```
 
-If you look at this output, you'll find that `-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include` now is missing. At this point, the build system cannot find `asynDriver.h` (which is used in `src/AsynDriverInterface.cc`). If you revert your changes and rebuild, then everything should work correctly.
+If you look at this output, you will find that `-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include` now is missing. At this point, the build system cannot find `asynDriver.h` (which is used in `src/AsynDriverInterface.cc`). If you revert your changes and rebuild, then everything should work correctly.
 
 ```console
 [iocuser@host:e3-stream]$ rm configure/CONFIG_MODULE.local
