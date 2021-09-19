@@ -133,7 +133,7 @@ VAR_EXTENSIONS = ${EPICSVERSION} ${ARCH_PARTS} ${ARCH_PARTS:%=${EPICSVERSION}_%}
 export VAR_EXTENSIONS
 ```
 
-allows the developter to have architecture-specific files: for example, if `T_A = linux-x86_64` then `ARCH_PARTS` will be `linux-x86_64 linux x86_64`: If we now consider the next segment, we see
+allows the developer to have architecture-specific files: for example, if `T_A = linux-x86_64` then `ARCH_PARTS` will be `linux-x86_64 linux x86_64`: If we now consider the next segment, we see
 
 ```makefile
 REQ = ${REQUIRED} $(foreach x, ${VAR_EXTENSIONS}, ${REQUIRED_$x})
@@ -200,7 +200,7 @@ The simplest way of including a header file is to add the line `HEADERS += heade
 
    which adds the directory that the header files are located in to the search path for include files when compiling.
 
-3. The next time the headers come up is during the install process, and are goverened by the following:
+3. The next time the headers come up is during the install process, and are governed by the following:
 
    ```makefile
    vpath %.h $(addprefix ../,$(sort $(dir $(filter-out /%,${HDRS}) ${SRCS}))) $(sort $(dir $(filter /%,${HDRS})))
@@ -232,7 +232,7 @@ Building source files at its heart is similar to the above, but the chain of dep
 
 The next steps are complicated due to being shared among different configure files.
 
-1. Initally in stage 3 above, we have the line `SRCS += $(if ${SOURCES},$(filter-out -none-,${SOURCES}),${AUTOSRCS})` which includes your file in the variable `SRCS`.
+1. Initially in stage 3 above, we have the line `SRCS += $(if ${SOURCES},$(filter-out -none-,${SOURCES}),${AUTOSRCS})` which includes your file in the variable `SRCS`.
 2. In the EPICS base configure file `CONFIG_COMMON`, we have the following two directives:
 
    ```makefile
