@@ -27,7 +27,7 @@ ESS' EPICS environment e3 is developed primarily for CentOS, and it is thus reco
 As e3 heavily relies on git, it is recommended to first be familiar with git, and especially git submodules.
 :::
 
-If you're on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning. This will install
+If you are on a mostly blank CentOS7 machine, you can copy, paste, and run the following code segment before beginning. This will install
 all of the necessary packages that are needed for the majority of EPICS modules that are in use with e3.[^prereqpkg]
 
 ```{include} ../../../includes/deps.md
@@ -147,7 +147,7 @@ Modifying versions in the `*.local` files above will override versions listed in
 
 ## Building and installing EPICS base and require
 
-For EPICS base and *require*, it's as simple as running:
+For EPICS base and *require*, it is as simple as running:
 
 ```console
 [iocuser@host:e3]$ ./e3.bash base
@@ -182,12 +182,12 @@ To see the contents of any of these groups, you can run
 ```console
 [iocuser@host:e3]$ ./e3.bash -<groups> vars
 ```
-where `<groups>` are in brackets next to the names. Some examples of the groups are as follows; run the command with the other
+where `<groups>` are in brackets next to the names. Some examples of the groups are shown in the following sections; run the command with the other
 groups to see all of what they contain.
 
 ### Core group
 
-This group contains the common EPICS modules, and is more or less a standard install: nearly every other group depends
+This group contains the common EPICS modules, and is more or less a standard install; nearly every other group depends
 on at least one module in this group, so you will need to install at least some of this group before you can install
 any other groups. Note that there are a few ESS-specific modules in here, most notably `e3-auth` and `e3-essioc`.
 
@@ -338,7 +338,7 @@ The full installation sequence for building an e3 module is `make init patch bui
 This does not work correctly in e3 0.4.1 due to the capitalisation of `EPICS_MODULE_NAME` for a few of the modules.
 :::
 
-The following command will load all installed modules within a single `iocsh.bash`. If, after executing `e3.bash -c load`, you see a clear console prompt (`>`), you have succesfully installed e3 on the host.
+The following command will load all installed modules within a single `iocsh.bash`. If, after executing `e3.bash -c load`, you see a clear console prompt (`>`), you have successfully installed e3 on the host.
 
 ```console
 [iocuser@host:e3]$ ./e3.bash -c load
