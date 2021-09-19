@@ -122,7 +122,7 @@ install build debug::
 For this stage of the build process, we are still in the module directory; the next stages will be done in the directories `O.$(EPICSVERSION)_Common` or `O.$(EPICSVERSION)_$(T_A)`, respectively. These directories will also be
 created at this point, and are the destination of all intermediate and final output files (e.g. any generated `.db` or `.dbd` files, `.o` files, and `lib$(module).so`)
 
-> Note that `make clean` simply deletes these directories, removing all generated files.
+Note that `make clean` simply deletes these directories, removing all generated files.
 
 We make a final collection of what objects we should build, and a final gathering of information:
 
