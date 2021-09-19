@@ -34,7 +34,7 @@ As you may realise, this allows a user to have multiple EPICS trees installed at
 
 ## Sourcing a specific e3 environment
 
-With e3, you may have several EPICS environments available, so you need to explicitly activate the e3 environment you intend to use.
+With e3, you may have several EPICS environments available, so you need to explicitly activate the e3 environment you intend to use:
 
 ```console
 [iocuser@host:e3]$ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
