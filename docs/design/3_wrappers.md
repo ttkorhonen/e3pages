@@ -13,7 +13,7 @@ e3-${MODULE}
 ├── cmds                        # example or template startup scripts
 ├── configure
 ├── docs                        # additional documentation (e.g. design docs)
-├── iocsh                       # "snippets" - common functions that are used by several IOCs
+├── iocsh                       # 'snippets' - common functions that are used by several IOCs
 ├── patch                       # ESS-specific modifications (in the shape of patch-files)
 ├── opi                         # example or template graphical user interfaces
 ├── template                    # ESS-specific database/template/substitution files
@@ -25,7 +25,7 @@ e3-${MODULE}
 In the above output, `${MODULE}` is the name of the EPICS module(/application/library). For community modules that are version controlled with git, this would be a *git submodule*. For ESS-specific modules, it can be a embedded file tree (i.e. both the wrapper and the wrapped module are controlled in the same repository).
 
 :::{note}
-We generally prefer "decoupled" modules---where the wrapper and the module are in separate repositories---as that allows for more flexibility (e.g. allowing the standard EPICS module to be made available for community usage).
+We generally prefer 'decoupled' modules---where the wrapper and the module are in separate repositories---as that allows for more flexibility (e.g. allowing the standard EPICS module to be made available for community usage).
 :::
 
 It should be noted that non-used directories in the above structure should be removed; e.g. if there are no patch-files, `patch/*` should be deleted.

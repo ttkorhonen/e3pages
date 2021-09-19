@@ -6,7 +6,7 @@ An IOC in e3 is typically (minimally) just a startup script which is passed to `
 
 ## Create the startup script
 
-A very minimal startup script to illustrate what a "typical" IOC in e3 looks like:
+A very minimal startup script to illustrate what a 'typical' IOC in e3 looks like:
 
 ```console
 [iocuser@host:~]$ touch st.cmd
@@ -47,7 +47,7 @@ require module
 
 epicsEnvSet(${IOCNAME},                 "${IOCNAME:NoName}")
 
-iocshLoad(${module_DIR}snippet.iocsh,   "IOCNAME=${IOCNAME})
+iocshLoad(${module_DIR}snippet.iocsh,   "IOCNAME=${IOCNAME}")
 
 iocInit()
 
