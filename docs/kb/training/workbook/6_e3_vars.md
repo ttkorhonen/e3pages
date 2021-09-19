@@ -2,7 +2,7 @@
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Understand variables and parameters within an IOC.
 * Run commands to access access variables and parameters from within an IOC.
@@ -43,7 +43,7 @@ Whenever an e3 module is dynamically loaded, require generates a number of modul
 One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a `/`, but `mrfioc2_DB` does not.
 :::
 
-Let's see these in action. Copy the following into a new `ch6.cmd` file.
+Let us see these in action. Copy the following into a new `ch6.cmd` file.
 ```bash
 require iocstats
 
@@ -150,7 +150,7 @@ For more information about EPICS functions, check out the [App Developers Guide]
 As described in the [design documentation](../../../design/2_require.md), *require* is used to dynamically load EPICS modules during the startup of an IOC. This
 is what the line `require iocstats` does above; `iocstats` can be replaced with any other EPICS module that is installed in your e3 environment.
 
-First, let's start up an IOC that has iocstats loaded in it as before. You can do this in one of two ways:
+First, let us start up an IOC that has iocstats loaded in it as before. You can do this in one of two ways:
 ```console
 [iocuser@host:e3]$ iocsh.bash ch6.cmd
 ```
@@ -172,7 +172,7 @@ This is due to the fact that *require* will only load a module a single time. It
 (for example, an IOC can control multiple copies of the same device) by loading the appropriate `.iocsh` snippet with different parameters, but
 that is a topic for another time.
 
-Next, in the running IOC, let's try to load the recsync module. Run
+Next, in the running IOC, let us try to load the recsync module. Run
 ```console
 localhost-15965 > require recsync
 Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
