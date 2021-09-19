@@ -2,10 +2,10 @@
 
 ## Lesson overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Print out and understand some of the various EPICS and e3 variables.
-* Understand how different versions of the same module are mananaged in e3.
+* Understand how different versions of the same module are managed in e3.
 * Understand the difference between two important variables: `E3_MODULE_VERSION` and `EPICS_MODULE_TAG`.
 * Install a different version of *StreamDevice* within e3.
 
@@ -52,7 +52,7 @@ Ensure that you are in the directory `e3-stream/`, and run the following command
 [iocuser@host:e3-stream]$ make existent
 ```
 
-The output shows all of the installed version(s) of the *StreamDevice* modules within the current e3 environement:
+The output shows all of the installed version(s) of the *StreamDevice* modules within the current e3 environment:
 
 ```console
 /epics/base-7.0.5/require/3.4.1/siteMods/stream
@@ -86,7 +86,7 @@ Once you have loaded *StreamDevice* as above, how can you determine which versio
 
 ## Check the version of a module
 
-Let's see what our current version of *StreamDevice* is (pay attention to the current working directory!):
+Let us see what our current version of *StreamDevice* is (pay attention to the current working directory!):
 
 ```console
 [iocuser@host:e3-stream]$ cd StreamDevice
@@ -111,7 +111,7 @@ It is important to understand the relationship between `EPICS_MODULE_TAG` and `E
 
 First, let us modify `EPICS_MODULE_TAG`; Use `master` instead of `tags/2.8.18` (Note that, as above, this is not recommended practice for a release version, but
 often makes sense during development). If you already have `master` as default, choose an arbitrary version and modify variables accordingly; available tags and
-branches can be found on the PSI StreamDevice release page: https://github.com/paulscherrerinstitute/StreamDevice/releases
+branches can be found on the PSI StreamDevice release page: <https://github.com/paulscherrerinstitute/StreamDevice/releases>
 
 Next, change `E3_MODULE_VERSION` to a different name (e.g. `e3training`). The convention here is to name the e3 module according to the module's version, but any name
 could technically be used during development. Note that there are some restrictions on valid module names.
