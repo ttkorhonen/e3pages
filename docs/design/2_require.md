@@ -20,7 +20,7 @@ IOC startup is run from the bash script `iocsh.bash`, which is installed in `${E
 * Initialises PVs to track which modules and versions are loaded
 
 :::{note}
-As we at ESS have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
+At ESS, we have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
 :::
 
 There are number of option flags and arguments that `iocsh.bash` accepts, the most common being: <!-- TODO: rewrite all of this and fixme -->
