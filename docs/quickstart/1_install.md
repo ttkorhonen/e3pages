@@ -27,7 +27,7 @@ To build EPICS base 7.0.5 with *require* 3.4.1 and the *core* module group and i
 ```
 
 :::{tip}
-If you leave out the flags `-b` (version of EPICS base) and `-r` (version of *require*) it will default to the latest stable release, but it's always good practice to be explicit.
+If you leave out the flags `-b` (version of EPICS base) and `-r` (version of *require*) it will default to the latest stable release, but it is always good practice to be explicit.
 :::
 
 As you may realise, this allows a user to have multiple EPICS trees installed at various locations.
