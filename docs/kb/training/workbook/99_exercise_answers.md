@@ -86,7 +86,7 @@ None
 2. The short answer to this question is "It depends.".
 
    In some cases, placing commands in a different order in the startup script
-   makes no difference. This is true for commands that don't have any dependence
+   makes no difference. This is true for commands that do not have any dependence
    on previous commands, including loading of database files. It also applies to
    the `iocshLoad` commands for startup script snippets, assuming the snippets
    are all independent of each other (e.g., referencing different devices). 
