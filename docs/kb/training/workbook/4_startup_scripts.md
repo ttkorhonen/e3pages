@@ -2,7 +2,7 @@
 
 ## Lesson overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Have an IOC communicate with a (simulated) device
 * How to load and configure certain common EPICS modules
@@ -52,7 +52,7 @@ Connection closed.
 
 :::{tip}
 The key combination `^]` will depend a lot on your keyboard layout. For a US keyboard layout, this is Ctrl + `]`. For
-a Swedish keyboard layout, this is Ctrl + `¨` (they are located in the same physical location of they keyboard). You
+a Swedish keyboard layout, this is Ctrl + `¨` (they are located in the same physical location of the keyboard). You
 may have to try a few different options to see what works.
 :::
 
@@ -61,7 +61,7 @@ may have to try a few different options to see what works.
 
 In the directory `4_startup_scripts_in_e3/cmds/` you will find a number of startup scripts that can be used for the following steps.
 
-For each of these scripts, it will be good practicce to examine the script in order to try to predict what will happen, and then
+For each of these scripts, it will be good practise to examine the script in order to try to predict what will happen, and then
 examine every line of the output when running the startup script with `iocsh.bash`. Before you begin, of course, make sure that
 you have sourced the correct e3 environment's `setE3Env.bash`.
 
