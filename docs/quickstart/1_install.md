@@ -72,7 +72,7 @@ E3_REQUIRE_VERSION:=3.4.1
 Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.5` to `/opt/epics/base-7.0.5`.
 :::
 
-Finally, we would run all of the make rules that: clones the submodule, applies patches (if there are any valid ones for this version), builds the module, and finally installs it;
+Finally, we would run each of the make rules that clone the submodule, apply patches (if there are any valid ones for this version), build the module, and finally install it:
 
 ```console
 [iocuser@host:e3]$ cd e3-caenelfastps
