@@ -12,7 +12,7 @@ In this lesson, you will learn how to do the following:
 ## Using a new record type
 
 When building an IOC, you may want to include records that are not part of EPICS base. As an example, you may want to use an *acalcout* record (from
-the [calc](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
+the [*calc*](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
 example, to perform linear conversions on *waveform* records.
 
 ### Create a new module 
