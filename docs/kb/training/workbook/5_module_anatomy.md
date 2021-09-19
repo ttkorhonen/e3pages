@@ -2,7 +2,7 @@
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Understand why e3 wrappers don't hold any source code.
 * Understand the anatomy of an e3 wrapper.
@@ -24,7 +24,7 @@ drivers, etc., which in turn can be hosted elsewhere.
 It should be noted that an e3 wrapper **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
 :::
 
-As descrbied in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
+As described in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
 *StreamDevice* 2.8.18 at one point, and to later build 2.8.20 by simply changing a few lines in the configuration files.
 
 ## Directory anatomy
@@ -83,7 +83,7 @@ Assuming that you are still in the `e3-iocStats` directory, let us explore some 
 
 The output should be something like ` 4df9e87815f6a9432955a3ddb45fafa9fe4a4d40 iocStats (3.1.15-22-g4df9e87)`.
 
-:::{admonition} Excercise
+:::{admonition} Exercise
 What do each of these parts represent?
 :::
 
@@ -181,7 +181,7 @@ index 0735f5598..3977a6a03 100644
 which modifies the default EPICS build rules in order for e3 to build properly.
 
 :::{note}
-While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatability reasons. <!-- TODO: Figure out what the story behind this is. -->
+While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatibility reasons. <!-- TODO: Figure out what the story behind this is. -->
 :::
 
 In order to apply patches to EPICS base (which one should always do before building), you simply run `make patch`. This will apply all of the patches 
