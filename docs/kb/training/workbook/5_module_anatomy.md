@@ -54,7 +54,7 @@ Although there is some variation amongst e3 modules, the majority of them have t
 
 * `docs/` For documentation, log files, and similar material.
 
-* `iocsh/` Site-specific startup script "snippets". These should be installed with the module and are, in a sense, the module's API.
+* `iocsh/` Site-specific startup script 'snippets'. These should be installed with the module and are, in a sense, the module's API.
 
 * `<MODULE_NAME>/` A git submodule link to source repository.
 
@@ -114,7 +114,7 @@ defined by `EPICS_MODULE_TAG`. In a perfect world these two should point at the 
 in some strange-looking errors, which can often be resolved by running `make init` upon cloning a wrapper repository.
 
 :::{note}
-We should note that this "redundancy" is a curious design feature that is being revisited by the e3 team.
+We should note that this 'redundancy' is a curious design feature that is being revisited by the e3 team.
 :::
 
 As denoted in [Chapter 1](1_installing_e3.md), the standard make targets to build and deploy a module are
