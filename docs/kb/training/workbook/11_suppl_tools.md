@@ -69,7 +69,7 @@ As in [Chapter 4](4_startup_scripts.md), the command to escape to the `telnet` c
 If you try to exit the IOC by typing `exit` or with `^C`, then the default behaviour of `procServ` is to restart the IOC.
 In order to kill the IOC, one should instead first press `^X` and then `^Q`.
 
-The above process starts an blank e3 IOC and opens up TCP port 2000 for communication. In general you will want to do a bit more:
+The above process starts a blank e3 IOC and opens up TCP port 2000 for communication. In general you will want to do a bit more:
 * Use a named Unix Domain Socket (UDS) so that you do not have to separately configure a port for each IOC running on a machine
 * Run an actual meaningful startup script
 * Keep a log of the output
@@ -350,7 +350,7 @@ config * {
 }
 ```
 
-And voilá ! If we just do a soft reload of the systemd manager again, we should be able to both see and attach to our IOC.
+And voilá! If we just do a soft reload of the systemd manager again, we should be able to both see and attach to our IOC.
 
 ```console
 [iocuser@host:~]$ systemctl daemon-reload
@@ -364,7 +364,7 @@ You can detach from a console by pressing `^E c .` (note the dot at the end).
 
 ## How to monitor your IOC and related processes
 
-So, as we have set things up, systemd starts and manages procServ processes that run our IOC(s). A conserver server is also run as a system daemon, and currently we have conserver client (also a daemon) attach to local IOCs. In our templated unit file, we specified that logging from procServ would go to `/var/log/procServ/<iocname>` (which we inspect with e.g. `less` or could monitor like `tail -f /path/to/logfile`), and since we included `dbl > PV.list` in the startup script, we will also print out a database list upon IOC initialization. This will be placed in `/var/run/procServ/<iocname>` since we executed procServ with `--chdir=/var/run/procServ/%i` in the unit file.
+So, as we have set things up, systemd starts and manages procServ processes that run our IOC(s). A conserver server is also run as a system daemon, and currently we have conserver client (also a daemon) attach to local IOCs. In our templated unit file, we specified that logging from procServ would go to `/var/log/procServ/<iocname>` (which we inspect with, for example, `less` or could monitor like `tail -f /path/to/logfile`), and since we included `dbl > PV.list` in the startup script, we will also print out a database list upon IOC initialization. This will be placed in `/var/run/procServ/<iocname>` since we executed procServ with `--chdir=/var/run/procServ/%i` in the unit file.
 
 As we are now dealing with multiple system daemons, yet another useful troubleshooting utility is *journalctl*, which is used to query the contents of the systemd journal. We will not go in-depth into how to use journalctl, but here are some examples of how we could use it to troubleshoot our services:
 
