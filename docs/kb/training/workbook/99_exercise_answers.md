@@ -89,10 +89,10 @@ None
    makes no difference. This is true for commands that do not have any dependence
    on previous commands, including loading of database files. It also applies to
    the `iocshLoad` commands for startup script snippets, assuming the snippets
-   are all independent of each other (e.g., referencing different devices). 
+   are all independent of each other (e.g. referencing different devices). 
 
    Any commands that call driver functions directly and depend on previous calls
-   having been made (e.g., to create a named asyn port) need to be called in a
+   having been made (e.g. to create a named asyn port) need to be called in a
    specific order so that the required code has been executed and objects
    created and/or memory allocated in the correct order. 
 
@@ -859,7 +859,7 @@ then you can modify a single file in order to update the dependency versions of 
 ### Assignments
 1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_PATH`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
    
-   Alternatively, you can also just export the variable into the environment via e.g.
+   Alternatively, you can also just export the variable into the environment via, for example, 
    ```console
    [iocuser@host:e3-module]$ export E3_CELL_PATH=/absolute/path/to/cellMods
    [iocuser@host:e3-module]$ make cellinstall
@@ -890,7 +890,7 @@ then you can modify a single file in order to update the dependency versions of 
   In this case, `[options]` is `-n iocsh`, which is the child process' name. `<endpoint>` is 2000, which is the port to connect to, and the output of `which iocsh.bash` (i.e. the absolute path of `iocsh.bash`) is the command to run in the child container.
 
 ### Assignments
-1. In order to have procServ listen to a TCP socket instead of a UDS, you simply need to change the argument to `--port` to be the port you wish to listen on. If you only intend to have a single IOC on each host, then it is possible to statically assign this in the `ExecStart` directive via, e.g.
+1. In order to have procServ listen to a TCP socket instead of a UDS, you simply need to change the argument to `--port` to be the port you wish to listen on. If you only intend to have a single IOC on each host, then it is possible to statically assign this in the `ExecStart` directive via, for example,
    ```
    ExecStart=/usr/bin/procServ \
                      --foreground \
