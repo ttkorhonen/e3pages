@@ -2,7 +2,7 @@
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Understand the difference between modules and IOCs
 * Understand the e3 wrapper directory structure.
@@ -220,7 +220,7 @@ We can check that it works correctly by starting an IOC that loads this module.
 ```console
 [iocuser@host:e3-fimscb]$ iocsh.bash -r fimscb
 ```
-to make sure that it loads correctly. In this case there isn't much that can go wrong as this module consists only of database and
+to make sure that it loads correctly. In this case there is not much that can go wrong as this module consists only of database and
 protocol files. But it is still good practice.
 
 :::{tip}
@@ -296,7 +296,7 @@ E3_MODULE_VERSION:=1.0.0
 # For example:
 #ASYN_DEP_VERSION:=4.41.0
 
-# In most cases, we don't need to touch the following variables.
+# In most cases, we do not need to touch the following variables.
 E3_MODULE_NAME:=$(EPICS_MODULE_NAME)
 E3_MODULE_SRC_PATH:=clock
 E3_MODULE_MAKEFILE:=$(EPICS_MODULE_NAME).Makefile
