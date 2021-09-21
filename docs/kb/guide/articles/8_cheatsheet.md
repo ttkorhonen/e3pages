@@ -33,7 +33,7 @@
 * `install` - Installs the module
 * `prebuild` - Run the given commands before each build
 * `clean` - Removes temporary build files
-* `test` - Runs basic test as well as any user-specified tests
+* `test` - Runs basic test as well as any user-specified tests (dependencies of `module_tests`)
 * `cellinstall` - Installs locally at `$(E3_CELL_PATH)`
 * `debug` - Prints out build variables
 * `existent` - Shows the versions that are installed
