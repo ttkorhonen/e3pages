@@ -1,8 +1,6 @@
 # Article: e3 Makefile Cheatsheet
 
 
-(makefile_vars_cheatsheet)=
-
 ## What to build and install
 
 * `SOURCES` - Source files to compile into the shared library
