@@ -20,7 +20,7 @@ IOC startup is run from the bash script `iocsh.bash`, which is installed in `${E
 * Initialises PVs to track which modules and versions are loaded
 
 :::{note}
-As we at ESS have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
+At ESS, we have decided to only use EPICS base 7, and thus we only make use of `softIocPVA` (and not `softIoc`).
 :::
 
 There are number of option flags and arguments that `iocsh.bash` accepts, the most common being: <!-- TODO: rewrite all of this and fixme -->
@@ -50,8 +50,8 @@ This is the most obviously visible part of *require* from the perspective of an 
 
 Versioning of modules mostly follows the [semantic versioning](https://semver.org/) (semver) scheme. A numerical version is specified in one of two ways:
 
-* MAJOR.MINOR.PATCH e.g. `require asyn,4.41.0`
-* MAJOR.MINOR.PATCH+BUILD e.g. `require sis8300llrf,3.17.1+1`
+* MAJOR.MINOR.PATCH (e.g. `require asyn,4.41.0`)
+* MAJOR.MINOR.PATCH+BUILD (e.g. `require sis8300llrf,3.17.1+1`)
 
 If you do not specify a BUILD number, then *require* will load the version with the highest build number. Otherwise, *require* will match the version exactly.
 

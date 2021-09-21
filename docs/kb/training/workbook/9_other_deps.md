@@ -1,8 +1,8 @@
-# Other dependencies
+# 9. Other dependencies
 
 ## Lessons overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Use a record type from another module in your module.
 * Use a db or template file from another module to generate a new db file in your module.
@@ -12,7 +12,7 @@ In this lesson, you'll learn how to do the following:
 ## Using a new record type
 
 When building an IOC, you may want to include records that are not part of EPICS base. As an example, you may want to use an *acalcout* record (from
-the [calc](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
+the [*calc*](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
 example, to perform linear conversions on *waveform* records.
 
 ### Create a new module 
@@ -62,7 +62,7 @@ require linconv
 dbLoadRecords("$(linconv_DB)/linconv.db")
 ```
 
-Let's try run this and see what happens.
+Let us try run this and see what happens.
 ```console
 [iocuser@host:e3-linconv]$ iocsh.bash st.cmd
 # --- snip snip ---
@@ -112,7 +112,7 @@ If we now re-install the module and re-start it
 then we should see that the records load as expected. Moreover, you should be able to read the `LINCONV` PV and set `SLOPE` and `OFFSET` to modify it.
 
 :::{admonition} Exercise
-Why don't we need to run `make patch` or `make init`?
+Why do we not need to run `make patch` or `make init`?
 :::
 
 ## Using an external db/template file

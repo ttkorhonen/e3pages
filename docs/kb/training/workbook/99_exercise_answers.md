@@ -1,6 +1,6 @@
 # Answers to exercises, assignments, and questions
 
-## Installing e3
+## 1. Installing e3
 
 ### Exercises
 None
@@ -45,15 +45,15 @@ None
    * `tools/e3_modules_list.sh`
    * `tools/e3-inventory.yaml`
 
-## An e3 IOC
+## 2. An e3 IOC
 ### Exercises
 None
 
 ### Assignments
 1. A brief description of each expression meaning, function, and/or action
    follows, along with references for more details.
-   - `require` is the keyword used by the require module to indicate that a
-	 module needs to be loaded into this IOC. When the IOC starts, the require
+   - `require` is the keyword used by the *require* module to indicate that a
+	 module needs to be loaded into this IOC. When the IOC starts, the *require*
 	 module will load all modules identified in the startup script, along with
 	 any dependencies.
    - `E3_CMD_TOP` is the path to the directory holding the startup script used
@@ -86,13 +86,13 @@ None
 2. The short answer to this question is "It depends.".
 
    In some cases, placing commands in a different order in the startup script
-   makes no difference. This is true for commands that don't have any dependence
+   makes no difference. This is true for commands that do not have any dependence
    on previous commands, including loading of database files. It also applies to
    the `iocshLoad` commands for startup script snippets, assuming the snippets
-   are all independent of each other (e.g., referencing different devices). 
+   are all independent of each other (e.g. referencing different devices). 
 
    Any commands that call driver functions directly and depend on previous calls
-   having been made (e.g., to create a named asyn port) need to be called in a
+   having been made (e.g. to create a named asyn port) need to be called in a
    specific order so that the required code has been executed and objects
    created and/or memory allocated in the correct order. 
 
@@ -102,7 +102,7 @@ None
 
 
 
-## Installing other versions of modules
+## 3. Installing other versions of modules
 ### Exercises
 
 ### Assignments
@@ -184,7 +184,7 @@ None
    - `build`
    - `install`
 
-6. `require` will default to loading the latest version that matches the
+6. *require* will default to loading the latest version that matches the
    `major.minor.patch` format, as these are considered the production releases
    of the module. To load a version that does not match this format, specify the
    version name explicitly when starting the IOC:
@@ -196,7 +196,7 @@ None
 
 
 
-## Startup scripts in e3
+## 4. Startup scripts in e3
 ### Exercises
 #### First IOC
 - You should see lines like the following in the output of your IOC that show
@@ -220,15 +220,15 @@ None
   startup script file.
 
 - The following additional modules will be loaded as direct dependencies of
-  `stream`:
-  - `asyn`
-  - `calc`
-  - `pcre`
+  *stream*:
+  - *asyn*
+  - *calc*
+  - *pcre*
 
   Additional modules that are indirect dependencies (via the direct
   dependencies) are also loaded:
-  - `sscan`
-  - `sequencer`
+  - *sscan*
+  - *sequencer*
 
 (warnings)=
 - You may see a warning like
@@ -237,7 +237,7 @@ None
   ```
   `iocsh.bash` is looking for an `env.sh` file to define a custom environment
   for the IOC. This warning can be ignored if you are not needing to define any
-  custom environment variables. Note that this warning only will turn up if you are using a version of require < 4.0.0; otherwise the corresponding check will be for whether the variable `IOCNAME` has been defined.
+  custom environment variables. Note that this warning only will turn up if you are using a version of *require* <= `3.4.1`; otherwise the corresponding check will be for whether the variable `IOCNAME` has been defined.
 
   The second warning is:
   ```
@@ -314,7 +314,7 @@ None
   /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   ```
 
-  `require` generates a database search path variable, `EPICS_DB_INCLUDE_PATH`,
+  *require* generates a database search path variable, `EPICS_DB_INCLUDE_PATH`,
   which is used by the `dbLoadRecords` command as the list of paths to search
   for database files.
 
@@ -372,7 +372,7 @@ None
    Note how the same commands are used, the only changes are in the values of
    the variables so that the port name and PV names are unique.
 
-## Anatomy of an e3 module
+## 5. Anatomy of an e3 module
 ### Exercises
 None
 
@@ -431,9 +431,9 @@ None
 
 
 
-## Variables within e3
+## 6. Variables within e3
 ### Exercises
-#### Variables created by `require`
+#### Variables created by *require*
 - Add the following to the top of the IOC startup script:
   ```
   require stream
@@ -453,7 +453,7 @@ None
   <snip>
   ```
   
-  `asyn`, `pcre`, and `calc` are all dependencies of `stream`, while `sscan` and `sequencer` are dependencies of `calc`.
+  *asyn*, *pcre*, and *calc* are all dependencies of *stream*, while *sscan* and *sequencer* are dependencies of *calc*.
   All of these modules must then be loaded, and *require* will then specify the respective paths.
 
 #### EPICS variables, parameters, and environment variables
@@ -488,7 +488,7 @@ None
 - The `stream` module has the `streamDebug` variable.
 
 ### Assignments
-1. The `asyn_DB` EPICS environment variable defines the location for asyn
+1. The `asyn_DB` EPICS environment variable defines the location for *asyn*
    databases.
 
    The `system` command can be used to access shell commands.
@@ -523,7 +523,7 @@ None
    		$(foreach v, $(E3_MODULES_VARIABLES), $(info $(v) = $($(v)))) @#noop
    ```
 
-## Understanding module dependence
+## 7. Understanding module dependence
 ### Exercises
 
 #### Dependent environment variables
@@ -562,8 +562,8 @@ then you can modify a single file in order to update the dependency versions of 
   |-- 2.8.18+0
   `-- e3training
   ```
-  then `require stream` will load 2.8.18+0.
-- In the first and third cases, where you load *stream* 2.8.18, then the version of *asyn* that is loaded is 4.41.0. This can be seen in the output of the IOC upon startup, or by looking at the following PVs that are generated by require:
+  then `require stream` will load `2.8.18+0`.
+- In the first and third cases, where you load *stream* `2.8.18`, then the version of *asyn* that is loaded is `4.41.0`. This can be seen in the output of the IOC upon startup, or by looking at the following PVs that are generated by *require*:
   ```console
   localhost-25251 > dbgrep *_VER
   REQMOD:localhost-25251:MOD_VER
@@ -612,7 +612,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 #### Dependency resolution limitations
 
-- If you were to release a new version of asyn after the IOC has been developed then as in the example above, you will have an inconsistency in loaded and dependent versions of *asyn*, causing the IOC to fail to start up.
+- If you were to release a new version of *asyn* after the IOC has been developed then as in the example above, you will have an inconsistency in loaded and dependent versions of *asyn*, causing the IOC to fail to start up.
   
   This is a challenge for a maintainer of a shared environment because this means that a functional IOC can fail due to changes in the environment that seem unrelated to the IOC.
 
@@ -655,7 +655,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Building an e3 module
+## 8. Building an e3 module
 ### Exercises
 
 #### IOCs
@@ -804,7 +804,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Other dependencies
+## 9. Other dependencies
 ### Exercises
 
 #### Fixing the dependency
@@ -849,7 +849,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Additional working modes
+## 10. Additional working modes
 ### Exercises
 
 #### Development mode
@@ -859,7 +859,7 @@ then you can modify a single file in order to update the dependency versions of 
 ### Assignments
 1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_PATH`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
    
-   Alternatively, you can also just export the variable into the environment via e.g.
+   Alternatively, you can also just export the variable into the environment via, for example, 
    ```console
    [iocuser@host:e3-module]$ export E3_CELL_PATH=/absolute/path/to/cellMods
    [iocuser@host:e3-module]$ make cellinstall
@@ -878,7 +878,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Supplementary tools
+## 11. Supplementary tools
 ### Exercises
 
 #### Starting an IOC in a procServ container
@@ -890,7 +890,7 @@ then you can modify a single file in order to update the dependency versions of 
   In this case, `[options]` is `-n iocsh`, which is the child process' name. `<endpoint>` is 2000, which is the port to connect to, and the output of `which iocsh.bash` (i.e. the absolute path of `iocsh.bash`) is the command to run in the child container.
 
 ### Assignments
-1. In order to have procServ listen to a TCP socket instead of a UDS, you simply need to change the argument to `--port` to be the port you wish to listen on. If you only intend to have a single IOC on each host, then it is possible to statically assign this in the `ExecStart` directive via, e.g.
+1. In order to have procServ listen to a TCP socket instead of a UDS, you simply need to change the argument to `--port` to be the port you wish to listen on. If you only intend to have a single IOC on each host, then it is possible to statically assign this in the `ExecStart` directive via, for example,
    ```
    ExecStart=/usr/bin/procServ \
                      --foreground \
@@ -915,7 +915,7 @@ then you can modify a single file in order to update the dependency versions of 
    for a read-only mount point. See [fstab](https://man7.org/linux/man-pages/man5/fstab.5.html) for more information about the remaining syntax.
 
    Note that it is possible to mount an NFS share via systemd, but it is suggested to use fstab unless you have a particularly complicated setup.
-3. One issue with the above solution is that we have hard-coded the versions of EPICS base and require, as well as (in the solution to assignment 1) the procServ port.
+3. One issue with the above solution is that we have hard-coded the versions of EPICS base and *require*, as well as (in the solution to assignment 1) the procServ port.
 
    To get around this, one can use the `EnvironmentFile` directive to load an environment file that could be deployed with the IOC to set these variables. For example, your IOC could also come with an `env.sh` file that looks like
    ```sh

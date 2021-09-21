@@ -6,7 +6,7 @@ An IOC in e3 is typically (minimally) just a startup script which is passed to `
 
 ## Create the startup script
 
-A very minimal startup script to illustrate what a "typical" IOC in e3 looks like:
+A very minimal startup script to illustrate what a 'typical' IOC in e3 looks like:
 
 ```console
 [iocuser@host:~]$ touch st.cmd
@@ -21,9 +21,9 @@ A very minimal startup script to illustrate what a "typical" IOC in e3 looks lik
 
 ## Conventions
 
-To set correct PV-names, the environment variable `$IOCNAME` must be set before starting your IOC. Up until *require* 3.4.1, this could be done in a file `env.sh` which needed to be in the same directory as your startup script. For later versions of require, the variable must be set through other mechanisms (where the easiest option is to just write `export IOCNAME=yourIocName` prior to starting the IOC).
+To set correct PV names, the environment variable `$IOCNAME` must be set before starting your IOC. Up until *require* 3.4.1, this could be done in a file `env.sh` which needed to be in the same directory as your startup script. For later versions of require, the variable must be set through other mechanisms (where the easiest option is to just write `export IOCNAME=yourIocName` prior to starting the IOC).
 
-There should preferably also be a `README.md` documenting the controlled system(s), the host machine (if the IOC is running in a lab), etc., and the IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
+There should preferably also be a `README.md` documenting the controlled system(s), the host machine (if the IOC is running in a lab), and any other relevant information useful for future IOC maintainers. The IOC should be version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
 
 Thus you may end up with something like the following:
 
@@ -47,7 +47,7 @@ require module
 
 epicsEnvSet(${IOCNAME},                 "${IOCNAME:NoName}")
 
-iocshLoad(${module_DIR}snippet.iocsh,   "IOCNAME=${IOCNAME})
+iocshLoad(${module_DIR}snippet.iocsh,   "IOCNAME=${IOCNAME}")
 
 iocInit()
 
@@ -60,6 +60,11 @@ Note that `st.cmd` must end with a newline---this will be explained in {ref}`the
 :::
 
 ### Environment file (`env.sh`)
+
+:::{warning}
+*require* version 3.4.1 is the last version that will support the use of
+`env.sh`.
+:::
 
 ```console
 [iocuser@host:e3-ioc-test]$ cat env.sh

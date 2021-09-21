@@ -174,7 +174,7 @@ Note that `${CALC_DEP_VERSION}` should be specified in `configure/CONFIG_MODULE`
 Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module. 
 
 :::{warning}
-Joint with the release of *require* 3.3.0 there was a switch to all modules being lowercase. So if you have a dependency on *ADCore*, then from *require* 3.3.0 onwards you should use the definition:
+Joint with the release of *require* 3.3.0 there was a switch to all modules being lower-case. So if you have a dependency on *ADCore*, then from *require* 3.3.0 onwards you should use the definition:
 
 ```makefile
 adcore_VERSION=$(ADCORE_DEP_VERSION)

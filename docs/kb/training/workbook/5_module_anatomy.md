@@ -1,10 +1,10 @@
-# Anatomy of an e3 module
+# 5. Anatomy of an e3 module
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
-* Understand why e3 wrappers don't hold any source code.
+* Understand why e3 wrappers do not hold any source code.
 * Understand the anatomy of an e3 wrapper.
 * Learn how to apply and create patch files for EPICS base and other modules within e3.
 
@@ -24,12 +24,12 @@ drivers, etc., which in turn can be hosted elsewhere.
 It should be noted that an e3 wrapper **can**, however, hold source code. This is known as *local mode*, and will be discussed more in-depth later.
 :::
 
-As descrbied in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
+As described in [Chapter 3](3_module_versions.md), an e3 module wrapper links to a specific commit in a source repository. This allows us to build, for example,
 *StreamDevice* 2.8.18 at one point, and to later build 2.8.20 by simply changing a few lines in the configuration files.
 
 ## Directory anatomy
 
-Let's have a look at `e3-iocStats/`:
+Let us have a look at `e3-iocStats/`:
 
 ```console
 [iocuser@host:e3-iocStats]$ tree -L 1
@@ -54,7 +54,7 @@ Although there is some variation amongst e3 modules, the majority of them have t
 
 * `docs/` For documentation, log files, and similar material.
 
-* `iocsh/` Site-specific startup script "snippets". These should be installed with the module and are, in a sense, the module's API.
+* `iocsh/` Site-specific startup script 'snippets'. These should be installed with the module and are, in a sense, the module's API.
 
 * `<MODULE_NAME>/` A git submodule link to source repository.
 
@@ -83,7 +83,7 @@ Assuming that you are still in the `e3-iocStats` directory, let us explore some 
 
 The output should be something like ` 4df9e87815f6a9432955a3ddb45fafa9fe4a4d40 iocStats (3.1.15-22-g4df9e87)`.
 
-:::{admonition} Excercise
+:::{admonition} Exercise
 What do each of these parts represent?
 :::
 
@@ -114,7 +114,7 @@ defined by `EPICS_MODULE_TAG`. In a perfect world these two should point at the 
 in some strange-looking errors, which can often be resolved by running `make init` upon cloning a wrapper repository.
 
 :::{note}
-We should note that this "redundancy" is a curious design feature that is being revisited by the e3 team.
+We should note that this 'redundancy' is a curious design feature that is being revisited by the e3 team.
 :::
 
 As denoted in [Chapter 1](1_installing_e3.md), the standard make targets to build and deploy a module are
@@ -181,7 +181,7 @@ index 0735f5598..3977a6a03 100644
 which modifies the default EPICS build rules in order for e3 to build properly.
 
 :::{note}
-While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatability reasons. <!-- TODO: Figure out what the story behind this is. -->
+While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatibility reasons. <!-- TODO: Figure out what the story behind this is. -->
 :::
 
 In order to apply patches to EPICS base (which one should always do before building), you simply run `make patch`. This will apply all of the patches 
@@ -222,7 +222,7 @@ there is no distinction between site-specific patches and community patches, and
 # --- snip snip ---
 ```
 
-The format for patch files names is `${E3_MODULE_VERSION}-description.p0.patch`. Patches should have descriptions in the file `HISTORY.md` that describes their purpose.
+The format for patch files names is `${E3_MODULE_VERSION}-description.p0.patch`. Patches should have descriptions in the file `HISTORY.md` that describe their purpose.
 
 In general, if one is providing a genuine fix to a community module then it is best to submit a pull/merge request to that module and fix it for everything. However,
 if the change is truly a site-specific one (for example, ADSupport is built differently in e3 than in EPICS base in a way that requires patching), then one should use

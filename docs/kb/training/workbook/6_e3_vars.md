@@ -1,8 +1,8 @@
-# Variables within e3
+# 6. Variables within e3
 
 ## Lesson Overview
 
-In this lesson, you'll learn how to do the following:
+In this lesson, you will learn how to do the following:
 
 * Understand variables and parameters within an IOC.
 * Run commands to access access variables and parameters from within an IOC.
@@ -32,7 +32,7 @@ The following variables are defined when an IOC is running from within startup a
 
 ### Variables created by *require*
 
-Whenever an e3 module is dynamically loaded, require generates a number of module-specific variables that are useful in scripts. For `mrfioc2` these would be
+Whenever an e3 module is dynamically loaded, *require* generates a number of module-specific variables that are useful in scripts. For `mrfioc2` these would be
 
 * `mrfioc2_VERSION` - The version of `mrfioc2` that was loaded.
 * `mrfioc2_DIR` - The absolute path where `mrfioc2` is located. Useful for loading `.iocsh` snippets and other files installed with the module.
@@ -43,7 +43,7 @@ Whenever an e3 module is dynamically loaded, require generates a number of modul
 One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a `/`, but `mrfioc2_DB` does not.
 :::
 
-Let's see these in action. Copy the following into a new `ch6.cmd` file.
+Let us see these in action. Copy the following into a new `ch6.cmd` file.
 ```bash
 require iocstats
 
@@ -150,7 +150,7 @@ For more information about EPICS functions, check out the [App Developers Guide]
 As described in the [design documentation](../../../design/2_require.md), *require* is used to dynamically load EPICS modules during the startup of an IOC. This
 is what the line `require iocstats` does above; `iocstats` can be replaced with any other EPICS module that is installed in your e3 environment.
 
-First, let's start up an IOC that has iocstats loaded in it as before. You can do this in one of two ways:
+First, let us start up an IOC that has *iocstats* loaded in it as before. You can do this in one of two ways:
 ```console
 [iocuser@host:e3]$ iocsh.bash ch6.cmd
 ```
@@ -162,7 +162,7 @@ or
 Exercise:
 * What is the difference between these two commands? Take a look at the output of the IOC shell as it starts up.
 
-In the running IOC, let us try a few commands. First, try to re-load iocstats:
+In the running IOC, let us try a few commands. First, try to re-load *iocstats*:
 ```console
 localhost-15965 > require iocstats
 Module iocstats version 3.1.16+0 already loaded
@@ -172,7 +172,7 @@ This is due to the fact that *require* will only load a module a single time. It
 (for example, an IOC can control multiple copies of the same device) by loading the appropriate `.iocsh` snippet with different parameters, but
 that is a topic for another time.
 
-Next, in the running IOC, let's try to load the recsync module. Run
+Next, in the running IOC, let us try to load the *recsync* module. Run
 ```console
 localhost-15965 > require recsync
 Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
@@ -351,14 +351,14 @@ The following are set in `CONFIG_MODULE` in the wrapper directory.
 * `E3_MODULE_NAME`: The module name used *require* to install and to load the module.
   :::{note}
   This is usually the same as `EPICS_MODULE_NAME`. However, there are two additional restrictions:
-  1. Only lowercase characters, numbers, and underscores are allowed.
+  1. Only lower-case characters, numbers, and underscores are allowed.
   2. The resulting string must be a valid C identifier
   :::
 * `E3_MODULE_SRC_PATH`: Location of the module code within the wrapper repository.
 * `E3_MODULE_VERSION`: Module version used for installing and loading the module.
 * `E3_MODULE_MAKEFILE`: Name of the module/application makefile. <!-- TODO: This should be removed, it could be defined by require -->
 
-The following variables are set by require.
+The following variables are set by *require*.
 
 * `E3_MODULES_PATH`: Installation path for the module.
 * `E3_MODULES_LIBNAME`: Name of shared libraries.
@@ -373,6 +373,6 @@ The following variables are set by require.
 
 ##  Assignments
 
-1. Use the command `iocsh.bash -r asyn` to load asyn into a fresh IOC. From the IOC shell, print out all of the database files that are included with *asyn*. Hint: There is a command that lets you run an external shell command within an IOC. See [chapter 2](2_e3_ioc.md).
+1. Use the command `iocsh.bash -r asyn` to load *asyn* into a fresh IOC. From the IOC shell, print out all of the database files that are included with *asyn*. Hint: There is a command that lets you run an external shell command within an IOC. See [chapter 2](2_e3_ioc.md).
 2. Can you find out which file it is that allows us to run `make vars` within the e3 building system? Try adding the `--debug` flag when executing `make`.
 

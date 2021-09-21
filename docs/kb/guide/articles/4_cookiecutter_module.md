@@ -36,7 +36,9 @@ Run the following command in the terminal to create a cookiecutter:
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 ```
 
-If you have run it before, it will ask if you want to re-download the template; you should answer the default of "yes", which ensures that you will use an up-to-date template.
+:::{note}
+If you have run it before, it will ask if you want to re-download the template; you should answer the default of 'yes', which ensures that you will use an up-to-date template.
+:::
 
 Cookiecutter then provides a list of prompts:
 
@@ -98,14 +100,14 @@ $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
 
 When you have created an e3-wrapper as above, it is only a local git repository on your machine. If you want to share it on the ESS GitLab (or otherwise), you will need to add a remote to the repository. Assuming you are using the ESS GitLab, then the steps are as follows:
 
-1. Create the remote repository by choosing "New project" from the menu on <https://gitlab.esss.lu.se>.
+1. Create the remote repository by choosing 'New project' from the menu on <https://gitlab.esss.lu.se>.
 2. The repository should be named *e3-testmodule*, and (although not necessary) should be public, at least if you want to share it with anyone else. However, you can change this at a later date. 
 
    :::{warning}
-   It is best to leave the box "Initialize repository with a README" unchecked.
+   It is best to leave the box 'Initialize repository with a README' unchecked.
    :::
 
-3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from "Push an existing folder"). You will want to, of course, change the name `simonrose` to your account or to the target group where you have created your repository, and change the name `e3-testmodule` to the name you have chosen:
+3. As the repository has already been initialised, you do not need to do all of the steps, but only the following (from 'Push an existing folder'). You will want to, of course, change the name `simonrose` to your account or to the target group where you have created your repository, and change the name `e3-testmodule` to the name you have chosen:
 
    ```bash
    $ # You do not need to switch into the directory if you are already there
