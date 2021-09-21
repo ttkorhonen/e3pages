@@ -1,4 +1,4 @@
-# Understanding module dependence
+# 7. Understanding module dependence
 
 ## Lesson Overview
 

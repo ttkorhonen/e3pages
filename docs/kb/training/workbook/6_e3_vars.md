@@ -1,4 +1,4 @@
-# Variables within e3
+# 6. Variables within e3
 
 ## Lesson Overview
 

@@ -1,4 +1,4 @@
-# Installing other versions of modules
+# 3. Installing other versions of modules
 
 ## Lesson overview
 

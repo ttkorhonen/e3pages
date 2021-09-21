@@ -1,4 +1,4 @@
-# Other dependencies
+# 9. Other dependencies
 
 ## Lessons overview
 

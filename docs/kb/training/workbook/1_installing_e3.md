@@ -1,4 +1,4 @@
-# Installing e3 
+# 1. Installing e3 
 
 ## Lesson overview
 

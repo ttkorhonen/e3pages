@@ -1,4 +1,4 @@
-# Building an e3 module
+# 8. Building an e3 module
 
 ## Lesson Overview
 

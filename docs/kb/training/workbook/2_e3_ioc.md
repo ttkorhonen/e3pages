@@ -1,4 +1,4 @@
-# An e3 IOC
+# 2. An e3 IOC
 
 ## Lesson overview
 

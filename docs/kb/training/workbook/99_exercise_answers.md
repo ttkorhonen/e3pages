@@ -1,6 +1,6 @@
 # Answers to exercises, assignments, and questions
 
-## Installing e3
+## 1. Installing e3
 
 ### Exercises
 None
@@ -45,7 +45,7 @@ None
    * `tools/e3_modules_list.sh`
    * `tools/e3-inventory.yaml`
 
-## An e3 IOC
+## 2. An e3 IOC
 ### Exercises
 None
 
@@ -102,7 +102,7 @@ None
 
 
 
-## Installing other versions of modules
+## 3. Installing other versions of modules
 ### Exercises
 
 ### Assignments
@@ -196,7 +196,7 @@ None
 
 
 
-## Startup scripts in e3
+## 4. Startup scripts in e3
 ### Exercises
 #### First IOC
 - You should see lines like the following in the output of your IOC that show
@@ -372,7 +372,7 @@ None
    Note how the same commands are used, the only changes are in the values of
    the variables so that the port name and PV names are unique.
 
-## Anatomy of an e3 module
+## 5. Anatomy of an e3 module
 ### Exercises
 None
 
@@ -431,7 +431,7 @@ None
 
 
 
-## Variables within e3
+## 6. Variables within e3
 ### Exercises
 #### Variables created by *require*
 - Add the following to the top of the IOC startup script:
@@ -523,7 +523,7 @@ None
    		$(foreach v, $(E3_MODULES_VARIABLES), $(info $(v) = $($(v)))) @#noop
    ```
 
-## Understanding module dependence
+## 7. Understanding module dependence
 ### Exercises
 
 #### Dependent environment variables
@@ -655,7 +655,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Building an e3 module
+## 8. Building an e3 module
 ### Exercises
 
 #### IOCs
@@ -804,7 +804,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Other dependencies
+## 9. Other dependencies
 ### Exercises
 
 #### Fixing the dependency
@@ -849,7 +849,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Additional working modes
+## 10. Additional working modes
 ### Exercises
 
 #### Development mode
@@ -878,7 +878,7 @@ then you can modify a single file in order to update the dependency versions of 
 
 
 
-## Supplementary tools
+## 11. Supplementary tools
 ### Exercises
 
 #### Starting an IOC in a procServ container

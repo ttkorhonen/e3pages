@@ -1,4 +1,4 @@
-# Anatomy of an e3 module
+# 5. Anatomy of an e3 module
 
 ## Lesson Overview
 

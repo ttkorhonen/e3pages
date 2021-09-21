@@ -1,4 +1,4 @@
-# Startup scripts in e3
+# 4. Startup scripts in e3
 
 ## Lesson overview
 
