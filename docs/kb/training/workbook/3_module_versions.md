@@ -111,7 +111,7 @@ It is important to understand the relationship between `EPICS_MODULE_TAG` and `E
 
 First, let us modify `EPICS_MODULE_TAG`; Use `master` instead of `tags/2.8.18` (Note that, as above, this is not recommended practice for a release version, but
 often makes sense during development). If you already have `master` as default, choose an arbitrary version and modify variables accordingly; available tags and
-branches can be found on the PSI StreamDevice release page: <https://github.com/paulscherrerinstitute/StreamDevice/releases>
+branches can be found on the PSI StreamDevice [release page](https://github.com/paulscherrerinstitute/StreamDevice/releases).
 
 Next, change `E3_MODULE_VERSION` to a different name (e.g. `e3training`). The convention here is to name the e3 module according to the module's version, but any name
 could technically be used during development. Note that there are some restrictions on valid module names.
