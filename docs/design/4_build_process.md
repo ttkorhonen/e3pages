@@ -90,9 +90,9 @@ e3 makes use of *require*'s build facilities. For a dive into *require*'s build 
 To begin with, if you are in an e3 wrapper directory, you can see some of the main targets available by typing `make help`
 ```console
 [iocuser@host:e3-iocStats]$ make help
---------------------------------------- 
+---------------------------------------
 Available targets
---------------------------------------- 
+---------------------------------------
 install         Install current module to $(EPICS_BASE)/require/$(E3_REQUIRE_VERSION)/siteMods
 uninstall       Uninstall the current module
 build           Build current module
@@ -101,13 +101,13 @@ debug           Displays information about the build process
 rebuild         Clean, build, and install the current module
 clean           Deletes temporary build files
 all             Initializes, patches, builds, and installs
-init            Syncs and checks out the tag $(EPICS_MODULE_TAG) for the submodule 
+init            Syncs and checks out the tag $(EPICS_MODULE_TAG) for the submodule
 cellbuild       Builds the module while also searching in $(E3_CELL_PATH) for dependencies
 cellinstall     Installs the module in a local directory $(E3_CELL_PATH)
 celluninstall   Remove the module from the local directory $(E3_CELL_PATH)
 cellvars        Print relevant environment variables for the local install
-patch           Apply Patch Files 
-patchrevert     Revert Patch Files 
+patch           Apply Patch Files
+patchrevert     Revert Patch Files
 test            Tests the current build
 existent        Show installed versions of the current module
 devinit         Initializes a dev setup, defined with configure/CONFIG_MODULE_DEV and configure/RELEASE_DEV
@@ -129,7 +129,7 @@ These are the targets that are used in most cases when building, debugging, test
 * `make patch`: This target will apply any module-specific patches. Patches are stored in `patch/Site/`. While not every module needs patches, it is an extremely good habit to start building a module with `make init patch` before building the module, since if you do not apply expected patches it is possible that the module will not build correctly. Patches can be removed with `make patchrevert`.
 * `make build`: This will build the module. This will compile all of the files specified in the variable `SOURCES` from the module makefile, as well as generate a number of necessary files for the installation process.
 * `make test`: This will perform a local installation of the module, and then try to start an IOC with that module.[^runiocsh] It will also perform any module-specific tests that are defined for that module.
-  
+
   These tests should be specified in `configure/module/RULES_MODULE` as dependencies of the target `module_tests`. For example,
   ```make
   module_tests: passing_test failing_test
@@ -174,7 +174,7 @@ A few variations on this are the following.
 
 These are targets that are useful to help diagnose issues, debug, or display information about the module.
 
-* `make debug`: Runs through the build process, but instead displays data that is collected and used throughout the build process (e.g. exactly which files are compiled) 
+* `make debug`: Runs through the build process, but instead displays data that is collected and used throughout the build process (e.g. exactly which files are compiled)
 * `make vars`: Displays a list of environment variables including the module install locations.
 * `make existent`: Displays the installed versions of the given module.
 
