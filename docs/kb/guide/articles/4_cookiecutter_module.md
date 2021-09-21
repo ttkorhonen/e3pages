@@ -36,7 +36,9 @@ Run the following command in the terminal to create a cookiecutter:
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 ```
 
+:::{note}
 If you have run it before, it will ask if you want to re-download the template; you should answer the default of 'yes', which ensures that you will use an up-to-date template.
+:::
 
 Cookiecutter then provides a list of prompts:
 
