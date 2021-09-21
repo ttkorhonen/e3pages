@@ -1,4 +1,4 @@
-# Article: e3 Makefile Cheatsheet
+# Article: e3 Cheatsheet
 
 
 ## What to build and install
