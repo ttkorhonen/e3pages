@@ -15,6 +15,7 @@ articles/4*
 articles/5*
 articles/6*
 articles/7*
+articles/8*
  ```
 
 

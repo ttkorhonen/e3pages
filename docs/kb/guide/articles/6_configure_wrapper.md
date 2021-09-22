@@ -19,6 +19,7 @@ ADCORE_DEP_VERSION:=3.10.0
 
 (iocstats_tree)=
 
+(makefile_variables)=
 ## The module Makefile
 
 The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is where we configure what gets built and how it gets built. For concreteness' sake, let us focus on a specific module: *iocStats*. To be explicit, we are currently looking at the makefile for version 3.1.16, built for *require* 3.4.1.
