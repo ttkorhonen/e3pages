@@ -31,10 +31,14 @@
 * `patch` - Applies any version-specific patches
 * `build` - Builds the module
 * `install` - Installs the module
-* `prebuild` - Run the given commands before each build
 * `clean` - Removes temporary build files
-* `test` - Runs basic test as well as any user-specified tests (dependencies of `module_tests`)
+* `test` - Runs basic test as well as any user-specified tests
 * `cellinstall` - Installs locally at `$(E3_CELL_PATH)`
 * `debug` - Prints out build variables
 * `existent` - Shows the versions that are installed
 * `vars` - Prints environment variables
+
+## custom build targets
+
+* `prebuild` - Runs a set of commands before each build
+* `module_tests` - User-defined tests that run as a part of `make test`
