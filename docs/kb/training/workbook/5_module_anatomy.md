@@ -130,7 +130,7 @@ The following additional `make` targets are of particular importance when workin
 * `make clean`: Deletes all of the temporary build files.
 * `make uninstall`: Removes the current module version (as defined in `CONFIG_MODULE`) from the e3 environment.
 * `make test`: Attempts to load the current module into an IOC, and runs any module-specific tests that have been defined.
-* `make cellinstall`: Installs the module in a local path (useful if you do not have write permissions to your e3 environment location). More on this in [Cell Mode](_file_does_not_exist.md)
+* `make cellinstall`: Installs the module in a local path (useful if you do not have write permissions to your e3 environment location). More on this in {ref}`cell_mode`.
 
 (patch_files)=
 ## Patch files

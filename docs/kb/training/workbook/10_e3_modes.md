@@ -12,6 +12,7 @@ This chapter covers several ways to work with e3 when building modules. If you a
 :::
 
 ---
+(cell_mode)=
 ## Cell mode
 
 Depending on your deployment settings, it is possible that you may have restricted access to deploy modules to an e3 environment. For example, there
