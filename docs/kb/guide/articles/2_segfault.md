@@ -1,3 +1,9 @@
+---
+orphan: true
+---
+% Remove this orphan definition when this document is added back into the
+% toctree
+
 # Segmentation fault 
 
 ```{admonition} Under Construction
