@@ -2,12 +2,6 @@
 
 # Article: The build process with *require*
 
-```{admonition} Under Construction
-:class: warning
-
-This page is still being written.
-```
-
 The e3 build process is a complicated bit of work. To recap, the overview is as follows:
 
 1. In the e3-wrapper directory: we collect some information and decide what build process we will perform (from `RULES_E3`), calling `make` in the module directory with information passed as in `CONFIG_E3_MAKEFILE`.
