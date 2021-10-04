@@ -20,7 +20,7 @@ Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in
 [iocuser@host:~]$ ls -lta /epics/base-7.0.5/require/3.4.1/
 ```
 
-In most cases when you have the above error, your system does not have the specified version of EPICS base and the require module. These are, as we know, defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
+In most cases when you have the above error, your system does not have the specified version of EPICS base and the _require_ module. These are, as we know, defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
 
 A quick-fix to this is to use e3 in local mode and specify the versions there:
 
@@ -47,7 +47,7 @@ make[3]: *** [install] Error 1
 
 ### Solution
 
-`require` will not overwrite a module where the version matches the `major.minor.patch+build` format. To reinstall a module version, you need to do the following:
+_require_ will not overwrite a module where the version matches the `major.minor.patch+build` format. To reinstall a module version, you need to do the following:
 
 ```console
 $ make uninstall
