@@ -1,16 +1,4 @@
----
-orphan: true
----
-% Remove this orphan definition when this document is added back into the
-% toctree
-
 # Build system troubleshooting 
-
-```{admonition} Under Construction
-:class: warning
-
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
-```
 
 ## Case 1
 
@@ -64,45 +52,5 @@ make[3]: *** [install] Error 1
 ```console
 $ make uninstall
 $ make install
-```
-
-## Case 3
-
-### Problem
-
-When we run `make init`, we may see the following sort of conflict with the git submodule:
-
-```console
-# --- snip snip ---
-
-git submodule update --remote --merge opcua/
-X11 forwarding request failed on channel 0
-Auto-merging devOpcuaSup/linkParser.cpp
-Auto-merging devOpcuaSup/devOpcua.cpp
-CONFLICT (content): Merge conflict in devOpcuaSup/devOpcua.cpp
-Auto-merging devOpcuaSup/UaSdk/SessionUaSdk.cpp
-CONFLICT (content): Merge conflict in devOpcuaSup/UaSdk/SessionUaSdk.cpp
-Auto-merging devOpcuaSup/UaSdk/ItemUaSdk.cpp
-Auto-merging devOpcuaSup/UaSdk/DataElementUaSdk.cpp
-CONFLICT (content): Merge conflict in devOpcuaSup/UaSdk/DataElementUaSdk.cpp
-Auto-merging devOpcuaSup/RecordConnector.cpp
-Auto-merging configure/CONFIG_OPCUA_VERSION
-CONFLICT (content): Merge conflict in configure/CONFIG_OPCUA_VERSION
-Automatic merge failed; fix conflicts and then commit the result.
-Unable to merge 'a52002c31e6d5d32a21c130af42e579ae17b5b6f' in submodule path 'opcua'
-make: *** [/epics/base-7.0.3/require/3.1.1/configure/RULES_E3:88: opcua] Error 2
-```
-
-This happens because the main module source repository `opcua` uses complicated branch and release rules. The `master` branch that e3 uses doesn't have enough information about release `v0.5.2` which exists in in branch `release/0.5`.
-
-### Solution
-
-Change the default branch in `.gitmodules` from `master` (undefined) to `release/0.5`: 
-
-```yaml
-[submodule "opcua"]
-  path = opcua
-  url = https://github.com/ralphlange/opcua
-  branch = release/0.5
 ```
 
