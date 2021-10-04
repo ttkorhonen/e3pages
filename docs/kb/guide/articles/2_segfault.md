@@ -1,16 +1,4 @@
----
-orphan: true
----
-% Remove this orphan definition when this document is added back into the
-% toctree
-
 # Segmentation fault 
-
-```{admonition} Under Construction
-:class: warning
-
-Please note that this portal currently is being set-up, and that content is evolving fairly rapidly. This specific warning will be removed once this page is in a reasonable state. 
-```
 
 ## Case 1
 
@@ -19,20 +7,29 @@ Please note that this portal currently is being set-up, and that content is evol
 Segmentation fault when iocsh.bash starts:
 
 ```console
-/epics/base-3.15.5/require/3.0.4/bin/iocsh.bash: line 131: 18208 Segmentation fault      (core dumped) softIoc${_PVA_} -D ${EPICS_BASE}/dbd/softIoc${_PVA_}.dbd "${IOC_STARTUP}" 2>&1
+[iocuser@host:~]$ iocsh.bash st.cmd
+...
+/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash: line 131: 18208 Segmentation fault      (core dumped) softIoc${_PVA_} -D ${EPICS_BASE}/dbd/softIoc${_PVA_}.dbd "${IOC_STARTUP}" 2>&1
 ```
 
 ### Solution
 
-Check where `core.xxxxx` file is.
+Run the IOC using `gdb` to try to identify the source of the problem.
 
 Execute the following command:
 
 ```console
-[iocuser@host:path/to/dir/]$ iocsh_gdb.bash core.18208 
+[iocuser@host:~]$ iocsh.bash -dg st.cmd
 ```
 
-You will notice it crashes.
+The IOC will still segmentation fault, and will return you to the `(gdb)`
+prompt, meaning that you are now in the `gdb` environment, and can start to
+investigate the cause of the problem.
+
+```note
+The following example shows a segmentation fault that occurred in an older
+version of EPICS base. Your exact output will be different to this.
+```
 
 ```console
 Program received signal SIGSEGV, Segmentation fault.
@@ -43,7 +40,8 @@ Missing separate debuginfos, use: debuginfo-install glibc-2.17-260.el7.x86_64 li
 (gdb) 
 ```
 
-Backtrace:
+Check the backtrace (`(gdb) bt`) to identify the source code file and line that
+caused the problem, and the sequence of function calls that lead to it.
 
 ```console
 (gdb) bt
