@@ -21,7 +21,7 @@ When we run any of the e3 `make` instructions (e.g. `make vars`, `make build`), 
 ```console
 configure/CONFIG:19: /epics/base-7.0.5/require/3.4.1/configure/CONFIG: No such file or directory
 /epics/base-7.0.5/require/3.4.1/configure/RULES_SITEAPPS: No such file or directory
-make: *** No rule to make target `/epics/base-7.0.5/require/3.4.1/configure/RULES_SITEMODS'.  Stop.
+make: *** No rule to make target '/epics/base-7.0.5/require/3.4.1/configure/RULES_SITEMODS'.  Stop.
 ```
 
 ### Solution
@@ -52,20 +52,20 @@ Of course modify the path above to where you have EPICS installed.
 When we run `make install` or `make devinstall`, we may see the following message:
 
 ```console
-rm: cannot remove '..../lib/linux-x86_64': Directory not empty
-
-rm: cannot remove '..../lib/linux-x86_64/.nfs000000004c0de98d00000007': Device or resource busy
+Error: /home/waynelewis/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/lib/linux-x86_64 already exists.
+Note: If you really want to overwrite then uninstall first.
+make[3]: *** [install] Error 1
 ```
 
 ### Solution
 
-An IOC may be running somewhere through NFS. We have to stop this IOC and exit any running process, then we can delete this directory if we would like to reinstall the application.
+`require` will not overwrite a module where the version matches the `major.minor.patch+build` format. To reinstall a module version, you need to do the following:
 
-The meaning of `.nfsXXXX` can be found in http://nfs.sourceforge.net/#faq_d2.
+```console
+$ make uninstall
+$ make install
+```
 
-### Note
-
-For user
 ## Case 3
 
 ### Problem
