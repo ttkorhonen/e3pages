@@ -1,4 +1,4 @@
-# Segmentation fault 
+# How to: Investigate a segmentation fault 
 
 ## Case 1
 

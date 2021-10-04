@@ -1,4 +1,4 @@
-# Build system troubleshooting 
+# How to: Troubleshoot build system errors
 
 ## Case 1
 
