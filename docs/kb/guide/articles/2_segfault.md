@@ -26,10 +26,10 @@ The IOC will still segmentation fault, and will return you to the `(gdb)`
 prompt, meaning that you are now in the `gdb` environment, and can start to
 investigate the cause of the problem.
 
-```note
+:::{note}
 The following example shows a segmentation fault that occurred in an older
 version of EPICS base. Your exact output will be different to this.
-```
+:::
 
 ```console
 Program received signal SIGSEGV, Segmentation fault.
@@ -91,7 +91,7 @@ No symbol table info available.
 
 Check the current thread:
 
-```
+```console
 (gdb) info threads
   Id   Target Id         Frame 
   26   Thread 0x7fffceef6700 (LWP 18948) "scan-0.1" 0x00007ffff663dd12 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
@@ -107,7 +107,7 @@ Check the current thread:
 
 Quit gdb.
 
-```
+```console
 (gdb) quit
 A debugging session is active.
 
