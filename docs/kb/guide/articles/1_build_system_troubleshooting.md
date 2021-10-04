@@ -16,31 +16,32 @@ Please note that this portal currently is being set-up, and that content is evol
 
 ### Problem
 
-When we run `make vars` or `make build`, we may see the following message:
+When we run any of the e3 `make` instructions (e.g. `make vars`, `make build`), we may see the following message:
 
 ```console
-configure/CONFIG:20: /epics/base-7.0.1.1/require/3.0.4/configure/CONFIG: No such file or directory
-/epics/base-7.0.1.1/require/3.0.4/configure/RULES_SITEAPPS: No such file or directory
-make: *** No rule to make target `/epics/base-7.0.1.1/require/3.0.4/configure/RULES_SITEAPPS'.  Stop.
+configure/CONFIG:19: /epics/base-7.0.5/require/3.4.1/configure/CONFIG: No such file or directory
+/epics/base-7.0.5/require/3.4.1/configure/RULES_SITEAPPS: No such file or directory
+make: *** No rule to make target `/epics/base-7.0.5/require/3.4.1/configure/RULES_SITEMODS'.  Stop.
 ```
 
 ### Solution
 
-Look up the declaration of `EPICS_BASE` in `configure/RELEASE` or `configure/RELEASE_DEV` file, and check the physical location of `EPICS_BASE`:
+Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in `configure/RELEASE` or `configure/RELEASE_DEV` file, and check that the physical location of `EPICS_BASE\require/E3_REQUIRE_VERSION` exists on your system:
 
 ```console
-[iocuser@host:~]$ ls -lta /epics/base-7.0.1.1/require/3.0.4/
+[iocuser@host:~]$ ls -lta /epics/base-7.0.5/require/3.4.1/
 ```
 
-In most cases when you have the above error, your system doesn't have the specified version of EPICS base and the require module. These are as we know defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
+In most cases when you have the above error, your system does not have the specified version of EPICS base and the require module. These are, as we know, defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
 
-A quick-fix to this is to use e3 in local mode and specify the version there:
+A quick-fix to this is to use e3 in local mode and specify the versions there:
 
 ```console
-[iocuser@host:~]$ echo "EPICS_BASE=/home/root/epics/base-7.0.1.1" > configure/RELEASE_DEV.local
+[iocuser@host:~]$ echo "EPICS_BASE=/home/iocuser/epics/base-7.0.5" > configure/RELEASE.local
+[iocuser@host:~]$ echo "E3_REQUIRE_VERSION=3.4.1" >> configure/RELEASE.local
 ```
 
-> Of course modify the path above to where you have EPICS installed.
+Of course modify the path above to where you have EPICS installed.
 
 ---
 
@@ -51,7 +52,7 @@ A quick-fix to this is to use e3 in local mode and specify the version there:
 When we run `make install` or `make devinstall`, we may see the following message:
 
 ```console
-rm: cannot remove '..../lib/linux-x86_ 64': Directory not empty
+rm: cannot remove '..../lib/linux-x86_64': Directory not empty
 
 rm: cannot remove '..../lib/linux-x86_64/.nfs000000004c0de98d00000007': Device or resource busy
 ```
@@ -62,6 +63,9 @@ An IOC may be running somewhere through NFS. We have to stop this IOC and exit a
 
 The meaning of `.nfsXXXX` can be found in http://nfs.sourceforge.net/#faq_d2.
 
+### Note
+
+For user
 ## Case 3
 
 ### Problem
