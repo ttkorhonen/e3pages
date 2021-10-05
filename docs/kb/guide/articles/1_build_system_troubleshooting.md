@@ -14,7 +14,7 @@ make: *** No rule to make target '/epics/base-7.0.5/require/3.4.1/configure/RULE
 
 ### Solution
 
-Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in `configure/RELEASE` or `configure/RELEASE_DEV` file, and check that the physical location of `EPICS_BASE\require/E3_REQUIRE_VERSION` exists on your system:
+Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in `configure/RELEASE` or `configure/RELEASE_DEV` file, and check that the physical location of `EPICS_BASE/require/E3_REQUIRE_VERSION` exists on your system:
 
 ```console
 [iocuser@host:~]$ ls -lta /epics/base-7.0.5/require/3.4.1/
