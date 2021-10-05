@@ -1,4 +1,4 @@
-# How to: Investigate a segmentation fault 
+# How to: Investigate a segmentation fault
 
 ## Case 1
 
@@ -16,9 +16,26 @@ Segmentation fault when iocsh.bash starts:
 
 Run the IOC using `gdb` to try to identify the source of the problem.
 
-Execute the following command:
+:::{note}
+The following two paragraphs and the command block need to be updated
+when the next e3 environment after `base-7.0.5/require-3.4.1` is built, as it
+will natively include the `linux-x86_64-debug` architecture.
+:::
+
+Some e3 environments have been built with `debug` architectures. At the moment,
+the `/epics-test/base-7.0.5-debug` e3 environment has the `linux-x86_64-debug`
+architecture available. After `base-7.0.5/require-3.4.1` the
+`linux-x86_64-debug` architecture will be available in all e3 environments.
+
+Execute the following commands (assuming you have the `/epics-test` e3
+environment mounted from the shared file system). If you do not have the
+`/epics-test` environment available, skip to the third command. You will still
+be able to use the `gdb` debugger, but will not have all the symbol names
+available to you.
 
 ```console
+[iocuser@host:~]$ source /epics-test/base-7.0.5-debug/require/3.4.1/bin/setE3Env.bash
+[iocuser@host:~]$ export EPICS_HOST_ARCH=linux-x86_64-debug
 [iocuser@host:~]$ iocsh.bash -dg st.cmd
 ```
 
@@ -37,7 +54,7 @@ Program received signal SIGSEGV, Segmentation fault.
 epicsMutexLock (pmutexNode=0x0) at ../../../src/libCom/osi/epicsMutex.cpp:143
 143             epicsMutexOsdLock(pmutexNode->id);
 Missing separate debuginfos, use: debuginfo-install glibc-2.17-260.el7.x86_64 libgcc-4.8.5-36.el7.x86_64 libstdc++-4.8.5-36.el7.x86_64 ncurses-libs-5.9-14.20130511.el7_4.x86_64 readline-6.2-10.el7.x86_64
-(gdb) 
+(gdb)
 ```
 
 Check the backtrace (`(gdb) bt`) to identify the source code file and line that
@@ -93,7 +110,7 @@ Check the current thread:
 
 ```console
 (gdb) info threads
-  Id   Target Id         Frame 
+  Id   Target Id         Frame
   26   Thread 0x7fffceef6700 (LWP 18948) "scan-0.1" 0x00007ffff663dd12 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
   25   Thread 0x7fffcf0f7700 (LWP 18947) "scan-0.2" 0x00007ffff663dd12 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
   24   Thread 0x7fffcf2f8700 (LWP 18946) "scan-0.5" 0x00007ffff663dd12 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
