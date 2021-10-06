@@ -22,10 +22,11 @@ when the next e3 environment after `base-7.0.5/require-3.4.1` is built, as it
 will natively include the `linux-x86_64-debug` architecture.
 :::
 
-Some e3 environments have been built with `debug` architectures. At the moment,
-the `/epics-test/base-7.0.5-debug` e3 environment has the `linux-x86_64-debug`
-architecture available. After `base-7.0.5/require-3.4.1` the
-`linux-x86_64-debug` architecture will be available in all e3 environments.
+Some ESS e3 environments have been built with `debug` architectures. At the
+moment, the `/epics-test/base-7.0.5-debug` ESS e3 environment has the
+`linux-x86_64-debug` architecture available.[^esse3envs] After
+`base-7.0.5/require-3.4.1` the `linux-x86_64-debug` architecture will be
+available in all e3 environments.[^adddebugarch]
 
 Execute the following commands (assuming you have the `/epics-test` e3
 environment mounted from the shared file system). If you do not have the
@@ -132,3 +133,11 @@ A debugging session is active.
 
 Quit anyway? (y or n) y
 ```
+[^esse3envs]: The `/epics-test` e3 environment is specific to the ESS site e3
+  installation. It is provided as a location for testing new e3 environments.
+
+[^adddebugarch]: To add the `linux-x86_64-debug` architecture to a local build
+    of e3, add the following line to `e3-base/configure/CONFIG_BASE`:
+    ```makefile
+    E3_CROSS_COMPILER_TARGET_ARCHS+=linux-x86_64-debug
+    ```
