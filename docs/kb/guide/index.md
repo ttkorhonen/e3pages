@@ -10,14 +10,12 @@ Users are encouraged to add their own articles, through a pull request on this p
  :glob:
 articles/1*
 articles/2*
+articles/3*
 articles/4*
 articles/5*
 articles/6*
 articles/7*
 articles/8*
  ```
-% add these back into {toctree} later
-% articles/3*
-
 
 [^1]: Before doing so, see `CONTRIBUTING.md` at the root level of e3 pages' source repository.
