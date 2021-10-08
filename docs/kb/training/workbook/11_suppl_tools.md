@@ -63,7 +63,7 @@ No other text occurs, since the IOC is up and running. If you press enter, or ty
 then you can interact with the IOC.
 
 :::{note}
-As in [Chapter 4](4_startup_scripts.md), the command to escape to the `telnet` console is `^]`. 
+As in [Chapter 4](4_startup_scripts.md), the command to escape to the `telnet` console is `^]`.
 :::
 
 If you try to exit the IOC by typing `exit` or with `^C`, then the default behaviour of `procServ` is to restart the IOC.
@@ -385,4 +385,3 @@ In the above examples, 1001 is the user ID of this author's `iocuser` account.
 1. Try to set up a unit file to execute procServ to listen to a TCP socket instead of an UDS. Can you also get conserver to work with this?
 2. Let us assume you had your e3 installation on a NFS server. Explain to yourself what you would modify to get above examples to work with this.
 3. The template unit file we created could be improved in many ways. Can you think of a few?
-

@@ -82,19 +82,19 @@ None
 	 contents of another file and execute those commands in the IOC shell. We
 	 recommend using `iocshLoad` instead of `<`. [Redirection
 	 commands](https://epics.anl.gov/base/R3-15/6-docs/AppDevGuide/IOCShell.html#x19-73900018.2.4)
-	 
+
 2. The short answer to this question is "It depends.".
 
    In some cases, placing commands in a different order in the startup script
    makes no difference. This is true for commands that do not have any dependence
    on previous commands, including loading of database files. It also applies to
    the `iocshLoad` commands for startup script snippets, assuming the snippets
-   are all independent of each other (e.g. referencing different devices). 
+   are all independent of each other (e.g. referencing different devices).
 
    Any commands that call driver functions directly and depend on previous calls
    having been made (e.g. to create a named asyn port) need to be called in a
    specific order so that the required code has been executed and objects
-   created and/or memory allocated in the correct order. 
+   created and/or memory allocated in the correct order.
 
    `iocInit` must not be called until all databases and database definitions
    have been loaded, as no new records can be added after `iocInit` has run.
@@ -452,7 +452,7 @@ None
   calc_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/
   <snip>
   ```
-  
+
   *asyn*, *pcre*, and *calc* are all dependencies of *stream*, while *sscan* and *sequencer* are dependencies of *calc*.
   All of these modules must then be loaded, and *require* will then specify the respective paths.
 
@@ -598,12 +598,12 @@ then you can modify a single file in order to update the dependency versions of 
   Note that this is one example of what is meant by the fact that *require* can only perform rudimentary dependency resolution.
 - The dependency information is stored in the file `$module.dep`:
   ```console
-  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep 
+  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep
   # Generated file. Do not edit.
   asyn 4.41.0+0
   calc 3.7.4+0
   pcre 8.44.0+0
-  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/e3training/lib/linux-x86_64/stream.dep 
+  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/e3training/lib/linux-x86_64/stream.dep
   # Generated file. Do not edit.
   asyn 4.42.0+0
   calc 3.7.4+0
@@ -613,7 +613,7 @@ then you can modify a single file in order to update the dependency versions of 
 #### Dependency resolution limitations
 
 - If you were to release a new version of *asyn* after the IOC has been developed then as in the example above, you will have an inconsistency in loaded and dependent versions of *asyn*, causing the IOC to fail to start up.
-  
+
   This is a challenge for a maintainer of a shared environment because this means that a functional IOC can fail due to changes in the environment that seem unrelated to the IOC.
 
   In this case, the fix is simple. An IOC should only load top-level modules (i.e. *stream*, but not *asyn*). However, this does not address all cases
@@ -628,9 +628,9 @@ then you can modify a single file in order to update the dependency versions of 
    [iocuser@host:e3]$ ./e3.bash -so vars
    >> Vertical display for the selected modules :
 
-    Modules List 
+    Modules List
        0 : ps/e3-caenelsmagnetps
-       1 : ps/e3-fug      # Here it is! 
+       1 : ps/e3-fug      # Here it is!
        2 : ps/e3-sairem
        3 : ps/e3-sorensen
        4 : ps/e3-tdklambdagenesys
@@ -646,7 +646,7 @@ then you can modify a single file in order to update the dependency versions of 
    ```
 3. `e3-fug` knows that stream is a dependency due to the variable `REQUIRED` used in `fug.Makefile`:
    ```make
-   [iocuser@host:e3-fug]$ grep  stream fug.Makefile 
+   [iocuser@host:e3-fug]$ grep  stream fug.Makefile
    REQUIRED += stream
    stream_VERSION=$(STREAM_DEP_VERSION)
    ```
@@ -665,7 +665,7 @@ then you can modify a single file in order to update the dependency versions of 
 #### External modules
 
 - `make init patch` should always be run before building a new module. This will do two things:
-  1. Make sure that the submodule is initialised correctly 
+  1. Make sure that the submodule is initialised correctly
   2. Make sure that all of the correct patches have been applied
   Without these two steps, it is possible that the module you are trying to build might not build as expected, or could even fail to build at all.
 
@@ -741,7 +741,7 @@ then you can modify a single file in order to update the dependency versions of 
    seq sncExample "user=test_ioc"
    sevr=info Sequencer release 2.2.8+0, compiled Fri May  7 14:04:03 2021
    sevr=info Spawning sequencer program "sncExample", thread 0x189bc90: "sncExample"
-   # Set the IOC Prompt String One 
+   # Set the IOC Prompt String One
    epicsEnvSet IOCSH_PS1 "localhost-5721 > "
    #
    sevr=info sncExample[0]: all channels connected & received 1st monitor
@@ -858,8 +858,8 @@ then you can modify a single file in order to update the dependency versions of 
 
 ### Assignments
 1. In order to change the install path used in *cell mode*, you need to redefine `E3_CELL_PATH`. This is best done in a `CONFIG_CELL.local` file either in the configure directory, or in the parent directory of the wrapper.
-   
-   Alternatively, you can also just export the variable into the environment via, for example, 
+
+   Alternatively, you can also just export the variable into the environment via, for example,
    ```console
    [iocuser@host:e3-module]$ export E3_CELL_PATH=/absolute/path/to/cellMods
    [iocuser@host:e3-module]$ make cellinstall
@@ -871,7 +871,7 @@ then you can modify a single file in order to update the dependency versions of 
    Note that the module search will prioritise the last specified path.
 3. As seen {ref}`before <dot_local_file>`, one should create a `CONFIG_MODULE_DEV.local` file with an updated `E3_MODULE_DEV_GITURL`, which git will ignore.
 4. Technically, `make devdistclean` does two things: it runs `make devclean` and then deletes the dev source directory. However, that first step is not relevant as deleting the source tree also gets rid of the temporary files.
-   
+
    This is not really a necessary make target, but there is some value in having a common interface for building, cleaning, installing, etc. a module.
 5. Like all development mode tasks, there is a target for this: if you have patch files in `e3-module/patch/Site`, then running `make devpatch` will apply them to the development source files.
 
@@ -947,4 +947,3 @@ then you can modify a single file in order to update the dependency versions of 
                         ${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/bin/iocsh.bash \
                         /opt/iocs/e3-ioc-%i/st.cmd
    ```
-

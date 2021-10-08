@@ -15,7 +15,7 @@ When building an IOC, you may want to include records that are not part of EPICS
 the [*calc*](https://github.com/epics-modules/calc) modules), which is like the *calc* record from EPICS base, but for arrays. This can be used, for
 example, to perform linear conversions on *waveform* records.
 
-### Create a new module 
+### Create a new module
 
 Let us begin by creating a module to work with, following the instructions in [Chapter 8](8_building_modules.md). We want to create a local module called
 *linconv*, which will sit in a wrapper called *e3-linconv*. Within that wrapper, create a `linconv.db` file with the following contents.
@@ -136,16 +136,16 @@ pattern { P,        PID,    INP,        OUT,        LOPR,   HOPR,   DRVL,   DRVH
 and save it as `pid.substitutions` in the `Db/` directory of your new module.
 
 In order to inflate the `.substitutions` file, you need to let the e3 build system know about it. The default `mypid.Makefile` is almost correct, with
-the main change that you need to uncomment the line defining the `SUBS` variable near the bottom. Once you do that and try to install it, you should see the 
+the main change that you need to uncomment the line defining the `SUBS` variable near the bottom. Once you do that and try to install it, you should see the
 following.
 
 ```console
 [iocuser@host:e3-mypid]$ make build install
 # --- snip snip ---
 make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
-Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db 
+Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db
 msi: Can't open file 'pid_control.db'
-input: '' at 
+input: '' at
 make[1]: *** [mypidApp/Db/pid.substitutions] Error 1
 make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 make: *** [db] Error 2
@@ -177,7 +177,7 @@ What is that `+0` doing there?
 You should have noticed by now that when you install a module (e.g. *asyn* version `4.41.0`) it is actually installed as `4.41.0+0`. What is this `+0`?
 This is the *build number*. These are used in a number of different deployment systems to distinguish between builds where, for example, the source code may not
 have changed but some of the metadata or dependencies have. This allows us to have, for example, two copies of the same version of *StreamDevice* that
-may depend on different versions of *asyn*. 
+may depend on different versions of *asyn*.
 
 The default behaviour in e3 is the following.
 * If you request a specific version inclusive of a build number, that version will be loaded or built against.
@@ -199,7 +199,7 @@ After the above changes, you should be able to build your module correctly. That
 [iocuser@host:e3-pid]$ make install
 # --- snip snip ---
 make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
-Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db 
+Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db
 make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 # --- snip snip ---
 ```

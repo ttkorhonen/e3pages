@@ -113,7 +113,7 @@ By default, the headers are all flatly installed into the `include/` directory; 
 └── devIocStatsOSD.h
 ```
 
-If you have two files in separate directories but with the same name, then you cannot install them this way. 
+If you have two files in separate directories but with the same name, then you cannot install them this way.
 
 From *require* 3.3.0 onwards, you can define the `KEEP_HEADER_SUBDIRS` variable in the module Makefile; `KEEP_HEADER_SUBDIRS` should contain the list of top-level header directories where you want to train the directory structure in the installation process.
 
@@ -133,7 +133,7 @@ SOURCES += $(DEVIOCSTATS)/devIocStatsString.c
 SOURCES += $(DEVIOCSTATS)/devIocStatsWaveform.c
 SOURCES += $(DEVIOCSTATS)/devIocStatsSub.c
 SOURCES += $(DEVIOCSTATS)/devIocStatsTest.c
- 
+
 SOURCES += $(DEVIOCSTATS)/os/Linux/osdCpuUsage.c
 SOURCES += $(DEVIOCSTATS)/os/Linux/osdCpuUtilization.c
 SOURCES += $(DEVIOCSTATS)/os/Linux/osdFdUsage.c
@@ -172,7 +172,7 @@ calc_VERSION=$(CALC_DEP_VERSION)
 
 Note that `${CALC_DEP_VERSION}` should be specified in `configure/CONFIG_MODULE`. In principle it does not need to be there, but it is clearer and easier to maintain if the dependencies are consistently placed in the same file.
 
-Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module. 
+Especially note that the variable name `${calc_VERSION}` must match exactly (including case) the name of the installed module.
 
 :::{warning}
 Joint with the release of *require* 3.3.0 there was a switch to all modules being lower-case. So if you have a dependency on *ADCore*, then from *require* 3.3.0 onwards you should use the definition:

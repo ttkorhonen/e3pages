@@ -74,7 +74,7 @@ build install debug:: ${IGNOREFILES}
 
 `EPICS_LOCATION` is defined in `CONFIG_E3_MAKEFILE` to be the same as `EPICS_BASE` from the module configuration. That is, if `EPICS_BASE` is specified to be `/home/simonrose/epics/base-7.0.4`, then the above code will run the next stage of the build process once with `EPICSVERSION=7.0.4`.
 
-Note that `build`, `install`, and `debug` all use the same recursive call to `make`. 
+Note that `build`, `install`, and `debug` all use the same recursive call to `make`.
 
 ### Stage 3: Defining `T_A`
 
@@ -257,7 +257,7 @@ The next steps are complicated due to being shared among different configure fil
    HDEPENDS_COMP.c   = $(COMPILE.c) $(HDEPENDS_COMPFLAGS) $(HDEPENDS_ARCHFLAGS)
    ```
 
-   i.e. it compiles the source file with a special flag that produces not only `file.o`, but a dependency file `file.d`. 
+   i.e. it compiles the source file with a special flag that produces not only `file.o`, but a dependency file `file.d`.
 
    To wit, on our first pass through in stage 5 we compile all of our source files to produce object files and dependency files.
 

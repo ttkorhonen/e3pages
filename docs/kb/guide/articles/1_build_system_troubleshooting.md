@@ -53,4 +53,3 @@ _require_ will not overwrite a module where the version matches the `major.minor
 $ make uninstall
 $ make install
 ```
-

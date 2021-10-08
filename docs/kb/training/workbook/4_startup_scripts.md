@@ -152,10 +152,10 @@ Run the following command to print your PVs, and inspect the output file:
 
 ```console
 [iocuser@home:cmds]$ cd ..
-[iocuser@home:4_startup_scripts_in_e3]$ bash ../tools/caget_pvs.bash -l IOC-NNNNNNNN_PVs.list 
+[iocuser@home:4_startup_scripts_in_e3]$ bash ../tools/caget_pvs.bash -l IOC-NNNNNNNN_PVs.list
 ```
 
-(where `NNNNNNNN` is your IOC's random number.) 
+(where `NNNNNNNN` is your IOC's random number.)
 
 ---
 
@@ -164,4 +164,3 @@ Run the following command to print your PVs, and inspect the output file:
 1. What other parameters can be passed to `iocStats`, `recsync`, and `autosave`?
 2. Are there any improvements that can be made to the last script, `5.cmd`?
 3. Can you modify this script to communicate with more than one simulated device at the same time?
-

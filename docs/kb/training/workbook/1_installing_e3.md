@@ -1,4 +1,4 @@
-# 1. Installing e3 
+# 1. Installing e3
 
 ## Lesson overview
 
@@ -71,7 +71,7 @@ Examples:
 
 ```console
 [iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.5 setup
->> 
+>>
   The following configuration for e3 installation
   will be generated :
 
@@ -91,7 +91,7 @@ Examples:
 
 ```console
 [iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.5 -t /opt/epics setup
->> 
+>>
   The following configuration for e3 installation
   will be generated :
 
@@ -114,7 +114,7 @@ Examples:
 Configuring EPICS per above directions will generate the following three `*.local` files.
 
 * `CONFIG_BASE.local`
-  
+
   ```bash
   E3_EPICS_PATH:=/epics
   EPICS_BASE_TAG:=tags/R7.0.5
@@ -126,7 +126,7 @@ Configuring EPICS per above directions will generate the following three `*.loca
   ```
 
 * `RELEASE.local`
-  
+
   ```bash
   EPICS_BASE:=/epics/base-7.0.5
   E3_REQUIRE_NAME:=require
@@ -134,7 +134,7 @@ Configuring EPICS per above directions will generate the following three `*.loca
   ```
 
 * `REQUIRE_CONFIG_MODULE.local`
-  
+
   ```bash
   EPICS_MODULE_TAG:=tags/3.4.1
   ```
@@ -195,7 +195,7 @@ any other groups. Note that there are a few ESS-specific modules in here, most n
 [iocuser@host:e3]$ ./e3.bash -c vars
 >> Vertical display for the selected modules :
 
- Modules List 
+ Modules List
     0 : core/e3-auth
     1 : core/e3-autosave
     2 : core/e3-caPutLog
@@ -224,7 +224,7 @@ This group contains those EPICS modules that are used for communication with spe
 [iocuser@host:e3]$ bash e3.bash -n vars
 >> Vertical display for the selected modules :
 
- Modules List 
+ Modules List
     0 : core/e3-auth
     1 : core/e3-autosave
     2 : core/e3-caPutLog
@@ -261,7 +261,7 @@ you should add the `-o` flag like
 ```console
 [iocuser@host:e3]$ bash e3.bash -no vars
 >> Vertical display for the selected modules :
-Modules List 
+Modules List
    0 : communication/e3-modbus
    1 : communication/e3-ipmiComm
    2 : communication/e3-motor
@@ -282,7 +282,7 @@ This group contains the necessary modules to work with camera-type sensors. This
 [iocuser@host:e3]$ ./e3.bash -ao vars
 >> Vertical display for the selected modules :
 
- Modules List 
+ Modules List
     0 : area/e3-ADSupport
     1 : area/e3-ADCore
     2 : area/e3-ADSimDetector
@@ -316,11 +316,11 @@ To install the core, timing, and area detector groups
 ### Options
 
 The mod argument contain these - individually accessible - steps:
- 
-* `cmod`: Clean  
-* `gmod`: Clone  
-* `imod`: Initiate  
-* `bmod`: Build and install  
+
+* `cmod`: Clean
+* `gmod`: Clone
+* `imod`: Initiate
+* `bmod`: Build and install
 
 And the *makefile* rules that can be used for a module are:
 
@@ -407,7 +407,7 @@ require: REQMOD-791F5F3:FAISERV-21664:MODULES[19] = "MCoreUtils"
 require: REQMOD-791F5F3:FAISERV-21664:VERSIONS[19] = "1.2.1"
 require: REQMOD-791F5F3:FAISERV-21664:MOD_VER+="MCoreUtils 1.2.1"
 iocRun: All initialization complete
-791f5f3.faiserv.21660 > 
+791f5f3.faiserv.21660 >
 ```
 
 ---

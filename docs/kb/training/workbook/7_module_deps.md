@@ -14,7 +14,7 @@ In this lesson, you will learn how to do the following:
 ## Dependent environment variables
 
 One of the key ideas with e3 (arguably, *the* key idea) is the management of dependencies of a given module in a common, structured way. That is,
-if a module A depends on a module B, then you should only need to load A; module B should be loaded and handled automatically (and so on, 
+if a module A depends on a module B, then you should only need to load A; module B should be loaded and handled automatically (and so on,
 recursively). There are a few pieces that manage this.
 
 Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables `*DEP_VERSION` in the output:
@@ -22,7 +22,7 @@ Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables `
 [iocuser@host:e3-stream]$ make vars | grep DEP_VERSION
 ASYN_DEP_VERSION = 4.41.0
 CALC_DEP_VERSION = 3.7.4
-EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET PCRE_DEP_VERSION CALC_DEP_VERSION ASYN_DEP_VERSION  
+EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET PCRE_DEP_VERSION CALC_DEP_VERSION ASYN_DEP_VERSION
 PCRE_DEP_VERSION = 8.44.0
 ```
 
@@ -104,7 +104,7 @@ If the new version of *StreamDevice* and the old version of *asyn* are compatibl
 This assumes that the list of source files for *StreamDevice* have not changed. If they have, you will have to modify `StreamDevice.Makefile` to account for any new or removed source files.
 :::
 
-If the new version of *StreamDevice* is not compatible with *asyn*, then you will need to install a new version of *asyn* in the current e3 environment. The 
+If the new version of *StreamDevice* is not compatible with *asyn*, then you will need to install a new version of *asyn* in the current e3 environment. The
 procedure for that is also the same as in [Chapter 3](3_module_versions.md). We can start by checking the current version and seeing what is installed, and then
 installing the necessary version (4.42.0)
 ```console
@@ -196,7 +196,7 @@ by running any of the following:
 
 *require* is not perfect when it comes to dependency resolution. Consider the following file:
 ```console
-[iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep 
+[iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep
 # Generated file. Do not edit.
 asyn 4.41.0+0
 calc 3.7.4+0
@@ -282,4 +282,3 @@ There is another kind of dependency, the *run-time dependency*. This is often as
 
 2. Look through temporary build files. Can you see where *stream* is referenced there?
 3. How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The configuration files are only part of the story.
-

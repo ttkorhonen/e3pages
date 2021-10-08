@@ -162,7 +162,6 @@ If the IOC starts up correctly (you will have to have installed the core modules
    - `iocshLoad`
    - `iocInit`
    - `>`
-   - `<` 
+   - `<`
 
 2. What happens if you place the commands in a different order in the startup script?
-

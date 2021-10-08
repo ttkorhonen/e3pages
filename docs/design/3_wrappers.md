@@ -35,4 +35,3 @@ Embedded file-trees are recommended for ESS-developed modules that the community
 :::
 
 To create a wrapper, see {ref}`cookiecutter_wrapper` and {ref}`wrapper_config`. You may also want to go through the {ref}`training_series`.
-

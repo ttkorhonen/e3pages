@@ -26,4 +26,3 @@ And IOCs are kept under:
 - <https://gitlab.esss.lu.se/ioc-lab>
 - <https://gitlab.esss.lu.se/ioc-test>
 - <https://gitlab.esss.lu.se/ioc-prod>
-

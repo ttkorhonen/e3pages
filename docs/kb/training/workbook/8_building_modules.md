@@ -23,9 +23,9 @@ Modules within e3 are essentially the core component that enables building of an
 communication protocols. Modules will often be collected from the EPICS community (and sometimes modified), but are also developed
 in-house.
 
-### Modules 
+### Modules
 
-Many module originate from the broader EPICS community. Some examples are [asyn](https://github.com/epics-modules/asyn), 
+Many module originate from the broader EPICS community. Some examples are [asyn](https://github.com/epics-modules/asyn),
 [iocStats](https://github.com/epics-modules/iocStats), [mrfioc2](https://github.com/epics-modules/mrfioc2), or any of the
 [Area Detector modules](https://github.com/areaDetector). To see which of these modules are installed in an e3 environment, you can
 simply look at the contents of `E3_SITEMODS_PATH` as previously discussed in [Chapter 6](6_e3_vars.md).
@@ -103,14 +103,14 @@ The idea behind this is that you do not need to maintain a local fork, but that 
 When you use the cookiecutter recipe it will prompt you for some information needed to create the wrapper.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
-company [European Spallation Source ERIC]: 
+company [European Spallation Source ERIC]:
 module_name [mymodule]: fimscb                                 # Update the module name
-summary [EPICS fimscb module]: 
+summary [EPICS fimscb module]:
 full_name [Your name]:                                         # Fill in your name
 email [your.name@ess.eu]:                                      # and email
-epics_base_version [7.0.5]: 
-epics_base_location [/epics/base-7.0.5]: 
-require_version [3.4.1]: 
+epics_base_version [7.0.5]:
+epics_base_location [/epics/base-7.0.5]:
+require_version [3.4.1]:
 git_repository [ ... ]: https://github.com/icshwi/fimscb.git   # And update the URL
 ```
 
@@ -121,7 +121,7 @@ If the git repository that you add exists and is public, then cookiecutter will 
 next section) will be created.
 :::
 
-Congratulations, you have just created an e3 wrapper! However, the wrapper is not configured correctly yet. If you try to build the module then you should see the 
+Congratulations, you have just created an e3 wrapper! However, the wrapper is not configured correctly yet. If you try to build the module then you should see the
 following output
 ```console
 [iocuser@host:e3-fimscb]$ make init patch build install
@@ -262,14 +262,14 @@ EPICS functionality can be shared with the broader community, instead of just th
 Create a cookiecutter wrapper as above, but this time enter `none` for the git URL.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
-company [European Spallation Source ERIC]: 
+company [European Spallation Source ERIC]:
 module_name [mymodule]: clock                     # Update the module name
-summary [EPICS clock module]: 
-full_name [Your name]: 
-email [your.name@ess.eu]: 
-epics_base_version [7.0.5]: 
-epics_base_location [/epics/base-7.0.5]: 
-require_version [3.4.1]: 
+summary [EPICS clock module]:
+full_name [Your name]:
+email [your.name@ess.eu]:
+epics_base_version [7.0.5]:
+epics_base_location [/epics/base-7.0.5]:
+require_version [3.4.1]:
 git_repository [ ... ]: none                      # Leave this as "none" or any non-valid URL
 ```
 This will create a new wrapper. The default behaviour of cookiecutter is to put in a template based on `makeBaseApp.pl` from EPICS

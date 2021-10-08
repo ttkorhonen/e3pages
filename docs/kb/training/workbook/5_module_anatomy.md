@@ -89,7 +89,7 @@ What do each of these parts represent?
 
 Next, look at the wrapper repository for [iocStats](https://gitlab.esss.lu.se/e3/wrappers/core/e3-iocStats.git) on Gitlab.
 
-The magic number is **4df9e878** - can you see what it refers to? After finding it, verify this number in the output of `git submodule status`. 
+The magic number is **4df9e878** - can you see what it refers to? After finding it, verify this number in the output of `git submodule status`.
 
 |![Import Example](imgs/ch5-fig1.png)|
 | :---: |
@@ -158,7 +158,7 @@ e3-base/patch/Site/R7.0.5/add_pvdatabase_nt_softIocPVA.p0.patch
 ```
 
 The patch files that would be stored in `e3-base/patch/R7.0.5` are EPICS community patch files. These are due to issues that have been resolved
-at the community level, but have not yet made it into a release of EPICS base. At the moment, new releases of EPICS base are occurring several 
+at the community level, but have not yet made it into a release of EPICS base. At the moment, new releases of EPICS base are occurring several
 times per year, so there has been less of a need to populate this directory.
 
 The patch files in `e3-base/patch/Site/R7.0.5`, in contrast, are for site-specific purposes. These are changes that are not to fix issues with
@@ -169,12 +169,12 @@ index 0735f5598..3977a6a03 100644
 --- configure/RULES_BUILD
 +++ configure/RULES_BUILD
 @@ -327,7 +327,7 @@ $(LOADABLE_SHRLIBNAME): $(LOADABLE_SHRLIB_PREFIX)%$(LOADABLE_SHRLIB_SUFFIX):
- 
+
  $(LIBNAME) $(SHRLIBNAME) $(LOADABLE_SHRLIBNAME): | $(INSTALL_LIB)
  $(INSTALL_LIB):
 -	@$(MKDIR) $@
 +#	@$(MKDIR) $@
- 
+
  #---------------------------------------------------------------
  # C++ munching for VxWorks
 ```
@@ -184,7 +184,7 @@ which modifies the default EPICS build rules in order for e3 to build properly.
 While the EPICS community use `p0` files for base 3.15.5, and `p1` files for base 3.16.x, e3 only supports use of `p0` files for compatibility reasons. <!-- TODO: Figure out what the story behind this is. -->
 :::
 
-In order to apply patches to EPICS base (which one should always do before building), you simply run `make patch`. This will apply all of the patches 
+In order to apply patches to EPICS base (which one should always do before building), you simply run `make patch`. This will apply all of the patches
 (both from `patch/` and `patch/Site`) for the current version of EPICS base. Thus, the proper commands to build and install EPICS base with e3 is
 
 ```console
@@ -208,7 +208,7 @@ Note that this is current as of require 3.4.1. The patching system will be sligh
 
 Patch files for EPICS (e3) modules are very similar to those for EPICS base, and are applied with the same method. The main difference is that
 there is no distinction between site-specific patches and community patches, and so all of the patch files are expected to be found in the path
-`patch/Site/` within a given wrapper. 
+`patch/Site/` within a given wrapper.
 
 ```console
 [iocuser@host:e3]$ find . -name *.p0.patch | grep -v e3-base | sort -n
@@ -270,4 +270,3 @@ explaining the purpose and role of the patch.
    ```
 
 3. What is the difference between a `p0` patch and `p1` patch? Is it the same in EPICS as generally with UNIX patch files?
-

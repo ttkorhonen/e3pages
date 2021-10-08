@@ -33,7 +33,7 @@ Go to `e3-stream`, which should have been installed with the `core` group in cha
 
 The variables of interest here are:
 
-* `E3_MODULE_VERSION`  is used as *Module/Application version* with require within an IOC startup script. We recommend using semantic versioning (also known as *semver*) for releases. 
+* `E3_MODULE_VERSION`  is used as *Module/Application version* with require within an IOC startup script. We recommend using semantic versioning (also known as *semver*) for releases.
 
 * `EPICS_MODULE_TAG` is *reference* (in the git sense) to the source code repository, e.g. `tags/stream_2_7_14`, `2.8.18`, `master`, `branch_name`, or `e0a24fe`. It is *strongly* recommended that
   only absolute references (either tags or commit hashes) are used, since otherwise it is much more difficult to have reproducible builds. However, in principle, any valid git reference
@@ -64,7 +64,7 @@ The output shows all of the installed version(s) of the *StreamDevice* modules w
       `-- stream_meta.yaml
 ```
 
-The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed. 
+The default argument to `make existent` is LEVEL 2 - i.e. `make existent` is identical to `make LEVEL=2 existent`. This controls the depth of the subtree displayed.
 
 ## Load a single module
 
@@ -115,7 +115,7 @@ branches can be found on the PSI StreamDevice [release page](https://github.com/
 
 Next, change `E3_MODULE_VERSION` to a different name (e.g. `e3training`). The convention here is to name the e3 module according to the module's version, but any name
 could technically be used during development. Note that there are some restrictions on valid module names.
-  
+
 Your modified `configure/CONFIG_MODULE` may then look like:
 
 ```make
@@ -160,7 +160,7 @@ Having made the modifications above, run the following commands and see what has
 2. What does `make init` do?
 3. What sort of restrictions exist for valid module names in e3?
 4. Which kind of make rule allows us to uninstall the installed module?
-5. Can we combine the following two steps? 
+5. Can we combine the following two steps?
    - `make build`
    - `make install`
 
@@ -168,4 +168,3 @@ Having made the modifications above, run the following commands and see what has
    ```console
    [iocuser@host:e3-stream]$ iocsh.bash -r stream
    ```
-

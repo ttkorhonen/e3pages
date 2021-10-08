@@ -97,10 +97,10 @@ Calling function calc_registerRecordDeviceDriver
 Loading module info records for calc
 Module linconv has no library
 Loading module info records for linconv
-# Set the IOC Prompt String One 
+# Set the IOC Prompt String One
 epicsEnvSet IOCSH_PS1 "localhost-10657 > "
 #
-# 
+#
 iocInit
 Starting iocInit
 ############################################################################
@@ -123,7 +123,7 @@ these files do not exist, you can create them from the original `CONFIG_MODULE` 
 
 * `E3_MODULE_DEV_GITURL`: The remote path to the module repository. This allows you to use a forked version of a module that you do not have permission to commit to.
 * `E3_MODULE_SRC_PATH`: The path used for the local clone of the module source code repository. Note that this appears in both `CONFIG_MODULE` and `CONFIG_MODULE_DEV`, and
-  the value in these two should be different. For example, for `e3-iocStats` in `CONFIG_MODULE` we define `E3_MODULE_SRC_PATH` as `iocStats`, while in 
+  the value in these two should be different. For example, for `e3-iocStats` in `CONFIG_MODULE` we define `E3_MODULE_SRC_PATH` as `iocStats`, while in
   `CONFIG_MODULE_DEV` we define it as `iocStats-dev`.
 
 Development mode allows a user to work with (and commit changes to) a remote module without needing to have permissions to commit to the standard one. This is a
@@ -187,7 +187,7 @@ EPICS_MODULE_TAG = master
 EPICS_SHORT_VERSION = 7.0.5
 EPICS_VERSION_NUMBER = 7.0.5
 EPICS_VERSION_STRING = "EPICS Version 7.0.5"
-EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   
+EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET
 GIT_REMOTE_NAME = origin
 MSI = /epics/base-7.0.5/bin/linux-x86_64/msi
 PROD_BIN_PATH = /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/jhlee/bin/linux-x86_64
@@ -223,7 +223,7 @@ using `git remote -v`.
 ```
 
 ```console
-[iocuser@host:iocStats-dev]$ git remote -v 
+[iocuser@host:iocStats-dev]$ git remote -v
 ```
 
 :::{tip}
@@ -247,4 +247,3 @@ they both use the same `module.Makefile`, even though some of the configuration 
 
 4. Do we need `make devdistclean`? Is there any other way to clean or remove a cloned repository `iocStats-dev`? <!-- TODO: I feel like this is a question for us. Seriously, do we really need this? All it does is deletes the *-dev folder. -->
 5. We have an `1.0.0-awesome.p0.patch` file. How would we apply it to Development mode source files?
-
