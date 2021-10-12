@@ -160,12 +160,12 @@ during the last chapter), then do the following
   ```
 
 * Try the following commands in the IOC shell:
-  * `help`
-  * `var`
-  * `dbl`
-  * `dbsr`
-  * `echo ${IOCNAME}`
-  * `epicsEnvShow`
+   * `help`
+   * `var`
+   * `dbl`
+   * `dbsr`
+   * `echo ${IOCNAME}`
+   * `epicsEnvShow`
 
 ---
 
@@ -173,13 +173,13 @@ during the last chapter), then do the following
 
 1. What is the meaning of each of the following expressions in a startup script?
    What function do they serve, or what action do they perform?
-  * `require`
-  * `E3_CMD_TOP`
-  * `system`
-  * `iocshLoad`
-  * `iocInit`
-  * `>`
-  * `<`
+   * `require`
+   * `E3_CMD_TOP`
+   * `system`
+   * `iocshLoad`
+   * `iocInit`
+   * `>`
+   * `<`
 
 2. What happens if you place the commands in a different order in the startup
    script?
