@@ -1,6 +1,6 @@
 all
 # Set unordered list preference
-rule 'MD005', :style => :sublist
+rule 'MD004', :style => :consistent
 # Be explicit about desired indent level
 rule 'MD007', :indent => 3
 # Ignore line length rule in code blocks
