@@ -1,21 +1,30 @@
 # Installing e3
 
-Building EPICS with the so-called *core* modules (to see what the various module groups contain, have a look at the [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml)) using e3 is fairly easy. Note, however, that the workflow (and tools) listed below typically is not what you would use for a production build.
+Building EPICS with the so-called *core* modules (to see what the various module
+groups contain, have a look at the
+[inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml))
+using e3 is fairly easy. Note, however, that the workflow (and tools) listed
+below typically is not what you would use for a production build.
 
 ## Prerequisites
 
-You should start with a mostly blank CentOS 7 machine, and then install all the necessary packages via the following command.[^prereqlist]
+You should start with a mostly blank CentOS 7 machine, and then install all the
+necessary packages via the following command.[^prereqlist]
 
 ```{include} ../includes/deps.md
 ```
 
 :::{note}
-Note that this package list is more than is strictly needed to install e3, but also contains the necessary packages for many of the e3 modules that are supported.
+Note that this package list is more than is strictly needed to install e3, but
+also contains the necessary packages for many of the e3 modules that are
+supported.
 :::
 
 ## Building a local e3 environment
 
-To build EPICS base 7.0.5 with *require* 3.4.1 and the *core* module group and install it at `/opt/epics`, you would only need to run (note `sudo` as we are installing to a subdirectory of `/opt` which generally is owned by `root`):
+To build EPICS base 7.0.5 with *require* 3.4.1 and the *core* module group and
+install it at `/opt/epics`, you would only need to run (note `sudo` as we are
+installing to a subdirectory of `/opt` which generally is owned by `root`):
 
 ```console
 [iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/e3.git
@@ -27,14 +36,18 @@ To build EPICS base 7.0.5 with *require* 3.4.1 and the *core* module group and i
 ```
 
 :::{tip}
-If you leave out the flags `-b` (version of EPICS base) and `-r` (version of *require*) it will default to the latest stable release, but it is always good practice to be explicit.
+If you leave out the flags `-b` (version of EPICS base) and `-r` (version of
+*require*) it will default to the latest stable release, but it is always good
+practice to be explicit.
 :::
 
-As you may realise, this allows a user to have multiple EPICS trees installed at various locations.
+As you may realise, this allows a user to have multiple EPICS trees installed at
+various locations.
 
 ## Sourcing a specific e3 environment
 
-With e3, you may have several EPICS environments available, so you need to explicitly activate the e3 environment you intend to use:
+With e3, you may have several EPICS environments available, so you need to
+explicitly activate the e3 environment you intend to use:
 
 ```console
 [iocuser@host:e3]$ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
@@ -48,13 +61,17 @@ or, alternatively:
 
 ## Installing an e3 module
 
-To install an existing e3 module in *deployment mode*,[^depmode] only a few steps are required. First clone the repository (we will use use the [*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps) module for this example):
+To install an existing e3 module in *deployment mode*,[^depmode] only a few
+steps are required. First clone the repository (we will use use the
+[*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps) module for
+this example):
 
 ```console
 [iocuser@host:e3]$ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
 ```
 
-Next, modify `configure/RELEASE` to point towards the correct installation path. If you followed the above steps to install, it should look like the following:
+Next, modify `configure/RELEASE` to point towards the correct installation path.
+If you followed the above steps to install, it should look like the following:
 
 ```makefile
 EPICS_BASE:=/opt/epics/base-7.0.5
@@ -72,7 +89,9 @@ E3_REQUIRE_VERSION:=3.4.1
 Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.5` to `/opt/epics/base-7.0.5`.
 :::
 
-Finally, we would run each of the make rules that clone the submodule, apply patches (if there are any valid ones for this version), build the module, and finally install it:
+Finally, we would run each of the make rules that clone the submodule, apply
+patches (if there are any valid ones for this version), build the module, and
+finally install it:
 
 ```console
 [iocuser@host:e3]$ cd e3-caenelfastps
@@ -90,9 +109,17 @@ We should finally validate that everything is working as expected:
 Done!
 
 :::{tip}
-If you here wanted to use a different version of the module than the most recent one, you could simply check out a specific commit or tag of the wrapper, prior to running `make init`.
+If you here wanted to use a different version of the module than the most recent
+one, you could simply check out a specific commit or tag of the wrapper, prior
+to running `make init`.
 :::
 
+[^prereqlist]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package.
+  It can be found at:
+  <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS
+  internal users, this package can be installed the same way as installing
+  standard CentOS packages. For external users, one will need to add this
+  repository to package manager’s repository-search-list to install this
+  package.
 
-[^prereqlist]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package. It can be found at: <https://artifactory.esss.lu.se/artifactory/rpm-ics/centos/7/x86_64/>. For ESS internal users, this package can be installed the same way as installing standard CentOS packages. For external users, one will need to add this repository to package manager’s repository-search-list to install this package.
 [^depmode]: More on this in the e3 tutorial.
