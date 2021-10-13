@@ -9,3 +9,5 @@ rule 'MD013', :code_blocks => false
 rule 'MD029', :style => :ordered
 # Allow leading $ sign in console commands
 exclude_rule 'MD014'
+exclude_rule 'MD033'
+exclude_rule 'MD034'
