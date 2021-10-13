@@ -2,19 +2,23 @@
 
 # E3 module creation
 
-The following assumes you already installed [conda] and [cookiecutter].
-Please refer to the {ref}`e3_requirements`.
+The following assumes you already installed [conda] and [cookiecutter].  Please
+refer to the {ref}`e3_requirements`.
 
-E3 uses [require](https://gitlab.esss.lu.se/epics-modules/require), originally developed by [PSI](https://github.com/paulscherrerinstitute/require) to dynamically load modules at runtime.
-require also includes a [driver.Makefile](https://gitlab.esss.lu.se/epics-modules/require/-/blob/master/App/tools/driver.makefile) that shall be used to build a module.
-This requires a specific `Makefile.E3` file that includes this `driver.Makefile`.
+E3 uses [require](https://gitlab.esss.lu.se/epics-modules/require), originally
+developed by [PSI](https://github.com/paulscherrerinstitute/require) to
+dynamically load modules at runtime.  require also includes a
+[driver.Makefile](https://gitlab.esss.lu.se/epics-modules/require/-/blob/master/App/tools/driver.makefile)
+that shall be used to build a module.  This requires a specific `Makefile.E3`
+file that includes this `driver.Makefile`.
 
 To make it easy to create a new E3 module, we provide a cookiecutter template.
 
 ## Create the module
 
-Use the `e3-module` alias to create a new module (refer to {ref}`cookiecutter_configuration` to create this alias).
-You'll be prompted to enter some values. Press enter to keep the default.
+Use the `e3-module` alias to create a new module (refer to
+{ref}`cookiecutter_configuration` to create this alias).  You'll be prompted to
+enter some values. Press enter to keep the default.
 
 ```bash
 [csi@8ef3d5671aef Dev]$ e3-module
@@ -30,7 +34,8 @@ Select keep_epics_base_makefiles:
 Choose from 1, 2 [1]:
 ```
 
-This will create a project based on `makeBaseApp.pl` from EPICS base but will also include extra files needed for E3.
+This will create a project based on `makeBaseApp.pl` from EPICS base but will
+also include extra files needed for E3.
 
 ```bash
 [csi@8ef3d5671aef Dev]$ tree foo/
@@ -61,20 +66,20 @@ foo/
     `-- foo.iocsh
 ```
 
-Notice the `Makefile.E3` file.
-The standard `Makefile` allows you to compile the module using the default EPICS build system if you want.
+Notice the `Makefile.E3` file.  The standard `Makefile` allows you to compile
+the module using the default EPICS build system if you want.
 
 ## Update the module
 
-Add the needed files to your module.
-You should also update the `Makefile.E3` file. It includes comments to help you.
-For a full example, refer to...
+Add the needed files to your module.  You should also update the `Makefile.E3`
+file. It includes comments to help you.  For a full example, refer to...
 
 (e3_module_compilation)=
 
 ## Compile the module
 
-To compile an E3 module in a conda environment, the following packages are required:
+To compile an E3 module in a conda environment, the following packages are
+required:
 
 - make
 - compilers
@@ -82,8 +87,8 @@ To compile an E3 module in a conda environment, the following packages are requi
 - epics-base
 - require
 
-Create the `e3-dev` environment with those packages.
-If you have other depencies, like `asyn`, install them as well.
+Create the `e3-dev` environment with those packages.  If you have other
+depencies, like `asyn`, install them as well.
 
 ```bash
 [csi@8ef3d5671aef Dev]$ conda create -y -n e3-dev epics-base require compilers make tclx
@@ -118,8 +123,8 @@ make[2]: Leaving directory '/home/csi/Dev/foo'
 make[1]: Leaving directory '/home/csi/Dev/foo'
 ```
 
-If you have some database to generate, run `make -f Makefile.E3 db`.
-In our case, we don't have any template, so the command won't do anything.
+If you have some database to generate, run `make -f Makefile.E3 db`.  In our
+case, we don't have any template, so the command won't do anything.
 
 ```bash
 (e3-dev) [csi@8ef3d5671aef foo]$ make -f Makefile.E3 db
@@ -154,8 +159,7 @@ make[2]: Leaving directory '/home/csi/Dev/foo'
 make[1]: Leaving directory '/home/csi/Dev/foo'
 ```
 
-The module was installed as _dev_ version.
-You can check that you can load it:
+The module was installed as _dev_ version.  You can check that you can load it:
 
 ```bash
 (e3-dev) [csi@8ef3d5671aef foo]$ iocsh.bash -r foo
@@ -186,7 +190,8 @@ iocshLoad("/home/csi/miniconda/envs/e3-dev/modules/foo/dev//foo.iocsh")
 ...
 ```
 
-During development, you can modify your code, re-compile and re-install as many times as you want:
+During development, you can modify your code, re-compile and re-install as many
+times as you want:
 
 ```bash
 make -f Makefile.E3
@@ -203,10 +208,11 @@ rm -rf /home/csi/miniconda/envs/e3-dev/modules/foo/dev
 
 ## Upload the module to GiLab
 
-You should upload your module to the proper subgroup under <https://gitlab.esss.lu.se/epics-modules>
+You should upload your module to the proper subgroup under
+<https://gitlab.esss.lu.se/epics-modules>
 
-To distribute your module, you need to package it with conda.
-See {ref}`e3_recipe_creation`.
+To distribute your module, you need to package it with conda.  See
+{ref}`e3_recipe_creation`.
 
 [conda]: https://docs.conda.io/en/latest/
 [cookiecutter]: https://cookiecutter.readthedocs.io
