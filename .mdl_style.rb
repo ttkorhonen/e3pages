@@ -7,3 +7,5 @@ rule 'MD007', :indent => 3
 rule 'MD013', :code_blocks => false
 # Use ordered style for numbered lists
 rule 'MD029', :style => :ordered
+# Allow leading $ sign in console commands
+exclude_rule 'MD014'
