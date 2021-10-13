@@ -11,3 +11,5 @@ rule 'MD029', :style => :ordered
 exclude_rule 'MD014'
 exclude_rule 'MD033'
 exclude_rule 'MD034'
+# Allow for anchors at start of file, otherwise they are not found in cross-referencing
+exclude_rule 'MD041'

@@ -1,6 +1,6 @@
-# Module wrappers
-
 (wrappers)=
+
+# Module wrappers
 
 Another key feature of e3 is the module wrapper. This allows us to apply
 site-specific changes to modules from any source without needing to modify that

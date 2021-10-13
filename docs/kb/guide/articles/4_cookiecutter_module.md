@@ -1,6 +1,6 @@
-# How to: Create an e3 wrapper with cookiecutter
-
 (cookiecutter_wrapper)=
+
+# How to: Create an e3 wrapper with cookiecutter
 
 *[Cookiecutter](https://github.com/cookiecutter/cookiecutter)* is a templating
 utility built in Python. Cookiecutter is already extensively used within ICS to
