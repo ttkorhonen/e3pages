@@ -130,18 +130,37 @@ If the new version of *StreamDevice* is not compatible with *asyn*, then you
 will need to install a new version of *asyn* in the current e3 environment. The
 procedure for that is also the same as in [Chapter 3](3_module_versions.md). We
 can start by checking the current version and seeing what is installed, and then
-installing the necessary version (4.42.0) ```console [iocuser@host:e3-asyn]$
-make vars # Check the current version [iocuser@host:e3-asyn]$ make existent
-/epics/base-7.0.5/require/3.4.1/siteMods/asyn `-- 4.41.0+0 |-- asyn_meta.yaml
-|-- db |-- dbd |-- include `-- lib [iocuser@host:e3-asyn]$ echo
-"EPICS_MODULE_TAG:=tags/R4-42" > configure/CONFIG_MODULE.local
-[iocuser@host:e3-asyn]$ echo "E3_MODULE_VERSION:=4.42.0" >>
-configure/CONFIG_MODULE.local [iocuser@host:e3-asyn]$ make vars
-[iocuser@host:e3-asyn]$ make init patch build install # You can do these all at
-once [iocuser@host:e3-asyn]$ make existent
-/epics/base-7.0.5/require/3.4.1/siteMods/asyn |-- 4.41.0+0 |   |--
-asyn_meta.yaml |   |-- db |   |-- dbd |   |-- include |   `-- lib `-- 4.42.0+0
-|-- asyn_meta.yaml |-- db |-- dbd |-- include `-- lib ```
+installing the necessary version (4.42.0)
+
+```console
+[iocuser@host:e3-asyn]$ make vars # Check the current version
+[iocuser@host:e3-asyn]$ make existent
+/epics/base-7.0.5/require/3.4.1/siteMods/asyn
+`-- 4.41.0+0
+    |-- asyn_meta.yaml
+    |-- db
+    |-- dbd
+    |-- include
+    `-- lib
+[iocuser@host:e3-asyn]$ echo "EPICS_MODULE_TAG:=tags/R4-42" > configure/CONFIG_MODULE.local
+[iocuser@host:e3-asyn]$ echo "E3_MODULE_VERSION:=4.42.0" >> configure/CONFIG_MODULE.local
+[iocuser@host:e3-asyn]$ make vars
+[iocuser@host:e3-asyn]$ make init patch build install # You can do these all at once
+[iocuser@host:e3-asyn]$ make existent
+/epics/base-7.0.5/require/3.4.1/siteMods/asyn
+|-- 4.41.0+0
+|   |-- asyn_meta.yaml
+|   |-- db
+|   |-- dbd
+|   |-- include
+|   `-- lib
+`-- 4.42.0+0
+    |-- asyn_meta.yaml
+    |-- db
+    |-- dbd
+    |-- include
+    `-- lib
+```
 
 :::{note}
 Between *asyn* 4-41 and 4-42 there actually are some source and `.dbd` files
