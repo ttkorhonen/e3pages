@@ -1,4 +1,5 @@
-# Rules are defined here: https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
+# Rules are defined here:
+# https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
 #
 # This file defines custom style selections used for ESS documentation
 all
