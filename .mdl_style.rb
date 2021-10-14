@@ -5,6 +5,8 @@ rule 'MD004', :style => :consistent
 rule 'MD007', :indent => 3
 # Ignore line length rule in code blocks
 rule 'MD013', :code_blocks => false
+# Allow repeated header names in different locations
+rule 'MD024', :allow_different_nesting => true
 # Use ordered style for numbered lists
 rule 'MD029', :style => :ordered
 # Allow leading $ sign in console commands
