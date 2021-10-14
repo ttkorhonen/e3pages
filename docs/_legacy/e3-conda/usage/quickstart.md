@@ -2,10 +2,18 @@
 
 Conda is used to package and deploy E3 modules.
 
-To work with E3, the only requirement is to have conda installed and configured to use the `conda-e3-virtual` channel on Artifactory.
-Please refer to the {ref}`e3_requirements`.
+To work with E3, the only requirement is to have conda installed and configured
+to use the `conda-e3-virtual` channel on Artifactory.  Please refer to the
+{ref}`e3_requirements`.
 
-As explained in the [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html), a conda environment is just a directory that contains a specific collection of conda packages that you have installed. You could have one environment with epics-base 7 and another one with epics-base 3.15. You can easily switch between environments (by activating or deactivating them). When installing packages in an environment, others are not impacted. To avoid conflicts, conda ensures that there is only one version of each package in an environment.
+As explained in the
+[user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html),
+a conda environment is just a directory that contains a specific collection of
+conda packages that you have installed. You could have one environment with
+epics-base 7 and another one with epics-base 3.15. You can easily switch between
+environments (by activating or deactivating them). When installing packages in
+an environment, others are not impacted. To avoid conflicts, conda ensures that
+there is only one version of each package in an environment.
 
 To create an environment with epics-base 7 and streamdevice, run:
 
@@ -35,7 +43,10 @@ The following NEW packages will be INSTALLED:
   ...
 ```
 
-As you see, it will download all the required dependencies to install the requested packages. To start working in this environment, just activate it. The name of the active environment will be displayed in your prompt. You can then run `iocsh.bash`.
+As you see, it will download all the required dependencies to install the
+requested packages. To start working in this environment, just activate it. The
+name of the active environment will be displayed in your prompt. You can then
+run `iocsh.bash`.
 
 ```bash
 [csi@8ef3d5671aef ~]$ conda activate epics
@@ -106,7 +117,9 @@ iocRun: All initialization complete
 8ef3d5671aef-2667 >
 ```
 
-Once you are in an environment you can install new packages or change the version of the installed packages. Let's add iocstats and recsync to our epics environment:
+Once you are in an environment you can install new packages or change the
+version of the installed packages. Let's add iocstats and recsync to our epics
+environment:
 
 ```bash
 (epics) [csi@8ef3d5671aef ~]$ conda install iocstats recsync
@@ -157,7 +170,9 @@ sscan                     2.11.2               h97b7252_1    conda-e3-virtual
 streamdevice              2.8.10               h31ca92a_0    conda-e3-virtual
 ```
 
-Let's say you want to switch to another version of streamdevice. You could create a new environment or just replace the version installed in this one. You can search for available versions by running `conda search`:
+Let's say you want to switch to another version of streamdevice. You could
+create a new environment or just replace the version installed in this one. You
+can search for available versions by running `conda search`:
 
 ```bash
 (epics) [csi@8ef3d5671aef ~]$ conda search streamdevice
@@ -200,8 +215,10 @@ The following packages will be DOWNGRADED:
   streamdevice                            2.8.10-h31ca92a_0 --> 2.8.8-h31ca92a_2
 ```
 
-Let's now create a separate environment with epics-base 3.15. Note that this is only as an example. epics-base 3 isn't supported anymore at ESS. You should use EPICS 7.
-This is to demonstrate you can work on separate environments with different epics-base version.
+Let's now create a separate environment with epics-base 3.15. Note that this is
+only as an example. epics-base 3 isn't supported anymore at ESS. You should use
+EPICS 7.  This is to demonstrate you can work on separate environments with
+different epics-base version.
 
 ```bash
 (epics) [csi@8ef3d5671aef ~]$ conda create -y -n epics3 epics-base=3 iocstats
@@ -260,7 +277,8 @@ tk                        8.6.10               hed695b0_0    conda-e3-virtual
 zlib                      1.2.11            h516909a_1006    conda-e3-virtual
 ```
 
-We saw earlier that you can check if a package exists using `conda search`. If the given name doesn't exist, conda will try to find a match using wildcard:
+We saw earlier that you can check if a package exists using `conda search`. If
+the given name doesn't exist, conda will try to find a match using wildcard:
 
 ```bash
 [csi@8ef3d5671aef ~]$ conda search iocstat
@@ -276,7 +294,8 @@ iocstats                      3.1.16      h76d1a4d_1  conda-e3-virtual
 iocstats                      3.1.16      hd2b67a6_0  conda-e3-virtual
 ```
 
-You can get more information about a package and its dependencies with the `-i` flag:
+You can get more information about a package and its dependencies with the `-i`
+flag:
 
 ```bash
 iocstats 3.1.15.post1 h0f5667f_0
@@ -321,9 +340,13 @@ dependencies:
   - require >=3.1.0,<3.2.0a0
 ```
 
-You can see above that the first package was compiled with epics-base 3.15.5 and the last with epics-base 7.0.3.1. The last one also has `calc` has run dependency.
+You can see above that the first package was compiled with epics-base 3.15.5 and
+the last with epics-base 7.0.3.1. The last one also has `calc` has run
+dependency.
 
-Note that conda package names are always **lowercase**. When searching or installing a package, conda is case-insensitive. Running `conda install iocStats` or `conda install iocstats` will perform exactly the same operation.
+Note that conda package names are always **lowercase**. When searching or
+installing a package, conda is case-insensitive. Running `conda install
+iocStats` or `conda install iocstats` will perform exactly the same operation.
 But when using a module with require, you should use the lowercase name:
 
 ```bash
@@ -339,4 +362,6 @@ Loading dbd file /home/csi/miniconda/envs/epics3/modules/iocstats/3.1.15/dbd/ioc
 Calling function iocstats_registerRecordDeviceDriver
 ```
 
-Note that when working with E3, you aren't limited to work with conda packages. During development, you can compile a module locally in a conda environment. See {ref}`how to compile a module <e3_module_compilation>`.
+Note that when working with E3, you aren't limited to work with conda packages.
+During development, you can compile a module locally in a conda environment. See
+{ref}`how to compile a module <e3_module_compilation>`.
