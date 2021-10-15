@@ -13,7 +13,19 @@ run pre-commit:
   image: registry.esss.lu.se/ics-docker/pre-commit:latest
   allow_failure: true
   script:
-    - pre-commit run --all-files
+    - pre-commit run trailing-whitespace --all-files
+    - pre-commit run end-of-file-fixer --all-files
+    - pre-commit run check-yaml --all-files
+    - pre-commit run check-added-large-files --all-files
+
+run markdown lint:
+  tags:
+    - docker
+  stage: check
+  image: pipelinecomponents/markdownlint:latest
+  allow_failure: true
+  script:
+    - mdl --config .mdlrc .
 
 pages:
   tags:
