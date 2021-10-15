@@ -11,11 +11,15 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### New Features
 
 * Added e3 cheatsheet content
+* Added pre-commit checks
+* Added linter style customisation
 
 ### Bugfixes
 
 * Fix list of packages to be installed prior to e3 installation
 * Fixed sphinx-build warnings
+* Fixed all linter errors (extensive formatting changes to all Markdown
+  documents)
 
 ### Other changes
 
