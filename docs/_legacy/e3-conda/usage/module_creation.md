@@ -211,7 +211,7 @@ rm -rf /home/csi/miniconda/envs/e3-dev/modules/foo/dev
 You should upload your module to the proper subgroup under
 <https://gitlab.esss.lu.se/epics-modules>
 
-To distribute your module, you need to package it with conda.  See
+To distribute your module, you need to package it with conda. See
 {ref}`e3_recipe_creation`.
 
 [conda]: https://docs.conda.io/en/latest/

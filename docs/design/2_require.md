@@ -32,7 +32,7 @@ At ESS, we have decided to only use EPICS base 7, and thus we only make use of
 :::
 
 There are number of option flags and arguments that `iocsh.bash` accepts, the
-most common being: <!-- TODO: rewrite all of this and fixme -->
+most common being:
 
 * `iocsh.bash st.cmd`---Run the commands in `st.cmd`.
 * `iocsh.bash -r module[,version]`---Load the given module/version upon startup.
