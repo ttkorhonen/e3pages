@@ -2,15 +2,16 @@
 
 # E3 recipe creation
 
-The following assumes you already installed [conda], [conda-build] and [cookiecutter].
-Please refer to the {ref}`e3_requirements`.
+The following assumes you already installed [conda], [conda-build] and
+[cookiecutter].  Please refer to the {ref}`e3_requirements`.
 
 To package a module with conda, you have to create a conda recipe.
 
 ## Create the recipe
 
-Use the `e3-recipe` alias to create a new recipe (refer to {ref}`cookiecutter_configuration` to create this alias).
-You'll be prompted to enter some values. Press enter to keep the default.
+Use the `e3-recipe` alias to create a new recipe (refer to
+{ref}`cookiecutter_configuration` to create this alias).  You'll be prompted to
+enter some values. Press enter to keep the default.
 
 ```bash
 [csi@8ef3d5671aef Dev]$ e3-recipe
@@ -25,7 +26,8 @@ module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se
 module_version [1.0.0]: 0.1.0
 ```
 
-The `module_home` variable shall point to the group in GitLab where your module is stored.
+The `module_home` variable shall point to the group in GitLab where your module
+is stored.
 
 This will create the following project:
 
@@ -42,13 +44,15 @@ foo-recipe/
 
 ## Update the recipe
 
-You should only have to update the `recipe/meta.yaml` and `recipe/test.cmd` files.
+You should only have to update the `recipe/meta.yaml` and `recipe/test.cmd`
+files.
 
 ### meta.yaml
 
-The `meta.yaml` file is the file that defines the recipe.
-It describes where to get the source of the module and the dependencies to build and run the modules.
-The file contains many hints in comments. Follow them and remove them when you've finalized your recipe.
+The `meta.yaml` file is the file that defines the recipe.  It describes where to
+get the source of the module and the dependencies to build and run the modules.
+The file contains many hints in comments. Follow them and remove them when
+you've finalized your recipe.
 
 ```{note}
 The final recipe shouldn't contain any comments!
@@ -56,9 +60,9 @@ The final recipe shouldn't contain any comments!
 
 ### test.cmd
 
-The file `recipe/test.cmd` is for testing purpose.
-It will be used by [conda-build] to check the created package by running `iocsh.bash recipe/test.cmd`.
-You can add extra commands to it if you want.
+The file `recipe/test.cmd` is for testing purpose.  It will be used by
+[conda-build] to check the created package by running `iocsh.bash
+recipe/test.cmd`.  You can add extra commands to it if you want.
 
 ## Build the recipe
 
@@ -102,7 +106,8 @@ To remove them, you can run the ```conda build purge``` command
 
 ## Test the built package
 
-You can install the package you built locally by using the `-c local` argument (to use the local channel).
+You can install the package you built locally by using the `-c local` argument
+(to use the local channel).
 
 ```bash
 [csi@8ef3d5671aef foo-recipe]$ conda create -y -n test -c local foo
@@ -117,8 +122,9 @@ Activate your test environment and test your package.
 
 ## Upload the recipe to GitLab
 
-You should upload your recipe to <https://gitlab.esss.lu.se/e3-recipes/staging>. GitLab-ci will automatically build it and upload the package
-to Artifactory `conda-e3-test` channel.
+You should upload your recipe to <https://gitlab.esss.lu.se/e3-recipes/staging>.
+GitLab-ci will automatically build it and upload the package to Artifactory
+`conda-e3-test` channel.
 
 [conda]: https://docs.conda.io/en/latest/
 [conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html

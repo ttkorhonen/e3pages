@@ -48,5 +48,6 @@ Use the `conda env create` command:
 conda env create -n myenv -f environment.yml
 ```
 
-If you omit the `-n` parameter, the environment name will be taken from the `environment.yml` file.
-The command will fail if the environment already exists. You can to destroy it first by using `--force`.
+If you omit the `-n` parameter, the environment name will be taken from the
+`environment.yml` file.  The command will fail if the environment already
+exists. You can to destroy it first by using `--force`.

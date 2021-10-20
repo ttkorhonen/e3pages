@@ -24,7 +24,7 @@ regardless.
 
 :::{note}
 This workbook has been developed at ESS, so it contains some site-specific
-processes and standards. The ESS-specific components have been identified.  
+processes and standards. The ESS-specific components have been identified.
 :::
 
 ---

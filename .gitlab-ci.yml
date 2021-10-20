@@ -1,6 +1,20 @@
 ---
 #include:
 #  - 'https://gitlab.esss.lu.se/ics-infrastructure/gitlab-ci-yml/raw/master/SphinxPages.gitlab-ci.yml'
+
+stages:
+  - check
+  - deploy
+
+run pre-commit:
+  tags:
+    - docker
+  stage: check
+  image: registry.esss.lu.se/ics-docker/pre-commit:latest
+  allow_failure: true
+  script:
+    - pre-commit run --all-files
+
 pages:
   tags:
     - docker

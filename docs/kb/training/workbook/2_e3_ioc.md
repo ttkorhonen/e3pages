@@ -12,12 +12,19 @@ In this lesson, you will learn how to do the following:
 
 ## The e3 environment
 
-In order to facilitate the development process, e3 supports using multiple EPICS environments. Such an environment consists of a collection of shell variables in the current terminal. When
-you install *require*, it will install an activation script called `setE3Env.bash`. To activate the environment, you must source the relevant `setE3Env.bash`.
+In order to facilitate the development process, e3 supports using multiple EPICS
+environments. Such an environment consists of a collection of shell variables in
+the current terminal. When you install *require*, it will install an activation
+script called `setE3Env.bash`. To activate the environment, you must source the
+relevant `setE3Env.bash`.
 
-Using a default configuration (presently EPICS base 7.0.5 with *require* 3.4.1 installed at `/epics`) the full path for this script would then be `/epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash`.
+Using a default configuration (presently EPICS base 7.0.5 with *require* 3.4.1
+installed at `/epics`) the full path for this script would then be
+`/epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash`.
 
-For your convenience, the e3 building system - at the end of installation procedure of *require* and modules - creates a utility script within the `tools/` directory called `setenv`:
+For your convenience, the e3 building system - at the end of installation
+procedure of *require* and modules - creates a utility script within the
+`tools/` directory called `setenv`:
 
 ```console
 [iocuser@host:e3]$ source tools/setenv
@@ -34,13 +41,19 @@ Thus, one can easily switch between environments. For example:
 [iocuser@host:e3]$ source /epics/base-7.0.3.1/require/3.4.1/bin/setE3Env.bash
 ```
 
-This will first load the latest environment installed with `e3.bash`, and then it will load the environment corresponding to EPICS base 7.0.3.1 and *require* 3.4.1 (assuming that that has been installed).
+This will first load the latest environment installed with `e3.bash`, and then
+it will load the environment corresponding to EPICS base 7.0.3.1 and *require*
+3.4.1 (assuming that that has been installed).
 
 ## Run an example IOC
 
-Starting an IOC in e3 is done by running the script `iocsh.bash` which is installed with *require* at `/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash`. If you have sourced the correct `setE3Env.bash`,
-then this will be on `$PATH`. `iocsh.bash` is a wrapper to `softIocPVA` from EPICS base and takes a number of possible arguments, the most basic of which is a startup command file, which consists
-of a sequence of commands that will be executed by the IOC upon startup.
+Starting an IOC in e3 is done by running the script `iocsh.bash` which is
+installed with *require* at `/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash`. If
+you have sourced the correct `setE3Env.bash`, then this will be on `$PATH`.
+`iocsh.bash` is a wrapper to `softIocPVA` from EPICS base and takes a number of
+possible arguments, the most basic of which is a startup command file, which
+consists of a sequence of commands that will be executed by the IOC upon
+startup.
 
 :::{warning}
 The last line of the file must end in a newline or that line will not be executed.
@@ -48,7 +61,8 @@ The last line of the file must end in a newline or that line will not be execute
 
 ### The simplest example
 
-In order to run a very basic IOC, run the following command after sourcing `setE3Env.bash` as described above.
+In order to run a very basic IOC, run the following command after sourcing
+`setE3Env.bash` as described above.
 
 ```console
 [iocuser@host:e3]$ iocsh.bash
@@ -81,11 +95,13 @@ dbl > "$(TOP)/${IOCNAME}_PVs.list"
 ```
 
 Save this file as `iocstats.cmd`, and then run
+
 ```console
 [iocuser@host:e3]$ iocsh.bash iocstats.cmd
 ```
 
-If the IOC starts up correctly (you will have to have installed the core modules during the last chapter), then do the following
+If the IOC starts up correctly (you will have to have installed the core modules
+during the last chapter), then do the following
 
 1. Check the IOC name:
 
@@ -100,6 +116,7 @@ If the IOC starts up correctly (you will have to have installed the core modules
    ```console
    localhost-31462> system "ls $(E3_CMD_TOP)"
    ```
+
    What does it represent?
 
 3. Open another terminal and source the same e3 configuration.
@@ -143,26 +160,26 @@ If the IOC starts up correctly (you will have to have installed the core modules
   ```
 
 * Try the following commands in the IOC shell:
-
-  - `help`
-  - `var`
-  - `dbl`
-  - `dbsr`
-  - `echo ${IOCNAME}`
-  - `epicsEnvShow`
+   * `help`
+   * `var`
+   * `dbl`
+   * `dbsr`
+   * `echo ${IOCNAME}`
+   * `epicsEnvShow`
 
 ---
 
 ## Assignments
 
-1. What is the meaning of each of the following expressions in a startup script? What function do they serve, or what action do they perform?
-   - `require`
-   - `E3_CMD_TOP`
-   - `system`
-   - `iocshLoad`
-   - `iocInit`
-   - `>`
-   - `<` 
+1. What is the meaning of each of the following expressions in a startup script?
+   What function do they serve, or what action do they perform?
+   * `require`
+   * `E3_CMD_TOP`
+   * `system`
+   * `iocshLoad`
+   * `iocInit`
+   * `>`
+   * `<`
 
-2. What happens if you place the commands in a different order in the startup script?
-
+2. What happens if you place the commands in a different order in the startup
+   script?

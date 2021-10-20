@@ -4,7 +4,8 @@
 
 ### Problem
 
-When we run any of the e3 `make` instructions (e.g. `make vars`, `make build`), we may see the following message:
+When we run any of the e3 `make` instructions (e.g. `make vars`, `make build`),
+we may see the following message:
 
 ```console
 configure/CONFIG:19: /epics/base-7.0.5/require/3.4.1/configure/CONFIG: No such file or directory
@@ -14,13 +15,17 @@ make: *** No rule to make target '/epics/base-7.0.5/require/3.4.1/configure/RULE
 
 ### Solution
 
-Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in `configure/RELEASE` or `configure/RELEASE_DEV` file, and check that the physical location of `EPICS_BASE/require/E3_REQUIRE_VERSION` exists on your system:
+Look up the definition of the `EPICS_BASE` and `E3_REQUIRE_VERSION` variables in
+`configure/RELEASE` or `configure/RELEASE_DEV` file, and check that the physical
+location of `EPICS_BASE/require/E3_REQUIRE_VERSION` exists on your system:
 
 ```console
 [iocuser@host:~]$ ls -lta /epics/base-7.0.5/require/3.4.1/
 ```
 
-In most cases when you have the above error, your system does not have the specified version of EPICS base and the _require_ module. These are, as we know, defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
+In most cases when you have the above error, your system does not have the
+specified version of EPICS base and the _require_ module. These are, as we know,
+defined in `configure/RELEASE` or `configure/RELEASE_DEV`.
 
 A quick-fix to this is to use e3 in local mode and specify the versions there:
 
@@ -37,7 +42,8 @@ Of course modify the path above to where you have EPICS installed.
 
 ### Problem
 
-When we run `make install` or `make devinstall`, we may see the following message:
+When we run `make install` or `make devinstall`, we may see the following
+message:
 
 ```console
 Error: /home/waynelewis/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/lib/linux-x86_64 already exists.
@@ -47,10 +53,11 @@ make[3]: *** [install] Error 1
 
 ### Solution
 
-_require_ will not overwrite a module where the version matches the `major.minor.patch+build` format. To reinstall a module version, you need to do the following:
+_require_ will not overwrite a module where the version matches the
+`major.minor.patch+build` format. To reinstall a module version, you need to do
+the following:
 
 ```console
 $ make uninstall
 $ make install
 ```
-

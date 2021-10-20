@@ -133,11 +133,13 @@ A debugging session is active.
 
 Quit anyway? (y or n) y
 ```
+
 [^esse3envs]: The `/epics-test` e3 environment is specific to the ESS site e3
   installation. It is provided as a location for testing new e3 environments.
 
 [^adddebugarch]: To add the `linux-x86_64-debug` architecture to a local build
     of e3, add the following line to `e3-base/configure/CONFIG_BASE`:
+
     ```makefile
     E3_CROSS_COMPILER_TARGET_ARCHS+=linux-x86_64-debug
     ```

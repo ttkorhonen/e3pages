@@ -2,23 +2,28 @@
 
 # E3 Requirements
 
-All requirements are already installed in the ESS Development Machine (4.x and upward).
+All requirements are already installed in the ESS Development Machine (4.x and
+upward).
 
 **E3 is only supported on Linux.**
 
 ## Conda
 
-[Conda] is a Package, dependency and environment management for any language — Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
+[Conda] is a Package, dependency and environment management for any language —
+Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
 
-[Conda] is open-source and runs on Linux, MacOS and Windows. It allows to easily install packages and their dependencies in isolated environment.
-You can read more about conda concepts in the official [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html).
+[Conda] is open-source and runs on Linux, MacOS and Windows. It allows to easily
+install packages and their dependencies in isolated environment.  You can read
+more about conda concepts in the official
+[user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html).
 
 (conda_installation)=
 
 ### Conda Installation
 
-To install conda, we'll use the [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.
-The only requirements to run the installation are `bzip2` and `curl`.
+To install conda, we'll use the
+[Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.  The only
+requirements to run the installation are `bzip2` and `curl`.
 
 ```bash
 curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -29,13 +34,16 @@ source $HOME/miniconda/bin/activate
 conda init
 ```
 
-You can refer to the [official documentation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) for more detailed information.
+You can refer to the [official
+documentation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
+for more detailed information.
 
 (conda_update)=
 
 ### Conda Update
 
-The installer might not come with the latest available version of conda. After installation you should update conda:
+The installer might not come with the latest available version of conda. After
+installation you should update conda:
 
 ```bash
 conda update -y -c conda-forge -n base conda
@@ -54,16 +62,18 @@ You need at least conda 4.7 to work with E3. Conda 4.8 is recommended.
 
 ### Conda Configuration
 
-If you don't want conda to activate the base environment by default (and modify your PATH),
-you should run:
+If you don't want conda to activate the base environment by default (and modify
+your PATH), you should run:
 
 ```bash
 conda config --set auto_activate_base false
 ```
 
-All E3 packages are available on [ESS Artifactory](https://artifactory.esss.lu.se).
-Artifactory includes mirrors for `anaconda-main` and `conda-forge` channels. You should set artifactory as the the default channel_alias.
-To work with E3, you have to use the `conda-e3-virtual` channel:
+All E3 packages are available on [ESS
+Artifactory](https://artifactory.esss.lu.se).  Artifactory includes mirrors for
+`anaconda-main` and `conda-forge` channels. You should set artifactory as the
+the default channel_alias.  To work with E3, you have to use the
+`conda-e3-virtual` channel:
 
 ```bash
 conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
@@ -71,7 +81,13 @@ conda config --add channels conda-e3-virtual
 conda config --remove channels defaults
 ```
 
-conda 4.7 introduced a new [.conda package format](https://conda.io/projects/conda/en/latest/user-guide/concepts/packages.html#conda-file-format). Artifactory 6.11.3 doesn't support that format and it creates issues with remote conda repository. See [RTFACT-19267](https://www.jfrog.com/jira/browse/RTFACT-19267). To use conda >= 4.7 with Artifactory you should force conda to only download .tar.bz2 packages by setting the `use_only_tar_bz2` boolean.
+conda 4.7 introduced a new [.conda package
+format](https://conda.io/projects/conda/en/latest/user-guide/concepts/packages.html#conda-file-format).
+Artifactory 6.11.3 doesn't support that format and it creates issues with remote
+conda repository. See
+[RTFACT-19267](https://www.jfrog.com/jira/browse/RTFACT-19267). To use conda >=
+4.7 with Artifactory you should force conda to only download .tar.bz2 packages
+by setting the `use_only_tar_bz2` boolean.
 
 ```bash
 conda config --set use_only_tar_bz2 true
@@ -87,13 +103,15 @@ channels:
 use_only_tar_bz2: true
 ```
 
-You can modify the configuration by editing directly this file or using the `conda config` command.
+You can modify the configuration by editing directly this file or using the
+`conda config` command.
 
 (conda_build_installation)=
 
 ## conda-build
 
-[conda-build] is only required if you want to build conda packages locally. It's not directly needed to work with E3.
+[conda-build] is only required if you want to build conda packages locally. It's
+not directly needed to work with E3.
 
 Install conda-build in the base environment:
 
@@ -105,9 +123,11 @@ conda install -y -n base -c conda-forge conda-build
 The base environment shall be writeable by the current user to run this command.
 ```
 
-Download the [conda_build_config.yaml](https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/blob/master/conda_build_config.yaml) file from the
-[e3-pinning repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).
-You should save it at the root of your home directory.
+Download the
+[conda_build_config.yaml](https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/blob/master/conda_build_config.yaml)
+file from the [e3-pinning
+repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).  You should save
+it at the root of your home directory.
 
 ```bash
 [csi@8ef3d5671aef Dev]$ cd
@@ -121,17 +141,20 @@ This file defines the default version of each dependency to use.
 
 ## Cookiecutter
 
-[Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from templates. It's used to easily create new E3 modules, recipes or IOCs for development. It's not required to run E3.
+[Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from
+templates. It's used to easily create new E3 modules, recipes or IOCs for
+development. It's not required to run E3.
 
 (cookiecutter_installation)=
 
 ### Cookiecutter Installation
 
-[Cookiecutter] is a Python tool. It can be installed with `pip`.
-Note that you should **never run** `sudo pip install`. This can override system packages.
+[Cookiecutter] is a Python tool. It can be installed with `pip`.  Note that you
+should **never run** `sudo pip install`. This can override system packages.
 
-[Cookiecutter] can be installed in different ways (`pip install --user` or using [pipx](https://pipxproject.github.io/pipx/)).
-As conda is installed, let's use it.
+[Cookiecutter] can be installed in different ways (`pip install --user` or using
+[pipx](https://pipxproject.github.io/pipx/)).  As conda is installed, let's use
+it.
 
 ```bash
 conda create -y -c conda-forge -n cookiecutter python=3 cookiecutter
@@ -161,9 +184,10 @@ default_context:
     full_name: "Your Name"
 ```
 
-This will override the variable `full_name` from any cookiecutter template with your name.
-It will become the default value and avoid you having to enter it every time you create a new project.
-Note that you could add to that file other variables.
+This will override the variable `full_name` from any cookiecutter template with
+your name.  It will become the default value and avoid you having to enter it
+every time you create a new project.  Note that you could add to that file other
+variables.
 
 Add the following aliases to your `.bashrc`:
 
@@ -173,7 +197,8 @@ echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutt
 echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
 ```
 
-To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or `e3-ioc`.
+To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or
+`e3-ioc`.
 
 [conda]: https://docs.conda.io/en/latest/
 [conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html

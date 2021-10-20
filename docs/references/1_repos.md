@@ -10,7 +10,8 @@ Generally, all ESS e3-related repositories are kept under:
 
 <https://gitlab.esss.lu.se/e3>
 
-They are then furthermore divided into different groups, depending on their type and application. Some examples for e3 wrappers are:
+They are then furthermore divided into different groups, depending on their type
+and application. Some examples for e3 wrappers are:
 
 - <https://gitlab.esss.lu.se/e3/common>
 - <https://gitlab.esss.lu.se/e3/area>
@@ -26,4 +27,3 @@ And IOCs are kept under:
 - <https://gitlab.esss.lu.se/ioc-lab>
 - <https://gitlab.esss.lu.se/ioc-test>
 - <https://gitlab.esss.lu.se/ioc-prod>
-
