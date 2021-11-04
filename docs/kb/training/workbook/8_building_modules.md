@@ -206,7 +206,7 @@ version is specified. This is done by adding the following to `CONFIG_MODULE`:
 STREAM_DEP_VERSION:=2.8.18
 ```
 
-and to `fimscb.Makefile`
+as well as the associated code to `fimscb.Makefile`:
 
 ```make
 REQUIRED += stream
@@ -239,19 +239,19 @@ Create a cookiecutter wrapper as above, but this time leave the git url blank.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
-module_name []: clock                               # Update the module name
-module_version [main]: 0.1.0                        # Choose/define a version for your e3 module
+module_name []: clock                           # Update the module name
+module_version [main]: 0.1.0                    # Choose/define a version for your e3 module
 summary [Wrapper for the module clock]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
 require_version [3.4.1]:
-git_repository []:                                  # Leave this blank or enter any non-valid URL
+git_repository []:                              # Leave this blank or enter any non-valid URL
 ```
 
 This will create a new wrapper. The default behaviour of cookiecutter is to put
 in an empty directory. You can then, for example, generate a template using
-`makeBaseApp.pl` from EPICS base. In our case we will remove that and download a
-new set of source files.
+`makeBaseApp.pl` from EPICS base. In our case we will remove the directory and download
+a new set of source files.
 
 ```console
 [iocuser@host:~]$ cd e3-clock
@@ -261,11 +261,11 @@ new set of source files.
 ```
 
 So how does e3 know that we are in local source mode? The key variables is
-`EPICS_MODULE_TAG`. When building/initialising etc., the e3 build system will
-check to see if this variable has been set. If it has, then it will try to check
-out that tag in the submodule. If it is not set, then it assume that we are in
-local source mode. If we look at `CONFIG_MODULE` in the wrapper in this case, we
-see
+`EPICS_MODULE_TAG`. When building (or more precisely initialising), the e3 build
+system will check to see if this variable has been set. If it has, then it will try
+to check out that tag in the submodule. If it is not set, then it assume that we
+are in local source mode. If we look at `CONFIG_MODULE` in the wrapper in this case,
+we see
 
 ```make
 EPICS_MODULE_NAME := clock
@@ -306,9 +306,9 @@ where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
-APP:=Clock1App
-APPDB:=$(APP)/Db
-APPSRC:=$(APP)/src
+APP := Clock1App
+APPDB := $(APP)/Db
+APPSRC := $(APP)/src
 
 USR_INCLUDES += -I$(where_am_I)$(APPSRC)
 
