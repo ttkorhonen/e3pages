@@ -60,7 +60,7 @@ Cookiecutter then provides a list of prompts:
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
 module_name []: testmodule
-module_version [main]: master
+module_version [main]:
 summary [Wrapper for the module testmodule]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
@@ -160,7 +160,6 @@ GitLab, then the steps are as follows:
    $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-testmodule.git
    $ # Otherwise, you can do this:
    $ # git remote add origin git@gitlab.esss.lu.se:simonrose/e3-testmodule.git
-   $ git checkout -b main
    $
    $ # Add all of the files and commit them
    $ git add .
