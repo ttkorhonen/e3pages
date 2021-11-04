@@ -32,15 +32,13 @@ It is highly recommended to use virtual environments (using, for example, the
 ### Building an EPICS module
 
 This step is not technically a prerequisite; if you do not have an EPICS module
-built already, then the steps below will construct a template EPICS module which
-you can modify to suit your needs. This uses a cookiecutter that is based on
-`makeBaseApp.pl` from EPICS base:
-<https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>.
+built already, then the steps below will construct an empty directory for an EPICS
+module which you can modify to suit your needs.
 
 Assuming that you have an existing EPICS module you would like to create a
-wrapper for, it should be available on the ESS GitLab, although both GitHub and
-GitLab will work. Note that the configuration and *make* files that are used to
-build this EPICS module will not be used in the e3 build process.
+wrapper for, it should be publically available via git. Note that the configuration
+and *make* files that are used to build this EPICS module will not be used in the
+e3 build process, and that you will have to configure the wrapper separately.
 
 ## Creating the e3 wrapper
 
@@ -60,20 +58,19 @@ Cookiecutter then provides a list of prompts:
 
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
-You've downloaded /Users/simonrose/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
 company [European Spallation Source ERIC]:
-module_name [mymodule]: testmodule
-summary [EPICS testmodule module]:
-full_name [Simon Rose]:
-email [simon.rose@ess.eu]:
-epics_base_version [7.0.4]:
-epics_base_location [/epics/base-7.0.4]:
-require_version [3.2.0]:
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
+module_name []: testmodule
+module_version [main]: master
+summary [Wrapper for the module testmodule]:
+epics_base_version [7.0.5]:
+epics_base_location [/epics/base-7.0.5]:
+require_version [3.4.1]:
+git_repository []: https://gitlab.esss.lu.se/epics-modules/testmodule.git
 ```
 
 Above, I have chosen the defaults for most of the responses other than the
-module name. In the last step, there are two possibilities:
+module name, the reference (`module_version`), and the repository path. In the last
+step, there are two possibilities:
 
 1. The git repository that you provide exists and is public.
 2. The git repository does not exist, or is not public.
@@ -100,21 +97,28 @@ submodule, and is ready to work with.
 In the second case, you will see something like the following.
 
 ```console
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
-Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
->>>> git repository has been initialized.
->>>> The repository 'https://gitlab.esss.lu.se/epics-modules/testmodule.git' was not found.
->>>> Please check that the repository is public, and then re-run 'git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git'.
->>>> A template module has been included in the meantime.
+Initialized empty Git repository in /mnt/c/dev/cookiecutter-e3-wrapper/e3-testmodule/.git/
+Switched to a new branch 'main'
+No valid submodule - local mode used.
+
+Your wrapper has been created.
+
+Create the repository on your Git repository manager (e.g. https://gitlab.esss.lu.se)
+and add that remote:
+
+    $ cd e3-testmodule
+    $ git remote add origin path/to/your/remote
+    $ git add .
+    $ git commit -m "Initial commit"
+    $ git push -u origin main
+
 ```
 
 In this case, either the EPICS modules you are looking for was not found (it may
-be private), or it does not exist. A temporary module has been added which
-displays the expected structure of an EPICS module. This is created using the
-cookiecutter template for EPICS modules found at
-<https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was
-not what you intended, you can delete the local directory, confirm that your
-EPICS module is available, and run:
+be private), or it does not exist. An empty folder has been added in which
+you are expected to place the EPICS module. This can be created using, for example,
+`makeBaseApp.pl` from EPICS base. If this was not what you intended, you can delete
+the local directory, confirm that your EPICS module is available, and run:
 
 ```console
 $ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
@@ -154,14 +158,15 @@ GitLab, then the steps are as follows:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
    $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-testmodule.git
    $ # Otherwise, you can do this:
-   $ git remote add origin git@gitlab.esss.lu.se:simonrose/e3-testmodule.git
+   $ # git remote add origin git@gitlab.esss.lu.se:simonrose/e3-testmodule.git
+   $ git checkout -b main
    $
    $ # Add all of the files and commit them
    $ git add .
    $ git commit -m "Initial commit"
    $
    $ # Push to the remote repository
-   $ git push -u origin master
+   $ git push -u origin main
    ```
 
    If you use https and not ssh, then you will have to enter your username and password.
