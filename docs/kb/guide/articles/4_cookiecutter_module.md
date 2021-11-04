@@ -69,8 +69,8 @@ git_repository []: https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 
 Above, I have chosen the defaults for most of the responses other than the
-module name, the reference and version (`module_version`), and the repository path.
-In the last step, there are two possibilities:
+module name, and the repository path. In the last step, there are two
+possibilities:
 
 1. The git repository that you provide exists and is public.
 2. The git repository does not exist, or is not public.
