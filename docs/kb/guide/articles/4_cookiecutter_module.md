@@ -59,13 +59,13 @@ Cookiecutter then provides a list of prompts:
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
-module_name []: testmodule
+module_name []: fakemodule
 module_version [main]:
-summary [Wrapper for the module testmodule]:
+summary [Wrapper for the module fakemodule]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
 require_version [3.4.1]:
-git_repository []: https://gitlab.esss.lu.se/epics-modules/testmodule.git
+git_repository []: https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 
 Above, I have chosen the defaults for most of the responses other than the
@@ -75,13 +75,13 @@ In the last step, there are two possibilities:
 1. The git repository that you provide exists and is public.
 2. The git repository does not exist, or is not public.
 
-In the first case, you will see the following:
+In the first case, you would see the following:
 
 ```text
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]: https://gitlab.esss.lu.se/simonrose/http
-Initialized empty Git repository in /home/iocuser/e3-testmodule/.git/
+git_repository [https://gitlab.esss.lu.se/epics-modules/fakemodule.git]: https://gitlab.esss.lu.se/simonrose/http
+Initialized empty Git repository in /home/iocuser/e3-fakemodule/.git/
 >>>> git repository has been initialized.
-Cloning into '/home/iocuser/e3-testmodule/http'...
+Cloning into '/home/iocuser/e3-fakemodule/http'...
 warning: redirecting to https://gitlab.esss.lu.se/simonrose/http.git/
 remote: Enumerating objects: 237, done.
 remote: Counting objects: 100% (237/237), done.
@@ -97,7 +97,7 @@ submodule, and is ready to work with.
 In the second case, you will see something like the following.
 
 ```text
-Initialized empty Git repository in /home/iocuser/cookiecutter-e3-wrapper/e3-fakemodule/.git/
+Initialized empty Git repository in /mnt/c/dev/cookiecutter-e3-wrapper/e3-fakemodule/.git/
 Switched to a new branch 'main'
 No valid submodule - local mode used.
 
@@ -106,7 +106,7 @@ Your wrapper has been created.
 Create the repository on your Git repository manager (e.g. https://gitlab.esss.lu.se)
 and add that remote:
 
-    $ cd e3-testmodule
+    $ cd e3-fakemodule
     $ git remote add origin path/to/your/remote
     $ git add .
     $ git commit -m "Initial commit"
@@ -122,7 +122,7 @@ you can delete the local directory, confirm that your EPICS module is available,
 and run:
 
 ```console
-$ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
+$ git submodule add https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 
 ### Adding a remote
@@ -134,7 +134,7 @@ GitLab, then the steps are as follows:
 
 1. Create the remote repository by choosing 'New project' from the menu on <https://gitlab.esss.lu.se>.
 
-2. The repository should be named *e3-testmodule*, and (although not necessary)
+2. The repository should be named *e3-fakemodule*, and (although not necessary)
    should be public, at least if you want to share it with anyone else. However,
    you can change this at a later date.
 
@@ -146,7 +146,7 @@ GitLab, then the steps are as follows:
    the steps, but only the following (from 'Push an existing folder'). You will
    want to, of course, change the name `simonrose` to your account or to the
    target group where you have created your repository, and change the name
-   `e3-testmodule` to the name you have chosen:
+   `e3-fakemodule` to the name you have chosen:
 
    ```bash
    $ # You do not need to switch into the directory if you are already there
@@ -157,9 +157,9 @@ GitLab, then the steps are as follows:
    $
    $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to GitLab:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
-   $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-testmodule.git
+   $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-fakemodule.git
    $ # Otherwise, you can do this:
-   $ # git remote add origin git@gitlab.esss.lu.se:simonrose/e3-testmodule.git
+   $ # git remote add origin git@gitlab.esss.lu.se:simonrose/e3-fakemodule.git
    $
    $ # Add all of the files and commit them
    $ git add .
