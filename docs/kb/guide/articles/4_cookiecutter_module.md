@@ -32,15 +32,13 @@ It is highly recommended to use virtual environments (using, for example, the
 ### Building an EPICS module
 
 This step is not technically a prerequisite; if you do not have an EPICS module
-built already, then the steps below will construct a template EPICS module which
-you can modify to suit your needs. This uses a cookiecutter that is based on
-`makeBaseApp.pl` from EPICS base:
-<https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>.
+already available, then the steps below will construct an empty directory for an
+EPICS module which you can modify to suit your needs.
 
 Assuming that you have an existing EPICS module you would like to create a
-wrapper for, it should be available on the ESS GitLab, although both GitHub and
-GitLab will work. Note that the configuration and *make* files that are used to
-build this EPICS module will not be used in the e3 build process.
+wrapper for, it should be publically available via git. Note that the configuration
+and *make* files that are used to build this EPICS module will not be used in the
+e3 build process, and that you will have to configure the wrapper separately.
 
 ## Creating the e3 wrapper
 
@@ -60,31 +58,30 @@ Cookiecutter then provides a list of prompts:
 
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
-You've downloaded /Users/simonrose/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
 company [European Spallation Source ERIC]:
-module_name [mymodule]: testmodule
-summary [EPICS testmodule module]:
-full_name [Simon Rose]:
-email [simon.rose@ess.eu]:
-epics_base_version [7.0.4]:
-epics_base_location [/epics/base-7.0.4]:
-require_version [3.2.0]:
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
+module_name []: fakemodule
+module_version [main]:
+summary [Wrapper for the module fakemodule]:
+epics_base_version [7.0.5]:
+epics_base_location [/epics/base-7.0.5]:
+require_version [3.4.1]:
+git_repository []: https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 
 Above, I have chosen the defaults for most of the responses other than the
-module name. In the last step, there are two possibilities:
+module name, and the repository path. In the last step, there are two
+possibilities:
 
 1. The git repository that you provide exists and is public.
 2. The git repository does not exist, or is not public.
 
-In the first case, you will see the following:
+In the first case, you would see the following:
 
-```console
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]: https://gitlab.esss.lu.se/simonrose/http
-Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
+```text
+git_repository [https://gitlab.esss.lu.se/epics-modules/fakemodule.git]: https://gitlab.esss.lu.se/simonrose/http
+Initialized empty Git repository in /home/iocuser/e3-fakemodule/.git/
 >>>> git repository has been initialized.
-Cloning into '/Users/simonrose/git/e3-testmodule/http'...
+Cloning into '/home/iocuser/e3-fakemodule/http'...
 warning: redirecting to https://gitlab.esss.lu.se/simonrose/http.git/
 remote: Enumerating objects: 237, done.
 remote: Counting objects: 100% (237/237), done.
@@ -99,25 +96,33 @@ submodule, and is ready to work with.
 
 In the second case, you will see something like the following.
 
-```console
-git_repository [https://gitlab.esss.lu.se/epics-modules/testmodule.git]:
-Initialized empty Git repository in /Users/simonrose/git/e3-testmodule/.git/
->>>> git repository has been initialized.
->>>> The repository 'https://gitlab.esss.lu.se/epics-modules/testmodule.git' was not found.
->>>> Please check that the repository is public, and then re-run 'git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git'.
->>>> A template module has been included in the meantime.
+```text
+Initialized empty Git repository in /mnt/c/dev/cookiecutter-e3-wrapper/e3-fakemodule/.git/
+Switched to a new branch 'main'
+No valid submodule - local mode used.
+
+Your wrapper has been created.
+
+Create the repository on your Git repository manager (e.g. https://gitlab.esss.lu.se)
+and add that remote:
+
+    $ cd e3-fakemodule
+    $ git remote add origin path/to/your/remote
+    $ git add .
+    $ git commit -m "Initial commit"
+    $ git push -u origin main
+
 ```
 
 In this case, either the EPICS modules you are looking for was not found (it may
-be private), or it does not exist. A temporary module has been added which
-displays the expected structure of an EPICS module. This is created using the
-cookiecutter template for EPICS modules found at
-<https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module>. If this was
-not what you intended, you can delete the local directory, confirm that your
-EPICS module is available, and run:
+be private), or it does not exist. An empty folder has been added in which
+you are expected to place the EPICS module. The module can then be created using,
+for example, `makeBaseApp.pl` from EPICS base. If this was not what you intended,
+you can delete the local directory, confirm that your EPICS module is available,
+and run:
 
 ```console
-$ git submodule add https://gitlab.esss.lu.se/epics-modules/testmodule.git
+$ git submodule add https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 
 ### Adding a remote
@@ -129,7 +134,7 @@ GitLab, then the steps are as follows:
 
 1. Create the remote repository by choosing 'New project' from the menu on <https://gitlab.esss.lu.se>.
 
-2. The repository should be named *e3-testmodule*, and (although not necessary)
+2. The repository should be named *e3-fakemodule*, and (although not necessary)
    should be public, at least if you want to share it with anyone else. However,
    you can change this at a later date.
 
@@ -141,7 +146,7 @@ GitLab, then the steps are as follows:
    the steps, but only the following (from 'Push an existing folder'). You will
    want to, of course, change the name `simonrose` to your account or to the
    target group where you have created your repository, and change the name
-   `e3-testmodule` to the name you have chosen:
+   `e3-fakemodule` to the name you have chosen:
 
    ```bash
    $ # You do not need to switch into the directory if you are already there
@@ -152,16 +157,16 @@ GitLab, then the steps are as follows:
    $
    $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to GitLab:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
-   $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-testmodule.git
+   $ git remote add origin https://gitlab.esss.lu.se/simonrose/e3-fakemodule.git
    $ # Otherwise, you can do this:
-   $ git remote add origin git@gitlab.esss.lu.se:simonrose/e3-testmodule.git
+   $ # git remote add origin git@gitlab.esss.lu.se:simonrose/e3-fakemodule.git
    $
    $ # Add all of the files and commit them
    $ git add .
    $ git commit -m "Initial commit"
    $
    $ # Push to the remote repository
-   $ git push -u origin master
+   $ git push -u origin main
    ```
 
    If you use https and not ssh, then you will have to enter your username and password.

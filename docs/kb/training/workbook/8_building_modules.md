@@ -136,22 +136,22 @@ needed to create the wrapper.
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
-module_name [mymodule]: fimscb                                 # Update the module name
-summary [EPICS fimscb module]:
-full_name [Your name]:                                         # Fill in your name
-email [your.name@ess.eu]:                                      # and email
+module_name []: fimscb                                          # Update the module name
+module_version [main]: master                                   # Choose a reference
+summary [Wrapper for the module fimscb]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
 require_version [3.4.1]:
-git_repository [ ... ]: https://github.com/icshwi/fimscb.git   # And update the URL
+git_repository []: https://github.com/icshwi/fimscb.git         # And update the URL
 ```
 
-The key things to fill in here are highlighted above, namely the module name
-and git url (as well as your name and email address).
+The key things to fill in here are highlighted above, namely the module name,
+the module reference (to start out with; you will need to define a numerical version),
+and git url.
 
 :::{note}
 If the git repository that you add exists and is public, then cookiecutter will
-add it as a submodule to the wrapper. Otherwise, a templated *local module* (see
+add it as a submodule to the wrapper. Otherwise, an empty directory (see
 next section) will be created.
 :::
 
@@ -162,102 +162,20 @@ the following output
 ```console
 [iocuser@host:e3-fimscb]$ make init patch build install
 [iocuser@host:e3-fimscb]$ make existent LEVEL=4
-/epics/base-7.0.5/require/3.4.1/siteMods/fimscb
-`-- master
-    |-- fimscb_meta.yaml
-    `-- lib
-        `-- linux-x86_64
-            |-- fimscb.dep
-            `-- libfimscb.so
+├── db
+│   ├── fimscb.db
+│   ├── fimscb.proto
+│   ├── stream_raw.proto
+│   └── stream_raw.template
+├── fimscb_meta.yaml
+└── lib
+    └── linux-x86_64
+        └── fimscb.dep
 ```
 
 :::{admonition} Exercise
 Why do we do `make init patch` as well as `build install`?
 :::
-
-If you explore the `fimscb` you should see the following.
-
-```console
-[iocuser@host:e3-fimscb]$ tree fimscb
-# --- snip snip ---
-|-- fimscbApp
-|   |-- Db
-|   |   |-- fimscb.db
-|   |   |-- fimscb.proto
-|   |   |-- Makefile
-|   |   |-- stream_raw.proto
-|   |   `-- stream_raw.template
-|   |-- Makefile
-|   `-- src
-|       |-- fimscbMain.cpp
-|       `-- Makefile
-|-- fimscb.Makefile
-|-- iocBoot
-|   |-- iocfimscb
-|   |   |-- Makefile
-|   |   `-- st.cmd
-|   `-- Makefile
-|-- Makefile
-|-- README.md
-# --- snip snip ---
-```
-
-In particular, the `.db`, `.proto`, and `.template` files have not been
-installed. Moreover, the `fimscpMain.cpp` file is a generic boilerplate file to
-start an IOC in regular EPICS, and does not need to be compiled in with the e3
-module `fimscb` (recall that we use `iocsh.bash` to start an IOC instead of
-compiling a separate executable binary). In order to install the database and
-other files, as well as remove the source file, you must make changes to
-`fimscb.Makefile`.
-
-In the end, it should look something like
-
-```make
-where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-include $(E3_REQUIRE_TOOLS)/driver.makefile
-include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
-
-############################################################################
-#
-# Relevant directories to point to files
-#
-############################################################################
-
-APP:=fimscbApp
-APPDB:=$(APP)/Db
-
-
-############################################################################
-#
-# Add any files that should be copied to $(module)/db
-#
-############################################################################
-
-TEMPLATES += $(wildcard $(APPDB)/*.db)
-TEMPLATES += $(wildcard $(APPDB)/*.proto)
-TEMPLATES += $(wildcard $(APPDB)/*.template)
-
-.PHONY: db
-db:
-```
-
-If you now re-run the build, you should see the following
-
-```console
-[iocuser@host:e3-fimscb]$ make clean build install
-[iocuser@host:e3-fimscb]$ make existent LEVEL=4
-/epics/base-7.0.5/require/3.4.1/siteMods/fimscb
-`-- master
-    |-- db
-    |   |-- fimscb.db
-    |   |-- fimscb.proto
-    |   |-- stream_raw.proto
-    |   `-- stream_raw.template
-    |-- fimscb_meta.yaml
-    `-- lib
-        `-- linux-x86_64
-            `-- fimscb.dep
-```
 
 We can check that it works correctly by starting an IOC that loads this module.
 
@@ -280,21 +198,20 @@ Given that `e3-fimscb` depends on *StreamDevice* (note the existence of
 cannot be a build-time dependency as discussed in [the last
 chapter](7_module_deps.md). Instead, it is a *run-time* dependency.
 
-In order to configure this correctly, you must uncomment the `# REQUIRED +=
-stream` line in `fimscb.Makefile` and, as for any other dependency, ensure that
-the correct version is specified. This is done by adding the following to
-`CONFIG_MODULE`:
+In order to configure this correctly, you must define the dependency in
+`fimscb.Makefile` and, as for any other dependency, ensure that the correct
+version is specified. This is done by adding the following to `CONFIG_MODULE`:
 
 ```make
 STREAM_DEP_VERSION:=2.8.18
 ```
 
-and to `fimscb.Makefile`
+as well as the associated code to `fimscb.Makefile`:
 
 ```make
 REQUIRED += stream
 ifneq ($(strip $(STREAM_DEP_VERSION)),)
-stream_VERSION:=$(STREAM_DEP_VERSION)
+  stream_VERSION:=$(STREAM_DEP_VERSION)
 endif
 ```
 
@@ -317,64 +234,52 @@ this ensures that your in-house developed EPICS functionality can be shared with
 the broader community, instead of just those that use e3.
 :::
 
-Create a cookiecutter wrapper as above, but this time enter `none` for the git
-URL.
+Create a cookiecutter wrapper as above, but this time leave the git url blank.
 
 ```console
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
-module_name [mymodule]: clock                     # Update the module name
-summary [EPICS clock module]:
-full_name [Your name]:
-email [your.name@ess.eu]:
+module_name []: clock                           # Update the module name
+module_version [main]: 0.1.0                    # Choose/define a version for your e3 module
+summary [Wrapper for the module clock]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
 require_version [3.4.1]:
-git_repository [ ... ]: none                      # Leave this as "none" or any non-valid URL
+git_repository []:                              # Leave this blank or enter any non-valid URL
 ```
 
 This will create a new wrapper. The default behaviour of cookiecutter is to put
-in a template based on `makeBaseApp.pl` from EPICS base. In our case we will
-remove that and download a new set of source files.
+in an empty directory. You can then, for example, generate a template using
+`makeBaseApp.pl` from EPICS base. In our case we will remove the directory and download
+a new set of source files.
 
 ```console
 [iocuser@host:~]$ cd e3-clock
-[iocuser@host:e3-clock]$ rm -rf clock/*  # Remove the generated files
+[iocuser@host:e3-clock]$ rmdir clock  # Remove the generated directory
 [iocuser@host:e3-clock]$ wget -c http://www-linac.kek.jp/cont/epics/second/second-devsup.tar.gz
 [iocuser@host:e3-clock]$ tar -zxvf second-devsup.tar.gz -C clock
 ```
 
 So how does e3 know that we are in local source mode? The key variables is
-`EPICS_MODULE_TAG`. When building/initialising etc., the e3 build system will
-check to see if this variable has been set. If it has, then it will try to check
-out that tag in the submodule. If it is not set, then it assume that we are in
-local source mode. If we look at `CONFIG_MODULE` in the wrapper in this case, we
-see
+`EPICS_MODULE_TAG`. When building (or more precisely initialising), the e3 build
+system will check to see if this variable has been set. If it has, then it will try
+to check out that tag in the submodule. If it is not set, then it assume that we
+are in local source mode. If we look at `CONFIG_MODULE` in the wrapper in this case,
+we see
 
 ```make
-#
-EPICS_MODULE_NAME:=clock
+EPICS_MODULE_NAME := clock
 
-# EPICS_MODULE_TAG:=master
-#
-E3_MODULE_VERSION:=1.0.0
-
-# Dependent module versions
-# For example:
-#ASYN_DEP_VERSION:=4.41.0
-
-# In most cases, we do not need to touch the following variables.
-E3_MODULE_NAME:=$(EPICS_MODULE_NAME)
-E3_MODULE_SRC_PATH:=clock
-E3_MODULE_MAKEFILE:=$(EPICS_MODULE_NAME).Makefile
-
+E3_MODULE_VERSION := main
+E3_MODULE_NAME := clock
+E3_MODULE_SRC_PATH := $(EPICS_MODULE_NAME)
+E3_MODULE_MAKEFILE := $(E3_MODULE_NAME).Makefile
 
 -include $(TOP)/configure/CONFIG_OPTIONS
-# The definitions can also be overridden an untracked CONFIG_MODULE.local
 -include $(TOP)/configure/CONFIG_MODULE.local
 ```
 
-i.e. the line which defines `EPICS_MODULE_TAG` has been commented out, so we are
+i.e. the line which defines `EPICS_MODULE_TAG` has been deleted, so we are
 in local source mode.
 
 :::{tip}
@@ -401,9 +306,9 @@ where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
-APP:=Clock1App
-APPDB:=$(APP)/Db
-APPSRC:=$(APP)/src
+APP := Clock1App
+APPDB := $(APP)/Db
+APPSRC := $(APP)/src
 
 USR_INCLUDES += -I$(where_am_I)$(APPSRC)
 
