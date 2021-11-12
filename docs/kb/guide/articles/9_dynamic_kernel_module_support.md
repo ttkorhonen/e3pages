@@ -158,12 +158,12 @@ Following is the contents of the RULES_DKMS file in e3 require module:
         $(DKMS) build $(DKMS_ARGS)
 
     dkms_remove:
-	    $(DKMS) remove $(E3_MODULE_NAME)/$(E3_MODULE_VERSION) --all
-	    rm -rf /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
+        $(DKMS) remove $(E3_MODULE_NAME)/$(E3_MODULE_VERSION) --all
+        rm -rf /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
 
     dkms_install:
-	    $(DKMS) install $(DKMS_ARGS)
-	    $(QUIET) depmod
+        $(DKMS) install $(DKMS_ARGS)
+        $(QUIET) depmod
 
     dkms_uninstall:
         $(DKMS) uninstall $(DKMS_ARGS)
@@ -224,10 +224,10 @@ E3 try to associate the DKMS module and the e3 wrapper module which depends on i
 together(From this point of view, it might be good to modify the cookie-cutter to
 let it create a `dkms` directory in e3 wrapper module).
 
-To build a DKMS module with e3, do the same preparation described in section 3.1. 
-That is to get the kernel module source or write your own kernel module, and add a
-`dkms.conf` file to the kernel module source. A typical simple dkms.conf file looks
-like the following:
+To build a DKMS module with e3, do the same preparation described in section
+3.1. That is to get the kernel module source or write your own kernel module,
+and add a `dkms.conf` file to the kernel module source. A typical simple
+dkms.conf file looks like the following:
 
 ```console
     PACKAGE_NAME="myModuleName"
