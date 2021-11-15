@@ -12,89 +12,12 @@ automatically rebuild when new kernels are installed.
 This article provides general information about how to build and install a
 DKMS module.
 
-## DKMS (Dynamic Kernel Module Support) in e3 wrapper
-
-The following `RULES_DKMS_L` file in e3 wrapper defines makefile rules to
-prepare and install a DKMS module's configure and source files into
-system's file system. It also provides rules to make the user space
-device driver deamon to reload its rule so that the newly built and
-installed DKMS module can work properly.
-
-The contents of RUELS_DKMS_L file, are as following:
-
-```make
-# KMOD_NAME := mrf
-
-# .PHONY: dkms_add
-
-# dkms_add: conf
-#       $(MSI) -M name="$(E3_MODULE_NAME)" -M  version="$(E3_MODULE_VERSION)" -M kmod_name="$(KMOD_NAME)" $(TOP)/dkms/dkms_with_msi.conf.in > $(TOP)/dkms/dkms_with_msi.conf
-#       $(QUIET) cat $(TOP)/dkms/dkms_with_msi.conf $(TOP)/dkms/dkms_without_msi.conf > $(TOP)/dkms/dkms.conf
-#       $(QUIET) install -m 644 $(TOP)/dkms/dkms.conf  $(E3_KMOD_SRC_PATH)/
-#       $(SUDO) install -d /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
-#       $(SUDO) cp -r $(TOP)/$(E3_KMOD_SRC_PATH)/* /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)/
-#       $(SUDO) $(DKMS) add $(DKMS_ARGS)
-
-# setup:
-#       $(QUIET) $(SUDO2) 'echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules'
-#       $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
-#       $(QUIET) $(SUDO) /bin/udevadm trigger
-#       $(QUIET) $(SUDO2) 'echo $(KMOD_NAME) | tee /etc/modules-load.d/$(KMOD_NAME).conf'
-#       $(QUIET) $(SUDO) depmod --quick
-#       $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
-#       $(QUIET) $(SUDO) modprobe -v $(KMOD_NAME)
-#       $(QUIET) echo ""
-#       $(QUIET) echo ""
-#       $(QUIET) echo "It is OK to see \"E3/RULES_DKMS:37: recipe for target 'setup' failed\""
-#       $(QUIET) echo "---------------------------------------------------------------------"
-#       $(QUIET) -ls -l /dev/uio* 2>/dev/null
-#       $(QUIET) echo "---------------------------------------------------------------------"
-
-# setup_clean:
-#       $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
-#       $(SUDO) rm -f /etc/modules-load.d/$(KMOD_NAME).conf
-#       $(SUDO) rm -f /etc/udev/rules.d/99-$(KMOD_NAME).rules
-
-# .PHONY: setup setup_clean
-```
-
-The above file(`RULES_DKMS_L`) can serve as a template or example to create
-makefile rules to prepare a kernel module source to be built and installed
-as a DKMS module.
-The rule `dkms_add` uses macro substitution tool to process a template DKMS
-configure file with macro substitutions, to generate a `dkms.conf` file and
-install it together with other kernel source files of the DKMS module into
-the host file system. The generated `dkms.conf` file includes `E3_MODULE_NAME`,
-`E3_MODULE_VERSION` and kernel module name.
-
-The rule `setup` try to setup user space input output driver deamon
-to reload its rules so that the newly installed DKMS module can work properly.
-The make rule which does `dkms build` is not included in this file. The
-original design was intending to use the `dkms_add` rule defined in
-this file to prepare and install the DKMS source and configure files into
-the system's DKMS source location. And then use the `dkms_build` rule
-defined in e3 `require` module to build and install the DKMS model into
-system's DKMS tree. And then use the `setup` rule defined in this file
-to make the user space input output driver deamon to reload its rules
-so that the newly built DKMS module can work properly.
-
-Following e3 wrappers, with DKMS kernel modules associated, can
-be used as reference.
-
-```console
-https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
-https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
-https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
-```
-
 To build a DKMS module, one can follow this makefile rule file to create
 makefile rules to prepare a kernel module as a DKMS module to be built.
 One can also directly use the DKMS tool provided by Linux system to build
 and install a DKMS module. Following sections explain these in detail.
 
-## Build and install a third-party kernel module as a DKMS module
-
-### Build and install DKMS module with dkms tool
+## Build and install DKMS module with Linux dkms tool
 
 DKMS is usually for kernel device driver. DKMS tool comes with Linux systems
 provide convenient way to build and install a third party kernel module as DKMS
@@ -138,7 +61,7 @@ dkms install -m myModuleName -v myModuleVersion
 
 This will install the built module into the system's DKMS tree.
 
-## DKMS build in e3
+## Build and install DKMS module with e3
 
 ### CONFIG_DKMS file
 
@@ -222,18 +145,89 @@ it assumes the currently running kernel.
 Call DKMS tool from the system to uninstall the DKMS module specified by the
 module name and module version
 
-### build DKMS kernel module with e3
 
-Although the `RULES_DKMS_L` rule has be removed from e3 wrapper modules, one
-still can build a DKMS kernel module with e3 build system.
+### Prepare kernel module source and DKMS configure file
+
+Following provide a template or example about how to create
+makefile rules that can be used to help to create DKMS configure
+file. And makefile rules to install a DKMS module's configure and
+source files into system's file system. And rules to make user
+space device driver deamon to reload its rule so that the newly
+built and installed DKMS module can work properly.
+
+```make
+KMOD_NAME := mrf
+
+.PHONY: dkms_add
+
+dkms_add: conf
+       $(MSI) -M name="$(E3_MODULE_NAME)" -M  version="$(E3_MODULE_VERSION)" -M kmod_name="$(KMOD_NAME)" $(TOP)/dkms/dkms_with_msi.conf.in > $(TOP)/dkms/dkms_with_msi.conf
+       $(QUIET) cat $(TOP)/dkms/dkms_with_msi.conf $(TOP)/dkms/dkms_without_msi.conf > $(TOP)/dkms/dkms.conf
+       $(QUIET) install -m 644 $(TOP)/dkms/dkms.conf  $(E3_KMOD_SRC_PATH)/
+       $(SUDO) install -d /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
+       $(SUDO) cp -r $(TOP)/$(E3_KMOD_SRC_PATH)/* /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)/
+       $(SUDO) $(DKMS) add $(DKMS_ARGS)
+
+ setup:
+       $(QUIET) $(SUDO2) 'echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules'
+       $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
+       $(QUIET) $(SUDO) /bin/udevadm trigger
+       $(QUIET) $(SUDO2) 'echo $(KMOD_NAME) | tee /etc/modules-load.d/$(KMOD_NAME).conf'
+       $(QUIET) $(SUDO) depmod --quick
+       $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
+       $(QUIET) $(SUDO) modprobe -v $(KMOD_NAME)
+       $(QUIET) echo ""
+       $(QUIET) echo ""
+       $(QUIET) echo "It is OK to see \"E3/RULES_DKMS:37: recipe for target 'setup' failed\""
+       $(QUIET) echo "---------------------------------------------------------------------"
+       $(QUIET) -ls -l /dev/uio* 2>/dev/null
+       $(QUIET) echo "---------------------------------------------------------------------"
+
+ setup_clean:
+       $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
+       $(SUDO) rm -f /etc/modules-load.d/$(KMOD_NAME).conf
+       $(SUDO) rm -f /etc/udev/rules.d/99-$(KMOD_NAME).rules
+
+ .PHONY: setup setup_clean
+```
+
+The rule `dkms_add` uses macro substitution tool to process a template DKMS
+configure file with macro substitutions, to generate a `dkms.conf` file and
+install it together with other kernel source files of the DKMS module into
+the host file system. The generated `dkms.conf` file includes `E3_MODULE_NAME`,
+`E3_MODULE_VERSION` and kernel module name.
+
+The rule `setup` try to setup user space input output driver deamon
+to reload its rules so that the newly installed DKMS module can work properly.
+The make rule which does `dkms build` is not included in this file. The
+original design was intending to use the `dkms_add` rule defined in
+this file to prepare and install the DKMS source and configure files into
+the system's DKMS source location. And then use the `dkms_build` rule
+defined in e3 `require` module to build and install the DKMS model into
+system's DKMS tree. And then use the `setup` rule defined in this file
+to make the user space input output driver deamon to reload its rules
+so that the newly built DKMS module can work properly.
+
+Following e3 wrappers, with DKMS kernel modules associated, can
+be used as reference.
+
+```console
+https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
+https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
+https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
+```
+
 The build and install processes are similar as normal DKMS build and install
 process.
 E3 try to associate the DKMS module and the e3 wrapper module which depends on it
-together(From this point of view, it might be good to modify the cookie-cutter to
-let it create a `dkms` directory in e3 wrapper module).
+together (From this point of view, it might be good to create a `dkms` directory
+in your e3 wrapper module and put the kernel module source and the DKMS
+configure file in `dkms` directory).
 
-To build a DKMS module with e3, one need to prepare the kernel module source and
-a DKMS configure file. A typical simple `dkms.conf` file looks like following:
+One can use the above makefile file rule template and a template DKMS template
+file with macro subitituation to create DKMS configure file, or skip that step
+and write a DKMS configure file directly. 
+A typical simple `dkms.conf` file looks like following:
 
 ```console
 PACKAGE_NAME="myModuleName"
@@ -243,11 +237,13 @@ AUTOINSTALL="yes"
 ```
 
 When the DKMS source is ready, copy the DKMS source which contains the kernel
-module files and the dkms.conf file into:
+module files and the `dkms.conf` file into:
 
 ```console
 /usr/src/myModuleName-myModuleVerson/
 ```
+
+#### Go to top e3 wrapper directory and launch the build
 
 After the source has been copied, at the top of the e3 wrapper directory, do:
 
@@ -263,6 +259,7 @@ module into the DKMS tree:
 make dkms_install
 ```
 
-Note, when use e3 build rules, `myMoudleName` should be the same as the corresponding
-e3 wrapper module name. And `myModuleVersion` should be the same as the corresponding
-e3 wrapper module's version.
+Note, when use e3 build system to build and install DKMS module, `myMoudleName` 
+should be the same as the corresponding e3 wrapper module name. And
+`myModuleVersion` should be the same as the corresponding e3 wrapper
+module's version.
