@@ -78,8 +78,8 @@ system's DKMS tree. And then use the `setup` rule defined in this file
 to make the user space input output driver deamon to reload its rules
 so that the newly built DKMS module can work properly.
 
-Following e3 wrappers with DKMS kernel modules associated. One can
-have a look as reference.
+Following e3 wrappers, with DKMS kernel modules associated, can
+be used as reference.
 
 ```console
 https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
