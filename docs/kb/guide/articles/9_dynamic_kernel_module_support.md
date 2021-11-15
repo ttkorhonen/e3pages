@@ -4,7 +4,7 @@
 ## Background information
 
 DKMS (Dynamic Kernel Module Support) is a framework for third party kernel
-modules, which are not included in a standard distribution, but needed by a 
+modules, which are not included in a standard distribution, but needed by a
 system. One can build and install a kernel module for the same purpose, but
 has to manually re-build it each time when the kernel is updated. DKMS can
 automatically rebuild when new kernels are installed.
@@ -86,6 +86,7 @@ https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
 https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
 https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
 ```
+
 To build a DKMS module, one can follow this makefile rule file to create
 makefile rules to prepare a kernel module as a DKMS module to be built.
 One can also directly use the DKMS tool provided by Linux system to build
@@ -221,17 +222,18 @@ it assumes the currently running kernel.
 Call DKMS tool from the system to uninstall the DKMS module specified by the
 module name and module version
 
-###  build DKMS kernel module with e3
+### build DKMS kernel module with e3
 
 Although the `RULES_DKMS_L` rule has be removed from e3 wrapper modules, one
 still can build a DKMS kernel module with e3 build system.
-The build and install processes are similar as normal DKMS build and install process.
+The build and install processes are similar as normal DKMS build and install
+process.
 E3 try to associate the DKMS module and the e3 wrapper module which depends on it
 together(From this point of view, it might be good to modify the cookie-cutter to
 let it create a `dkms` directory in e3 wrapper module).
 
-To build a DKMS module with e3, one need to prepare the kernel module source and a
-DKMS configure file. A typical simple `dkms.conf` file looks like the following:
+To build a DKMS module with e3, one need to prepare the kernel module source and
+a DKMS configure file. A typical simple `dkms.conf` file looks like following:
 
 ```console
 PACKAGE_NAME="myModuleName"
