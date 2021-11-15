@@ -12,10 +12,11 @@ automatically rebuild when new kernels are installed.
 This article provides general information about how to build and install a
 DKMS module.
 
-To build a DKMS module, one can follow this makefile rule file to create
-makefile rules to prepare a kernel module as a DKMS module to be built.
-One can also directly use the DKMS tool provided by Linux system to build
-and install a DKMS module. Following sections explain these in detail.
+To build a DKMS module, one can follow a template makefile rule file to
+create makefile rules to prepare a kernel module as a DKMS module to be
+built. One can also directly use the DKMS tool provided by Linux system
+to build and install a DKMS module.
+Following sections explain these in detail.
 
 ## Build and install DKMS module with Linux dkms tool
 
@@ -63,7 +64,7 @@ This will install the built module into the system's DKMS tree.
 
 ## Build and install DKMS module with e3
 
-### CONFIG_DKMS file
+### e3 CONFIG_DKMS file
 
 Following is the contents of the CONFIG_DKMS file in e3 require module:
 
@@ -77,7 +78,7 @@ VARS_EXCLUDES+=DKMS
 
 This file defines makefile variables for the DKMS tool.
 
-### RULES_DKMS file
+### e3 RULES_DKMS file
 
 Following is the contents of the RULES_DKMS file in e3 require module:
 
@@ -145,15 +146,15 @@ it assumes the currently running kernel.
 Call DKMS tool from the system to uninstall the DKMS module specified by the
 module name and module version
 
-
 ### Prepare kernel module source and DKMS configure file
 
 Following provide a template or example about how to create
 makefile rules that can be used to help to create DKMS configure
-file. And makefile rules to install a DKMS module's configure and
-source files into system's file system. And rules to make user
-space device driver deamon to reload its rule so that the newly
-built and installed DKMS module can work properly.
+file from a DKMS template configure file with macro subistitution,
+rules to install a DKMS module's configure and source files into
+system's file system, and rules to make user space device driver
+deamon to reload its rule so that the newly built and installed
+DKMS module can work properly.
 
 ```make
 KMOD_NAME := mrf
@@ -200,7 +201,7 @@ the host file system. The generated `dkms.conf` file includes `E3_MODULE_NAME`,
 The rule `setup` try to setup user space input output driver deamon
 to reload its rules so that the newly installed DKMS module can work properly.
 The make rule which does `dkms build` is not included in this file. The
-original design was intending to use the `dkms_add` rule defined in
+design was intending to use the `dkms_add` rule defined in
 this file to prepare and install the DKMS source and configure files into
 the system's DKMS source location. And then use the `dkms_build` rule
 defined in e3 `require` module to build and install the DKMS model into
@@ -222,11 +223,11 @@ process.
 E3 try to associate the DKMS module and the e3 wrapper module which depends on it
 together (From this point of view, it might be good to create a `dkms` directory
 in your e3 wrapper module and put the kernel module source and the DKMS
-configure file in `dkms` directory).
+configure file in the `dkms` directory).
 
 One can use the above makefile file rule template and a template DKMS template
 file with macro subitituation to create DKMS configure file, or skip that step
-and write a DKMS configure file directly. 
+and write a DKMS configure file directly.
 A typical simple `dkms.conf` file looks like following:
 
 ```console
@@ -259,7 +260,7 @@ module into the DKMS tree:
 make dkms_install
 ```
 
-Note, when use e3 build system to build and install DKMS module, `myMoudleName` 
+Note, when use e3 build system to build and install DKMS module, `myMoudleName`
 should be the same as the corresponding e3 wrapper module name. And
 `myModuleVersion` should be the same as the corresponding e3 wrapper
 module's version.
