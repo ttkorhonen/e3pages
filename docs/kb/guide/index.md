@@ -20,6 +20,7 @@ articles/5*
 articles/6*
 articles/7*
 articles/8*
+articles/9*
  ```
 
 [^1]: Before doing so, see `CONTRIBUTING.md` at the root level of e3 pages'

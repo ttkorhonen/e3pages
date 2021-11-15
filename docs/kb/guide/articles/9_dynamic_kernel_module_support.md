@@ -1,30 +1,28 @@
 
 # How to: Build Dynamic Kernel Module Support Module (DKMS)
 
-## 1. ) Background information
-
-We have simplified the standard e3 wrapper template to remove the boilerplate
-`RULES_DKMS_L` file, and associated DKMS build stuffs from the e3
-wrapper(e3 cookie-cutter).
+## Background information
 
 DKMS (Dynamic Kernel Module Support) is a framework for third party kernel
-modules which are automatically rebuilt when new kernels are installed.
+modules, which are not included in a standard distribution, but needed by a 
+system. One can build and install a kernel module for the same purpose, but
+has to manually re-build it each time when the kernel is updated. DKMS can
+automatically rebuild when new kernels are installed.
 
-This section provides some information about the DKMS contents removed from
-the e3 build system, and informations about how to build a DKMS after this
-contents have been removed.
+This article provides general information about how to build and install a
+DKMS module.
 
-## 2. ) Removed DKMS(Dynamic Kernel Module Support) in e3 wrapper
+## DKMS (Dynamic Kernel Module Support) in e3 wrapper
 
-The removed `RULES_DKMS_L` file in e3 wrapper defines makefile rules to
+The following `RULES_DKMS_L` file in e3 wrapper defines makefile rules to
 prepare and install a DKMS module's configure and source files into
 system's file system. It also provides rules to make the user space
 device driver deamon to reload its rule so that the newly built and
 installed DKMS module can work properly.
 
-The contents of RUELS_DKMS_L file, which will be deleted, are as following:
+The contents of RUELS_DKMS_L file, are as following:
 
-```console
+```make
 # KMOD_NAME := mrf
 
 # .PHONY: dkms_add
@@ -60,22 +58,19 @@ The contents of RUELS_DKMS_L file, which will be deleted, are as following:
 # .PHONY: setup setup_clean
 ```
 
-This file(`RULES_DKMS_L`) is part of the cookie-cutter for e3 wrapper. That
-means that each e3 wrapper module created with the cookie-cutter will have
-this file included as part of the wrapper. However, these rules seems not a
-general rules which can be used by all e3 wrappers. Probably, this is one
-reason that why it never be used(commented out).
-
+The above file(`RULES_DKMS_L`) can serve as a template or example to create
+makefile rules to prepare a kernel module source to be built and installed
+as a DKMS module.
 The rule `dkms_add` uses macro substitution tool to process a template DKMS
 configure file with macro substitutions, to generate a `dkms.conf` file and
 install it together with other kernel source files of the DKMS module into
-the host system. The generated `dkms.conf` file includes `E3_MODULE_NAME`,
+the host file system. The generated `dkms.conf` file includes `E3_MODULE_NAME`,
 `E3_MODULE_VERSION` and kernel module name.
 
-The rule `setup` seems try to setup user space input output driver deamon
+The rule `setup` try to setup user space input output driver deamon
 to reload its rules so that the newly installed DKMS module can work properly.
 The make rule which does `dkms build` is not included in this file. The
-original design seems intending to use the `dkms_add` rule defined in
+original design was intending to use the `dkms_add` rule defined in
 this file to prepare and install the DKMS source and configure files into
 the system's DKMS source location. And then use the `dkms_build` rule
 defined in e3 `require` module to build and install the DKMS model into
@@ -83,42 +78,53 @@ system's DKMS tree. And then use the `setup` rule defined in this file
 to make the user space input output driver deamon to reload its rules
 so that the newly built DKMS module can work properly.
 
-However, this file seems not a general file which can be used for all e3
-wrappers. And it sees that it has never been used.
+Following e3 wrappers with DKMS kernel modules associated. One can
+have a look as reference.
 
-## 3.) Build and install a third-party kernel module as a DKMS module
+```console
+https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
+https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
+https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
+```
+To build a DKMS module, one can follow this makefile rule file to create
+makefile rules to prepare a kernel module as a DKMS module to be built.
+One can also directly use the DKMS tool provided by Linux system to build
+and install a DKMS module. Following sections explain these in detail.
 
-### 3.1) Build and install DKMS module with dkms tool
+## Build and install a third-party kernel module as a DKMS module
 
-DKMS is usually for kernel device driver. DKMS tool comes with systems
-provide convenient way to build and install a third party kernel module as DKMS module.
+### Build and install DKMS module with dkms tool
+
+DKMS is usually for kernel device driver. DKMS tool comes with Linux systems
+provide convenient way to build and install a third party kernel module as DKMS
+module.
 
 To build and install a third-party kernel module as a DKMS module, one must
-have the kernel module source to be built. If the kernel module does not exist,
-one need to get it or write your own.
+have the kernel module source to be built. If the kernel module source does not
+exist, one need to get it or write a new one.
 
 To build and install a third-party kernel module as a DKMS module, a `dkms.conf`
 file which describes the module source to the DKMS system is required. It usually
 looks like the following:
 
 ```console
-    PACKAGE_NAME="myModuleName"
-    PACKAGE_VERSION="myModuleVersion"
-    BUILT_MODULE_NAME[0]="myModuleName"
-    AUTOINSTALL="yes"
+PACKAGE_NAME="myModuleName"
+PACKAGE_VERSION="myModuleVersion"
+BUILT_MODULE_NAME[0]="myModuleName"
+AUTOINSTALL="yes"
 ```
 
 Add this `dkms.conf` file to your kernel module source, and copy the DKMS source
 which contains the kernel module and this `dkms.conf` file into the following directory:
 
 ```console
-    /usr/src/myModuleName-myModuleVersion/
+/usr/src/myModuleName-myModuleVersion/
 ```
 
 After this is done, launch DKMS tool to build and install the built DKMS module as:
 
 ```console
-    dkms build -m myModuleName -v myModuleVersion
+dkms build -m myModuleName -v myModuleVersion
 ```
 
 This will, first, copy the DKMS source from the above location to the system's DKMS
@@ -126,50 +132,50 @@ build location, and then, build the DKMS module in DKMS build location of the sy
 After a successful build, install it into the DKMS tree with the following command:
 
 ```console
-    dkms install -m myModuleName -v myModuleVersion
+dkms install -m myModuleName -v myModuleVersion
 ```
 
 This will install the built module into the system's DKMS tree.
 
-## 4. ) DKMS build in e3
+## DKMS build in e3
 
-### 4.1) CONFIG_DKMS file
+### CONFIG_DKMS file
 
 Following is the contents of the CONFIG_DKMS file in e3 require module:
 
-```console
-    DKMS := /usr/sbin/dkms
-    DKMS_ARGS := -m $(E3_MODULE_NAME) -v $(E3_MODULE_VERSION)
+```make
+DKMS := /usr/sbin/dkms
+DKMS_ARGS := -m $(E3_MODULE_NAME) -v $(E3_MODULE_VERSION)
 
-    VARS_EXCLUDES+=DKMS_ARGS
-    VARS_EXCLUDES+=DKMS
+VARS_EXCLUDES+=DKMS_ARGS
+VARS_EXCLUDES+=DKMS
 ```
 
 This file defines makefile variables for the DKMS tool.
 
-### 4.2) RULES_DKMS
+### RULES_DKMS file
 
 Following is the contents of the RULES_DKMS file in e3 require module:
 
-```console
-    .PHONY: dkms_build dkms_remove dkms_install dkms_uninstall
+```make
+.PHONY: dkms_build dkms_remove dkms_install dkms_uninstall
 
-    dkms_build:
-        $(DKMS) build $(DKMS_ARGS)
+dkms_build:
+    $(DKMS) build $(DKMS_ARGS)
 
-    dkms_remove:
-        $(DKMS) remove $(E3_MODULE_NAME)/$(E3_MODULE_VERSION) --all
-        rm -rf /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
+dkms_remove:
+    $(DKMS) remove $(E3_MODULE_NAME)/$(E3_MODULE_VERSION) --all
+    rm -rf /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
 
-    dkms_install:
-        $(DKMS) install $(DKMS_ARGS)
-        $(QUIET) depmod
+dkms_install:
+    $(DKMS) install $(DKMS_ARGS)
+    $(QUIET) depmod
 
-    dkms_uninstall:
-        $(DKMS) uninstall $(DKMS_ARGS)
-        $(QUIET) depmod
+dkms_uninstall:
+    $(DKMS) uninstall $(DKMS_ARGS)
+    $(QUIET) depmod
 
-    .PHONY: dkms_build dkms_install dkms_remove dkms_uninstall
+.PHONY: dkms_build dkms_install dkms_remove dkms_uninstall
 ```
 
 This file defines the makefile rules for building a DKMS module with e3.
@@ -177,17 +183,17 @@ This file defines the makefile rules for building a DKMS module with e3.
 So, the e3 RULES_DKMS provides the following makefile rules:
 
 ```console
-    a.) “make dkms_build”
-    b.) “make dkms_install”
-    c.) “make dkms_remove”
-    d.) “make dems_uninstall”
+a.) “make dkms_build”
+b.) “make dkms_install”
+c.) “make dkms_remove”
+d.) “make dems_uninstall”
 ```
 
 Following are detail explanation of each of the rule.
 
-#### 4.2.1.) make dkms_build
+#### make dkms_build
 
-The DKMS build in original e3 will invoke the system's DKMS tool to take
+The DKMS build in e3 will invoke the system's DKMS tool to take
 the module source from `/usr/src/<module_name>-<module_version>/` directory.
 According to the DKMS tool's manual, by default, all builds occur in the
 directory `/var/lib/dkms/<module_name>/<module_version>/build/`.
@@ -198,24 +204,24 @@ them from `/usr/src/<module_name>-<moudle_version>/`. So, just as a normal build
 copy the DKMS source in the system DKMS's source directory is a prerequisite
 before launch the `make dkms_build` make command.
 
-#### 4.2.2.) make dkms_remove
+#### make dkms_remove
 
 This makefile rule invoke DKMS tool to remove the source in the
 `/usr/src/<module_name>-<module_version>/` directory and do a `dkms remove`
 of the installed DKMS module from the DKMS tree
 
-#### 4.2.3.) make dkms_install
+#### make dkms_install
 
 Call DKMS tool from the system to install the module specified by the module
 name and module version into the DKMS tree. If the kernel option is not specified,
 it assumes the currently running kernel.
 
-#### 4.2.4.) make dkms_uninstall
+#### make dkms_uninstall
 
 Call DKMS tool from the system to uninstall the DKMS module specified by the
 module name and module version
 
-### 4.3.)  build DKMS kernel module with e3
+###  build DKMS kernel module with e3
 
 Although the `RULES_DKMS_L` rule has be removed from e3 wrapper modules, one
 still can build a DKMS kernel module with e3 build system.
@@ -224,29 +230,27 @@ E3 try to associate the DKMS module and the e3 wrapper module which depends on i
 together(From this point of view, it might be good to modify the cookie-cutter to
 let it create a `dkms` directory in e3 wrapper module).
 
-To build a DKMS module with e3, do the same preparation described in section
-3.1. That is to get the kernel module source or write your own kernel module,
-and add a `dkms.conf` file to the kernel module source. A typical simple
-dkms.conf file looks like the following:
+To build a DKMS module with e3, one need to prepare the kernel module source and a
+DKMS configure file. A typical simple `dkms.conf` file looks like the following:
 
 ```console
-    PACKAGE_NAME="myModuleName"
-    PACKAGE_VERSION="myModuleVersion"
-    BUILT_MODULE_NAME[0]="myModuleName"
-    AUTOINSTALL="yes"
+PACKAGE_NAME="myModuleName"
+PACKAGE_VERSION="myModuleVersion"
+BUILT_MODULE_NAME[0]="myModuleName"
+AUTOINSTALL="yes"
 ```
 
 When the DKMS source is ready, copy the DKMS source which contains the kernel
 module files and the dkms.conf file into:
 
 ```console
-    /usr/src/myModuleName-myModuleVerson/
+/usr/src/myModuleName-myModuleVerson/
 ```
 
 After the source has been copied, at the top of the e3 wrapper directory, do:
 
 ```console
-    make dkms_build
+make dkms_build
 ```
 
 This will build the DKMS module in the default DKMS build location of the system.
@@ -254,7 +258,7 @@ After a successful build, launch the following command to install the built DKMS
 module into the DKMS tree:
 
 ```console
-    make dkms_install
+make dkms_install
 ```
 
 Note, when use e3 build rules, `myMoudleName` should be the same as the corresponding
