@@ -158,10 +158,10 @@ module name and module version
 * "make dkms_install"
 * "make setup"
 
-Note, when use e3 build system to build and install DKMS module,
-`myMoudleName` must be the same as the corresponding e3 wrapper
-module name. And `myModuleVersion` must be the same as the
-corresponding e3 wrapper module's version.
+Note, when use e3 to build and install DKMS module, `myMoudleName`
+must be the same as the corresponding e3 wrapper module name.
+And `myModuleVersion` must be the same as the corresponding
+e3 wrapper module's version.
 
 Following e3 wrappers, use DKMS kernel modules, can be used
 as reference:
