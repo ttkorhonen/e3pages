@@ -116,7 +116,7 @@ DKMS module:
 * “make dkms_install”
 * "make setup"
 * “make dkms_remove”
-* “make dems_uninstall”
+* “make dkms_uninstall”
 
 Following explains the rules in detail.
 
