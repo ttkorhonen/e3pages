@@ -1,5 +1,5 @@
 
-# How to: Build dynamic kernel module support module (DKMS)
+# How to: Build dynamic kernel module support (DKMS)
 
 ## Background information
 
