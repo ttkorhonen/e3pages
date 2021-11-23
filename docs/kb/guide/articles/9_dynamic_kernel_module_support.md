@@ -1,13 +1,11 @@
-
 # How to: Build dynamic kernel module support (DKMS)
 
 ## Background information
 
-DKMS (Dynamic Kernel Module Support) is a framework for third party kernel
-modules, that are not part of a standard distribution, but needed by a
-system. This kind of modules are also called "out-of-tree" kernel modules.
-One can build and install a kernel module for the same purpose, but
-has to manually re-build it each time when the kernel is updated.
+DKMS (Dynamic Kernel Module Support) is a framework that enables
+generating Linux kernel modules whose source generally reside
+outside the kernel source tree. The concept is to have DKMS
+modules automatically rebuilt when a new kernel is installed.
 
 This article describes two alternative ways to build and install a
 DKMS module:
