@@ -9,7 +9,7 @@ system. This kind of modules are also called "out-of-tree" kernel modules.
 One can build and install a kernel module for the same purpose, but
 has to manually re-build it each time when the kernel is updated.
 
-This article describe two alternative ways to build and install a
+This article describes two alternative ways to build and install a
 DKMS module:
 
 * build DKMS module with DKMS tool directly
