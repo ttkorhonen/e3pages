@@ -64,7 +64,6 @@ about how to write a DKMS module configure file.
 e3 also prevides makefile rule to generate DKMS configure file from
 template file. Following makefile defines the corresponding rule.
 
-
 ```make
 KMOD_NAME := mrf
 
@@ -125,8 +124,8 @@ Following explains the rules in detail.
 
 The DKMS build in e3 will invoke the system's DKMS tool to take
 the module source from `/usr/src/<module_name>-<module_version>/` directory.
-According to the DKMS tool's manual, by default, all builds occur in the
-directory `/var/lib/dkms/<module_name>/<module_version>/build/`.
+By default, all builds occur in the directory
+`/var/lib/dkms/<module_name>/<module_version>/build/`.
 
 After the DKMS tool is invoked, if the `<module_name>` and `<module_version>`
 have not been added to the `/var/lib/dkms/` build directory, the tool will copy
