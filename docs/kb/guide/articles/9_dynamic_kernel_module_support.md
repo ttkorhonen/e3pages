@@ -100,11 +100,11 @@ dkms_add: conf
 
 ```
 
-The rule `dkms_add` process template DKMS configure file with macro
-substitutions, and generates `dkms.conf` file. It wil install the
-generated file together with the source into the host file system.
-The generated `dkms.conf` file includes `E3_MODULE_NAME`,
-`E3_MODULE_VERSION` and kernel module name.
+The rule `dkms_add` processes template DKMS configure file with
+macro substitutions, and generates `dkms.conf` file.
+It wil install the generated file together with the source into
+the host file system. The generated `dkms.conf` file includes
+`E3_MODULE_NAME`, `E3_MODULE_VERSION` and kernel module name.
 
 ### DKMS related makefile rules provided by e3
 
