@@ -23,7 +23,7 @@ To build and install a third-party kernel module as a DKMS module, a
 `dkms.conf` file which describes the module source to the DKMS system
 is required. It usually looks like the following:
 
-```python
+```makefile
 PACKAGE_NAME="myModuleName"
 PACKAGE_VERSION="myModuleVersion"
 BUILT_MODULE_NAME[0]="myModuleName"
