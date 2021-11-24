@@ -21,7 +21,7 @@ To build and install a third-party kernel module as a DKMS module, a
 `dkms.conf` file which describes the module source to the DKMS system
 is required. It usually looks like the following:
 
-```console
+```python
 PACKAGE_NAME="myModuleName"
 PACKAGE_VERSION="myModuleVersion"
 BUILT_MODULE_NAME[0]="myModuleName"
@@ -70,13 +70,13 @@ KMOD_NAME := mrf
 dkms_add: conf
     $(MSI) -M name="$(E3_MODULE_NAME)" -M  version="$(E3_MODULE_VERSION)" -M kmod_name="$(KMOD_NAME)" $(TOP)/dkms/dkms_with_msi.conf.in > $(TOP)/dkms/dkms_with_msi.conf
     $(QUIET) cat $(TOP)/dkms/dkms_with_msi.conf $(TOP)/dkms/dkms_without_msi.conf > $(TOP)/dkms/dkms.conf
-    $(QUIET) install -m 644 $(TOP)/dkms/dkms.conf  $(E3_KMOD_SRC_PATH)/
+    $(QUIET) install -m 644 $(TOP)/dkms/dkms.conf  $(E3_KMOD_SRC_PATH)
     $(SUDO) install -d /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)
     $(SUDO) cp -r $(TOP)/$(E3_KMOD_SRC_PATH)/* /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)/
     $(SUDO) $(DKMS) add $(DKMS_ARGS)
 
 .PHONY: setup setup_clean
- setup:
+setup:
     $(QUIET) echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules'
     $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
     $(QUIET) $(SUDO) /bin/udevadm trigger
@@ -91,7 +91,7 @@ dkms_add: conf
     $(QUIET) -ls -l /dev/uio* 2>/dev/null
     $(QUIET) echo "---------------------------------------------------------------------"
 
- setup_clean:
+setup_clean:
     $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
     $(SUDO) rm -f /etc/modules-load.d/$(KMOD_NAME).conf
     $(SUDO) rm -f /etc/udev/rules.d/99-$(KMOD_NAME).rules
