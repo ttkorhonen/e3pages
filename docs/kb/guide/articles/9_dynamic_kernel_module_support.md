@@ -30,9 +30,9 @@ BUILT_MODULE_NAME[0]="myModuleName"
 AUTOINSTALL="yes"
 ```
 
-Add this `dkms.conf` file to your kernel module source, and copy the
-DKMS source which contains the kernel module and this `dkms.conf` file
-into `/usr/src/myModuleName-myModuleVersion/`
+Add this ```dkms.conf``` file to your kernel module source, and copy the
+DKMS source which contains the kernel module and this ```dkms.conf``` file
+into ```/usr/src/myModuleName-myModuleVersion/```
 
 ### Build and install the module
 
