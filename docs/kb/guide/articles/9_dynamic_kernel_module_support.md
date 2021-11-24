@@ -60,7 +60,7 @@ This will install the built module into the system's DKMS tree.
 ### Create a DKMS configure file
 
 Please see {ref}`with_dkms_tool` about how to create DKMS configuration file.
-e3 also prevides makefile rule to generate DKMS configure file from
+e3 also provides makefile rules to generate DKMS configuration file from
 template file. Following makefile defines the corresponding rule.
 
 ```makefile
@@ -101,21 +101,21 @@ setup_clean:
 
 The rule `dkms_add` processes template DKMS configure file with
 macro substitutions, and generates `dkms.conf` file.
-It wil install the generated file together with the source into
+It will install the generated file together with the source into
 the host file system. The generated `dkms.conf` file includes
 `E3_MODULE_NAME`, `E3_MODULE_VERSION` and kernel module name.
 
 ### DKMS related makefile rules provided by e3
 
 e3 provides the following makefile rules to build and install
-DKMS module:
+DKMS modules:
 
-* "make dkms_add"
-* “make dkms_build”
-* “make dkms_install”
-* "make setup"
-* “make dkms_remove”
-* “make dkms_uninstall”
+* `make dkms_add`
+* `make dkms_build`
+* `make dkms_install`
+* `make setup`
+* `make dkms_remove`
+* `make dkms_uninstall`
 
 Following explains the rules in detail.
 
@@ -134,9 +134,9 @@ before launch the `make dkms_build` make command.
 
 #### make dkms_remove
 
-This makefile rule invoke DKMS tool to remove the source in the
-`/usr/src/<module_name>-<module_version>/` directory and do a `dkms remove`
-of the installed DKMS module from the DKMS tree
+This makefile rule invokes DKMS tool to remove the source in the
+`/usr/src/<module_name>-<module_version>/` directory and does a `dkms remove`
+of the installed DKMS module from the DKMS tree.
 
 #### make dkms_install
 
@@ -151,11 +151,11 @@ module name and module version
 
 ### Steps to build and install a DKMS module with e3
 
-* "prepare DKMS configure file"
-* "cd /wrapper/top/directory"
-* "make dkms_build"
-* "make dkms_install"
-* "make setup"
+* `prepare DKMS configure file`
+* `cd /wrapper/top/directory`
+* `make dkms_build`
+* `make dkms_install`
+* `make setup`
 
 Note, when use e3 to build and install DKMS module, `myMoudleName`
 must be the same as the corresponding e3 wrapper module name.
