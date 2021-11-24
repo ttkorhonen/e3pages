@@ -164,8 +164,8 @@ must be the same as the corresponding e3 wrapper module name.
 And `myModuleVersion` must be the same as the corresponding
 e3 wrapper module's version.
 
-Following e3 wrappers, use DKMS kernel modules, can be used
-as reference:
+The following e3 wrappers use DKMS kernel modules and can be used
+as a reference:
 
 https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
 https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
