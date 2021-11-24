@@ -10,8 +10,8 @@ modules automatically rebuilt when a new kernel is installed.
 This article describes two alternative ways to build and install a
 DKMS module:
 
-* use DKMS tool directly
-* use e3
+* using DKMS tool directly
+* using e3
 
 (with_dkms_tool)=
 
@@ -32,9 +32,7 @@ AUTOINSTALL="yes"
 
 Add this `dkms.conf` file to your kernel module source, and copy the
 DKMS source which contains the kernel module and this `dkms.conf` file
-into the following directory:
-
-/usr/src/myModuleName-myModuleVersion/
+into `/usr/src/myModuleName-myModuleVersion/`
 
 ### Build and install the module
 
@@ -76,7 +74,7 @@ dkms_add: conf
     $(SUDO) cp -r $(TOP)/$(E3_KMOD_SRC_PATH)/* /usr/src/$(E3_MODULE_NAME)-$(E3_MODULE_VERSION)/
     $(SUDO) $(DKMS) add $(DKMS_ARGS)
 
-.PHONY: setup setup_clean
+.PHONY: setup
 setup:
     $(QUIET) echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules'
     $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
@@ -92,6 +90,7 @@ setup:
     $(QUIET) -ls -l /dev/uio* 2>/dev/null
     $(QUIET) echo "---------------------------------------------------------------------"
 
+.PHONY: setup_clean
 setup_clean:
     $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
     $(SUDO) rm -f /etc/modules-load.d/$(KMOD_NAME).conf
