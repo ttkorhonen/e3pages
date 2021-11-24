@@ -10,8 +10,8 @@ modules automatically rebuilt when a new kernel is installed.
 This article describes two alternative ways to build and install a
 DKMS module:
 
-* build DKMS module with DKMS tool directly
-* build DKMS module with e3
+* use DKMS tool directly
+* use e3
 
 ## Build and install DKMS module with DKMS tool
 
@@ -32,12 +32,12 @@ Add this `dkms.conf` file to your kernel module source, and copy the
 DKMS source which contains the kernel module and this `dkms.conf` file
 into the following directory:
 
-`/usr/src/myModuleName-myModuleVersion/`
+/usr/src/myModuleName-myModuleVersion/
 
 ### Build and install the module
 
-When the DKMS source and configure file is ready, launch DKMS tool to
-build and install the built DKMS module as:
+When the DKMS source and configuration file is ready, launch the DKMS
+tool to build and install the built DKMS module as:
 
 ```bash
 $ dkms build -m myModuleName -v myModuleVersion
@@ -62,7 +62,7 @@ about how to write a DKMS module configure file.
 e3 also prevides makefile rule to generate DKMS configure file from
 template file. Following makefile defines the corresponding rule.
 
-```make
+```makefile
 KMOD_NAME := mrf
 
 .PHONY: dkms_add
