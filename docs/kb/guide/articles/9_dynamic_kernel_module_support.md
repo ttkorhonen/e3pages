@@ -23,11 +23,11 @@ To build and install a third-party kernel module as a DKMS module, a
 `dkms.conf` file which describes the module source to the DKMS system
 is required. It usually looks like the following:
 
-```makefile
-PACKAGE_NAME="myModuleName"
-PACKAGE_VERSION="myModuleVersion"
-BUILT_MODULE_NAME[0]="myModuleName"
-AUTOINSTALL="yes"
+```bash
+PACKAGE_NAME=myModuleName
+PACKAGE_VERSION=myModuleVersion
+BUILT_MODULE_NAME[0]=myModuleName
+AUTOINSTALL=yes
 ```
 
 Add this `dkms.conf` file to your kernel module source, and copy the
@@ -76,7 +76,7 @@ dkms_add: conf
 
 .PHONY: setup
 setup:
-    $(QUIET) echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules
+    $(QUIET) echo "KERNEL==uio*, ATTR{name}==mrf-pci, MODE=0666" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules
     $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
     $(QUIET) $(SUDO) /bin/udevadm trigger
     $(QUIET) echo $(KMOD_NAME) | $(SUDO) tee /etc/modules-load.d/$(KMOD_NAME).conf
@@ -159,17 +159,7 @@ $ make setup
 ```
 
 Note, when use e3 to build and install DKMS module, `myMoudleName`
-must be the same as the corresponding e3 wrapper module name.
+must be the same as the corresponding e3 wrapper module's name.
 And `myModuleVersion` must be the same as the corresponding
 e3 wrapper module's version.
-
-The following e3 wrappers use DKMS kernel modules and can be used
-as a reference:
-
-```html
-https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
-https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
-https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
-```
-
 [EOF]
