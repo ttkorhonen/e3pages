@@ -13,6 +13,8 @@ DKMS module:
 * use DKMS tool directly
 * use e3
 
+(with_dkms_tool)=
+
 ## Build and install DKMS module with DKMS tool
 
 ### Prepare a DKMS configure file
@@ -57,8 +59,7 @@ This will install the built module into the system's DKMS tree.
 
 ### Create a DKMS configure file
 
-One can refer to `Build and install DKMS module with DKMS tool` section
-about how to write a DKMS module configure file.
+Please see {ref}`with_dkms_tool` about how to create DKMS configuration file.
 e3 also prevides makefile rule to generate DKMS configure file from
 template file. Following makefile defines the corresponding rule.
 
