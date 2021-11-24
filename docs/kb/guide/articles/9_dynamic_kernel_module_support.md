@@ -151,11 +151,13 @@ module name and module version
 
 ### Steps to build and install a DKMS module with e3
 
-* `prepare DKMS configure file`
-* `cd /wrapper/top/directory`
-* `make dkms_build`
-* `make dkms_install`
-* `make setup`
+```python
+  prepare module source and DKMS configuration file
+$ cd /wrapper/top/directory
+$ make dkms_build
+$ make dkms_install
+$ make setup
+```
 
 Note, when use e3 to build and install DKMS module, `myMoudleName`
 must be the same as the corresponding e3 wrapper module name.
