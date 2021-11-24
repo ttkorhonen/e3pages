@@ -75,6 +75,7 @@ dkms_add: conf
     $(SUDO) $(DKMS) add $(DKMS_ARGS)
 
 .PHONY: setup
+
 setup:
     $(QUIET) echo "KERNEL==uio*, ATTR{name}==mrf-pci, MODE=0666" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules
     $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
@@ -91,6 +92,7 @@ setup:
     $(QUIET) echo "---------------------------------------------------------------------"
 
 .PHONY: setup_clean
+
 setup_clean:
     $(QUIET) $(SUDO) modprobe -rv $(KMOD_NAME)
     $(SUDO) rm -f /etc/modules-load.d/$(KMOD_NAME).conf
@@ -116,9 +118,7 @@ DKMS modules:
 * `make dkms_remove`
 * `make dkms_uninstall`
 
-Following explains the rules in detail.
-
-#### make dkms_build
+#### dkms_build
 
 The DKMS build in e3 will invoke the system's DKMS tool to take
 the module source from `/usr/src/<module_name>-<module_version>/` directory.
@@ -131,19 +131,19 @@ them from `/usr/src/<module_name>-<moudle_version>/`. So, just as a normal build
 copy the DKMS source in the system DKMS's source directory is a prerequisite
 before launch the `make dkms_build` make command.
 
-#### make dkms_remove
+#### dkms_remove
 
 This makefile rule invokes DKMS tool to remove the source in the
 `/usr/src/<module_name>-<module_version>/` directory and does a `dkms remove`
 of the installed DKMS module from the DKMS tree.
 
-#### make dkms_install
+#### dkms_install
 
 Call DKMS tool from the system to install the module specified by the module
 name and module version into the DKMS tree. If the kernel option is not
 specified, it assumes the currently running kernel.
 
-#### make dkms_uninstall
+#### dkms_uninstall
 
 Call DKMS tool from the system to uninstall the DKMS module specified by the
 module name and module version
@@ -162,4 +162,10 @@ Note, when using e3 to build and install DKMS module, `myModuleName`
 must be the same as the corresponding e3 wrapper module's name.
 And `myModuleVersion` must be the same as the corresponding
 e3 wrapper module's version.
-[EOF]
+
+The following e3 wrappers use DKMS kernel modules and can be used
+as a reference:
+
+* <https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2>
+* <https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv>
+* <https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc>
