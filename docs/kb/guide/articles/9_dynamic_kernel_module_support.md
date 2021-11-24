@@ -151,14 +151,14 @@ module name and module version
 ### Steps to build and install a DKMS module with e3
 
 ```console
-  prepare module source and DKMS configuration file
+# prepare module source and DKMS configuration file
 $ cd /wrapper/top/directory
 $ make dkms_build
 $ make dkms_install
 $ make setup
 ```
 
-Note, when use e3 to build and install DKMS module, `myMoudleName`
+Note, when using e3 to build and install DKMS module, `myModuleName`
 must be the same as the corresponding e3 wrapper module's name.
 And `myModuleVersion` must be the same as the corresponding
 e3 wrapper module's version.
