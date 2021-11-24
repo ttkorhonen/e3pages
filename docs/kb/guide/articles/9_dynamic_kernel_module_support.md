@@ -30,9 +30,9 @@ BUILT_MODULE_NAME[0]="myModuleName"
 AUTOINSTALL="yes"
 ```
 
-Add this ```dkms.conf``` file to your kernel module source, and copy the
-DKMS source which contains the kernel module and this ```dkms.conf``` file
-into ```/usr/src/myModuleName-myModuleVersion/```
+Add this `dkms.conf` file to your kernel module source, and copy the
+DKMS source which contains the kernel module and this `dkms.conf` file
+into `/usr/src/myModuleName-myModuleVersion/`
 
 ### Build and install the module
 
@@ -76,7 +76,7 @@ dkms_add: conf
 
 .PHONY: setup
 setup:
-    $(QUIET) echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules'
+    $(QUIET) echo KERNEL==\"uio*\", ATTR{name}==\"mrf-pci\", MODE=\"0666\" | $(SUDO) tee  /etc/udev/rules.d/99-$(KMOD_NAME).rules
     $(QUIET) $(SUDO) /bin/udevadm control --reload-rules
     $(QUIET) $(SUDO) /bin/udevadm trigger
     $(QUIET) echo $(KMOD_NAME) | $(SUDO) tee /etc/modules-load.d/$(KMOD_NAME).conf
@@ -150,7 +150,7 @@ module name and module version
 
 ### Steps to build and install a DKMS module with e3
 
-```python
+```console
   prepare module source and DKMS configuration file
 $ cd /wrapper/top/directory
 $ make dkms_build
