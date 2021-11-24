@@ -60,8 +60,8 @@ This will install the built module into the system's DKMS tree.
 ### Create a DKMS configure file
 
 Please see {ref}`with_dkms_tool` about how to create DKMS configuration file.
-e3 also provides makefile rules to generate DKMS configuration file from
-template file. Following makefile defines the corresponding rule.
+The `dkms_add` rule in the following file generates DKMS configuration file
+from a template file with macro substitution.
 
 ```makefile
 KMOD_NAME := mrf
