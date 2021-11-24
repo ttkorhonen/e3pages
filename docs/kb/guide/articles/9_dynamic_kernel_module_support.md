@@ -167,8 +167,10 @@ e3 wrapper module's version.
 The following e3 wrappers use DKMS kernel modules and can be used
 as a reference:
 
-<https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2.git>
+```html
+https://gitlab.esss.lu.se/e3/wrappers/ts/e3-mrfioc2
+https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv
+https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc
+```
 
-<https://gitlab.esss.lu.se/e3/wrappers/rf/e3-sis8300drv.git>
-
-<https://gitlab.esss.lu.se/e3/wrappers/ifc/e3-tsc.git>
+[EOF]
