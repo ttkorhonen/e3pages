@@ -100,8 +100,8 @@ setup_clean:
 
 ```
 
-The rule `dkms_add` processes template DKMS configure file with
-macro substitutions, and generates `dkms.conf` file.
+The rule `dkms_add` processes template DKMS configuration file with
+macro substitutions, and generates a `dkms.conf` file.
 It will install the generated file together with the source into
 the host file system. The generated `dkms.conf` file includes
 `E3_MODULE_NAME`, `E3_MODULE_VERSION` and kernel module name.
