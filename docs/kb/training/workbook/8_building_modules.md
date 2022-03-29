@@ -203,7 +203,7 @@ In order to configure this correctly, you must define the dependency in
 version is specified. This is done by adding the following to `CONFIG_MODULE`:
 
 ```make
-STREAM_DEP_VERSION:=2.8.22
+STREAM_DEP_VERSION:=2.8.18
 ```
 
 as well as the associated code to `fimscb.Makefile`:

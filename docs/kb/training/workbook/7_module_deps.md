@@ -13,6 +13,10 @@ In this lesson, you will learn how to do the following:
 
 ## Dependent environment variables
 
+:::{note}
+The versions of the modules mentioned below may be different that you will see in your environment, because the E3 tool that installs the modules packs gets the latest version of each module.
+:::
+
 One of the key ideas with e3 (arguably, *the* key idea) is the management of
 dependencies of a given module in a common, structured way. That is, if a module
 A depends on a module B, then you should only need to load A; module B should be
@@ -24,10 +28,10 @@ Begin by switching to `e3-stream/`. Run `make vars`, and look at the variables
 
 ```console
 [iocuser@host:e3-stream]$ make vars | grep DEP_VERSION
-ASYN_DEP_VERSION = 4.42.0+0
-CALC_DEP_VERSION = 3.7.4+1
+ASYN_DEP_VERSION = 4.41.0
+CALC_DEP_VERSION = 3.7.4
 EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET PCRE_DEP_VERSION CALC_DEP_VERSION ASYN_DEP_VERSION
-PCRE_DEP_VERSION = 8.44.0+0
+PCRE_DEP_VERSION = 8.44.0
 ```
 
 These variables are defined and used, respectively, in `configure/CONFIG_MODULE`
@@ -35,9 +39,9 @@ and `StreamDevice.Makefile`.
 
 ```console
 [iocuser@host:e3-stream]$ cat configure/CONFIG_MODULE | grep DEP_VERSION
-ASYN_DEP_VERSION:=4.42.0+0
-PCRE_DEP_VERSION:=8.44.0+0
-CALC_DEP_VERSION:=3.7.4+1
+ASYN_DEP_VERSION:=4.41.0
+PCRE_DEP_VERSION:=8.44.0
+CALC_DEP_VERSION:=3.7.4
 ```
 
 ```console
@@ -55,15 +59,15 @@ Let us see where these variables are used. Run `make build` and look for
 
 ```console
 make[4]: Entering directory `/home/simonrose/data/git/e3/modules/core/e3-stream/StreamDevice/O.7.0.5_linux-x86_64'
-/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  .././src/StreamVersion.c
-/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamFormatConverter.cc
-/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamProtocol.cc
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  .././src/StreamVersion.c
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamFormatConverter.cc
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall         -std=c++11     -std=c++11  -mtune=generic               -m64 -fPIC          -I. -I../src/ -I.././src/   -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include  -I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/include                -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/include            -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/include -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../src/StreamProtocol.cc
 ```
 
 In particular, note the following segments:
 
 ```none
--I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0/include
+-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include
 -I/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0/include
 -I/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4/include
 ```
@@ -87,7 +91,7 @@ compilation terminated.
 ```
 
 If you look at this output, you will find that
-`-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0/include` now is missing.
+`-I/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0/include` now is missing.
 At this point, the build system cannot find `asynDriver.h` (which is used in
 `src/AsynDriverInterface.cc`). If you revert your changes and rebuild, then
 everything should work correctly.
@@ -130,8 +134,7 @@ If the new version of *StreamDevice* is not compatible with *asyn*, then you
 will need to install a new version of *asyn* in the current e3 environment. The
 procedure for that is also the same as in [Chapter 3](3_module_versions.md). We
 can start by checking the current version and seeing what is installed, and then
-installing the necessary version, For study of the case, we are assuming that
-the current version is 4.41.0 and we would like to update to 4.42.0.
+installing the necessary version (4.42.0)
 
 ```console
 [iocuser@host:e3-asyn]$ make vars # Check the current version
@@ -166,7 +169,7 @@ the current version is 4.41.0 and we would like to update to 4.42.0.
 :::{note}
 Between *asyn* 4-41 and 4-42 there actually are some source and `.dbd` files
 that have been added; if this functionality is necessary for your purposes,
-then you will have to add.
+then you will have to add
 
 ```make
 SOURCES += drvPrologixGPIB.c
