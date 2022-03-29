@@ -240,7 +240,7 @@ Create a cookiecutter wrapper as above, but this time leave the git url blank.
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
 module_name []: clock                           # Update the module name
-module_version [main]: 0.1.0                    # Choose/define a version for your e3 module
+module_version [main]: 0.1.0+0                  # Choose/define a version for your e3 module
 summary [Wrapper for the module clock]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
@@ -269,7 +269,7 @@ we see
 ```make
 EPICS_MODULE_NAME := clock
 
-E3_MODULE_VERSION := 0.1.0
+E3_MODULE_VERSION := 0.1.0+0
 E3_MODULE_NAME := clock
 E3_MODULE_SRC_PATH := $(EPICS_MODULE_NAME)
 E3_MODULE_MAKEFILE := $(E3_MODULE_NAME).Makefile
