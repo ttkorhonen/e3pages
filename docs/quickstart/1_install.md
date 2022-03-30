@@ -1,6 +1,6 @@
 # Installing e3
 
-Building EPICS with the so-called *core* modules (to see what the various module
+Building e3 with the so-called *core* modules (to see what the various module
 groups contain, have a look at the
 [inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml))
 using e3 is fairly easy. Note, however, that the workflow (and tools) listed
@@ -22,41 +22,83 @@ supported.
 
 ## Building a local e3 environment
 
-To build EPICS base 7.0.5 with *require* 3.4.1 and the *core* module group and
-install it at `/opt/epics`, you would only need to run (note `sudo` as we are
-installing to a subdirectory of `/opt` which generally is owned by `root`):
+It is possible to build an e3 environment by hand by cloning and building the
+necessary repositories ([e3-base](https://gitlab.esss.lu.se/e3/e3-base),
+[e3-require](https://gitlab.esss.lu.se/e3/e3-require), followed by all of the
+appropriate modules). This will require some custom configuration to ensure that
+all of the versions and dependencies match up.
+
+The prefered way of building an e3 environment is to use the *specification handler*,
+which allows you to build a predefined environment by using a *specification*.
+
+### Installing the specification handler
+
+The specification handler is distributed on artifactory at ESS, and can be installed
+via
+
+```console
+[iocuser@host:~]$ pip3 install --user e3 -i https://artifactory.esss.lu.se/artifactory/api/pypi/pypi-virtual/simple
+```
+
+One can also clone and install the specification handler directly:
 
 ```console
 [iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/e3.git
 [iocuser@host:~]$ cd e3
-[iocuser@host:e3]$ ./e3_building_config.bash -b 7.0.5 -r 3.4.1 -t /opt/epics setup
-[iocuser@host:e3]$ sudo ./e3.bash base
-[iocuser@host:e3]$ sudo ./e3.bash req
-[iocuser@host:e3]$ sudo ./e3.bash -c mod
+[iocuser@host:e3]$ pip3 install --user .
 ```
 
-:::{tip}
-If you leave out the flags `-b` (version of EPICS base) and `-r` (version of
-*require*) it will default to the latest stable release, but it is always good
-practice to be explicit.
-:::
+### Selecting a specification
 
-As you may realise, this allows a user to have multiple EPICS trees installed at
-various locations.
+The specifications are stored in the repository [specifications](https://gitlab.esss.lu.se/e3/specifications).
+The latest environment built at ESS is [2022q1-full](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-full.yml),
+while a smaller environment which is more likely suitable for a local installation is found
+at [2022q1-core](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-core.yml).
+
+These files will look something like the following.
+
+```yaml
+config:
+  base_version: 7.0.6.1-NA/7.0.6.1-ff3e2c9-20220209T143845
+  require_version: 7.0.6.1-4.0.0/4.0.0-9b692d5-20220209T160204
+meta:
+  datestamp: 20220210T112407
+modules:
+  adcore:
+    versions:
+    - 7.0.6.1-4.0.0/3.10.0+2-52add63-20220210T112321
+  adsupport:
+    versions:
+    - 7.0.6.1-4.0.0/1.9.0-c4b8ff4-20220210T112319
+  ...
+```
+
+They contain information including which version of EPICS base to install (7.0.6.1),
+which version of require to install (4.0.0), as well as a list of modules to install
+into that environment.
+
+These can be built (assuming you have installed the specification handler as above) via
+```console
+[iocuser@host:specifications]$ e3-build -t /opt/epics specifications/2022q1-core.yml
+```
+assuming that you would like to build your local environment at `/opt/epics`. Note
+that you will need to have permission to write to this location, which may necessitate
+the use of `sudo`.
 
 ## Sourcing a specific e3 environment
 
-With e3, you may have several EPICS environments available, so you need to
-explicitly activate the e3 environment you intend to use:
+It is possible to have several e3 installations available (either at different root
+locations, or with different versions of EPICS base or require). You need to explicitly
+activate the e3 environment you intend to use:
 
 ```console
-[iocuser@host:e3]$ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
+[iocuser@host:~]$ source /path/to/epics/${EPICS_BASE_VERSION}/require/${REQUIRE_VERSION}/bin/setE3Env.bash
 ```
 
-or, alternatively:
+If you installed the above specification at `/opt/epics`, then this would be
 
 ```console
-[iocuser@host:e3]$ source /path/to/e3/repository/tools/setenv
+[iocuser@host:~]$ source /opt/epics/7.0.6.1/require/4.0.0/bin/setE3Env.bash
 ```
 
 ## Installing an e3 module
