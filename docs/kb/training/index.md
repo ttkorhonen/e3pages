@@ -2,13 +2,9 @@
 
 # Training
 
-:::{admonition} Training status
-The workbook has been extensively updated in September 2021, and reflects the
-state of e3 as of that date. This training is based on EPICS base `7.0.5` and
-*require* `3.4.1`.
-
-e3 is still under development, so future changes to e3 may result in parts of
-this training becoming outdated.
+:::{warning}
+The following user guides are correct as of EPICS base 7.0.5, *require* 3.4.1, and
+have not yet been updated for the latest e3 release of *require* 4.0.0
 :::
 
 :::{admonition} Feedback request
