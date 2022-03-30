@@ -1,10 +1,9 @@
 # Installing e3
 
-Building e3 with the so-called *core* modules (to see what the various module
-groups contain, have a look at the
-[inventory](https://gitlab.esss.lu.se/e3/e3/-/blob/master/tools/e3-inventory.yaml))
-using e3 is fairly easy. Note, however, that the workflow (and tools) listed
-below typically is not what you would use for a production build.
+Building a core e3 installation using standard tools is relatively straightforward.
+To see which modules are included in such an installation, see the contents of
+[2022q1-core](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-core.yml);
+more information will be provided below.
 
 ## Prerequisites
 
@@ -116,10 +115,10 @@ Next, modify `configure/RELEASE` to point towards the correct installation path.
 If you followed the above steps to install, it should look like the following:
 
 ```makefile
-EPICS_BASE:=/opt/epics/base-7.0.5
+EPICS_BASE:=/opt/epics/base-7.0.6.1
 
 E3_REQUIRE_NAME:=require
-E3_REQUIRE_VERSION:=3.4.1
+E3_REQUIRE_VERSION:=4.0.0
 
 # The definitions shown below can also be placed in an untracked RELEASE.local
 -include $(TOP)/../../RELEASE.local
@@ -128,7 +127,7 @@ E3_REQUIRE_VERSION:=3.4.1
 ```
 
 :::{note}
-Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.5` to `/opt/epics/base-7.0.5`.
+Notice the change to `${EPICS_BASE}` from the default `/epics/base-7.0.6.1` to `/opt/epics/base-7.0.6.1`.
 :::
 
 Finally, we would run each of the make rules that clone the submodule, apply
@@ -145,7 +144,7 @@ We should finally validate that everything is working as expected:
 
 ```console
 # this assumes you have sourced setenv or setE3Env.bash
-[iocuser@host:e3-caenelfastps]$ iocsh.bash -r caenelfastps
+[iocuser@host:e3-caenelfastps]$ iocsh -r caenelfastps
 ```
 
 Done!
