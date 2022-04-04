@@ -14,7 +14,9 @@ In this lesson, you will learn how to do the following:
 ## Dependent environment variables
 
 :::{note}
-The versions of the modules mentioned below may be different that you will see in your environment, because the e3 tool that installs the modules packs gets the latest version of each module.
+The versions of the modules mentioned below may be different that you will
+see in your environment, because the e3 tool that installs the modules packs
+gets the latest version of each module.
 :::
 
 One of the key ideas with e3 (arguably, *the* key idea) is the management of
