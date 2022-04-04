@@ -20,15 +20,20 @@ like:
 ## Start the IOC
 
 ```console
-[iocuser@host:~]$ /opt/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash st.cmd
+[iocuser@host:~]$ /opt/epics/base-7.0.6.1/require/4.0.0/bin/iocsh st.cmd
 ```
+
+:::{note}
+In *require* 4.0.0, the startup utility was renamed to `iocsh`. If you are
+using an older version of require, you should use `iocsh.bash` instead.
+:::
 
 ## Conventions
 
 To set correct PV names, the environment variable `$IOCNAME` must be set before
 starting your IOC. Up until *require* 3.4.1, this could be done in a file
 `env.sh` which needed to be in the same directory as your startup script. For
-later versions of require, the variable must be set through other mechanisms
+require 4.0.0 onwards, the variable must be set through other mechanisms
 (where the easiest option is to just write `export IOCNAME=yourIocName` prior to
 starting the IOC).
 
@@ -71,18 +76,6 @@ date
 Note that `st.cmd` must end with a newline---this will be explained in
 {ref}`the_require_module`.
 :::
-
-### Environment file (`env.sh`)
-
-:::{warning}
-*require* version 3.4.1 is the last version that will support the use of
-`env.sh`.
-:::
-
-```console
-[iocuser@host:e3-ioc-test]$ cat env.sh
-export IOCNAME="SomeName"
-```
 
 [^require]: In version 3.3.0 of *require*, version pinning became optional; i.e.
   from `require MODULE,MODULE_VERSION` to `require MODULE[,MODULE_VERSION]`.

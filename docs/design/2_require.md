@@ -15,12 +15,11 @@ has been started.
 
 ## IOC startup
 
-IOC startup is run from the bash script `iocsh.bash`, which is installed in
-`${E3_REQUIRE_LOCATION}/bin/iocsh.bash`. This script generates a temporary
+IOC startup is run from the bash script `iocsh`, which is installed in
+`${E3_REQUIRE_LOCATION}/bin/iocsh`. This script generates a temporary
 startup script which is passed to `softIocPVA` from EPICS base. This temporary
 startup script:
 
-* Tries to load an environment file, if it exists[^envsh]
 * Sets some environment variables, e.g. `${IOCSH_TOP}` and `${REQUIRE_IOC}`
 * Prints a list of EPICS environment variables into the startup log
 * Loads *require*
@@ -31,16 +30,16 @@ At ESS, we have decided to only use EPICS base 7, and thus we only make use of
 `softIocPVA` (and not `softIoc`).
 :::
 
-There are number of option flags and arguments that `iocsh.bash` accepts, the
+There are number of option flags and arguments that `iocsh` accepts, the
 most common being:
 
-* `iocsh.bash st.cmd`---Run the commands in `st.cmd`.
-* `iocsh.bash -r module[,version]`---Load the given module/version upon startup.
+* `iocsh st.cmd`---Run the commands in `st.cmd`.
+* `iocsh -r module[,version]`---Load the given module/version upon startup.
   Equivalent to including the line `require module[,version]` in your startup
   script.
-* `iocsh.bash -c 'some command'`---Executes the command `some command` in the
+* `iocsh -c 'some command'`---Executes the command `some command` in the
   IOC shell.
-* `iocsh.bash filename` -- If the file is a `.db` file, a `.dbd` file, a `.subs`
+* `iocsh filename` -- If the file is a `.db` file, a `.dbd` file, a `.subs`
   file, or a `.subst` file, then the file will be appropriately loaded at
   startup.
 
@@ -56,7 +55,7 @@ file---otherwise the last line will be ignored.
 :::
 
 Most of the functionality for this is contained in the file
-`tools/iocsh_functions` in the [e3 repository](https://gitlab.esss.lu.se/e3/e3).
+`tools/iocsh_functions` in the [require repository](https://gitlab.esss.lu.se/e3/e3-require).
 There are also *gdb* and *valgrind* options if you would like to run an IOC with
 either of those utilities.
 
@@ -107,20 +106,20 @@ load when working with test versions.
 
 If one module depends on another one, both of these will be loaded. For example,
 *StreamDevice* depends on *asyn*, so loading *StreamDevice* will automatically
-load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.18 in
-its current incarnation has been built against *asyn* 4.41.0---if you load that
-version of *StreamDevice* then it will try to load specifically version 4.41.0
+load *asyn* as well. Dependencies are version-specific; *StreamDevice* 2.8.22 in
+its current incarnation has been built against *asyn* 4.42.0---if you load that
+version of *StreamDevice* then it will try to load specifically version 4.42.0
 of *asyn*, and if it cannot find that version, or if another version of *asyn*
 has already been loaded, then the IOC will exit with an error.
 
 These dependencies are generated at build time and are stored in
 `$(module)/$(version)/lib/$(T_A)/$(module).dep`. For example, the dependencies
-for *StreamDevice* 2.8.18 are (directly from the aforementioned file):
+for *StreamDevice* 2.8.22 are (directly from the aforementioned file):
 
 ```bash
 # Generated file. Do not edit.
-asyn 4.41.0+0
-calc 3.7.4+0
+asyn 4.42.0+0
+calc 3.7.4+1
 pcre 8.44.0+0
 ```
 
@@ -150,6 +149,3 @@ version of *scaling*. What should happen to the existing installed version of
    This way, the existing version has not been modified. Moreover, you can use
    *sis8300llrf* version 3.16.1 with either version of scaling by specifying the
    build number.
-
-[^envsh]: support for an environment-file (`env.sh`) is deprecated after
-  *require* 3.4.1.

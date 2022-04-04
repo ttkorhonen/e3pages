@@ -27,13 +27,9 @@ differentiated between module types. A graphical representation of this (where
 │           └── siteMods
 │               └── MODULE
 │                   └── MODULE_VERSION
-└── base-7.0.5
+└── base-7.0.6.1
     └── require
-        ├── 3.4.0
-        │   └── siteMods
-        │       └── MODULE
-        │           └── MODULE_VERSION
-        └── 3.4.1
+        └── 4.0.0
             └── siteMods
                 └── MODULE
                     └── MODULE_VERSION
@@ -46,32 +42,32 @@ modules, and would not fit very well on this page.
 One benefit of having this approach is that we easily can "keep tabs" of what
 version (of EPICS base and *require*) a module has been built for. We can thus
 fairly easily move from using, for example, *asyn* 4.36.0 with base 7.0.3.1 and
-*require* 3.2.0 to using *asyn* 4.41.0 with the same versions of base and
-*require*, or use the same version of *asyn* with base 7.0.5 with *require*
-3.4.1. Once we have migrated away from older versions, we can simply delete that
+*require* 3.2.0 to using *asyn* 4.42.0 with the same versions of base and
+*require*, or use the same version of *asyn* with base 7.0.6.1 with *require*
+4.0.0. Once we have migrated away from older versions, we can simply delete that
 entire sub-tree.
 
 Each `MODULE` will then, as indicated above, contain all of the built versions
 of that module. This could look like the following:
 
 ```console
-[iocuser@host:~]$ tree -L 2 /epics/base-7.0.5/require/3.4.1/siteMods/ecmc
-/epics/base-7.0.5/require/3.4.1/siteMods/ecmc
-├── 6.2.1
-│   ├── dbd
-│   ├── include
-│   └── lib
-├── 6.2.1-1
-│   ├── dbd
-│   ├── include
-│   └── lib
-├── 6.2.2
-│   ├── dbd
-│   ├── include
-│   └── lib
-└── 6.2.3
+[iocuser@host:~]$ tree -L 2 /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats
+/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats
+├── 3.1.16+2
+│   ├── db
+│   ├── dbd
+│   ├── include
+│   ├── iocReleaseCreateDb.py
+│   ├── iocStats.iocsh
+│   ├── iocstats_meta.yaml
+│   └── lib
+└── 3.1.16+4
+    ├── db
     ├── dbd
     ├── include
+    ├── iocReleaseCreateDb.py
+    ├── iocStats.iocsh
+    ├── iocstats_meta.yaml
     └── lib
 ```
 
@@ -81,8 +77,8 @@ the selected architectures). We will use the example given in
 {ref}`iocstats_tree`:
 
 ```console
-[iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
-/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
+[iocuser@host:~]$ tree /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/
+/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/
 ├── db
 |   ├── access.db
 |   ├── ...
@@ -112,10 +108,10 @@ main targets available by typing `make help`
 
 ```console
 [iocuser@host:e3-iocStats]$ make help
----------------------------------------
+--------------------------------------- 
 Available targets
----------------------------------------
-install         Install current module to $(EPICS_BASE)/require/$(E3_REQUIRE_VERSION)/siteMods
+--------------------------------------- 
+install         Install module to $(E3_MODULES_INSTALL_LOCATION)
 uninstall       Uninstall the current module
 build           Build current module
 prebuild        Run module-specific commands before building

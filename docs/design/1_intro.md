@@ -53,7 +53,7 @@ An e3 IOC is broadly defined by just a startup script, that:
 
 Database templates and shared libraries are obtained from EPICS modules.
 
-An e3 IOC is started using the `iocsh.bash` script, uses the `softIocPVA`
+An e3 IOC is started using the `iocsh` script, uses the `softIocPVA`
 executable from EPICS base, and dynamically loads any additional modules using
 `require`.
 
