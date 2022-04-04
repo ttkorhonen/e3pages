@@ -240,7 +240,7 @@ Create a cookiecutter wrapper as above, but this time leave the git url blank.
 [iocuser@host:~]$ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git
 company [European Spallation Source ERIC]:
 module_name []: clock                           # Update the module name
-module_version [main]: 0.1.0                    # Choose/define a version for your e3 module
+module_version [main]: 0.1.0+0                  # Choose/define a version for your e3 module
 summary [Wrapper for the module clock]:
 epics_base_version [7.0.5]:
 epics_base_location [/epics/base-7.0.5]:
@@ -250,12 +250,11 @@ git_repository []:                              # Leave this blank or enter any 
 
 This will create a new wrapper. The default behaviour of cookiecutter is to put
 in an empty directory. You can then, for example, generate a template using
-`makeBaseApp.pl` from EPICS base. In our case we will remove the directory and download
-a new set of source files.
+`makeBaseApp.pl` from EPICS base. In our case we will download a new set of source
+files and put inside the created empty directory.
 
 ```console
 [iocuser@host:~]$ cd e3-clock
-[iocuser@host:e3-clock]$ rmdir clock  # Remove the generated directory
 [iocuser@host:e3-clock]$ wget -c http://www-linac.kek.jp/cont/epics/second/second-devsup.tar.gz
 [iocuser@host:e3-clock]$ tar -zxvf second-devsup.tar.gz -C clock
 ```
@@ -270,7 +269,7 @@ we see
 ```make
 EPICS_MODULE_NAME := clock
 
-E3_MODULE_VERSION := main
+E3_MODULE_VERSION := 0.1.0+0
 E3_MODULE_NAME := clock
 E3_MODULE_SRC_PATH := $(EPICS_MODULE_NAME)
 E3_MODULE_MAKEFILE := $(E3_MODULE_NAME).Makefile

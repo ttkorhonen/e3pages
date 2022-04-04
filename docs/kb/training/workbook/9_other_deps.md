@@ -167,11 +167,13 @@ pattern { P,        PID,    INP,        OUT,        LOPR,   HOPR,   DRVL,   DRVH
 
 and save it as `pid.substitutions` in the `Db/` directory of your new module.
 
+:::{note}
 In order to inflate the `.substitutions` file, you need to let the e3 build
-system know about it. The default `mypid.Makefile` is almost correct, with the
-main change that you need to uncomment the line defining the `SUBS` variable
-near the bottom. Once you do that and try to install it, you should see the
-following.
+system know about it. In the `mypid.Makefile` the `SUBS` variable is defined
+in the specific line `SUBS = $(wildcard $(APPDB)/*.substitutions)`
+:::
+
+Try to build and install the module, you should see the following.
 
 ```console
 [iocuser@host:e3-mypid]$ make build install
