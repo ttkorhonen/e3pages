@@ -1,16 +1,14 @@
-(e3_recipe_creation)=
-
 # E3 recipe creation
 
 The following assumes you already installed [conda], [conda-build] and
-[cookiecutter].  Please refer to the {ref}`e3_requirements`.
+[cookiecutter].  Please refer to the [e3_requirements].
 
 To package a module with conda, you have to create a conda recipe.
 
 ## Create the recipe
 
 Use the `e3-recipe` alias to create a new recipe (refer to
-{ref}`cookiecutter_configuration` to create this alias).  You'll be prompted to
+[cookiecutter_configuration] to create this alias).  You'll be prompted to
 enter some values. Press enter to keep the default.
 
 ```bash
@@ -20,9 +18,10 @@ module_name [mymodule]: foo
 summary [EPICS foo module]:
 Select module_kind:
 1 - ESS
-2 - Community
-Choose from 1, 2 [1]:
-module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/test-group
+2 - ESS-WP12
+3 - Community
+Choose from 1, 2, 3 [1]:
+module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/test-subgroup
 module_version [1.0.0]: 0.1.0
 ```
 
@@ -34,18 +33,16 @@ This will create the following project:
 ```bash
 [csi@8ef3d5671aef Dev]$ tree foo-recipe/
 foo-recipe/
-|-- LICENSE
-|-- README.md
-`-- recipe
-    |-- build.sh
-    |-- meta.yaml
-    `-- test.cmd
+├── LICENSE
+├── README.md
+└── recipe
+    ├── build.sh
+    └── meta.yaml
 ```
 
 ## Update the recipe
 
-You should only have to update the `recipe/meta.yaml` and `recipe/test.cmd`
-files.
+You should only have to update the `recipe/meta.yaml` file
 
 ### meta.yaml
 
@@ -57,13 +54,6 @@ you've finalized your recipe.
 ```{note}
 The final recipe shouldn't contain any comments!
 ```
-
-### test.cmd
-
-The file `recipe/test.cmd` is for testing purpose.  It will be used by
-[conda-build] to check the created package by running `iocsh.bash
-recipe/test.cmd`.  You can add extra commands to it if you want.
-
 ## Build the recipe
 
 To build the recipe, run:
@@ -78,12 +68,12 @@ If the build was successful, you should see something like that:
 
 ````bash
 ...
-TEST END: /home/csi/miniconda/conda-bld/linux-64/foo-0.8.0-0.tar.bz2
-Renaming work directory,  /home/csi/miniconda/conda-bld/foo_1591215967088/work  to  /home/csi/miniconda/conda-bld/foo_1591215967088/work_moved_foo-0.8.0-0_linux-64_main_build_loop
+TEST END: /home/csi/miniconda/conda-bld/linux-64/foo-1.0.0-hbd7620e_0.tar.bz2
+Renaming work directory,  /home/csi/miniconda/conda-bld/foo_1591215967088/work  to  /home/csi/miniconda/conda-bld/foo_1591215967088/work_moved_foo-1.0.0-hbd7620e_0_linux-64_main_build_loop
 # Automatic uploading is disabled
 # If you want to upload package(s) to anaconda.org later, type:
 
-anaconda upload /home/csi/miniconda/conda-bld/linux-64/foo-0.8.0-0.tar.bz2
+anaconda upload /home/csi/miniconda/conda-bld/linux-64/foo-1.0.0-hbd7620e_0.tar.bz2
 
 # To have conda build upload to anaconda.org automatically, use
 # $ conda config --set anaconda_upload yes
@@ -114,7 +104,7 @@ You can install the package you built locally by using the `-c local` argument
 ...
 The following NEW packages will be INSTALLED:
 
-  foo                home/csi/miniconda/conda-bld/linux-64::foo-0.8.0-0
+  foo                home/csi/miniconda/conda-bld/linux-64::foo-1.0.0-hbd7620e_0
 ...
 ```
 
@@ -129,3 +119,5 @@ GitLab-ci will automatically build it and upload the package to Artifactory
 [conda]: https://docs.conda.io/en/latest/
 [conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html
 [cookiecutter]: https://cookiecutter.readthedocs.io
+[e3_requirements]: ../references/requirements.md
+[cookiecutter_configuration]: ../references/requirements.md#cookiecutter

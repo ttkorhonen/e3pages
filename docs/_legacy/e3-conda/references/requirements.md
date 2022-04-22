@@ -1,5 +1,3 @@
-(e3_requirements)=
-
 # E3 Requirements
 
 All requirements are already installed in the ESS Development Machine (4.x and
@@ -16,8 +14,6 @@ Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN.
 install packages and their dependencies in isolated environment.  You can read
 more about conda concepts in the official
 [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html).
-
-(conda_installation)=
 
 ### Conda Installation
 
@@ -38,8 +34,6 @@ You can refer to the [official
 documentation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 for more detailed information.
 
-(conda_update)=
-
 ### Conda Update
 
 The installer might not come with the latest available version of conda. After
@@ -53,12 +47,10 @@ To check the version of conda installed, run:
 
 ```bash
 $ conda -V
-conda 4.8.3
+conda 4.12.0
 ```
 
-You need at least conda 4.7 to work with E3. Conda 4.8 is recommended.
-
-(conda_configuration)=
+You need at least conda 4.7 to work with E3. Conda >=4.8 is recommended.
 
 ### Conda Configuration
 
@@ -106,8 +98,6 @@ use_only_tar_bz2: true
 You can modify the configuration by editing directly this file or using the
 `conda config` command.
 
-(conda_build_installation)=
-
 ## conda-build
 
 [conda-build] is only required if you want to build conda packages locally. It's
@@ -145,8 +135,6 @@ This file defines the default version of each dependency to use.
 templates. It's used to easily create new E3 modules, recipes or IOCs for
 development. It's not required to run E3.
 
-(cookiecutter_installation)=
-
 ### Cookiecutter Installation
 
 [Cookiecutter] is a Python tool. It can be installed with `pip`.  Note that you
@@ -172,8 +160,6 @@ Close and re-open your current shell. You should be able to run `cookiecutter`:
 cookiecutter --version
 Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
 ```
-
-(cookiecutter_configuration)=
 
 ### Cookiecutter Configuration
 
