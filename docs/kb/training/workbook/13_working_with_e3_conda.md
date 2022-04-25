@@ -10,7 +10,9 @@ In this lesson, you'll learn how to do the following:
 This chapter contains detailed information as to work with conda and e3.
 If you intend to work only with e3 environment, then this chapter can be skipped.
 :::
+
 ## Quickstart
+
 Conda is used to package and deploy e3 modules.
 
 To work with e3, the only requirement is to have conda installed and configured
@@ -189,8 +191,8 @@ can search for available versions by running `conda search`:
 (epics) [csi@8ef3d5671aef ~]$ conda search stream
 Loading channels: done
 # Name                       Version           Build  Channel
-stream                        2.8.10      h2feebe4_0  conda-e3-virtual    
-stream                        2.8.10      hbaf0b60_1  conda-e3-virtual    
+stream                        2.8.10      h2feebe4_0  conda-e3-virtual
+stream                        2.8.10      hbaf0b60_1  conda-e3-virtual
 stream                        2.8.22      h74e095f_2  conda-e3-virtual
 ```
 
@@ -313,6 +315,7 @@ iocstats                      3.1.16      hd2b67a6_0  conda-e3-virtual
 You can get more information about a package and its dependencies with the `-i`
 flag:
 [csi@8ef3d5671aef ~]$ conda search iocstat -i
+
 ```bash
 iocstats 3.1.15.post1 h0f5667f_0
 --------------------------------
@@ -348,7 +351,7 @@ subdir      : linux-64
 url         : https://artifactory.esss.lu.se/artifactory/api/conda/conda-e3-virtual/linux-64/iocstats-3.1.16-h2bcc261_6.tar.bz2
 md5         : 73d062648a0c5c767def3798a514fdfe
 timestamp   : 2022-03-04 18:50:11 UTC
-dependencies: 
+dependencies:
   - calc >=3.7.1,<3.7.2.0a0
   - epics-base >=7.0.6.1,<7.0.6.2.0a0
   - libgcc-ng >=7.3.0
@@ -406,7 +409,7 @@ company [European Spallation Source ERIC]:
 module_name [mymodule]: foo
 full_name [Your name]: Douglas Araujo
 email [your.name@ess.eu]: douglas.araujo@ess.eu
-documentation_page [https://confluence.esss.lu.se/display/IS/Integration+by+ICS]: 
+documentation_page [https://confluence.esss.lu.se/display/IS/Integration+by+ICS]:
 Select keep_epics_base_makefiles:
 1 - N
 2 - Y
@@ -447,8 +450,8 @@ foo
 
 ```
 
-Notice the `foo.Makefile` file, this is the main file used to 
-build and install a conda e3 module.  The standard `Makefile` 
+Notice the `foo.Makefile` file, this is the main file used to
+build and install a conda e3 module.  The standard `Makefile`
 allows you to compile the module using the default EPICS build
 system if you want.
 
@@ -462,11 +465,11 @@ Add the needed files to your module.  You should also update the
 To compile an e3 module in a conda environment, the following packages are
 required:
 
-- make
-- compilers
-- tclx
-- epics-base
-- require
+* make
+* compilers
+* tclx
+* epics-base
+* require
 
 Create the `e3-dev` environment with those packages.  If you have other
 depencies, like `asyn`, install them as well.
@@ -645,6 +648,7 @@ you've finalized your recipe.
 ```{note}
 The final recipe shouldn't contain any comments!
 ```
+
 ## Build the recipe
 
 To build the recipe, run:

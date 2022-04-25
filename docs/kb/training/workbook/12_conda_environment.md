@@ -12,7 +12,6 @@ This chapter contains detailed information as to work with conda and e3.
 If you intend to work only with e3 environment, then this chapter can be skipped.
 :::
 
-
 ## Conda
 
 [Conda] is a Package, dependency and environment management for any language —
