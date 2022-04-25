@@ -1,10 +1,21 @@
-# E3 quickstart
+# 13. Working with conda and e3
 
-Conda is used to package and deploy E3 modules.
+In this lesson, you'll learn how to do the follwing:
 
-To work with E3, the only requirement is to have conda installed and configured
+* Create a simple environment with epics.
+* Install new packages.
+* Create different environments for other epics versions.
+
+:::{note}
+This chapter contains detailed information as to work with conda and e3.
+If you intend to work only with e3 environment, then this chapter can be skipped.
+:::
+
+Conda is used to package and deploy e3 modules.
+
+To work with e3, the only requirement is to have conda installed and configured
 to use the `conda-e3-virtual` channel on Artifactory.  Please refer to the
-[conda requirements](../references/requirements.md).
+[conda requirements](12_conda_environment.md).
 
 As explained in the
 [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html),
@@ -367,6 +378,336 @@ Loading dbd file /home/csi/miniconda/envs/epics3/modules/iocstats/3.1.15/dbd/ioc
 Calling function iocstats_registerRecordDeviceDriver
 ```
 
-Note that when working with E3, you aren't limited to work with conda packages.
+Note that when working with e3, you aren't limited to work with conda packages.
 During development, you can compile a module locally in a conda environment. See
 {ref}`how to compile a module <e3_module_compilation>`.
+
+## e3 module creation
+
+e3 uses [require](https://gitlab.esss.lu.se/epics-modules/require), originally
+developed by [PSI](https://github.com/paulscherrerinstitute/require) to
+dynamically load modules at runtime.  require also includes a
+[driver.Makefile](https://gitlab.esss.lu.se/epics-modules/require/-/blob/master/App/tools/driver.makefile)
+that shall be used to build a module.  This requires a specific `{module_name}.Makegile`
+file that includes this `driver.Makefile`.
+
+To make it easy to create a new e3 module, we provide a cookiecutter template.
+
+## Create the module
+
+Use the `e3-module` alias to create a new module (refer to [cookiecutter_configuration](../references/requirements.md#cookiecutter)
+to create this alias).  You'll be prompted to enter some values
+Press enter to keep the default.
+
+```bash
+[csi@8ef3d5671aef Dev]$ e3-module
+You've downloaded /home/csi/.cookiecutters/cookiecutter-e3-module before. Is it okay to delete and re-download it? [yes]:
+company [European Spallation Source ERIC]:
+module_name [mymodule]: foo
+full_name [Your name]: Douglas Araujo
+email [your.name@ess.eu]: douglas.araujo@ess.eu
+documentation_page [https://confluence.esss.lu.se/display/IS/Integration+by+ICS]: 
+Select keep_epics_base_makefiles:
+1 - N
+2 - Y
+Choose from 1, 2 [1]: 2
+```
+
+This will create a project based on `makeBaseApp.pl` from EPICS base but will
+also include extra files needed for e3.
+
+```bash
+[csi@8ef3d5671aef Dev]$ tree foo/
+foo
+├── cmds
+│   └── st.cmd
+├── configure
+│   ├── CONFIG
+│   ├── CONFIG_SITE
+│   ├── Makefile
+│   ├── RELEASE
+│   ├── RULES
+│   ├── RULES_DIRS
+│   ├── RULES.ioc
+│   └── RULES_TOP
+├── fooApp
+│   ├── Db
+│   │   └── Makefile
+│   ├── Makefile
+│   └── src
+│       ├── fooMain.cpp
+│       └── Makefile
+├── foo.Makefile
+├── iocsh
+│   └── foo.iocsh
+├── LICENSE
+├── Makefile
+├── README.md
+└── RELEASE.md
+
+```
+
+Notice the `foo.Makefile` file, this is the main file used to 
+build and install a conda e3 module.  The standard `Makefile` 
+allows you to compile the module using the default EPICS build
+system if you want.
+
+## Update the module
+
+Add the needed files to your module.  You should also update the
+`foo.Makefile` file. It includes comments to help you.
+
+## Compile the module
+
+To compile an e3 module in a conda environment, the following packages are
+required:
+
+- make
+- compilers
+- tclx
+- epics-base
+- require
+
+Create the `e3-dev` environment with those packages.  If you have other
+depencies, like `asyn`, install them as well.
+
+```bash
+[csi@8ef3d5671aef Dev]$ conda create -y -n e3-dev epics-base require compilers make tclx
+Collecting package metadata (repodata.json): done
+Solving environment: done
+...
+```
+
+Activate the `e3-dev` environment and compile your module.
+
+```bash
+[csi@8ef3d5671aef Dev]$ conda activate e3-dev
+(e3-dev) [csi@8ef3d5671aef Dev]$ cd foo
+(e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile
+make[1]: Entering directory '/home/csi/Dev/foo'
+MAKING EPICS VERSION 7.0.6.1
+MAKING ARCH linux-x86_64
+make[2]: Entering directory '/home/csi/Dev/foo'
+mkdir -p O.7.0.6.1_Common
+mkdir -p O.7.0.6.1_linux-x86_64
+make[3]: Entering directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+/home/csi/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET                -D_X86_64_ -DUNIX  -Dlinux                  -MD   -O3 -g   -Wall                   -mtune=generic                   -m64 -fPIC               -I. -I../fooApp/src/ -I/home/csi/miniconda/envs/e3-dev/modules/require/3.1.4/include -I/home/csi/miniconda/envs/e3-dev/epics/include  -I/home/csi/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/csi/miniconda/envs/e3-dev/epics/include/os/Linux                   -I/home/csi/miniconda/envs/e3-dev/include                -c  ../fooApp/src/fooMain.cpp
+echo "char _fooLibRelease[] = \"dev\";" >> foo_version_dev.c
+/home/csi/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET                -D_X86_64_ -DUNIX  -Dlinux                  -MD   -O3 -g   -Wall -Werror-implicit-function-declaration                   -mtune=generic     -m64 -fPIC                -I. -I../fooApp/src/ -I/home/csi/miniconda/envs/e3-dev/modules/require/3.1.4/include -I/home/csi/miniconda/envs/e3-dev/epics/include  -I/home/csi/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/csi/miniconda/envs/e3-dev/epics/include/os/Linux                   -I/home/csi/miniconda/envs/e3-dev/include                -c foo_version_dev.c
+Collecting dependencies
+rm -f foo.dep
+cat *.d 2>/dev/null | sed 's/ /\n/g' | sed -n 's%/home/csi/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([0-9]*\.[0-9]*\.[0-9]*\)/.*%\1 \2%p;s%/home/csi/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([^/]*\)/.*%\1 \2%p'| grep -v "include" | sort -u >> foo.dep
+/home/csi/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++ -o libfoo.so -shared -fPIC -Wl,-hlibfoo.so -L/home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64 -Wl,-rpath,/home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64                       -rdynamic -m64 -Wl,--disable-new-dtags -Wl,-rpath,/home/csi/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/csi/miniconda/envs/e3-dev/lib -L/home/csi/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/csi/miniconda/envs/e3-dev/epics/lib/linux-x86_64                          fooMain.o foo_version_dev.o      -lpthread    -lm -lrt -ldl -lgcc
+rm -f MakefileInclude
+make[3]: Leaving directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+make[2]: Leaving directory '/home/csi/Dev/foo'
+make[1]: Leaving directory '/home/csi/Dev/foo'
+```
+
+If you have some database to generate, run `make -f foo.Makefile`.  In our
+case, we don't have any template, so the command won't do anything.
+
+```bash
+(e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile db
+make: Nothing to be done for 'db'.
+```
+
+Install the module in the current environment.
+
+```bash
+(e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile install
+make[1]: Entering directory '/home/csi/Dev/foo'
+MAKING EPICS VERSION 7.0.6.1
+MAKING ARCH linux-x86_64
+make[2]: Entering directory '/home/csi/Dev/foo'
+make[3]: Entering directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+rm -f MakefileInclude
+make[3]: Leaving directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+make[3]: Entering directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+rm -f MakefileInclude
+Installing scripts ../iocsh/foo.iocsh to /home/csi/miniconda/envs/e3-dev/modules/foo/dev
+perl -CSD /home/csi/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m755 ../iocsh/foo.iocsh /home/csi/miniconda/envs/e3-dev/modules/foo/dev
+mkdir /home/csi/miniconda/envs/e3-dev/modules/foo
+mkdir /home/csi/miniconda/envs/e3-dev/modules/foo/dev
+Installing module library /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/libfoo.so
+perl -CSD /home/csi/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m755 libfoo.so /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
+mkdir /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib
+mkdir /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
+Installing module dependency file /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/foo.dep
+perl -CSD /home/csi/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m644 foo.dep /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
+make[3]: Leaving directory '/home/csi/Dev/foo/O.7.0.6.1_linux-x86_64'
+make[2]: Leaving directory '/home/csi/Dev/foo'
+make[1]: Leaving directory '/home/csi/Dev/foo'
+```
+
+The module was installed as _dev_ version.  You can check that you can load it:
+
+```bash
+(e3-dev) [csi@8ef3d5671aef foo]$ iocsh.bash -r foo
+...
+require foo
+Module foo version dev found in /home/csi/miniconda/envs/e3-dev/modules/foo/dev/
+Loading library /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/libfoo.so
+Loaded foo version dev
+foo has no dbd file
+Loading module info records for foo
+...
+```
+
+You can also use the `cmds/st.cmd` file to test your module.
+
+```bash
+(e3-dev) [csi@8ef3d5671aef foo]$ iocsh.bash cmds/st.cmd
+...
+iocshLoad 'cmds/st.cmd',''
+# This should be a test startup script
+require foo
+Module foo version dev found in /home/csi/miniconda/envs/e3-dev/modules/foo/dev/
+Loading library /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/libfoo.so
+Loaded foo version dev
+foo has no dbd file
+Loading module info records for foo
+iocshLoad("/home/csi/miniconda/envs/e3-dev/modules/foo/dev//foo.iocsh")
+...
+```
+
+During development, you can modify your code, re-compile and re-install as many
+times as you want:
+
+```bash
+make -f foo.Makefile
+make -f foo.Makefile db
+make -f foo.Makefile install
+```
+
+You can uninstall the module by running `make -f foo.Makefile uninstall`.
+
+```bash
+(e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile uninstall
+rm -rf /home/csi/miniconda/envs/e3-dev/modules/foo/dev
+```
+
+## Upload the module to GiLab
+
+You should upload your module to the proper subgroup under
+<https://gitlab.esss.lu.se/epics-modules>
+
+To distribute your module, you need to package it with conda.
+
+## e3 recipe creation
+
+To package a module with conda, you have to create a conda recipe.
+
+Use the `e3-recipe` alias to create a new recipe (refer to
+[cookiecutter_configuration] to create this alias).  You'll be prompted to
+enter some values. Press enter to keep the default.
+
+```bash
+[csi@8ef3d5671aef Dev]$ e3-recipe
+company [European Spallation Source ERIC]:
+module_name [mymodule]: foo
+summary [EPICS foo module]:
+Select module_kind:
+1 - ESS
+2 - ESS-WP12
+3 - Community
+Choose from 1, 2, 3 [1]:
+module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/test-subgroup
+module_version [1.0.0]: 0.1.0
+```
+
+The `module_home` variable shall point to the group in GitLab where your module
+is stored.
+
+This will create the following project:
+
+```bash
+[csi@8ef3d5671aef Dev]$ tree foo-recipe/
+foo-recipe/
+├── LICENSE
+├── README.md
+└── recipe
+    ├── build.sh
+    └── meta.yaml
+```
+
+## Update the recipe
+
+You should only have to update the `recipe/meta.yaml` file
+
+### meta.yaml
+
+The `meta.yaml` file is the file that defines the recipe.  It describes where to
+get the source of the module and the dependencies to build and run the modules.
+The file contains many hints in comments. Follow them and remove them when
+you've finalized your recipe.
+
+```{note}
+The final recipe shouldn't contain any comments!
+```
+## Build the recipe
+
+To build the recipe, run:
+
+```bash
+[csi@8ef3d5671aef foo-recipe]$ conda build recipe
+```
+
+In case of failure, check the error message and update your `meta.yaml` file.
+
+If the build was successful, you should see something like that:
+
+````bash
+...
+TEST END: /home/csi/miniconda/conda-bld/linux-64/foo-1.0.0-hbd7620e_0.tar.bz2
+Renaming work directory,  /home/csi/miniconda/conda-bld/foo_1591215967088/work  to  /home/csi/miniconda/conda-bld/foo_1591215967088/work_moved_foo-1.0.0-hbd7620e_0_linux-64_main_build_loop
+# Automatic uploading is disabled
+# If you want to upload package(s) to anaconda.org later, type:
+
+anaconda upload /home/csi/miniconda/conda-bld/linux-64/foo-1.0.0-hbd7620e_0.tar.bz2
+
+# To have conda build upload to anaconda.org automatically, use
+# $ conda config --set anaconda_upload yes
+
+anaconda_upload is not set.  Not uploading wheels: []
+####################################################################################
+Resource usage summary:
+
+Total time: 0:00:07.2
+CPU usage: sys=0:00:00.0, user=0:00:00.0
+Maximum memory usage observed: 2.4M
+Total disk usage observed (not including envs): 52B
+
+
+####################################################################################
+Source and build intermediates have been left in /home/csi/miniconda/conda-bld.
+There are currently 2 accumulated.
+To remove them, you can run the ```conda build purge``` command
+````
+
+## Test the built package
+
+You can install the package you built locally by using the `-c local` argument
+(to use the local channel).
+
+```bash
+[csi@8ef3d5671aef foo-recipe]$ conda create -y -n test -c local foo
+...
+The following NEW packages will be INSTALLED:
+
+  foo                home/csi/miniconda/conda-bld/linux-64::foo-1.0.0-hbd7620e_0
+...
+```
+
+Activate your test environment and test your package.
+
+## Upload the recipe to GitLab
+
+You should upload your recipe to <https://gitlab.esss.lu.se/e3-recipes/staging>.
+GitLab-ci will automatically build it and upload the package to Artifactory
+`conda-e3-test` channel.
+
+[conda]: https://docs.conda.io/en/latest/
+[conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html
+[cookiecutter]: https://cookiecutter.readthedocs.io
+[cookiecutter_configuration]: 12_conda_environment.md#cookiecutter
