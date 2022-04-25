@@ -1,6 +1,6 @@
 # 13. Working with conda and e3
 
-In this lesson, you'll learn how to do the follwing:
+In this lesson, you'll learn how to do the following:
 
 * Create a simple environment with epics.
 * Install new packages.
@@ -10,7 +10,7 @@ In this lesson, you'll learn how to do the follwing:
 This chapter contains detailed information as to work with conda and e3.
 If you intend to work only with e3 environment, then this chapter can be skipped.
 :::
-
+## Quickstart
 Conda is used to package and deploy e3 modules.
 
 To work with e3, the only requirement is to have conda installed and configured

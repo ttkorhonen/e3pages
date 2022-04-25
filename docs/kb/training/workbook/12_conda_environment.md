@@ -1,8 +1,8 @@
 # 12. Conda Environment
 
-In this lesson, you'll learn how to do the follwing:
+In this lesson, you'll learn how to do the following:
 
-* Install and configurate conda.
+* Install and configure conda.
 * Create an environment in conda.
 * Handle environments in conda.
 * Work with cookiecutter
