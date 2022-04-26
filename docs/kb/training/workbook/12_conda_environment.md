@@ -127,8 +127,8 @@ repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).  You should save
 it at the root of your home directory.
 
 ```console
-[csi@8ef3d5671aef Dev]$ cd
-[csi@8ef3d5671aef ~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
+[iocuser@host:~]$ cd
+[iocuser@host:~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  2960  100  2960    0     0   7750      0 --:--:-- --:--:-- --:--:--  7748
@@ -143,7 +143,7 @@ This file defines the default version of each dependency to use.
 To create an environment named "myenv" with epics-base 7, run:
 
 ```console
-conda create -n myenv epics-base=7
+[iocuser@host:~]$ conda create -n myenv epics-base=7
 ```
 
 ### How to activate an environment
@@ -151,7 +151,7 @@ conda create -n myenv epics-base=7
 Use the `conda activate` command followed by the environment name:
 
 ```console
-conda activate myenv
+[iocuser@host:~]$ conda activate myenv
 ```
 
 ### How to deactivate an environment
@@ -159,7 +159,7 @@ conda activate myenv
 Use `conda deactivate`:
 
 ```console
-conda deactivate
+[iocuser@host:~]$ conda deactivate
 ```
 
 ### How to delete an environment
@@ -167,7 +167,7 @@ conda deactivate
 Use the `conda env remove` command:
 
 ```console
-conda env remove -n myenv
+[iocuser@host:~]$ conda env remove -n myenv
 ```
 
 ### How to export an environment
@@ -175,7 +175,7 @@ conda env remove -n myenv
 Use the `conda env export` command:
 
 ```console
-conda env export -n myenv > environment.yml
+[iocuser@host:~]$ conda env export -n myenv > environment.yml
 ```
 
 ### How to create an environment based on an environment file
@@ -183,7 +183,7 @@ conda env export -n myenv > environment.yml
 Use the `conda env create` command:
 
 ```console
-conda env create -n myenv -f environment.yml
+[iocuser@host:~]$ conda env create -n myenv -f environment.yml
 ```
 
 If you omit the `-n` parameter, the environment name will be taken from the
@@ -206,20 +206,20 @@ should **never run** `sudo pip install`. This can override system packages.
 it.
 
 ```console
-conda create -y -c conda-forge -n cookiecutter python=3 cookiecutter
+[iocuser@host:~]$ conda create -y -c conda-forge -n cookiecutter python=3 cookiecutter
 ```
 
 Add an alias to your `.bashrc`:
 
 ```console
-echo "alias cookiecutter='~/miniconda/envs/cookiecutter/bin/cookiecutter'" >> ~/.bashrc
+[iocuser@host:~]$ echo "alias cookiecutter='~/miniconda/envs/cookiecutter/bin/cookiecutter'" >> ~/.bashrc
 ```
 
 Close and re-open your current shell. You should be able to run `cookiecutter`:
 
 ```console
-cookiecutter --version
-Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
+[iocuser@host:~]$ cookiecutter --version
+Cookiecutter 1.7.2 from /home/iocuser/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
 ```
 
 ### Cookiecutter Configuration
@@ -239,9 +239,9 @@ variables.
 Add the following aliases to your `.bashrc`:
 
 ```console
-echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
-echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
-echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
+[iocuser@host:~]$ echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
+[iocuser@host:~]$ echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
+[iocuser@host:~]$ echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
 ```
 
 To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or
