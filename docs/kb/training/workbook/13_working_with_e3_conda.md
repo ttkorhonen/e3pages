@@ -30,9 +30,9 @@ there is only one version of each package in an environment.
 
 To create an environment with epics-base 7 and stream, run:
 
-```bash
+```console
 [csi@8ef3d5671aef ~]$ conda create -y -n epics epics-base=7 stream
-...
+# --- snip snip ---
 
 The following NEW packages will be INSTALLED:
 
@@ -53,7 +53,7 @@ The following NEW packages will be INSTALLED:
   seq                conda-e3-virtual/linux-64::seq-2.2.7-hfba5578_2
   sscan              conda-e3-virtual/linux-64::sscan-2.11.5-hd0a8fca_1
   stream             conda-e3-virtual/linux-64::stream-2.8.22-h74e095f_2
-  ...
+  # --- snip snip ---
 ```
 
 As you see, it will download all the required dependencies to install the
@@ -61,7 +61,7 @@ requested packages. To start working in this environment, just activate it. The
 name of the active environment will be displayed in your prompt. You can then
 run `iocsh.bash`.
 
-```bash
+```console
 [csi@8ef3d5671aef ~]$ conda activate epics
 (epics) [csi@8ef3d5671aef ~]$ iocsh.bash -r stream
 registerChannelProviderLocal firstTime true
@@ -71,7 +71,7 @@ registerChannelProviderLocal firstTime true
 # Version information:
 # European Spallation Source ERIC : iocsh.bash (3.1.3-PID-2667)
 #
-...
+# --- snip snip ---
 # Load require module, which has the version 3.1.3
 #
 dlload /home/csi/miniconda/envs/epics/modules/require/3.1.3/lib/linux-x86_64/librequire.so
@@ -131,10 +131,10 @@ iocRun: All initialization complete
 ```
 
 Once you are in an environment you can install new packages or change the
-version of the installed packages. Let's add iocstats and recsync to our epics
+version of the installed packages. Let's add *iocstats* and *recsync* to our epics
 environment:
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda install iocstats recsync
 Collecting package metadata (repodata.json): done
 Solving environment: done
@@ -147,7 +147,7 @@ Solving environment: done
     - iocstats
     - recsync
 
-...
+# --- snip snip ---
 
 The following NEW packages will be INSTALLED:
 
@@ -157,7 +157,7 @@ The following NEW packages will be INSTALLED:
 
 `conda list` will show you the list of installed packages in the environment:
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda list
 # packages in environment at /home/csi/miniconda/envs/epics:
 #
@@ -187,7 +187,7 @@ Let's say you want to switch to another version of stream. You could
 create a new environment or just replace the version installed in this one. You
 can search for available versions by running `conda search`:
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda search stream
 Loading channels: done
 # Name                       Version           Build  Channel
@@ -198,7 +198,7 @@ stream                        2.8.22      h74e095f_2  conda-e3-virtual
 
 Let's switch to 2.8.10
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda install stream=2.8.10
 Collecting package metadata (repodata.json): done
 Solving environment: done
@@ -238,7 +238,7 @@ only as an example. epics-base 3 isn't supported anymore at ESS. You should use
 EPICS 7.  This is to demonstrate you can work on separate environments with
 different epics-base version.
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda create -y -n epics3 epics-base=3 iocstats
 Collecting package metadata (repodata.json): done
 Solving environment: done
@@ -250,7 +250,7 @@ Solving environment: done
   added / updated specs:
     - epics-base=3
     - iocstats
-...
+# --- snip snip ---
 
 The following NEW packages will be INSTALLED:
 
@@ -272,7 +272,7 @@ The following NEW packages will be INSTALLED:
 
 Switch to this new environment:
 
-```bash
+```console
 (epics) [csi@8ef3d5671aef ~]$ conda deactivate
 [csi@8ef3d5671aef ~]$ conda activate epics3
 (epics3) [csi@8ef3d5671aef ~]$ conda list
@@ -298,13 +298,13 @@ zlib                      1.2.11            h516909a_1006    conda-e3-virtual
 We saw earlier that you can check if a package exists using `conda search`. If
 the given name doesn't exist, conda will try to find a match using wildcard:
 
-```bash
+```console
 [csi@8ef3d5671aef ~]$ conda search iocstat
 Loading channels: done
 No match found for: iocstat. Search: *iocstat*
 # Name                       Version           Build  Channel
 iocstats                3.1.15.post1      h0f5667f_0  conda-e3-virtual
-...
+# --- snip snip ---
 iocstats                3.1.15.post1      hd2b67a6_0  conda-e3-virtual
 iocstats                3.1.15.post1      he422a75_0  conda-e3-virtual
 iocstats                3.1.15.post1      hf85dc0c_0  conda-e3-virtual
@@ -312,11 +312,10 @@ iocstats                      3.1.16      h76d1a4d_1  conda-e3-virtual
 iocstats                      3.1.16      hd2b67a6_0  conda-e3-virtual
 ```
 
-You can get more information about a package and its dependencies with the `-i`
-flag:
+You can get more information about a package and its dependencies with the `-i` flag:
+```console
 [csi@8ef3d5671aef ~]$ conda search iocstat -i
 
-```bash
 iocstats 3.1.15.post1 h0f5667f_0
 --------------------------------
 file name   : iocstats-3.1.15.post1-h0f5667f_0.tar.bz2
@@ -336,7 +335,7 @@ dependencies:
   - libstdcxx-ng >=7.3.0
   - require >=3.1.0,<3.2.0a0
 
-...
+# --- snip snip ---
 
 iocstats 3.1.16 h2bcc261_6
 --------------------------
@@ -368,9 +367,9 @@ installing a package, conda is case-insensitive. Running `conda install
 iocStats` or `conda install iocstats` will perform exactly the same operation.
 But when using a module with require, you should use the lowercase name:
 
-```bash
+```console
 (epics3) [csi@8ef3d5671aef ~]$ iocsh.bash
-...
+# --- snip snip ---
 8ef3d5671aef.3038 > require iocStats
 Module iocStats not available
 8ef3d5671aef.3038 > require iocstats
@@ -387,11 +386,11 @@ During development, you can compile a module locally in a conda environment. See
 
 ## e3 module creation
 
-e3 uses [require](https://gitlab.esss.lu.se/epics-modules/require), originally
+e3 uses [*require*](https://gitlab.esss.lu.se/epics-modules/require), originally
 developed by [PSI](https://github.com/paulscherrerinstitute/require) to
-dynamically load modules at runtime.  require also includes a
+dynamically load modules at runtime. The *require* also includes a
 [driver.Makefile](https://gitlab.esss.lu.se/epics-modules/require/-/blob/master/App/tools/driver.makefile)
-that shall be used to build a module.  This requires a specific `{module_name}.Makegile`
+that shall be used to build a module.  This requires a specific `{module_name}.Makefile`
 file that includes this `driver.Makefile`.
 
 To make it easy to create a new e3 module, we provide a cookiecutter template.
@@ -402,7 +401,7 @@ Use the `e3-module` alias to create a new module (refer to [cookiecutter_configu
 to create this alias).  You'll be prompted to enter some values
 Press enter to keep the default.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ e3-module
 You've downloaded /home/csi/.cookiecutters/cookiecutter-e3-module before. Is it okay to delete and re-download it? [yes]:
 company [European Spallation Source ERIC]:
@@ -419,7 +418,7 @@ Choose from 1, 2 [1]: 2
 This will create a project based on `makeBaseApp.pl` from EPICS base but will
 also include extra files needed for e3.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ tree foo/
 foo
 ├── cmds
@@ -474,16 +473,16 @@ required:
 Create the `e3-dev` environment with those packages.  If you have other
 depencies, like `asyn`, install them as well.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ conda create -y -n e3-dev epics-base require compilers make tclx
 Collecting package metadata (repodata.json): done
 Solving environment: done
-...
+# --- snip snip ---
 ```
 
 Activate the `e3-dev` environment and compile your module.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ conda activate e3-dev
 (e3-dev) [csi@8ef3d5671aef Dev]$ cd foo
 (e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile
@@ -507,17 +506,17 @@ make[2]: Leaving directory '/home/csi/Dev/foo'
 make[1]: Leaving directory '/home/csi/Dev/foo'
 ```
 
-If you have some database to generate, run `make -f foo.Makefile`.  In our
+If you have some database to generate, run `make -f foo.Makefile db`.  In our
 case, we don't have any template, so the command won't do anything.
 
-```bash
+```console
 (e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile db
 make: Nothing to be done for 'db'.
 ```
 
 Install the module in the current environment.
 
-```bash
+```console
 (e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile install
 make[1]: Entering directory '/home/csi/Dev/foo'
 MAKING EPICS VERSION 7.0.6.1
@@ -545,23 +544,23 @@ make[1]: Leaving directory '/home/csi/Dev/foo'
 
 The module was installed as _dev_ version.  You can check that you can load it:
 
-```bash
+```console
 (e3-dev) [csi@8ef3d5671aef foo]$ iocsh.bash -r foo
-...
+# --- snip snip ---
 require foo
 Module foo version dev found in /home/csi/miniconda/envs/e3-dev/modules/foo/dev/
 Loading library /home/csi/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/libfoo.so
 Loaded foo version dev
 foo has no dbd file
 Loading module info records for foo
-...
+# --- snip snip ---
 ```
 
 You can also use the `cmds/st.cmd` file to test your module.
 
-```bash
+```console
 (e3-dev) [csi@8ef3d5671aef foo]$ iocsh.bash cmds/st.cmd
-...
+# --- snip snip ---
 iocshLoad 'cmds/st.cmd',''
 # This should be a test startup script
 require foo
@@ -571,13 +570,13 @@ Loaded foo version dev
 foo has no dbd file
 Loading module info records for foo
 iocshLoad("/home/csi/miniconda/envs/e3-dev/modules/foo/dev//foo.iocsh")
-...
+# --- snip snip ---
 ```
 
 During development, you can modify your code, re-compile and re-install as many
 times as you want:
 
-```bash
+```console
 make -f foo.Makefile
 make -f foo.Makefile db
 make -f foo.Makefile install
@@ -585,7 +584,7 @@ make -f foo.Makefile install
 
 You can uninstall the module by running `make -f foo.Makefile uninstall`.
 
-```bash
+```console
 (e3-dev) [csi@8ef3d5671aef foo]$ make -f foo.Makefile uninstall
 rm -rf /home/csi/miniconda/envs/e3-dev/modules/foo/dev
 ```
@@ -605,7 +604,7 @@ Use the `e3-recipe` alias to create a new recipe (refer to
 [cookiecutter_configuration] to create this alias).  You'll be prompted to
 enter some values. Press enter to keep the default.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ e3-recipe
 company [European Spallation Source ERIC]:
 module_name [mymodule]: foo
@@ -624,7 +623,7 @@ is stored.
 
 This will create the following project:
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ tree foo-recipe/
 foo-recipe/
 ├── LICENSE
@@ -653,7 +652,7 @@ The final recipe shouldn't contain any comments!
 
 To build the recipe, run:
 
-```bash
+```console
 [csi@8ef3d5671aef foo-recipe]$ conda build recipe
 ```
 
@@ -662,7 +661,7 @@ In case of failure, check the error message and update your `meta.yaml` file.
 If the build was successful, you should see something like that:
 
 ````bash
-...
+# --- snip snip ---
 TEST END: /home/csi/miniconda/conda-bld/linux-64/foo-1.0.0-hbd7620e_0.tar.bz2
 Renaming work directory,  /home/csi/miniconda/conda-bld/foo_1591215967088/work  to  /home/csi/miniconda/conda-bld/foo_1591215967088/work_moved_foo-1.0.0-hbd7620e_0_linux-64_main_build_loop
 # Automatic uploading is disabled
@@ -694,13 +693,13 @@ To remove them, you can run the ```conda build purge``` command
 You can install the package you built locally by using the `-c local` argument
 (to use the local channel).
 
-```bash
+```console
 [csi@8ef3d5671aef foo-recipe]$ conda create -y -n test -c local foo
-...
+# --- snip snip ---
 The following NEW packages will be INSTALLED:
 
   foo                home/csi/miniconda/conda-bld/linux-64::foo-1.0.0-hbd7620e_0
-...
+# --- snip snip ---
 ```
 
 Activate your test environment and test your package.

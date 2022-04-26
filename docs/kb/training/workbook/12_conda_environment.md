@@ -28,7 +28,7 @@ To install conda, we'll use the
 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.  The only
 requirements to run the installation are `bzip2` and `curl`.
 
-```bash
+```console
 curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -bp $HOME/miniconda
 rm -f Miniconda3-latest-Linux-x86_64.sh
@@ -46,13 +46,13 @@ for more detailed information.
 The installer might not come with the latest available version of conda. After
 installation you should update conda:
 
-```bash
+```console
 conda update -y -c conda-forge -n base conda
 ```
 
 To check the version of conda installed, run:
 
-```bash
+```console
 $ conda -V
 conda 4.12.0
 ```
@@ -64,7 +64,7 @@ You need at least conda 4.7 to work with E3. Conda >=4.8 is recommended.
 If you don't want conda to activate the base environment by default (and modify
 your PATH), you should run:
 
-```bash
+```console
 conda config --set auto_activate_base false
 ```
 
@@ -74,7 +74,7 @@ Artifactory](https://artifactory.esss.lu.se).  Artifactory includes mirrors for
 the default channel_alias.  To work with E3, you have to use the
 `conda-e3-virtual` channel:
 
-```bash
+```console
 conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
 conda config --add channels conda-e3-virtual
 conda config --remove channels defaults
@@ -88,7 +88,7 @@ conda repository. See
 4.7 with Artifactory you should force conda to only download .tar.bz2 packages
 by setting the `use_only_tar_bz2` boolean.
 
-```bash
+```console
 conda config --set use_only_tar_bz2 true
 ```
 
@@ -112,7 +112,7 @@ not directly needed to work with E3.
 
 Install conda-build in the base environment:
 
-```bash
+```console
 conda install -y -n base -c conda-forge conda-build
 ```
 
@@ -126,7 +126,7 @@ file from the [e3-pinning
 repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).  You should save
 it at the root of your home directory.
 
-```bash
+```console
 [csi@8ef3d5671aef Dev]$ cd
 [csi@8ef3d5671aef ~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -138,51 +138,51 @@ This file defines the default version of each dependency to use.
 
 ## Conda usage
 
-## How To create a new environment
+### How To create a new environment
 
 To create an environment named "myenv" with epics-base 7, run:
 
-```bash
+```console
 conda create -n myenv epics-base=7
 ```
 
-## How to activate an environment
+### How to activate an environment
 
 Use the `conda activate` command followed by the environment name:
 
-```bash
+```console
 conda activate myenv
 ```
 
-## How to deactivate an environment
+### How to deactivate an environment
 
 Use `conda deactivate`:
 
-```bash
+```console
 conda deactivate
 ```
 
-## How to delete an environment
+### How to delete an environment
 
 Use the `conda env remove` command:
 
-```bash
+```console
 conda env remove -n myenv
 ```
 
-## How to export an environment
+### How to export an environment
 
 Use the `conda env export` command:
 
-```bash
+```console
 conda env export -n myenv > environment.yml
 ```
 
-## How to create an environment based on an environment file
+### How to create an environment based on an environment file
 
 Use the `conda env create` command:
 
-```bash
+```console
 conda env create -n myenv -f environment.yml
 ```
 
@@ -205,19 +205,19 @@ should **never run** `sudo pip install`. This can override system packages.
 [pipx](https://pipxproject.github.io/pipx/)).  As conda is installed, let's use
 it.
 
-```bash
+```console
 conda create -y -c conda-forge -n cookiecutter python=3 cookiecutter
 ```
 
 Add an alias to your `.bashrc`:
 
-```bash
+```console
 echo "alias cookiecutter='~/miniconda/envs/cookiecutter/bin/cookiecutter'" >> ~/.bashrc
 ```
 
 Close and re-open your current shell. You should be able to run `cookiecutter`:
 
-```bash
+```console
 cookiecutter --version
 Cookiecutter 1.7.2 from /home/csi/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
 ```
@@ -238,7 +238,7 @@ variables.
 
 Add the following aliases to your `.bashrc`:
 
-```bash
+```console
 echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
 echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
 echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
