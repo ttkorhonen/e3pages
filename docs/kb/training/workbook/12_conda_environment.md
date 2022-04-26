@@ -8,7 +8,7 @@ In this lesson, you'll learn how to do the following:
 * Work with cookiecutter
 
 :::{note}
-This chapter contains detailed information as to work with conda and e3.
+This chapter contains detailed information to work with conda and e3.
 If you intend to work only with e3 environment, then this chapter can be skipped.
 :::
 
@@ -22,7 +22,7 @@ install packages and their dependencies in isolated environment.  You can read
 more about conda concepts in the official
 [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html).
 
-### Conda Installation
+### Conda installation
 
 To install conda, we'll use the
 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.  The only
@@ -41,7 +41,7 @@ You can refer to the [official
 documentation](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 for more detailed information.
 
-### Conda Update
+### Conda update
 
 The installer might not come with the latest available version of conda. After
 installation you should update conda:
@@ -57,21 +57,21 @@ $ conda -V
 conda 4.12.0
 ```
 
-You need at least conda 4.7 to work with E3. Conda >=4.8 is recommended.
+You need at least conda 4.7 to work with e3. Conda >=4.8 is recommended.
 
-### Conda Configuration
+### Conda configuration
 
 If you don't want conda to activate the base environment by default (and modify
-your PATH), you should run:
+your `PATH`), you should run:
 
 ```console
 conda config --set auto_activate_base false
 ```
 
-All E3 packages are available on [ESS
+All e3 packages are available on [ESS
 Artifactory](https://artifactory.esss.lu.se).  Artifactory includes mirrors for
 `anaconda-main` and `conda-forge` channels. You should set artifactory as the
-the default channel_alias.  To work with E3, you have to use the
+the default `channel_alias`.  To work with e3, you have to use the
 `conda-e3-virtual` channel:
 
 ```console
@@ -80,7 +80,7 @@ conda config --add channels conda-e3-virtual
 conda config --remove channels defaults
 ```
 
-conda 4.7 introduced a new [.conda package
+Conda 4.7 introduced a new [.conda package
 format](https://conda.io/projects/conda/en/latest/user-guide/concepts/packages.html#conda-file-format).
 Artifactory 6.11.3 doesn't support that format and it creates issues with remote
 conda repository. See
@@ -108,7 +108,7 @@ You can modify the configuration by editing directly this file or using the
 ## conda-build
 
 [conda-build] is only required if you want to build conda packages locally. It's
-not directly needed to work with E3.
+not directly needed to work with e3.
 
 Install conda-build in the base environment:
 
@@ -138,12 +138,12 @@ This file defines the default version of each dependency to use.
 
 ## Conda usage
 
-### How To create a new environment
+### How to create a new environment
 
-To create an environment named "myenv" with epics-base 7, run:
+To create an environment named "epics-7" with epics-base 7, run:
 
 ```console
-[iocuser@host:~]$ conda create -n myenv epics-base=7
+[iocuser@host:~]$ conda create -n epics-7 epics-base=7
 ```
 
 ### How to activate an environment
@@ -151,7 +151,7 @@ To create an environment named "myenv" with epics-base 7, run:
 Use the `conda activate` command followed by the environment name:
 
 ```console
-[iocuser@host:~]$ conda activate myenv
+[iocuser@host:~]$ conda activate epics-7
 ```
 
 ### How to deactivate an environment
@@ -159,7 +159,7 @@ Use the `conda activate` command followed by the environment name:
 Use `conda deactivate`:
 
 ```console
-[iocuser@host:~]$ conda deactivate
+(epics-7) [iocuser@host:~]$ conda deactivate
 ```
 
 ### How to delete an environment
@@ -167,7 +167,7 @@ Use `conda deactivate`:
 Use the `conda env remove` command:
 
 ```console
-[iocuser@host:~]$ conda env remove -n myenv
+[iocuser@host:~]$ conda env remove -n epics-7
 ```
 
 ### How to export an environment
@@ -175,7 +175,7 @@ Use the `conda env remove` command:
 Use the `conda env export` command:
 
 ```console
-[iocuser@host:~]$ conda env export -n myenv > environment.yml
+[iocuser@host:~]$ conda env export -n epics-7 > environment.yml
 ```
 
 ### How to create an environment based on an environment file
@@ -183,7 +183,7 @@ Use the `conda env export` command:
 Use the `conda env create` command:
 
 ```console
-[iocuser@host:~]$ conda env create -n myenv -f environment.yml
+[iocuser@host:~]$ conda env create -n epics-7 -f environment.yml
 ```
 
 If you omit the `-n` parameter, the environment name will be taken from the
@@ -193,10 +193,10 @@ exists. You can to destroy it first by using `--force`.
 ## Cookiecutter
 
 [Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from
-templates. It's used to easily create new E3 modules, recipes or IOCs for
-development. It's not required to run E3.
+templates. It's used to easily create new e3 modules, recipes or IOCs for
+development. It's not required to run e3.
 
-### Cookiecutter Installation
+### Cookiecutter installation
 
 [Cookiecutter] is a Python tool. It can be installed with `pip`.  Note that you
 should **never run** `sudo pip install`. This can override system packages.
@@ -215,14 +215,20 @@ Add an alias to your `.bashrc`:
 [iocuser@host:~]$ echo "alias cookiecutter='~/miniconda/envs/cookiecutter/bin/cookiecutter'" >> ~/.bashrc
 ```
 
-Close and re-open your current shell. You should be able to run `cookiecutter`:
+Reload the `.bashrc` file
+
+```console
+[iocuser@host:~] source ~/.bashrc
+```
+
+You should be able to run `cookiecutter`:
 
 ```console
 [iocuser@host:~]$ cookiecutter --version
 Cookiecutter 1.7.2 from /home/iocuser/miniconda/envs/cookiecutter/lib/python3.8/site-packages (Python 3.8)
 ```
 
-### Cookiecutter Configuration
+### Cookiecutter configuration
 
 Create the file `~/.cookiecutterrc` with your name:
 
@@ -244,7 +250,7 @@ Add the following aliases to your `.bashrc`:
 [iocuser@host:~]$ echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
 ```
 
-To create a new E3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or
+To create a new e3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or
 `e3-ioc`.
 
 [conda]: https://docs.conda.io/en/latest/

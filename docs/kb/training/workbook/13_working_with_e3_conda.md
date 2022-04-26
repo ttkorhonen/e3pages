@@ -23,12 +23,12 @@ As explained in the
 [user-guide](https://conda.io/projects/conda/en/latest/user-guide/concepts.html),
 a conda environment is just a directory that contains a specific collection of
 conda packages that you have installed. You could have one environment with
-epics-base 7 and another one with epics-base 3.15. You can easily switch between
+EPICS base 7 and another one with EPICS base 3. You can easily switch between
 environments (by activating or deactivating them). When installing packages in
 an environment, others are not impacted. To avoid conflicts, conda ensures that
 there is only one version of each package in an environment.
 
-To create an environment with epics-base 7 and stream, run:
+To create an environment with EPICS base 7 and *stream*, run:
 
 ```console
 [iocuser@host:~]$ conda create -y -n epics epics-base=7 stream
@@ -233,10 +233,10 @@ The following packages will be DOWNGRADED:
 
 ```
 
-Let's now create a separate environment with epics-base 3.15. Note that this is
-only as an example. epics-base 3 isn't supported anymore at ESS. You should use
+Let's now create a separate environment with EPICS Base 3.15. Note that this is
+only as an example. EPICS Base  3 isn't supported anymore at ESS. You should use
 EPICS 7.  This is to demonstrate you can work on separate environments with
-different epics-base version.
+different EPICS Base  version.
 
 ```console
 (epics) [iocuser@host:~]$ conda create -y -n epics3 epics-base=3 iocstats
@@ -358,8 +358,8 @@ dependencies:
   - require >=3.1.4,<3.2.0a0
 ```
 
-You can see above that the first package was compiled with epics-base 3.15.5 and
-the last with epics-base 7.0.6.1. The last one also has `calc` has run
+You can see above that the first package was compiled with EPICS Base  3.15.5 and
+the last with EPICS Base  7.0.6.1. The last one also has `calc` has run
 dependency.
 
 Note that conda package names are always **lowercase**. When searching or
@@ -464,11 +464,11 @@ Add the needed files to your module.  You should also update the
 To compile an e3 module in a conda environment, the following packages are
 required:
 
-* make
-* compilers
-* tclx
-* epics-base
-* require
+* `make`
+* `compilers`
+* `tclx`
+* `epics-base`
+* `require`
 
 Create the `e3-dev` environment with those packages.  If you have other
 depencies, like `asyn`, install them as well.
