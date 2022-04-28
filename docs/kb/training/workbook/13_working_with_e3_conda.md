@@ -395,58 +395,59 @@ file that includes this `driver.Makefile`.
 
 To make it easy to create a new e3 module, we provide a cookiecutter template.
 
-## Create the module
+## Create the wrapper
 
-Use the `e3-module` alias to create a new module (refer to [cookiecutter_configuration](../references/requirements.md#cookiecutter)
+Use the `e3-wrapper` alias to create a new wrapper (refer to [cookiecutter_configuration]
 to create this alias).  You'll be prompted to enter some values
 Press enter to keep the default.
 
 ```console
-[iocuser@host:dev]$ e3-module
-You've downloaded /home/iocuser/.cookiecutters/cookiecutter-e3-module before. Is it okay to delete and re-download it? [yes]:
+[iocuser@host:dev]$ e3-wrapper
+You've downloaded /home/iocuser/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
 company [European Spallation Source ERIC]:
-module_name [mymodule]: foo
-full_name [Your name]: Douglas Araujo
-email [your.name@ess.eu]: douglas.araujo@ess.eu
-documentation_page [https://confluence.esss.lu.se/display/IS/Integration+by+ICS]:
-Select keep_epics_base_makefiles:
-1 - N
-2 - Y
-Choose from 1, 2 [1]: 2
+module_name []: foo
+module_version [main]: 1.0.0
+summary [Wrapper for the module foo]:
+epics_base_version [7.0.6.1]:
+epics_base_location [/epics/base-7.0.6.1]:
+require_version [4.0.0]:
+git_repository []:
 ```
 
-This will create a project based on `makeBaseApp.pl` from EPICS base but will
-also include extra files needed for e3.
+This will create a new wrapper. The default behaviour of cookiecutter is to put
+in an empty directory for the module. You can then, for example, generate a template using
+makeBaseApp.pl from EPICS base, copy some set of source files, or use the git submodule
+for external modules. Refer to [module_wrappers] for more details.
 
 ```console
 [iocuser@host:dev]$ tree foo/
-foo
-├── cmds
-│   └── st.cmd
-├── configure
-│   ├── CONFIG
-│   ├── CONFIG_SITE
-│   ├── Makefile
-│   ├── RELEASE
-│   ├── RULES
-│   ├── RULES_DIRS
-│   ├── RULES.ioc
-│   └── RULES_TOP
-├── fooApp
-│   ├── Db
-│   │   └── Makefile
-│   ├── Makefile
-│   └── src
-│       ├── fooMain.cpp
-│       └── Makefile
-├── foo.Makefile
-├── iocsh
-│   └── foo.iocsh
-├── LICENSE
-├── Makefile
-├── README.md
-└── RELEASE.md
-
+.
+└── e3-foo
+    ├── cmds
+    │   └── st.cmd
+    ├── configure
+    │   ├── CONFIG
+    │   ├── CONFIG_MODULE
+    │   ├── CONFIG_OPTIONS
+    │   ├── module
+    │   │   └── RULES_MODULE
+    │   ├── RELEASE
+    │   └── RULES
+    ├── foo
+    ├── foo.Makefile
+    ├── iocsh
+    │   └── README.md
+    ├── LICENSE
+    ├── Makefile
+    ├── opi
+    │   └── README.md
+    ├── patch
+    │   └── Site
+    │       ├── HISTORY.md
+    │       └── README.md
+    ├── README.md
+    └── template
+        └── README.md
 ```
 
 Notice the `foo.Makefile` file, this is the main file used to
@@ -589,7 +590,7 @@ You can uninstall the module by running `make -f foo.Makefile uninstall`.
 rm -rf /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
 ```
 
-## Upload the module to GiLab
+## Upload the module to GitLab
 
 You should upload your module to the proper subgroup under
 <https://gitlab.esss.lu.se/epics-modules>
@@ -710,7 +711,5 @@ You should upload your recipe to <https://gitlab.esss.lu.se/e3-recipes/staging>.
 GitLab-ci will automatically build it and upload the package to Artifactory
 `conda-e3-test` channel.
 
-[conda]: https://docs.conda.io/en/latest/
-[conda-build]: https://docs.conda.io/projects/conda-build/en/latest/index.html
-[cookiecutter]: https://cookiecutter.readthedocs.io
 [cookiecutter_configuration]: 12_conda_environment.md#cookiecutter
+[module_wrappers]: ../../../design/3_wrappers.md

@@ -193,7 +193,7 @@ exists. You can to destroy it first by using `--force`.
 ## Cookiecutter
 
 [Cookiecutter](https://cookiecutter.readthedocs.io) creates projects from
-templates. It's used to easily create new e3 modules, recipes or IOCs for
+templates. It's used to easily create new e3 wrappers, recipes or IOCs for
 development. It's not required to run e3.
 
 ### Cookiecutter installation
@@ -245,12 +245,12 @@ variables.
 Add the following aliases to your `.bashrc`:
 
 ```console
-[iocuser@host:~]$ echo "alias e3-module='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-module.git'" >> ~/.bashrc
+[iocuser@host:~]$ echo "alias e3-wrapper='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-wrapper.git'" >> ~/.bashrc
 [iocuser@host:~]$ echo "alias e3-recipe='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git'" >> ~/.bashrc
 [iocuser@host:~]$ echo "alias e3-ioc='cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-ioc.git'" >> ~/.bashrc
 ```
 
-To create a new e3 module, recipe or IOC, just run `e3-module`, `e3-recipe` or
+To create a new e3 wrapper, recipe or IOC, just run `e3-wrapper`, `e3-recipe` or
 `e3-ioc`.
 
 [conda]: https://docs.conda.io/en/latest/
