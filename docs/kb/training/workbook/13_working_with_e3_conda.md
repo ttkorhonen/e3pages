@@ -415,9 +415,10 @@ git_repository []:
 ```
 
 This will create a new wrapper. The default behaviour of cookiecutter is to put
-in an empty directory for the module. You can then, for example, generate a template using
-makeBaseApp.pl from EPICS base, copy some set of source files, or use the git submodule
-for external modules. Refer to [module_wrappers] for more details.
+in an empty directory for the module. You can then, for example, generate a
+template using makeBaseApp.pl from EPICS base, copy some set of source files,
+or use the git submodule for external modules. Refer to [module_wrappers]
+for more details.
 
 ```console
 [iocuser@host:dev]$ tree foo/
