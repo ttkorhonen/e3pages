@@ -17,7 +17,7 @@ In this lesson, you will learn how to do the following:
 The following variables are defined when an IOC is running from within startup
 and iocsh scripts.
 
-### General `iocsh.bash` variables
+### General `iocsh` variables
 
 * `REQUIRE_IOC`: A unique name of the IOC that can be used to track certain
   variables in a certain IOC. For example, an e3 IOC will generate on startup a
@@ -31,7 +31,7 @@ and iocsh scripts.
 * `E3_CMD_TOP`: The absolute path to the startup script (cmd file), if one
   exists.
 
-* `E3_IOCSH_TOP`: The absolute path to where `iocsh.bash` was executed from;
+* `E3_IOCSH_TOP`: The absolute path to where `iocsh` was executed from;
   equivalent to running `pwd`.
 
 * `IOCSH_PS1`: The IOC Prompt String. Defaults to `$HOSTNAME-$PID >`.
@@ -47,7 +47,6 @@ be
   loading `.iocsh` snippets and other files installed with the module.
 * `mrfioc2_DB` - The absolute path where the database, template, protocol, and
   substitutions files for `mrfioc2` have been installed.
-* `mrfioc2_TEMPLATES` - Same as above
 
 :::{note}
 One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a
@@ -66,17 +65,16 @@ epicsEnvShow E3_CMD_TOP
 epicsEnvShow iocstats_DIR
 epicsEnvShow iocstats_VERSION
 epicsEnvShow iocstats_DB
-epicsEnvShow iocstats_TEMPLATES
 ```
 
 ```console
-[iocuser@host:e3training/workbook]$ iocsh.bash ch6.cmd
+[iocuser@host:e3training/workbook]$ iocsh ch6.cmd
 
 # --- snip snip ---
 
 Starting iocInit
 ############################################################################
-## EPICS R7.0.5-E3-7.0.5-patch
+## EPICS R7.0.6.1-E3-7.0.6.1-patch
 ## Rev. 2021-03-15T09:48+0100
 ############################################################################
 iocRun: All initialization complete
@@ -85,13 +83,11 @@ E3_IOCSH_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
 epicsEnvShow E3_CMD_TOP
 E3_CMD_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
 epicsEnvShow iocstats_DIR
-iocstats_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/
+iocstats_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/
 epicsEnvShow iocstats_VERSION
 iocstats_VERSION=3.1.16+0
 epicsEnvShow iocstats_DB
-iocstats_DB=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db
-epicsEnvShow iocstats_TEMPLATES
-iocstats_TEMPLATES=/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/d
+iocstats_DB=/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db
 # --- snip snip ---
 ```
 
@@ -103,6 +99,9 @@ protocol files that have been installed with a given module. For example,
 ```bash
 epicsEnvSet("STREAM_PROTOCOL_PATH", "$(mymodule_DB)")
 ```
+
+Note however that if a module depends on *StreamDevice*, then this variable
+is automatically set by *require* when the module is loaded.
 
 Exercise:
 
@@ -179,13 +178,13 @@ First, let us start up an IOC that has *iocstats* loaded in it as before. You
 can do this in one of two ways:
 
 ```console
-[iocuser@host:e3]$ iocsh.bash ch6.cmd
+[iocuser@host:e3]$ iocsh ch6.cmd
 ```
 
 or
 
 ```console
-[iocuser@host:e3]$ iocsh.bash -r iocstats
+[iocuser@host:e3]$ iocsh -r iocstats
 ```
 
 Exercise:
@@ -193,15 +192,30 @@ Exercise:
 * What is the difference between these two commands? Take a look at the output
   of the IOC shell as it starts up.
 
-In the running IOC, let us try a few commands. First, try to re-load *iocstats*:
+As a second experiment, try to load *iostats* a second time as follows.
 
 ```console
-localhost-15965 > require iocstats
-Module iocstats version 3.1.16+0 already loaded
+[iocuser@host:e3]$ iocsh -r iocstats -r iocstats
+
+# --- snip snip ---
+
+require iocstats
+Module iocstats version 3.1.16+2 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+2/
+Module iocstats depends on calc 3.7.4+1
+
+# --- snip snip ---
+
+Calling function iocstats_registerRecordDeviceDriver
+Loading module info records for iocstats
+require iocstats
+Module iocstats version 3.1.16+2 already loaded
+
+# --- snip snip ---
+
 ```
 
-This is due to the fact that *require* will only load a module a single time. It
-is possible to have multiple configured *instances* of a module (for example, an
+Nothing happens due to the fact that *require* will only load a module a single time.
+It is possible to have multiple configured *instances* of a module (for example, an
 IOC can control multiple copies of the same device) by loading the appropriate
 `.iocsh` snippet with different parameters, but that is a topic for another
 time.
@@ -210,22 +224,12 @@ Next, in the running IOC, let us try to load the *recsync* module. Run
 
 ```console
 localhost-15965 > require recsync
-Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
-Loading library /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so
-Loaded recsync version 1.3.0-eb33785
-Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
-Error loading /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
+Error! Modules can only be loaded before iocIint!
 ```
 
-*require* cannot load a module with a `.dbd` (database definition) file once the
-IOC has been initialised; all of the `require <module>` commands must occur
-*before* `iocInit()` is run.
-
-:::{note}
-Modules that do not have `.dbd` files (for example, those that only have
-database or template files) can be properly loaded after `iocInit()` is called.
-However, this is not good practice and is strongly discouraged.
-:::
+*require* cannot load modules after `iocInit` has been called. This is due to the
+fact that a lot of setup and initialisation must be done before the call to
+`iocInit`.
 
 It can be useful to see a bit of extra information when *require* is loading a
 module to understand exactly where it is coming from (and to see why it loads
@@ -237,10 +241,10 @@ var requireDebug 1
 require recsync
 ```
 
-and then load it with `iocsh.bash`:
+and then load it with `iocsh`:
 
 ```console
-[iocuser@host:e3]$ iocsh.bash ch6-2.cmd
+[iocuser@host:e3]$ iocsh ch6-2.cmd
 
 # --- snip snip ---
 
@@ -249,45 +253,39 @@ var requireDebug 1
 require recsync
 require: putenv("T_A=linux-x86_64")
 require: putenv("EPICS_HOST_ARCH=linux-x86_64")
-require: putenv("EPICS_RELEASE=7.0.5")
+require: putenv("EPICS_RELEASE=7.0.6")
 require: putenv("OS_CLASS=Linux")
 require: versionstr = ""
 require: module="recsync" version="(null)" args="(null)"
-require: searchpath=/epics/base-7.0.5/require/3.4.1/siteMods:/epics/base-7.0.5/require/3.4.1/siteApps
+require: searchpath=/epics/base-7.0.6.1/require/4.0.0/siteMods
 require: no recsync version loaded yet
-require: trying /epics/base-7.0.5/require/3.4.1/siteMods
-require: found directory /epics/base-7.0.5/require/3.4.1/siteMods/recsync/
-require: checking version 1.3.0-eb33785 against required (null)
-require: compareVersions(found=1.3.0-eb33785, request=(null))
+require: trying /epics/base-7.0.6.1/require/4.0.0/siteMods
+require: found directory /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/
+require: checking version 1.4.0+0 against required (null)
+require: compareVersions(found=1.4.0+0, request=(null))
 require: compareVersions: MATCH empty version requested
-require: recsync 1.3.0-eb33785 may match (null)
-require: directory /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/
-         exists
-require: recsync 1.3.0-eb33785 looks promising
-require: trying /epics/base-7.0.5/require/3.4.1/siteApps
-require: no /epics/base-7.0.5/require/3.4.1/siteApps/recsync/ directory
-Module recsync version 1.3.0-eb33785 found in /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/
+require: recsync 1.4.0+0 may match (null)
+require: directory /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/ exists
+require: recsync 1.4.0+0 looks promising
+Module recsync version 1.4.0+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/
 require: looking for dependency file
-require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/recsync.dep
-         exists, size 31 bytes
-require: parsing dependency file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/recsync.dep
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/recsync.dep exists, size 31 bytes
+require: parsing dependency file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/recsync.dep
 require: looking for library file
-require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so
-         exists, size 114608 bytes
-Loading library /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/lib/linux-x86_64/librecsync.so
-Loaded recsync version 1.3.0-eb33785
-require: compare requested version (null) with loaded version 1.3.0-eb33785
-require: compareVersions(found=1.3.0-eb33785, request=(null))
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/librecsync.so exists, size 114720 bytes
+Loading library /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/librecsync.so
+Loaded recsync version 1.4.0+0
+require: compare requested version (null) with loaded version 1.4.0+0
+require: compareVersions(found=1.4.0+0, request=(null))
 require: compareVersions: MATCH empty version requested
-require: file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
-         exists, size 207 bytes
-Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/dbd/recsync.dbd
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/dbd/recsync.dbd exists, size 207 bytes
+Loading dbd file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/dbd/recsync.dbd
 Calling function recsync_registerRecordDeviceDriver
-require: registerModule(recsync,1.3.0-eb33785,/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/)
+require: registerModule(recsync,1.4.0+0,/epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/)
 require: putenv("MODULE=recsync")
-require: putenv("recsync_VERSION=1.3.0-eb33785")
-require: putenv("recsync_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/")
-require: putenv("SCRIPT_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/recsync/1.3.0-eb33785/:/epics/base-7.0.5/require/3.4.1/")
+require: putenv("recsync_VERSION=1.4.0+0")
+require: putenv("recsync_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/")
+require: putenv("SCRIPT_PATH=.:/epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/:/epics/base-7.0.6.1/require/4.0.0/")
 Loading module info records for recsync
 
 # --- snip snip ---
@@ -322,92 +320,47 @@ You can print out all environment variables of a module with the rule `make
 vars`:
 
 ```console
-[iocuser@host:e3-caPutLog]$ make vars
+[iocuser@host:e3-caputlog]$ make vars
 
 ------------------------------------------------------------
->>>>     Current EPICS and E3 Envrionment Variables     <<<<
+>>>>     Current EPICS and E3 Environment Variables     <<<<
 ------------------------------------------------------------
 
-BASE_3_14 = NO
-BASE_3_15 = NO
-BASE_3_16 = NO
-BASE_7_0 = YES
-E3_MODULES_INSTALL_LOCATION = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0
-E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/bin
-E3_MODULES_INSTALL_LOCATION_DB = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/db
-E3_MODULES_INSTALL_LOCATION_INC = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/include
-E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/lib
-E3_MODULES_PATH = /epics/base-7.0.5/require/3.4.1/siteMods
-E3_MODULES_VENDOR_LIBS_LOCATION = /epics/base-7.0.5/require/3.4.1/siteLibs/vendor/caputlog/3.7.0+0
+E3_MODULES_INSTALL_LOCATION = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0
+E3_MODULES_INSTALL_LOCATION_BIN = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0/bin
+E3_MODULES_INSTALL_LOCATION_DB = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0/db
+E3_MODULES_INSTALL_LOCATION_INC = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0/include
+E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0/lib
+E3_MODULES_PATH = /epics/base-7.0.6.1/require/4.0.0/siteMods
 E3_MODULE_MAKEFILE = caPutLog.Makefile
-E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.7.0+0"
-                      PROJECT="caputlog"
-                      EPICS_MODULES="/epics/base-7.0.5/require/3.4.1/siteMods"
-                      EPICS_LOCATION="/epics/base-7.0.5" BUILDCLASSES="Linux"
-                      E3_SITEMODS_PATH="/epics/base-7.0.5/require/3.4.1/siteMods"
-                      E3_SITEAPPS_PATH="/epics/base-7.0.5/require/3.4.1/siteApps"
-                      E3_SITELIBS_PATH="/epics/base-7.0.5/require/3.4.1/siteLibs"
-                      caputlog_E3_GIT_DESC="7.0.5-3.4.1/3.7.0-40af4e4-20210426T180358-6-g8bda15a"
-                      caputlog_E3_GIT_STATUS="[ \\\" M caPutLog\\\", ]"
-                      caputlog_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-caPutLog.git"
+E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.7.0+0" PROJECT="caputlog" EPICS_MODULES="/epics/base-7.0.6.1/require/4.0.0/siteMods" EPICS_LOCATION="/epics/base-7.0.6.1" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-7.0.6.1/require/4.0.0/siteMods" caputlog_E3_GIT_DESC="7.0.6.1-4.0.0/3.7.0-20f7c82-20220210T112335-2-gaab774b" caputlog_E3_GIT_STATUS="[ ]" caputlog_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-caPutLog.git"
 E3_MODULE_NAME = caputlog
 E3_MODULE_SRC_PATH = caPutLog
 E3_MODULE_VERSION = 3.7.0+0
-E3_MODULE_VERSION_ORIG = 3.7.0
-E3_REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
-E3_REQUIRE_TOOLS = /epics/base-7.0.5/require/3.4.1/tools
+E3_REQUIRE_CONFIG = /epics/base-7.0.6.1/require/4.0.0/configure
+E3_REQUIRE_TOOLS = /epics/base-7.0.6.1/require/4.0.0/tools
 EPICS_MODULE_NAME = caPutLog
 EPICS_MODULE_TAG = R3.7
-EPICS_SHORT_VERSION = 7.0.5
-EPICS_VERSION_NUMBER = 7.0.5
-EPICS_VERSION_STRING = "EPICS Version 7.0.5"
-EXPORT_VARS = E3_MODULES_VENDOR_LIBS_LOCATION E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH
-              EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION
-              E3_SITEMODS_PATH E3_SITEAPPS_PATH E3_SITELIBS_PATH
-              E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME
-              E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD
-              E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB
-              E3_REQUIRE_BIN QUIET
-
-GIT_REMOTE_NAME = origin
-MSI = /epics/base-7.0.5/bin/linux-x86_64/msi
-PROD_BIN_PATH = /epics/base-7.0.5/require/3.4.1/siteMods/caputlog/3.7.0+0/bin/linux-x86_64
-REQUIRE_CONFIG = /epics/base-7.0.5/require/3.4.1/configure
-RMDIR = rm -f -rf
-SUDOBASH = "bash -c"
-TEMP_CELL_PATH = /home/simonrose/data/git/e3/modules/core/e3-caPutLog/testMods-210802140617
+EPICS_SHORT_VERSION = 7.0.6.1
+EPICS_VERSION_NUMBER = 7.0.6.1
+EPICS_VERSION_STRING = "EPICS Version 7.0.6.1"
+EXPORT_VARS = E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET   
+MSI = /epics/base-7.0.6.1/bin/linux-x86_64/msi
+REQUIRE_CONFIG = /epics/base-7.0.6.1/require/4.0.0/configure
 ```
 
 Many of these variables fall into one of several different categories: EPICS
 environment variables, e3 environment variables, and e3 module-related
 variables.
 
-### Customized EPICS environment variables
-
-These are variables that are inherited from and used by EPICS base.
-
-* `EPICS_BASE`: Location where EPICS base is installed
-* `EPICS_HOST_ARCH`: Host system architecture
-* `EPICS_*VERSION*`: Version of EPICS base
-
 ### e3 environment variables
 
-These are variables generated by require and used to reference important paths
-for modules and for builds.
+These are variables generated by require or EPICS base and are used to reference
+important paths for modules and for builds.
 
-* `E3_SITEMODS_PATH`: e3 site module installation path.
-* `E3_SITEAPPS_PATH`: e3 site application installation path.
-* `E3_SITELIBS_PATH`: e3 site library path.
-* `E3_REQUIRE_NAME`: unique e3 module name used by *require*. This variable
-  should not be changed. <!-- TODO: Let's get rid of this. For reelz. Terrible
-  variable. -->
-* `E3_REQUIRE_VERSION`: *require* version number.
-* `E3_REQUIRE_BIN`: *require* binary path.
+* `EPICS_*VERSION*`: Version of EPICS base
+* `E3_MODULES_PATH`: Installation path for modules.
 * `E3_REQUIRE_CONFIG`: *require* configure path.
-* `E3_REQUIRE_DB`: *require* database path.
-* `E3_REQUIRE_INC`: *require* include path.
-* `E3_REQUIRE_LIB`: *require* lib path.
-* `E3_REQUIRE_LOCATION`: *require* root directory path.
 * `E3_REQUIRE_TOOLS`: *require* tools path.
 * `REQUIRE_CONFIG`: *require* configuration path used for by module
   configurations. It is typically the same as `E3_REQUIRE_CONFIG`, but is
@@ -440,21 +393,17 @@ The following are set in `CONFIG_MODULE` in the wrapper directory.
 
 The following variables are set by *require*.
 
-* `E3_MODULES_PATH`: Installation path for the module.
-* `E3_MODULES_LIBNAME`: Name of shared libraries.
 * `E3_MODULES_INSTALL_LOCATION`: Parent path to installation directories.
 * `E3_MODULES_INSTALL_LOCATION_BIN`: Binary installation path.
 * `E3_MODULES_INSTALL_LOCATION_DB`: Database installation path.
 * `E3_MODULES_INSTALL_LOCATION_INC`: Include installation path.
 * `E3_MODULES_INSTALL_LOCATION_LIB`: Library installation path.
-* `E3_MODULES_VENDOR_LIBS_LOCATION`: Location to install any necessary vendor
-  libraries.
 
 ---
 
 ##  Assignments
 
-1. Use the command `iocsh.bash -r asyn` to load *asyn* into a fresh IOC. From
+1. Use the command `iocsh -r asyn` to load *asyn* into a fresh IOC. From
    the IOC shell, print out all of the database files that are included with
    *asyn*. Hint: There is a command that lets you run an external shell command
    within an IOC. See [chapter 2](2_e3_ioc.md).
