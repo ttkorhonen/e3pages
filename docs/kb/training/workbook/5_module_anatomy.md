@@ -37,10 +37,10 @@ a few lines in the configuration files.
 
 ## Directory anatomy
 
-Let us have a look at `e3-iocStats/`:
+Let us have a look at `e3-iocstats/`:
 
 ```console
-[iocuser@host:e3-iocStats]$ tree -L 1
+[iocuser@host:e3-iocstats]$ tree -L 1
 .
 |-- cmds
 |-- configure
@@ -84,11 +84,11 @@ have not already done the exercise from [Chapter 1](1_installing_e3.md) on git
 submodules, it is encouraged to read more about them from the [official git
 documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
-Assuming that you are still in the `e3-iocStats` directory, let us explore some
+Assuming that you are still in the `e3-iocstats` directory, let us explore some
 of the submodule there. Start by running the following command.
 
 ```console
-[iocuser@host:e3-iocStats]$ git submodule status
+[iocuser@host:e3-iocstats]$ git submodule status
 ```
 
 The output should be something like ` 4df9e87815f6a9432955a3ddb45fafa9fe4a4d40
@@ -99,7 +99,7 @@ What do each of these parts represent?
 :::
 
 Next, look at the wrapper repository for
-[iocStats](https://gitlab.esss.lu.se/e3/wrappers/core/e3-iocStats.git) on
+[iocStats](https://gitlab.esss.lu.se/e3/wrappers/core/e3-iocstats.git) on
 Gitlab.
 
 The magic number is **4df9e878** - can you see what it refers to? After finding
@@ -112,7 +112,7 @@ it, verify this number in the output of `git submodule status`.
 Finally, examine its submodule configuration:
 
 ```console
-[iocuser@host:e3-iocStats]$ more .gitmodules
+[iocuser@host:e3-iocstats]$ more .gitmodules
 [submodule "iocStats"]
          path = iocStats
          url = https://github.com/epics-modules/iocStats
@@ -183,23 +183,23 @@ Let us look at a few patch files and see how to work with them.
 ### Patch files in EPICS (e3) base
 
 ```console
-[iocuser@host:e3]$ find e3-base/ -name *.patch | grep "7\.0\.5"
-e3-base/patch/Site/R7.0.5/softIocPVA.p0.patch
-e3-base/patch/Site/R7.0.5/ess_epics_host_arch.p0.patch
-e3-base/patch/Site/R7.0.5/config_site-x86_84_c++11.p0.patch
-e3-base/patch/Site/R7.0.5/enable_new_dtags.p0.patch
-e3-base/patch/Site/R7.0.5/os_class.p0.patch
-e3-base/patch/Site/R7.0.5/remove_mkdir_from_rules_build.p0.patch
-e3-base/patch/Site/R7.0.5/add_pvdatabase_nt_softIocPVA.p0.patch
+[iocuser@host:e3]$ find e3-base/ -name *.patch | grep "7\.0\.6\.1"
+e3-base/patch/Site/R7.0.6.1/softIocPVA.p0.patch
+e3-base/patch/Site/R7.0.6.1/ess_epics_host_arch.p0.patch
+e3-base/patch/Site/R7.0.6.1/config_site-x86_84_c++11.p0.patch
+e3-base/patch/Site/R7.0.6.1/enable_new_dtags.p0.patch
+e3-base/patch/Site/R7.0.6.1/os_class.p0.patch
+e3-base/patch/Site/R7.0.6.1/remove_mkdir_from_rules_build.p0.patch
+e3-base/patch/Site/R7.0.6.1/add_pvdatabase_nt_softIocPVA.p0.patch
 ```
 
-The patch files that would be stored in `e3-base/patch/R7.0.5` are EPICS
+The patch files that would be stored in `e3-base/patch/R7.0.6.1` are EPICS
 community patch files. These are due to issues that have been resolved at the
 community level, but have not yet made it into a release of EPICS base. At the
 moment, new releases of EPICS base are occurring several times per year, so
 there has been less of a need to populate this directory.
 
-The patch files in `e3-base/patch/Site/R7.0.5`, in contrast, are for
+The patch files in `e3-base/patch/Site/R7.0.6.1`, in contrast, are for
 site-specific purposes. These are changes that are not to fix issues with EPICS
 base that have been identified, but for changes that are necessary for e3 to
 function properly. An example is `remove_mkdir_from_rules_build.p0.patch`:
@@ -248,11 +248,6 @@ These steps are all performed when you run
 
 ### Patch files for e3 modules
 
-:::{note}
-Note that this is current as of require 3.4.1. The patching system will be
-slightly modified for require 4.0.0.
-:::
-
 Patch files for EPICS (e3) modules are very similar to those for EPICS base, and
 are applied with the same method. The main difference is that there is no
 distinction between site-specific patches and community patches, and so all of
@@ -261,17 +256,19 @@ given wrapper.
 
 ```console
 [iocuser@host:e3]$ find . -name *.p0.patch | grep -v e3-base | sort -n
-./area/e3-ADAndor3/patch/Site/2.2.0-include-stdlin.h.p0.patch
-./area/e3-ADSupport/patch/Site/.1.4.0-tiff_extern_rename.p0.patch
-./area/e3-ADSupport/patch/Site/.1.6.0-tiff_extern_renam.p0.patch
-./area/e3-ADSupport/patch/Site/.1.7.0-tiff_extern_renam.p0.patch
-./area/e3-ADSupport/patch/Site/1.9.0-netcdf-config-header-rename.p0.patch
-./area/e3-ADSupport/patch/Site/1.9.0-rename.p0.patch
-
+./e3-adandor3/patch/Site/2.2.0+0/include-stdlin.h.p0.patch
+./e3-adsis8300/patch/Site/devel-initialvalues.p0.patch
+./e3-adsupport/patch/Site/1.10.0+0/netcdf-config-header-rename.p0.patch
+./e3-adsupport/patch/Site/1.10.0+0/rename.p0.patch
+./e3-adsupport/patch/Site/1.4.0+0/tiff_extern_rename.p0.patch
+./e3-adsupport/patch/Site/1.6.0+0/tiff_extern_renam.p0.patch
+./e3-adsupport/patch/Site/1.7.0+0/tiff_extern_renam.p0.patch
+./e3-adsupport/patch/Site/1.9.0+0/netcdf-config-header-rename.p0.patch
+./e3-adsupport/patch/Site/1.9.0+0/rename.p0.patch
 # --- snip snip ---
 ```
 
-The format for patch files names is `${E3_MODULE_VERSION}-description.p0.patch`.
+The format for patch files names is `${E3_MODULE_VERSION}/description.p0.patch`.
 Patches should have descriptions in the file `HISTORY.md` that describe their
 purpose.
 
@@ -286,17 +283,17 @@ with `make patch`. This means that the correct build sequence for an e3 module
 is
 
 ```console
-[iocuser@host:e3-iocStats]$ make init
-[iocuser@host:e3-iocStats]$ make patch
-[iocuser@host:e3-iocStats]$ make build
-[iocuser@host:e3-iocStats]$ make install
+[iocuser@host:e3-iocstats]$ make init
+[iocuser@host:e3-iocstats]$ make patch
+[iocuser@host:e3-iocstats]$ make build
+[iocuser@host:e3-iocstats]$ make install
 ```
 
 For both `e3-base` and any e3 module, you revert patches with the command `make
 patchrevert`. If there are no applicable patches, then you will see the message
 
 ```console
-[iocuser@host:e3-iocStats]$ make patch
+[iocuser@host:e3-iocstats]$ make patch
 >>> No patches to apply
 ```
 
@@ -308,11 +305,11 @@ If you want to create a patch file for an e3 module, run `git diff --no-prefix >
 ../patch/Site/` from the root directory of the module, e.g.:
 
 ```console
-[iocuser@host:iocStats]$ git diff --no-prefix > ../patch/Site/3.1.16-add_more_stats.p0.patch
+[iocuser@host:iocstats]$ git diff --no-prefix > ../patch/Site/3.1.16+4/add_more_stats.p0.patch
 ```
 
-Make sure that the patch file name has the correct version (3.1.16, from
-`CONFIG_MODULE`) and a useful description, and make sure that you update the
+Make sure that the patch file name is installed in the correct directory (3.1.16+4,
+from `CONFIG_MODULE`) and a useful description, and make sure that you update the
 `HISTORY.md` file explaining the purpose and role of the patch.
 
 ---
@@ -322,7 +319,7 @@ Make sure that the patch file name has the correct version (3.1.16, from
 1. Where are the e3 make targets defined? What are some other targets that might
    be of interest?
 2. Can you override the `EPICS_MODULE_TAG` to build a different version without
-   any `git status` changes in `e3-iocStats`? The output of `git status` should
+   any `git status` changes in `e3-iocstats`? The output of `git status` should
    look like
 
    ```console

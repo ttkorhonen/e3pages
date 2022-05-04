@@ -33,10 +33,11 @@ to the current working directory in the command prompt:
 `[(user)@(hostname):(**current-working-directory**)]$` .
 :::
 
-Go to `e3-stream`, which should have been installed with the `core` group in
-chapter 1. Run the following command.
+Clone `e3-stream` and switch to that directory, and then run `make vars`:
 
 ```console
+[iocuser@host:~]$ git clone --recursive https://gitlab.esss.lu.se/e3/wrappers/communication/e3-stream.git
+[iocuser@host:~]$ cd e3-stream
 [iocuser@host:e3-stream]$ make vars
 ```
 
@@ -47,7 +48,7 @@ The variables of interest here are:
   known as *semver*) for releases.
 
 * `EPICS_MODULE_TAG` is *reference* (in the git sense) to the source code
-  repository, e.g. `tags/stream_2_7_14`, `2.8.18`, `master`, `branch_name`, or
+  repository, e.g. `tags/stream_2_7_14`, `2.8.22`, `master`, `branch_name`, or
   `e0a24fe`. It is *strongly* recommended that only absolute references (either
   tags or commit hashes) are used, since otherwise it is much more difficult to
   have reproducible builds. However, in principle, any valid git reference works
@@ -73,8 +74,8 @@ The output shows all of the installed version(s) of the *StreamDevice* modules
 within the current e3 environment:
 
 ```console
-/epics/base-7.0.5/require/3.4.1/siteMods/stream
-`-- 2.8.18+0
+/epics/base-7.0.6.1/require/4.0.0/siteMods/stream
+`-- 2.8.22+0
       |-- dbd
       |-- include
       |-- lib
@@ -93,13 +94,13 @@ to perform a quick minimal test that everything has compiled and linked
 correctly. The syntax (for *StreamDevice*) is
 
 ```console
-[iocuser@host:e3-stream]$ iocsh.bash -r stream
+[iocuser@host:e3-stream]$ iocsh -r stream
 ```
 
 Or more generally
 
 ```console
-[iocuser@host:e3-stream]$ iocsh.bash -r $MODULE,$VERSION
+[iocuser@host:e3-stream]$ iocsh -r $MODULE,$VERSION
 ```
 
 Once you have loaded *StreamDevice* as above, how can you determine which
@@ -127,7 +128,7 @@ switch `EPICS_MODULE_TAG` when `make init` is executed:
 4. Have a look at the `configure/CONFIG_MODULE` file
 
 Running `make init` will download all source files within StreamDevice as a git
-submodule, and will in our case switch back to the `2.8.18` version of
+submodule, and will in our case switch back to the `2.8.22` version of
 StreamDevice.
 
 ## Change `EPICS_MODULE_TAG` and `E3_MODULE_VERSION`
@@ -136,7 +137,7 @@ It is important to understand the relationship between `EPICS_MODULE_TAG` and
 `E3_MODULE_VERSION` as described above. Let us try to change them and see what
 happens.
 
-First, let us modify `EPICS_MODULE_TAG`; Use `master` instead of `tags/2.8.18`
+First, let us modify `EPICS_MODULE_TAG`; Use `master` instead of `tags/2.8.22`
 (Note that, as above, this is not recommended practice for a release version,
 but often makes sense during development). If you already have `master` as
 default, choose an arbitrary version and modify variables accordingly; available
@@ -203,5 +204,5 @@ changed from before.
    *StreamDevice*. Which version is loaded when you run the following command?
 
    ```console
-   [iocuser@host:e3-stream]$ iocsh.bash -r stream
+   [iocuser@host:e3-stream]$ iocsh -r stream
    ```

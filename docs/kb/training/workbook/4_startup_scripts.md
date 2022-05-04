@@ -52,10 +52,10 @@ P?
 The commands that the motor takes are `P?`, `T?`, and `S?` to query information,
 `T=<num>` to set its target, and `H` to halt the motor from moving.
 
-You can always quit the `telnet` session by hitting `^]`:
+You can always quit the `telnet` session by hitting `^]`:
 
 ```console
-^]
+^]
 telnet> quit
 Connection closed.
 ```
@@ -74,7 +74,7 @@ startup scripts that can be used for the following steps.
 
 For each of these scripts, it will be good practise to examine the script in
 order to try to predict what will happen, and then examine every line of the
-output when running the startup script with `iocsh.bash`. Before you begin, of
+output when running the startup script with `iocsh`. Before you begin, of
 course, make sure that you have sourced the correct e3 environment's
 `setE3Env.bash`.
 
@@ -85,11 +85,11 @@ this script first and then start it with
 
 ```console
 [iocuser@host:e3-training-material]$ cd 4_startup_scripts_in_e3/cmds
-[iocuser@host:cmds]$ iocsh.bash 1.cmd
+[iocuser@host:cmds]$ iocsh 1.cmd
 ```
 
 * Can you see where `E3_IOCSH_TOP` and `E3_CMD_TOP` are defined?
-* How are these two variables changed if you instead execute `iocsh.bash` from
+* How are these two variables changed if you instead execute `iocsh` from
   the parent directory `4_startup_scripts_in_e3/`?
 * How many dependent modules of stream are loaded?
 * Were there any warning messages? What do you think they mean?
@@ -99,7 +99,7 @@ this script first and then start it with
 Start the second IOC with the startup script `2.cmd`.
 
 ```console
-[iocuser@host:cmds]$ iocsh.bash 2.cmd
+[iocuser@host:cmds]$ iocsh 2.cmd
 ```
 
 * What is the purpose of `iocInit()`?
@@ -120,7 +120,7 @@ Start the second IOC with the startup script `2.cmd`.
 Start the third IOC with the startup script `3.cmd`.
 
 ```console
-[iocuser@host:cmds]$ iocsh.bash 3.cmd
+[iocuser@host:cmds]$ iocsh 3.cmd
 ```
 
 This script contains a fully working IOC, and so you should read through the
@@ -153,7 +153,7 @@ others.
 Execute the next script:
 
 ```console
-[iocuser@host:cmds]$ iocsh.bash 4.cmd
+[iocuser@host:cmds]$ iocsh 4.cmd
 ```
 
 Start with typing `dbl` at the IOC prompt in order to see a full list of the
@@ -173,7 +173,7 @@ For this last IOC, we add in the other modules mentioned above, and modify how
 we load the database file from `iocStats`.
 
 ```console
-[iocuser@host:cmds]$ iocsh.bash 5.cmd
+[iocuser@host:cmds]$ iocsh 5.cmd
 ```
 
 * Can you see the how database file for `iocStats` is loaded? Is it the same
