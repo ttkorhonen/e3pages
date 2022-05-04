@@ -22,7 +22,7 @@ specify the dependencies in `configure/CONFIG_MODULE`. This is done like so:
 
 ```makefile
 # DEPENDENT MODULE VERSION
-ASYN_DEP_VERSION:=4.41.0
+ASYN_DEP_VERSION:=4.42.0
 STREAM_DEP_VERSION:=2.8.18
 ADCORE_DEP_VERSION:=3.10.0
 ```
@@ -36,7 +36,7 @@ ADCORE_DEP_VERSION:=3.10.0
 The module makefile (`${MODULE}.Makefile` in the wrapper root directory) is
 where we configure what gets built and how it gets built. For concreteness'
 sake, let us focus on a specific module: *iocStats*. To be explicit, we are
-currently looking at the makefile for version 3.1.16, built for *require* 3.4.1.
+currently looking at the makefile for version 3.1.16, built for *require* 4.0.0.
 
 At the top of the makefile there is some boilerplate code which sets the build
 stage correctly:
@@ -52,11 +52,11 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 Before we move on, we should take a brief detour to look at the output of this
 process (this will be covered more in-depth in {ref}`build_process`), i.e. a
 compiled and installed module. For *iocStats* 3.1.16 built under *require*
-3.4.1, we find the following:
+4.0.0, we find the following:
 
 ```console
-[iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
-/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/
+[iocuser@host:~]$ tree /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/
+/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/
 ├── db
 |   ├── access.db
 |   ├── ...
@@ -143,8 +143,8 @@ By default, the headers are all flatly installed into the `include/` directory;
 that is, the two files listed are both installed directly as follows:
 
 ```console
-[iocuser@host:~]$ tree /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/include/
-/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16/include/
+[iocuser@host:~]$ tree /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/include/
+/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/include/
 ├── devIocStats.h
 └── devIocStatsOSD.h
 ```
