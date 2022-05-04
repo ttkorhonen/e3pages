@@ -4,12 +4,13 @@
 
 ### Problem
 
-Segmentation fault when iocsh.bash starts:
+Segmentation fault when `iocsh` starts:
 
 ```console
-[iocuser@host:~]$ iocsh.bash st.cmd
+[iocuser@host:~]$ iocsh st.cmd
 ...
-/epics/base-7.0.6.1/require/4.0.0/bin/iocsh.bash: line 131: 18208 Segmentation fault      (core dumped) softIoc${_PVA_} -D ${EPICS_BASE}/dbd/softIoc${_PVA_}.dbd "${IOC_STARTUP}" 2>&1
+/epics/base-7.0.6.1/require/4.0.0/bin/iocsh: line 164: 10243 Segmentation fault      (core dumped) ${__LOADER__}${EPICS_BASE}/bin/${EPICS_HOST_ARCH}/softIoc${__PVA__} -D ${EPICS_BASE}/dbd/softIoc${__PVA__}.dbd "${IOC_STARTUP}" 2>&1
+
 ```
 
 ### Solution
@@ -24,7 +25,7 @@ Execute the following commands.
 ```console
 [iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
 [iocuser@host:~]$ export EPICS_HOST_ARCH=linux-x86_64-debug
-[iocuser@host:~]$ iocsh.bash -dg st.cmd
+[iocuser@host:~]$ iocsh -dg st.cmd
 ```
 
 The IOC will still segmentation fault, and will return you to the `(gdb)`
