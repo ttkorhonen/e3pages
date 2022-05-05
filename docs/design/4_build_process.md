@@ -108,9 +108,9 @@ main targets available by typing `make help`
 
 ```console
 [iocuser@host:e3-iocStats]$ make help
---------------------------------------- 
+---------------------------------------
 Available targets
---------------------------------------- 
+---------------------------------------
 install         Install module to $(E3_MODULES_INSTALL_LOCATION)
 uninstall       Uninstall the current module
 build           Build current module

@@ -51,8 +51,8 @@ One can also clone and install the specification handler directly:
 
 The specifications are stored in the repository [specifications](https://gitlab.esss.lu.se/e3/specifications).
 The latest environment built at ESS is [2022q1-full](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-full.yml),
-while a smaller environment which is more likely suitable for a local installation is found
-at [2022q1-core](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-core.yml).
+while a smaller environment which is more likely suitable for a local installation
+is found at [2022q1-core](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1-core.yml).
 
 These files will look something like the following.
 
@@ -76,10 +76,12 @@ They contain information including which version of EPICS base to install (7.0.6
 which version of require to install (4.0.0), as well as a list of modules to install
 into that environment.
 
-These can be built (assuming you have installed the specification handler as above) via
+These can be built (assuming you have installed the specification handler as above)
+
 ```console
 [iocuser@host:specifications]$ e3-build -t /opt/epics specifications/2022q1-core.yml
 ```
+
 assuming that you would like to build your local environment at `/opt/epics`. Note
 that you will need to have permission to write to this location, which may necessitate
 the use of `sudo`.
