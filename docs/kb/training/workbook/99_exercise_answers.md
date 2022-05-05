@@ -30,7 +30,7 @@ None
    ```console
    [test-vm-wl02] 19:03 $ ls -1 /epics
    base-7.0.3.1
-   base-7.0.5
+   base-7.0.6.1
    ```
 
 3. Clone the [e3 repository](https://gitlab.esss.lu.se/e3/e3.git).
@@ -81,7 +81,7 @@ None
      to calling `iocInit`.
      [iocInit](https://docs.epics-controls.org/en/latest/specs/IOCInit.html)
 
-     `iocInit` must be executed to start the IOC. `iocsh.bash` adds `iocInit` to
+     `iocInit` must be executed to start the IOC. `iocsh` adds `iocInit` to
      the generated startup script if it is not present in the user-provided
      startup script.
    * `>` is the output redirect command. It will send any `stdout` output to the
@@ -129,7 +129,7 @@ None
 
    ```console
     [iocuser@host:e3-stream]$ make existent LEVEL=4
-    /epics/base-7.0.5/require/3.4.1/siteMods/stream
+    /epics/base-7.0.6.1/require/4.0.0/siteMods/stream
     └── 2.8.18+0
         ├── dbd
         │   └── stream.dbd
@@ -207,7 +207,7 @@ None
    version name explicitly when starting the IOC:
 
    ```console
-   [iocuser@host:e3-stream]$ iocsh.bash -r stream,e3training
+   [iocuser@host:e3-stream]$ iocsh -r stream,e3training
    ```
 
 ## 4. Startup scripts in e3
@@ -217,22 +217,22 @@ None
 #### First IOC
 
 * You should see lines like the following in the output of your IOC that show
-  the variables being defined. These are created by `iocsh.bash`, not by the
+  the variables being defined. These are created by `iocsh`, not by the
   startup script.
 
   ```console
-  [iocuser@host:cmds]$ iocsh.bash 1.cmd
+  [iocuser@host:cmds]$ iocsh 1.cmd
   <snip>
-  # Set E3_IOCSH_TOP for the absolute path where iocsh.bash is executed.
-  epicsEnvSet E3_IOCSH_TOP "/home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/cmds"
+  # Set E3_IOCSH_TOP for the absolute path where iocsh is executed.
+  epicsEnvSet E3_IOCSH_TOP "/home/iocuser/git/e3-training-material/4_startup_scripts_in_e3/cmds"
   <snip>
   # Set E3_CMD_TOP for the absolute path where 1.cmd exists
-  epicsEnvSet E3_CMD_TOP "/home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/cmds"
+  epicsEnvSet E3_CMD_TOP "/home/iocuser/git/e3-training-material/4_startup_scripts_in_e3/cmds"
   <snip>
   ```
 
 * The definition of `E3_IOCSH_TOP` will change to the directory from which you
-  call `iocsh.bash`.
+  call `iocsh`.
 
   The definition of `E3_CMD_TOP` will not change, as it is the path to the
   startup script file.
@@ -252,10 +252,12 @@ None
 
 (warnings)=
 
+<!-- TODO: Rework this exercise given the changes to require. -->
+
 * You may see a warning like
 
   ```console
-  Warning: environment file /home/waynelewis/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
+  Warning: environment file /home/iocuser/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
   ```
 
   `iocsh.bash` is looking for an `env.sh` file to define a custom environment
@@ -285,7 +287,7 @@ None
 * The official description of the IOC initialisation process is
   [here](https://docs.epics-controls.org/en/latest/specs/IOCInit.html).
 
-* If you delete the `iocInit()` line from the startup script, `iocsh.bash` will
+* If you delete the `iocInit()` line from the startup script, `iocsh` will
   add it in to the generated startup script used to start the IOC.
 
   If you comment out the `iocInit()` line:
@@ -294,7 +296,7 @@ None
   #iocInit()
   ```
 
-  then `iocsh.bash` will not add the iocInit command, and the IOC will be only
+  then `iocsh` will not add the iocInit command, and the IOC will be only
   partially started, as `iocInit()` will not be executed. You can run
   `iocInit()` yourself from the IOC shell prompt to complete the IOC startup.
 
@@ -346,8 +348,8 @@ None
   your e3 environment. On the shared file system, the location is:
 
   ```console
-  [iocuser@host:~]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
-  /epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
+  [iocuser@host:~]$ ls /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
+  /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db/iocAdminSoft.db
   ```
 
   *require* generates a database search path variable, `EPICS_DB_INCLUDE_PATH`,
@@ -356,7 +358,7 @@ None
 
   ```console
   localhost-1593 > epicsEnvShow("EPICS_DB_INCLUDE_PATH")
-  EPICS_DB_INCLUDE_PATH=.:/epics/base-7.0.5/require/3.4.1/siteMods/iocstats/3.1.16+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/db:/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/db
+  EPICS_DB_INCLUDE_PATH=.:/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db:/epics/base-7.0.6.1/require/4.0.0/siteMods/calc/3.7.4+1/db:/epics/base-7.0.6.1/require/4.0.0/siteMods/sscan/2.11.4+0/db:/epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/db
   localhost-1593 >
   ```
 
@@ -421,8 +423,8 @@ None
 
 1. e3 make targets are defined a number of locations, including:
 
-   * `/epics/base-7.0.5/require/3.4.1/configure/RULES_*`
-   * `/epics/base-7.0.5/require/3.4.1/tools/driver.makefile`
+   * `/epics/base-7.0.6.1/require/4.0.0/configure/RULES_*`
+   * `/epics/base-7.0.6.1/require/4.0.0/tools/driver.makefile`
 
    Running `make help` gives a list of the commonly used targets.
 
@@ -469,7 +471,7 @@ None
    documentation for the `-p` option.
 
    For details of what happens behind the scenes, see the `RULES_PATCH` and
-   `DEFINES_FT` in `/epics/base-7.0.5/require/3.4.1/configure` for the actual
+   `DEFINES_FT` in `/epics/base-7.0.6.1/require/4.0.0/configure` for the actual
    commands being executed.
 
 ## 6. Variables within e3
@@ -490,12 +492,12 @@ None
   <snip>
   localhost-1593 > epicsEnvShow
   <snip>
-  asyn_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.41.0+0/
-  pcre_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/pcre/8.44.0+0/
-  stream_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
-  sequencer_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/
-  sscan_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/sscan/2.11.4+0/
-  calc_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/
+  asyn_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/
+  pcre_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/pcre/8.44.0+0/
+  stream_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.22+0/
+  sequencer_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/
+  sscan_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/sscan/2.11.4+0/
+  calc_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/calc/3.7.4+1/
   <snip>
   ```
 
@@ -510,7 +512,7 @@ None
 
   ```console
   localhost-1593 > epicsEnvShow("stream_DIR")
-  stream_DIR=/epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
+  stream_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.22+0/
   localhost-1593 >
   ```
 
@@ -553,27 +555,29 @@ None
 
    ```console
    [iocuser@localhost:e3-asyn]$ make --debug vars
-   <snip>
+
+   # --- snip snip ---
+
    Reading makefiles...
    Updating goal targets....
-   File `vars' does not exist.
-   File `header' does not exist.
-   Must remake target `header'.
-   Invoking recipe from /epics/base-7.0.5/require/3.4.1/configure/RULES_VARS:34 to update target `header'.
-   <snip>
+    File `vars' does not exist.
+      File `header' does not exist.
+     Must remake target `header'.
+   Invoking recipe from /epics/base-7.0.6.1/require/4.0.0/configure/RULES_VARS:19 to update target `header'.<snip>
    ```
 
    The `Invoking recipe` line provides a clue to the location of the `vars` make
    rule.
 
-   In the `/epics/base-7.0.5/require/3.4.1/configure/RULES_VARS` file, the
+   In the `/epics/base-7.0.6.1/require/4.0.0/configure/RULES_VARS` file, the
    `vars` rule is as follows:
 
    ```make
    ## Print relevant environment variables
    .PHONY: vars
    vars: header
-        $(foreach v, $(E3_MODULES_VARIABLES), $(info $(v) = $($(v)))) @#noop
+      $(foreach v, $(filter-out %_DEP_VERSION,$(E3_MODULES_VARIABLES)), $(info $(v) = $($(v)))) @#noop
+      $(foreach v, $(filter %_DEP_VERSION,$(E3_MODULES_VARIABLES)), $(info $(v) = $($(v)))) @#noop
    ```
 
 ## 7. Understanding module dependence
@@ -619,17 +623,20 @@ every module.
 * The expression `require stream` in your startup script will load the *highest
   numerical version* available. So if you have the following versions installed
 
+<!-- TODO: update this exercise. The way everything is phrased it does exactly
+the right thing, which is not what we want! -->
+
   ```console
   [iocuser@host:e3-stream]$ make existent LEVEL=1
-  /epics/base-7.0.5/require/3.4.1/siteMods/stream
-  |-- 2.8.18+0
-  `-- e3training
+  /epics/base-7.0.6.1/require/4.0.0/siteMods/stream
+  |-- 2.8.20+0
+  `-- 2.8.22+0
   ```
 
-  then `require stream` will load `2.8.18+0`.
+  then `require stream` will load `2.8.22+0`.
 
-* In the first and third cases, where you load *stream* `2.8.18`, then the
-  version of *asyn* that is loaded is `4.41.0`. This can be seen in the output
+* In the first and third cases, where you load *stream* `2.8.22`, then the
+  version of *asyn* that is loaded is `4.42.0`. This can be seen in the output
   of the IOC upon startup, or by looking at the following PVs that are generated
   by *require*:
 
@@ -645,25 +652,25 @@ every module.
   REQMOD:localhost-25251:stream_VER
   ```
 
-  In the middle case, it is *asyn* 4.42.0 that is loaded, as specified in
+  In the middle case, it is *asyn* 4.41.0 that is loaded, as specified in
   `CONFIG_MODULE.local` during the build and install of that version.
 
-* If you run `iocsh.bash -r stream -r asyn`, then it should load fine. However,
-  if you run `iocsh.bash -r asyn -r stream` (with the versions installed as in
+* If you run `iocsh -r stream -r asyn`, then it should load fine. However,
+  if you run `iocsh -r asyn -r stream` (with the versions installed as in
   this chapter), then the IOC will fail to start up:
 
   ```console
-  [iocuser@host:~]$ iocsh.bash -r asyn -r stream
+  [iocuser@host:~]$ iocsh -r asyn -r stream
   # --- snip snip ---
   equire asyn
-  Module asyn version 4.42.0+0 found in /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/
-  Loading library /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/lib/linux-x86_64/libasyn.so
+  Module asyn version 4.42.0+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/
+  Loading library /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/lib/linux-x86_64/libasyn.so
   Loaded asyn version 4.42.0+0
-  Loading dbd file /epics/base-7.0.5/require/3.4.1/siteMods/asyn/4.42.0+0/dbd/asyn.dbd
+  Loading dbd file /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/dbd/asyn.dbd
   Calling function asyn_registerRecordDeviceDriver
   Loading module info records for asyn
   require stream
-  Module stream version 2.8.18+0 found in /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/
+  Module stream version 2.8.18+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.18+0/
   Module stream depends on asyn 4.41.0+0
   Conflict between requested asyn version 4.41.0+0 and already loaded version 4.42.0+0.
   Aborting startup script
@@ -681,15 +688,15 @@ every module.
 * The dependency information is stored in the file `$module.dep`:
 
   ```console
-  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/2.8.18+0/lib/linux-x86_64/stream.dep
-  # Generated file. Do not edit.
-  asyn 4.41.0+0
-  calc 3.7.4+0
-  pcre 8.44.0+0
-  [iocuser@host:~]$ cat /epics/base-7.0.5/require/3.4.1/siteMods/stream/e3training/lib/linux-x86_64/stream.dep
+  [iocuser@host:~]$ cat /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.22+0/lib/linux-x86_64/stream.dep
   # Generated file. Do not edit.
   asyn 4.42.0+0
-  calc 3.7.4+0
+  calc 3.7.4+1
+  pcre 8.44.0+0
+  [iocuser@host:~]$ cat /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.20+0/lib/linux-x86_64/stream.dep
+  # Generated file. Do not edit.
+  asyn 4.41.0+0
+  calc 3.7.4+1
   pcre 8.44.0+0
   ```
 
@@ -738,8 +745,8 @@ every module.
    `fug.dep`:
 
    ```console
-   [iocuser@host:e3-fug]$ grep -nr stream fug/O.7.0.5_linux-x86_64/
-   fug/O.7.0.5_linux-x86_64/fug.dep:2:stream 2.8.18+0
+   [iocuser@host:e3-fug]$ grep -nr stream fug/O.7.0.6.1_linux-x86_64/
+   fug/O.7.0.6.1_linux-x86_64/fug.dep:2:stream 2.8.18+0
    ```
 
 3. `e3-fug` knows that stream is a dependency due to the variable `REQUIRED`
@@ -852,11 +859,11 @@ every module.
 
    ```console
    [iocuser@host:e3-ch8]$ make cellinstall
-   [iocuser@host:e3-ch8]$ iocsh.bash -l cellMods st.cmd
+   [iocuser@host:e3-ch8]$ iocsh -l cellMods st.cmd
    # --- snip snip ---
    iocRun: All initialization complete
    seq sncExample "user=test_ioc"
-   sevr=info Sequencer release 2.2.8+0, compiled Fri May  7 14:04:03 2021
+   sevr=info Sequencer release 2.2.9+0, compiled Fri May  7 14:04:03 2021
    sevr=info Spawning sequencer program "sncExample", thread 0x189bc90: "sncExample"
    # Set the IOC Prompt String One
    epicsEnvSet IOCSH_PS1 "localhost-5721 > "
@@ -896,8 +903,8 @@ every module.
    surprising:
 
    ```console
-   make[4]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-myexample/myexample/O.7.0.5_linux-x86_64'
-   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c  ../myexampleApp/src/xxxRecord.c
+   make[4]: Entering directory `/home/iocuser/data/git/e3.pages.esss.lu.se/e3-myexample/myexample/O.7.0.6.1_linux-x86_64'
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.6.1_Common/                     -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                                   -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                -I/epics/base-7.0.6.1/include  -I/epics/base-7.0.6.1/include/compiler/gcc -I/epics/base-7.0.6.1/include/os/Linux                           -c  ../myexampleApp/src/xxxRecord.c
    ../myexampleApp/src/xxxRecord.c:21:23: fatal error: xxxRecord.h: No such file or directory
    #include "xxxRecord.h"
                         ^
@@ -912,9 +919,9 @@ every module.
    you can see that the following happens a few lines later:
 
    ```console
-   perl -CSD /epics/base-7.0.5/bin/linux-x86_64/dbdToRecordtypeH.pl  -I ../myexampleApp/src/ -I ./ -I /epics/base-7.0.5/dbd  -I. -I.. -I../O.7.0.5_Common -I/epics/base-7.0.5/require/3.4.1/siteMods/myexample/master/dbd -o xxxRecord.h ../myexampleApp/src/xxxRecord.dbd
-   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/devXxxSoft.c
-   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.5_Common/                     -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                                   -I/epics/base-7.0.5/require/3.4.1/siteMods/sequencer/2.2.8+0/include                -I/epics/base-7.0.5/include  -I/epics/base-7.0.5/include/compiler/gcc -I/epics/base-7.0.5/include/os/Linux                           -c ../myexampleApp/src/xxxRecord.c
+   perl -CSD /epics/base-7.0.6.1/bin/linux-x86_64/dbdToRecordtypeH.pl  -I ../myexampleApp/src/ -I ./ -I /epics/base-7.0.6.1/dbd  -I. -I.. -I../O.7.0.6.1_Common -I/epics/base-7.0.6.1/require/4.0.0/siteMods/myexample/master/dbd -o xxxRecord.h ../myexampleApp/src/xxxRecord.dbd
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.6.1_Common/                     -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                                   -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                -I/epics/base-7.0.6.1/include  -I/epics/base-7.0.6.1/include/compiler/gcc -I/epics/base-7.0.6.1/include/os/Linux                           -c ../myexampleApp/src/devXxxSoft.c
+   /usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE         -DUSE_TYPED_RSET            -D_X86_64_  -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration               -mtune=generic      -m64 -fPIC           -I. -I../myexampleApp/src/ -I../O.7.0.6.1_Common/                     -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                                   -I/epics/base-7.0.6.1/require/4.0.0/siteMods/sequencer/2.2.9+0/include                -I/epics/base-7.0.6.1/include  -I/epics/base-7.0.6.1/include/compiler/gcc -I/epics/base-7.0.6.1/include/os/Linux                           -c ../myexampleApp/src/xxxRecord.c
    ```
 
    So the module builds correctly after all.
@@ -951,19 +958,19 @@ every module.
    the following.
 
    ```console
-   dbLoadRecords("/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db")
+   dbLoadRecords("/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.6.1/require-4.0.0/mypid/master/db/pid.db")
    Record "mypid:PID1_limits" is of unknown type "transform"
-   Error at or before ")" in file "/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db" line 22
+   Error at or before ")" in file "/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.6.1/require-4.0.0/mypid/master/db/pid.db" line 22
    Error: syntax error
-   dbLoadRecords: failed to load '/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.5/require-3.4.1/mypid/master/db/pid.db'
+   dbLoadRecords: failed to load '/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/cellMods/base-7.0.6.1/require-4.0.0/mypid/master/db/pid.db'
    ```
 
    The database file uses the `transform` record type, which is not a part of
    EPICS base. How can we determine which module contains this? Consider
 
    ```console
-   [iocuser@host:e3-mypid]$ grep -nr "\btransform\b" /epics/base-7.0.5/require/3.4.1/siteMods/ --include=*.dbd
-   /epics/base-7.0.5/require/3.4.1/siteMods/calc/3.7.4+0/dbd/calc.dbd:15:recordtype(transform) {
+   [iocuser@host:e3-mypid]$ grep -nr "\btransform\b" /epics/base-7.0.6.1/require/4.0.0/siteMods/ --include=*.dbd
+   /epics/base-7.0.6.1/require/4.0.0/siteMods/calc/3.7.4+1/dbd/calc.dbd:15:recordtype(transform) {
    ```
 
    Note that this pinpoints that the record type `transform` is defined in
@@ -1035,7 +1042,7 @@ every module.
    of running
 
    ```console
-   [iocuser@host:~]$ iocsh.bash -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
+   [iocuser@host:~]$ iocsh -l <path/to/cellMods_1> -l <path/to/cellMods_2> st.cmd
    ```
 
    Note that the module search will prioritise the last specified path.
@@ -1069,7 +1076,7 @@ every module.
 
   In this case, `[options]` is `-n iocsh`, which is the child process' name.
   `<endpoint>` is 2000, which is the port to connect to, and the output of
-  `which iocsh.bash` (i.e. the absolute path of `iocsh.bash`) is the command to
+  `which iocsh` (i.e. the absolute path of `iocsh`) is the command to
   run in the child container.
 
 ### Assignments
@@ -1089,7 +1096,7 @@ every module.
                      --logoutcmd=^Q \
                      --chdir=/var/run/procServ/%i \
                      --port=2000 \
-                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash \
+                     /epics/base-7.0.6.1/require/4.0.0/bin/iocsh \
                      /opt/iocs/e3-ioc-%i/st.cmd
    ```
 
@@ -1125,7 +1132,7 @@ every module.
    For example, your IOC could also come with an `env.sh` file that looks like
 
    ```sh
-   EPICS_BASE=/epics/base-7.0.5 E3_REQUIRE_VERSION=3.4.1
+   EPICS_BASE=/epics/base-7.0.6.1 E3_REQUIRE_VERSION=4.0.0
    PROCSERV_PORT=2000
    ```
 
@@ -1151,6 +1158,6 @@ every module.
                         --logoutcmd=^Q \
                         --chdir=/var/run/procServ/%i \
                         --port=${PROCSERV_PORT} \
-                        ${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/bin/iocsh.bash \
+                        ${EPICS_BASE}/require/${E3_REQUIRE_VERSION}/bin/iocsh \
                         /opt/iocs/e3-ioc-%i/st.cmd
    ```

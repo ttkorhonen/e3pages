@@ -224,6 +224,8 @@ running any of the following:
 * Which version does the last one load, and why?
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
+<!-- TODO: update this exercise. The way everything is phrased it does exactly
+the right thing, which is not what we want! -->
 
   ```console
   [iocuser@host:~]$ iocsh -r stream -r asyn

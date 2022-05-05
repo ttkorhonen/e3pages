@@ -78,17 +78,17 @@ dbLoadRecords("$(linconv_DB)/linconv.db")
 Let us try run this and see what happens.
 
 ```console
-[iocuser@host:e3-linconv]$ iocsh.bash st.cmd
+[iocuser@host:e3-linconv]$ iocsh -l cellMods st.cmd
 # --- snip snip ---
 require linconv
-Module linconv version master found in cellMods//base-7.0.5/require-3.4.1/linconv/master/
+Module linconv version master found in cellMods/base-7.0.6.1/require-4.0.0/linconv/master/
 Module linconv has no library
 Loading module info records for linconv
-dbLoadRecords(/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db)
+dbLoadRecords(/home/iocuser/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.6.1/require-4.0.0/linconv/master/db/linconv.db)
 Record "LINCONV_create" is of unknown type "acalcout"
-Error at or before ")" in file "/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db" line 13
+Error at or before ")" in file "/home/iocuser/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.6.1/require-4.0.0/linconv/master/db/linconv.db" line 13
 Error: syntax error
-dbLoadRecords: failed to load '/home/simonrose/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.5/require-3.4.1/linconv/master/db/linconv.db'
+dbLoadRecords: failed to load '/home/iocuser/data/git/e3.pages.esss.lu.se/e3-linconv/cellMods/base-7.0.6.1/require-4.0.0/linconv/master/db/linconv.db'
 # --- snip snip ---
 ```
 
@@ -98,7 +98,7 @@ So what happened here? The issue is that we need to also load the *calc* module
 at the same time in order for the *acalcout* record to be made available. We can
 do this in one of several different ways:
 
-* Run `iocsh.bash -r calc st.cmd` instead, to force it to load *calc* on
+* Run `iocsh -r calc st.cmd` instead, to force it to load *calc* on
   startup. This is the worst of the ways since we have to modify the command we
   use to start the IOC, but it can be useful for quick and dirty testing.
 * Modify your `st.cmd` to load *calc*:
@@ -131,7 +131,7 @@ If we now re-install the module and re-start it
 ```console
 [iocuser@host:e3-linconv]$ make uninstall  # A good idea in general
 [iocuser@host:e3-linconv]$ make clean build install
-[iocuser@host:e3-linconv]$ iocsh.bash st.cmd
+[iocuser@host:e3-linconv]$ iocsh st.cmd
 ```
 
 then we should see that the records load as expected. Moreover, you should be
@@ -178,12 +178,12 @@ Try to build and install the module, you should see the following.
 ```console
 [iocuser@host:e3-mypid]$ make build install
 # --- snip snip ---
-make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+make[1]: Entering directory `/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db
 msi: Can't open file 'pid_control.db'
 input: '' at
 make[1]: *** [mypidApp/Db/pid.substitutions] Error 1
-make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+make[1]: Leaving directory `/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 make: *** [db] Error 2
 ```
 
@@ -208,7 +208,7 @@ Unfortunately, this does not work. If you look at the installed versions of
 *std*, you will see the following:
 
 ```console
-[iocuser@host:e3-mypid]$ ls /epics/base-7.0.5/require/3.4.1/siteMods/std
+[iocuser@host:e3-mypid]$ ls /epics/base-7.0.6.1/require/4.0.0/siteMods/std
 3.6.2+0
 ```
 
@@ -254,9 +254,9 @@ is, you should see the following
 ```console
 [iocuser@host:e3-pid]$ make install
 # --- snip snip ---
-make[1]: Entering directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+make[1]: Entering directory `/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 Inflating database ...                mypidApp/Db/pid.substitutions >>>                       mypidApp/Db/pid.db
-make[1]: Leaving directory `/home/simonrose/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
+make[1]: Leaving directory `/home/iocuser/data/git/e3.pages.esss.lu.se/e3-mypid/mypid'
 # --- snip snip ---
 ```
 

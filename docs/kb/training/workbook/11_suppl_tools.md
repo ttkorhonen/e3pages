@@ -44,12 +44,12 @@ background while opening up either a`telnet` connection at a specified port or a
 Unix Domain Socket in order to allow users to communicate with the process. For
 more information, see its [documentation](https://linux.die.net/man/1/procserv).
 
-Let us create a `procServ` container for a blank IOC using `iocsh.bash` and
+Let us create a `procServ` container for a blank IOC using `iocsh` and
 listening on port 2000, which we will then connect to via `telnet`. First, start
 the `procServ` container:
 
 ```console
-[iocuser@host:~]$ procServ -n iocsh 2000 $(which iocsh.bash)
+[iocuser@host:~]$ procServ -n iocsh 2000 $(which iocsh)
 ```
 
 :::{admonition} Exercise
@@ -70,7 +70,7 @@ Escape character is '^]'.
 @@@ procServ server PID: 15539
 @@@ Server startup directory: /home/iocuser/data/git
 @@@ Child startup directory: /home/iocuser/data/git
-@@@ Child "iocsh" started as: /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash
+@@@ Child "iocsh" started as: /epics/base-7.0.6.1/require/4.0.0/bin/iocsh
 @@@ Child "iocsh" PID: 15549
 @@@ procServ server started at: Wed Aug 11 13:38:00 2021
 @@@ Child "iocsh" started at: Wed Aug 11 13:38:01 2021
@@ -103,7 +103,7 @@ This can be achieved with
 
 ```console
 [iocuser@host:~]$ procServ -n "Test IOC" -i ^D^C -L procServ.log \
-                  unix:/var/run/procServ/my-ioc $(which iocsh.bash) /path/to/st.cmd
+                  unix:/var/run/procServ/my-ioc $(which iocsh) /path/to/st.cmd
 ```
 
 :::{note}
@@ -143,14 +143,14 @@ ExecStart=/usr/bin/procServ \
                      --logfile=/home/iocuser/test-ioc.log \
                      --ignore=^C^D \
                      --port=2000 \
-                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash
+                     /epics/base-7.0.6.1/require/4.0.0/bin/iocsh
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 :::{note}
-Note that you need to provide the full path to `iocsh.bash` as command
+Note that you need to provide the full path to `iocsh` as command
 substitution does not work in unit files. Instead, systemd offers its own
 minimalistic shell-style command line parsing - if interested, see more
 [here](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Command%20lines).
@@ -210,7 +210,7 @@ ExecStart=/usr/bin/procServ \
                      --logoutcmd=^Q \
                      --chdir=/var/run/procServ/%i \
                      --port=unix:/var/run/procServ/%i/control \
-                     /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash \
+                     /epics/base-7.0.6.1/require/4.0.0/bin/iocsh \
                      /opt/iocs/e3-ioc-%i/st.cmd
 
 [Install]
@@ -261,8 +261,8 @@ Finally, check the status of the process.
  Main PID: 20435 (procServ)
    CGroup: /system.slice/system-ioc.slice/ioc@test-ioc.service
            ├─20435 /usr/bin/procServ --foreground --name=test-ioc --logfile=/var/log/procServ/test-ioc/out.log --info-file=/var/run/procServ/test-ioc/inf...
-           ├─20447 /bin/bash /epics/base-7.0.5/require/3.4.1/bin/iocsh.bash /opt/iocs/e3-ioc-test-ioc/st.cmd
-           └─20482 /epics/base-7.0.5/bin/linux-x86_64/softIocPVA -D /epics/base-7.0.5/dbd/softIocPVA.dbd /tmp/systemd-private-e3-iocsh-iocuser/tm...
+           ├─20447 /bin/bash /epics/base-7.0.6.1/require/4.0.0/bin/iocsh /opt/iocs/e3-ioc-test-ioc/st.cmd
+           └─20482 /epics/base-7.0.6.1/bin/linux-x86_64/softIocPVA -D /epics/base-7.0.6.1/dbd/softIocPVA.dbd /tmp/systemd-private-e3-iocsh-iocuser/tm...
 
 Aug 11 15:42:46 localhost.localdomain systemd[1]: Starting procServ container for IOC test-ioc...
 Aug 11 15:42:46 localhost.localdomain systemd[1]: Started procServ container for IOC test-ioc.
