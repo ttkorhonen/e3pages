@@ -48,11 +48,6 @@ be
 * `mrfioc2_DB` - The absolute path where the database, template, protocol, and
   substitutions files for `mrfioc2` have been installed.
 
-:::{note}
-One should pay attention to these strings somewhat: `mrfioc2_DIR` ends with a
-`/`, but `mrfioc2_DB` does not.
-:::
-
 Let us see these in action. Copy the following into a new `ch6.cmd` file.
 
 ```bash
@@ -79,15 +74,15 @@ Starting iocInit
 ############################################################################
 iocRun: All initialization complete
 epicsEnvShow E3_IOCSH_TOP
-E3_IOCSH_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
+E3_IOCSH_TOP=/home/iocuser/data/git/e3.pages.esss.lu.se
 epicsEnvShow E3_CMD_TOP
-E3_CMD_TOP=/home/simonrose/data/git/e3.pages.esss.lu.se
+E3_CMD_TOP=/home/iocuser/data/git/e3.pages.esss.lu.se
 epicsEnvShow iocstats_DIR
 iocstats_DIR=/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/
 epicsEnvShow iocstats_VERSION
 iocstats_VERSION=3.1.16+0
 epicsEnvShow iocstats_DB
-iocstats_DB=/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db
+iocstats_DB=/epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+0/db/
 # --- snip snip ---
 ```
 
@@ -178,13 +173,13 @@ First, let us start up an IOC that has *iocstats* loaded in it as before. You
 can do this in one of two ways:
 
 ```console
-[iocuser@host:e3]$ iocsh ch6.cmd
+[iocuser@host:~]$ iocsh ch6.cmd
 ```
 
 or
 
 ```console
-[iocuser@host:e3]$ iocsh -r iocstats
+[iocuser@host:~]$ iocsh -r iocstats
 ```
 
 Exercise:
@@ -195,12 +190,12 @@ Exercise:
 As a second experiment, try to load *iostats* a second time as follows.
 
 ```console
-[iocuser@host:e3]$ iocsh -r iocstats -r iocstats
+[iocuser@host:~]$ iocsh -r iocstats -r iocstats
 
 # --- snip snip ---
 
 require iocstats
-Module iocstats version 3.1.16+2 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+2/
+Module iocstats version 3.1.16+4 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/iocstats/3.1.16+4/
 Module iocstats depends on calc 3.7.4+1
 
 # --- snip snip ---
@@ -208,7 +203,7 @@ Module iocstats depends on calc 3.7.4+1
 Calling function iocstats_registerRecordDeviceDriver
 Loading module info records for iocstats
 require iocstats
-Module iocstats version 3.1.16+2 already loaded
+Module iocstats version 3.1.16+4 already loaded
 
 # --- snip snip ---
 
@@ -244,7 +239,7 @@ require recsync
 and then load it with `iocsh`:
 
 ```console
-[iocuser@host:e3]$ iocsh ch6-2.cmd
+[iocuser@host:~]$ iocsh ch6-2.cmd
 
 # --- snip snip ---
 
@@ -300,7 +295,8 @@ defined within the require module. Other modules have similar functionality.
 
 Exercise:
 
-* Find at least one other **core** module that has a debug variable.
+* Find at least one other modules installed in the core specification that has a
+  debug variable.
 
 :::{note}
 Like any well-behaved shell, you should be able to use the up/down arrows to

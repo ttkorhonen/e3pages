@@ -188,9 +188,9 @@ make: *** [db] Error 2
 ```
 
 :::{note}
-The database inflation is performed by `make db`, which is a dependency of the
+The database inflation is performed by `make db_internal`, which is a dependency of the
 `install` target. So to inflate the `.substitutions` file you can simply run
-`make db`.
+`make db_internal`.
 :::
 
 As in other situations, we need to tell the build system where to look for
@@ -201,8 +201,9 @@ module. That is,
 * Define `STD_DEP_VERSION` in `configure/CONFIG_MODULE`
 * Add a `REQUIRED += std` and other associated lines in `mypid.Makefile`
 * We also need to update `USR_DBFLAGS` so that `msi` can find any necessary
-  `.db` or `.template` files. So add the line ```make USR_DBFLAGS += -I
-  $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db ``` and then run `make db` again
+  `.db` or `.template` files. So add the line
+  `make USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db ` and then
+  run `make db_internal` again
 
 Unfortunately, this does not work. If you look at the installed versions of
 *std*, you will see the following:
@@ -216,8 +217,8 @@ What is that `+0` doing there?
 
 ### A digression about build numbers
 
-You should have noticed by now that when you install a module (e.g. *asyn*
-version `4.41.0`) it is actually installed as `4.41.0+0`. What is this `+0`?
+You should have noticed by now that when you load a module (e.g. *asyn*
+version `4.42.0`) it is actually loaded as `4.42.0+0`. What is this `+0`?
 This is the *build number*. These are used in a number of different deployment
 systems to distinguish between builds where, for example, the source code may
 not have changed but some of the metadata or dependencies have. This allows us
@@ -230,8 +231,12 @@ The default behaviour in e3 is the following.
   will be loaded or built against.
 * If you do not request a build number, then the highest matching build number
   will be used.
-* If you try to build a module but did not include a build number, then the
-  build number 0 will be added.
+
+:::{warning}
+Even though you do not have to specify build numbers when loading a module, you
+_must_ specify a build number for `E3_MODULE_VERSION` in `CONFIG_MODULE` when
+building a module.
+:::
 
 Most of this all happens under the hood. One main exception is any references to
 other modules within, for example, `mypid.Makefile`. To deal with that case,

@@ -32,8 +32,8 @@ is known as *local mode*, and will be discussed more in-depth later.
 
 As described in [Chapter 3](3_module_versions.md), an e3 module wrapper links to
 a specific commit in a source repository. This allows us to build, for example,
-*StreamDevice* 2.8.18 at one point, and to later build 2.8.20 by simply changing
-a few lines in the configuration files.
+*StreamDevice* 2.8.22 at one point, and to later build a newer version by simply
+changing a few lines in the configuration files.
 
 ## Directory anatomy
 
@@ -182,8 +182,13 @@ Let us look at a few patch files and see how to work with them.
 
 ### Patch files in EPICS (e3) base
 
+First, make sure you have a copy of *e3-base* cloned. If you followed the steps
+from [Chapter 1](1_installing_e3.md), then this should be in the default `build`
+directory. If not, you should clone it from
+[e3/e3-base](https://gitlab.esss.lu.se/e3/e3-base.git).
+
 ```console
-[iocuser@host:e3]$ find e3-base/ -name *.patch | grep "7\.0\.6\.1"
+[iocuser@host:build]$ find e3-base/ -name *.patch | grep "7\.0\.6\.1"
 e3-base/patch/Site/R7.0.6.1/softIocPVA.p0.patch
 e3-base/patch/Site/R7.0.6.1/ess_epics_host_arch.p0.patch
 e3-base/patch/Site/R7.0.6.1/config_site-x86_84_c++11.p0.patch
@@ -224,8 +229,8 @@ which modifies the default EPICS build rules in order for e3 to build properly.
 
 :::{note}
 While the EPICS community use `p0` files for base 3.15.5, and `p1` files for
-base 3.16.x, e3 only supports use of `p0` files for compatibility reasons. <!--
-TODO: Figure out what the story behind this is. -->
+base 3.16.x, e3 only supports use of `p0` files for compatibility reasons.
+<!-- TODO: Figure out what the story behind this is. -->
 :::
 
 In order to apply patches to EPICS base (which one should always do before
@@ -240,11 +245,7 @@ proper commands to build and install EPICS base with e3 is
 [iocuser@host:e3-base]$ make install
 ```
 
-These steps are all performed when you run
-
-```console
-[iocuser@host:e3]$ ./e3.bash base
-```
+These steps are all performed when you build EPICS base using `e3-build`.
 
 ### Patch files for e3 modules
 
@@ -255,7 +256,7 @@ the patch files are expected to be found in the path `patch/Site/` within a
 given wrapper.
 
 ```console
-[iocuser@host:e3]$ find . -name *.p0.patch | grep -v e3-base | sort -n
+[iocuser@host:build]$ find . -name *.p0.patch | grep -v e3-base | sort -n
 ./e3-adandor3/patch/Site/2.2.0+0/include-stdlin.h.p0.patch
 ./e3-adsis8300/patch/Site/devel-initialvalues.p0.patch
 ./e3-adsupport/patch/Site/1.10.0+0/netcdf-config-header-rename.p0.patch
