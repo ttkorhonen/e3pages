@@ -420,18 +420,18 @@ None
    is OK.
 
    ```console
-   [iocuser@localhost:e3-iocStats]$ git st
-   # HEAD detached at 7.0.5-3.4.1/3.1.16-2fd5f31-20210426T180403
-   # Changes not staged for commit:
-   #   (use "git add <file>..." to update what will be committed)
-   #   (use "git checkout -- <file>..." to discard changes in working directory)
-   #
-   #    modified:   iocStats (new commits)
-   #
-   # Untracked files:
-   #   (use "git add <file>..." to include in what will be committed)
-   #
-   #    configure/CONFIG_MODULE.local
+   [iocuser@localhost:e3-iocStats]$ git status
+   HEAD detached at 7.0.6.1-4.0.0/3.1.16+4-70c2311-20220316T161418
+   Changes not staged for commit:
+     (use "git add <file>..." to update what will be committed)
+     (use "git checkout -- <file>..." to discard changes in working directory)
+   
+      modified:   iocStats (new commits)
+   
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+   
+      configure/CONFIG_MODULE.local
    no changes added to commit (use "git add" and/or "git commit -a")
    [iocuser@localhost:e3-iocStats]$ cat configure/CONFIG_MODULE.local
    EPICS_MODULE_TAG:=tags/3.1.15
