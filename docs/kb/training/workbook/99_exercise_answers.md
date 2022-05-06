@@ -29,29 +29,9 @@ None
 
    ```console
    [test-vm-wl02] 19:03 $ ls -1 /epics
-   base-7.0.3.1
+   base-7.0.5
    base-7.0.6.1
    ```
-
-3. Clone the [e3 repository](https://gitlab.esss.lu.se/e3/e3.git).
-
-   The groups and the contents of each group are defined in the
-   `tools/e3-inventory.yaml` file.
-
-   References to the group names defined in `tools/e3-inventory.yaml` exist in
-   the following files:
-
-   * `e3.bash`
-   * `tools/e3_modules_list.sh`
-
-   Adding a module to a group is done by editing the `tools/e3-inventory.yaml`
-   file.
-
-   Adding a new group involves editing all three files:
-
-   * `e3.bash`
-   * `tools/e3_modules_list.sh`
-   * `tools/e3-inventory.yaml`
 
 ## 2. An e3 IOC
 
