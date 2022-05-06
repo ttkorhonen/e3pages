@@ -2,14 +2,6 @@
 
 # Training
 
-:::{warning}
-The following user guides are correct as of EPICS base 7.0.5, *require* 3.4.1, and
-have not yet been updated for the latest e3 release of *require* 4.0.0
-
-Note in particular that we have deprecated the use of e3.bash. This training will
-be updated shortly.
-:::
-
 :::{admonition} Feedback request
 We welcome suggestions for corrections and improvements to this training. Please
 create either a merge request or an issue
