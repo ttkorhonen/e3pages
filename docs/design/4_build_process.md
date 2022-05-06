@@ -228,7 +228,7 @@ create these local builds.
 
 * `make cellinstall`: Installs the module in the path defined by
   `$(E3_CELL_PATH)`. The default is `$(TOP)/cellMods`. An IOC can be loaded with
-  this module by running `iocsh.bash -l ${E3_CELL_PATH}` to allow *require* to
+  this module by running `iocsh -l ${E3_CELL_PATH}` to allow *require* to
   search in that path.
 * `make cellbuild`: In case you have multiple modules that you are testing
   locally that all depend on each other, `cellbuild` will use `$(E3_CELL_PATH)`
