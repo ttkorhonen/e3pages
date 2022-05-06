@@ -1,10 +1,5 @@
 # User guides
 
-:::{warning}
-The following user guides are correct as of EPICS base 7.0.5, *require* 3.4.1, and
-have not yet been updated for the latest e3 release of *require* 4.0.0
-:::
-
 Here is an inventory of existing user guides. For information on more
 ESS-specific items (such as deployment workflows or tools), please instead
 browse [e3's information space](https://confluence.esss.lu.se/display/E3) on the

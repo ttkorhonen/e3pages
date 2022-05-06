@@ -232,19 +232,27 @@ None
 
 (warnings)=
 
-<!-- TODO: Rework this exercise given the changes to require. -->
-
 * You may see a warning like
 
   ```console
-  Warning: environment file /home/iocuser/git/e3-training-material/4_startup_scripts_in_e3/env.sh does not exist.
+  Warning: environment variable IOCNAME is not set.
   ```
 
-  `iocsh.bash` is looking for an `env.sh` file to define a custom environment
-  for the IOC. This warning can be ignored if you are not needing to define any
-  custom environment variables. Note that this warning only will turn up if you
-  are using a version of *require* <= `3.4.1`; otherwise the corresponding check
-  will be for whether the variable `IOCNAME` has been defined.
+  `IOCNAME` is an important variable that is used to uniquely identify the IOC.
+  In particular, it is used to define a number of status PVs for the IOC that
+  allow you to read what modules are loaded, as well as what versions of those
+  modules are loaded. For example, if you start an IOC in one terminal with
+  
+  ```console
+  [iocuser@host:~]$ IOCNAME=my_ioc iocsh -r stream
+  ```
+
+  and then in a separate terminal run
+
+  ```console
+  [iocuser@host:~]$ pvget my_ioc:MODULES
+  my_ioc:MODULES 2022-05-06 16:21:51.233  [require, asyn, sequencer, sscan, calc, pcre, stream]
+  ```
 
   The second warning is:
 
