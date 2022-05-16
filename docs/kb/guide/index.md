@@ -17,15 +17,16 @@ page's git repository.[^1]
  :caption: Table of Content
  :maxdepth: 1
  :glob:
-articles/1*
-articles/2*
-articles/3*
-articles/4*
-articles/5*
-articles/6*
-articles/7*
-articles/8*
-articles/9*
+articles/1_*
+articles/2_*
+articles/3_*
+articles/4_*
+articles/5_*
+articles/6_*
+articles/7_*
+articles/8_*
+articles/9_*
+articles/10_*
  ```
 
 [^1]: Before doing so, see `CONTRIBUTING.md` at the root level of e3 pages'

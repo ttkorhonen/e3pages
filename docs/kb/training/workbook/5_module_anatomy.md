@@ -155,7 +155,8 @@ working with an e3 module.
 * `make uninstall`: Removes the current module version (as defined in
   `CONFIG_MODULE`) from the e3 environment.
 * `make test`: Attempts to load the current module into an IOC, and runs any
-  module-specific tests that have been defined.
+  module-specific tests that have been defined. See {ref}`module_tests` for more
+  information.
 * `make cellinstall`: Installs the module in a local path (useful if you do not
   have write permissions to your e3 environment location). More on this in
   {ref}`cell_mode`.
