@@ -51,10 +51,11 @@ allow you to install an e3 environment on your local machine.
 
 ## Selecting a specification
 
-An e3 environment is described using a *specification*. This is a file that contains references
-to a version of EPICS base, *require*, and a collection of modules to install. These are intended
-to provide a mechanism to build consistent and reproducible environments that can be shared
-between different users and sites. These files will look something like the following.
+An e3 environment is described using a *specification*. This is a file that contains
+references to a version of EPICS base, *require*, and a collection of modules to
+install. These are intended to provide a mechanism to build consistent and reproducible
+environments that can be shared between different users and sites. These files will
+look something like the following.
 
 ```yaml
 config:
@@ -165,6 +166,7 @@ host-15636 >
 Exit the IOC by typing `exit` at the console.
 
 You can see which modules and versions have been installed by running
+
 ```console
 [iocuser@host:~]$ ls /epics/base-7.0.6.1/require/4.0.0/siteMods/*
 /epics/base-7.0.6.1/require/4.0.0/siteMods/adcore:

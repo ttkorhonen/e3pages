@@ -188,8 +188,8 @@ make: *** [db] Error 2
 ```
 
 :::{note}
-The database inflation is performed by `make db_internal`, which is a dependency of the
-`install` target. So to inflate the `.substitutions` file you can simply run
+The database inflation is performed by `make db_internal`, which is a dependency
+of the `install` target. So to inflate the `.substitutions` file you can simply run
 `make db_internal`.
 :::
 
@@ -202,7 +202,7 @@ module. That is,
 * Add a `REQUIRED += std` and other associated lines in `mypid.Makefile`
 * We also need to update `USR_DBFLAGS` so that `msi` can find any necessary
   `.db` or `.template` files. So add the line
-  `make USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db ` and then
+  `make USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(std_VERSION)/db` and then
   run `make db_internal` again
 
 Unfortunately, this does not work. If you look at the installed versions of

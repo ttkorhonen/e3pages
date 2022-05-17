@@ -209,11 +209,11 @@ Module iocstats version 3.1.16+4 already loaded
 
 ```
 
-Nothing happens due to the fact that *require* will only load a module a single time.
-It is possible to have multiple configured *instances* of a module (for example, an
-IOC can control multiple copies of the same device) by loading the appropriate
-`.iocsh` snippet with different parameters, but that is a topic for another
-time.
+Nothing happens due to the fact that *require* will only load a module a single
+time. It is possible to have multiple configured *instances* of a module (for
+example, an IOC can control multiple copies of the same device) by loading the
+appropriate `.iocsh` snippet with different parameters, but that is a topic for
+another time.
 
 Next, in the running IOC, let us try to load the *recsync* module. Run
 

@@ -132,10 +132,10 @@ new or removed source files.
 :::
 
 If the old version of *StreamDevice* is not compatible with *asyn*, then you
-will need to install a different version of *asyn* in the current e3 environment. The
-procedure for that is also the same as in [Chapter 3](3_module_versions.md). We
-can start by checking the current version and seeing what is installed, and then
-installing the necessary version (4.41.0)
+will need to install a different version of *asyn* in the current e3 environment.
+The procedure for that is also the same as in [Chapter 3](3_module_versions.md).
+We can start by checking the current version and seeing what is installed, and
+then installing the necessary version (4.41.0)
 
 ```console
 [iocuser@host:e3-asyn]$ make vars # Check the current version
@@ -224,6 +224,7 @@ running any of the following:
 * Which version does the last one load, and why?
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
+
 <!-- TODO: update this exercise. The way everything is phrased it does exactly
 the right thing, which is not what we want! -->
 
