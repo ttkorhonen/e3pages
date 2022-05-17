@@ -260,20 +260,24 @@ require: checking version 1.4.0+0 against required (null)
 require: compareVersions(found=1.4.0+0, request=(null))
 require: compareVersions: MATCH empty version requested
 require: recsync 1.4.0+0 may match (null)
-require: directory /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/ exists
+require: directory /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/
+         exists
 require: recsync 1.4.0+0 looks promising
 Module recsync version 1.4.0+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/
 require: looking for dependency file
-require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/recsync.dep exists, size 31 bytes
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/recsync.dep
+         exists, size 31 bytes
 require: parsing dependency file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/recsync.dep
 require: looking for library file
-require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/librecsync.so exists, size 114720 bytes
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/librecsync.so
+         exists, size 114720 bytes
 Loading library /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/lib/linux-x86_64/librecsync.so
 Loaded recsync version 1.4.0+0
 require: compare requested version (null) with loaded version 1.4.0+0
 require: compareVersions(found=1.4.0+0, request=(null))
 require: compareVersions: MATCH empty version requested
-require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/dbd/recsync.dbd exists, size 207 bytes
+require: file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/dbd/recsync.dbd
+         exists, size 207 bytes
 Loading dbd file /epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/dbd/recsync.dbd
 Calling function recsync_registerRecordDeviceDriver
 require: registerModule(recsync,1.4.0+0,/epics/base-7.0.6.1/require/4.0.0/siteMods/recsync/1.4.0+0/)
@@ -329,7 +333,14 @@ E3_MODULES_INSTALL_LOCATION_INC = /epics/base-7.0.6.1/require/4.0.0/siteMods/cap
 E3_MODULES_INSTALL_LOCATION_LIB = /epics/base-7.0.6.1/require/4.0.0/siteMods/caputlog/3.7.0+0/lib
 E3_MODULES_PATH = /epics/base-7.0.6.1/require/4.0.0/siteMods
 E3_MODULE_MAKEFILE = caPutLog.Makefile
-E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.7.0+0" PROJECT="caputlog" EPICS_MODULES="/epics/base-7.0.6.1/require/4.0.0/siteMods" EPICS_LOCATION="/epics/base-7.0.6.1" BUILDCLASSES="Linux" E3_SITEMODS_PATH="/epics/base-7.0.6.1/require/4.0.0/siteMods" caputlog_E3_GIT_DESC="7.0.6.1-4.0.0/3.7.0-20f7c82-20220210T112335-2-gaab774b" caputlog_E3_GIT_STATUS="[ ]" caputlog_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-caPutLog.git"
+E3_MODULE_MAKE_CMDS = make -C caPutLog -f caPutLog.Makefile LIBVERSION="3.7.0+0"
+                      PROJECT="caputlog"
+                      EPICS_MODULES="/epics/base-7.0.6.1/require/4.0.0/siteMods"
+                      EPICS_LOCATION="/epics/base-7.0.6.1" BUILDCLASSES="Linux"
+                      E3_SITEMODS_PATH="/epics/base-7.0.6.1/require/4.0.0/siteMods"
+                      caputlog_E3_GIT_DESC="7.0.6.1-4.0.0/3.7.0-20f7c82-20220210T112335-2-gaab774b"
+                      caputlog_E3_GIT_STATUS="[ ]"
+                      caputlog_E3_GIT_URL="git@gitlab.esss.lu.se:e3/wrappers/core/e3-caPutLog.git"
 E3_MODULE_NAME = caputlog
 E3_MODULE_SRC_PATH = caPutLog
 E3_MODULE_VERSION = 3.7.0+0
@@ -340,7 +351,11 @@ EPICS_MODULE_TAG = R3.7
 EPICS_SHORT_VERSION = 7.0.6.1
 EPICS_VERSION_NUMBER = 7.0.6.1
 EPICS_VERSION_STRING = "EPICS Version 7.0.6.1"
-EXPORT_VARS = E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB E3_REQUIRE_BIN QUIET
+EXPORT_VARS = E3_MODULES_INSTALL_LOCATION_LIB TEMP_CELL_PATH EPICS_HOST_ARCH EPICS_BASE
+              MSI E3_MODULE_NAME E3_MODULE_VERSION E3_SITEMODS_PATH E3_REQUIRE_MAKEFILE_INPUT_OPTIONS
+              E3_REQUIRE_NAME E3_REQUIRE_CONFIG E3_REQUIRE_DB E3_REQUIRE_LOCATION
+              E3_REQUIRE_DBD E3_REQUIRE_VERSION E3_REQUIRE_TOOLS E3_REQUIRE_INC E3_REQUIRE_LIB
+              E3_REQUIRE_BIN QUIET
 MSI = /epics/base-7.0.6.1/bin/linux-x86_64/msi
 REQUIRE_CONFIG = /epics/base-7.0.6.1/require/4.0.0/configure
 ```
