@@ -4,7 +4,7 @@
 
 ### Problem
 
-Segmentation fault when `iocsh` starts:
+Segmentation fault when the IOC shell starts:
 
 ```console
 [iocuser@host:~]$ iocsh st.cmd
@@ -20,7 +20,7 @@ Run the IOC using `gdb` to try to identify the source of the problem.
 Since EPICS base 7.0.6.1, *require* 4.0.0, all e3 environments are built by
 default with a debug architecture.[^adddebugarch]
 
-Execute the following commands. 
+Execute the following commands.
 
 ```console
 [iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash

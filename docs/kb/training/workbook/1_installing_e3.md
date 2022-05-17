@@ -52,7 +52,7 @@ allow you to install an e3 environment on your local machine.
 ## Selecting a specification
 
 An e3 environment is described using a *specification*. This is a file that contains references
-to a version of EPICS base, require, and a collection of modules to install. These are intended
+to a version of EPICS base, *require*, and a collection of modules to install. These are intended
 to provide a mechanism to build consistent and reproducible environments that can be shared
 between different users and sites. These files will look something like the following.
 
@@ -73,7 +73,7 @@ modules:
 ```
 
 One can obtain the official specifications used at ESS by cloning the following
-repository:
+[repository](https://gitlab.esss.lu.se/e3/specifications.git):
 
 ```console
 [iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/specifications.git
@@ -140,18 +140,18 @@ dbLoadRecords "/epics/base-7.0.6.1/db/softIocExit.db" "IOC=REQMOD:host-15636"
 # Set E3_IOCSH_TOP for the absolute path where iocsh is executed.
 epicsEnvSet E3_IOCSH_TOP "/home/iocuser/specifications"
 #
-# 
+#
 # Load require module, which has the version 4.0.0
-# 
+#
 dlload /epics/base-7.0.6.1/require/4.0.0/lib/linux-x86_64/librequire.so
 dbLoadDatabase /epics/base-7.0.6.1/require/4.0.0/dbd/require.dbd
 require_registerRecordDeviceDriver
 Loading module info records for require
-# 
-# Set the IOC Prompt String One 
+#
+# Set the IOC Prompt String One
 epicsEnvSet IOCSH_PS1 "host-15636 > "
 #
-# 
+#
 iocInit
 Starting iocInit
 ############################################################################

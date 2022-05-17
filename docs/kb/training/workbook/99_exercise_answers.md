@@ -242,7 +242,7 @@ None
   In particular, it is used to define a number of status PVs for the IOC that
   allow you to read what modules are loaded, as well as what versions of those
   modules are loaded. For example, if you start an IOC in one terminal with
-  
+
   ```console
   [iocuser@host:~]$ IOCNAME=my_ioc iocsh -r stream
   ```
@@ -433,12 +433,12 @@ None
    Changes not staged for commit:
      (use "git add <file>..." to update what will be committed)
      (use "git checkout -- <file>..." to discard changes in working directory)
-   
+
       modified:   iocStats (new commits)
-   
+
    Untracked files:
      (use "git add <file>..." to include in what will be committed)
-   
+
       configure/CONFIG_MODULE.local
    no changes added to commit (use "git add" and/or "git commit -a")
    [iocuser@localhost:e3-iocStats]$ cat configure/CONFIG_MODULE.local
