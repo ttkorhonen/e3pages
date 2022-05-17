@@ -163,20 +163,8 @@ same names, but with some differences.
   generate a number of necessary files for the installation process.
 * `make test`: This will perform a local installation of the module, and then
   try to start an IOC with that module.[^runiocsh] It will also perform any
-  module-specific tests that are defined for that module.
-
-  These tests should be specified in `configure/module/RULES_MODULE` as
-  dependencies of the target `module_tests`. For example,
-
-  ```make
-  module_tests: passing_test failing_test
-
-  passing_test:
-      true
-
-  failing_test:
-      false
-  ```
+  module-specific tests that are defined for that module. For more information,
+  see {ref}`module_tests`.
 
   For a more detailed example, see the
   *[opcua](https://gitlab.esss.lu.se/e3/wrappers/communication/e3-opcua/-/blob/master/configure/module/RULES_MODULE#L21)*
