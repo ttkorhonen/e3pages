@@ -31,11 +31,8 @@ using an older version of require, you should use `iocsh.bash` instead.
 ## Conventions
 
 To set correct PV names, the environment variable `$IOCNAME` must be set before
-starting your IOC. Up until *require* 3.4.1, this could be done in a file
-`env.sh` which needed to be in the same directory as your startup script. For
-require 4.0.0 onwards, the variable must be set through other mechanisms
-(where the easiest option is to just write `export IOCNAME=yourIocName` prior to
-starting the IOC).
+starting your IOC. (where the easiest option is to just write
+`export IOCNAME=yourIocName` prior to starting the IOC).
 
 There should preferably also be a `README.md` documenting the controlled
 system(s), the host machine (if the IOC is running in a lab), and any other

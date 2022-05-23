@@ -107,8 +107,8 @@ build install debug:: ${IGNOREFILES}
 
 `EPICS_LOCATION` is defined in `CONFIG_E3_MAKEFILE` to be the same as
 `EPICS_BASE` from the module configuration. That is, if `EPICS_BASE` is
-specified to be `/home/simonrose/epics/base-7.0.4`, then the above code will run
-the next stage of the build process once with `EPICSVERSION=7.0.4`.
+specified to be `/home/iocuser/epics/base-7.0.6.1`, then the above code will run
+the next stage of the build process once with `EPICSVERSION=7.0.6.1`.
 
 Note that `build`, `install`, and `debug` all use the same recursive call to
 `make`.

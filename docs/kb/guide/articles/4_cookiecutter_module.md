@@ -62,9 +62,9 @@ company [European Spallation Source ERIC]:
 module_name []: fakemodule
 module_version [main]:
 summary [Wrapper for the module fakemodule]:
-epics_base_version [7.0.5]:
-epics_base_location [/epics/base-7.0.5]:
-require_version [3.4.1]:
+epics_base_version [7.0.6.1]:
+epics_base_location [/epics/base-7.0.6.1]:
+require_version [4.0.0]:
 git_repository []: https://gitlab.esss.lu.se/epics-modules/fakemodule.git
 ```
 

@@ -4,40 +4,28 @@
 
 ### Problem
 
-Segmentation fault when iocsh.bash starts:
+Segmentation fault when the IOC shell starts:
 
 ```console
-[iocuser@host:~]$ iocsh.bash st.cmd
+[iocuser@host:~]$ iocsh st.cmd
 ...
-/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash: line 131: 18208 Segmentation fault      (core dumped) softIoc${_PVA_} -D ${EPICS_BASE}/dbd/softIoc${_PVA_}.dbd "${IOC_STARTUP}" 2>&1
+/epics/base-7.0.6.1/require/4.0.0/bin/iocsh: line 164: 10243 Segmentation fault      (core dumped) ${__LOADER__}${EPICS_BASE}/bin/${EPICS_HOST_ARCH}/softIoc${__PVA__} -D ${EPICS_BASE}/dbd/softIoc${__PVA__}.dbd "${IOC_STARTUP}" 2>&1
+
 ```
 
 ### Solution
 
 Run the IOC using `gdb` to try to identify the source of the problem.
 
-:::{note}
-The following two paragraphs and the command block need to be updated
-when the next e3 environment after `base-7.0.5/require-3.4.1` is built, as it
-will natively include the `linux-x86_64-debug` architecture.
-:::
+Since EPICS base 7.0.6.1, *require* 4.0.0, all e3 environments are built by
+default with a debug architecture.[^adddebugarch]
 
-Some ESS e3 environments have been built with `debug` architectures. At the
-moment, the `/epics-test/base-7.0.5-debug` ESS e3 environment has the
-`linux-x86_64-debug` architecture available.[^esse3envs] After
-`base-7.0.5/require-3.4.1` the `linux-x86_64-debug` architecture will be
-available in all e3 environments.[^adddebugarch]
-
-Execute the following commands (assuming you have the `/epics-test` e3
-environment mounted from the shared file system). If you do not have the
-`/epics-test` environment available, skip to the third command. You will still
-be able to use the `gdb` debugger, but will not have all the symbol names
-available to you.
+Execute the following commands.
 
 ```console
-[iocuser@host:~]$ source /epics-test/base-7.0.5-debug/require/3.4.1/bin/setE3Env.bash
+[iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
 [iocuser@host:~]$ export EPICS_HOST_ARCH=linux-x86_64-debug
-[iocuser@host:~]$ iocsh.bash -dg st.cmd
+[iocuser@host:~]$ iocsh -dg st.cmd
 ```
 
 The IOC will still segmentation fault, and will return you to the `(gdb)`
@@ -133,9 +121,6 @@ A debugging session is active.
 
 Quit anyway? (y or n) y
 ```
-
-[^esse3envs]: The `/epics-test` e3 environment is specific to the ESS site e3
-  installation. It is provided as a location for testing new e3 environments.
 
 [^adddebugarch]: To add the `linux-x86_64-debug` architecture to a local build
     of e3, add the following line to `e3-base/configure/CONFIG_BASE`:

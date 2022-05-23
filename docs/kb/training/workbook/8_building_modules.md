@@ -139,9 +139,9 @@ company [European Spallation Source ERIC]:
 module_name []: fimscb                                          # Update the module name
 module_version [main]: master                                   # Choose a reference
 summary [Wrapper for the module fimscb]:
-epics_base_version [7.0.5]:
-epics_base_location [/epics/base-7.0.5]:
-require_version [3.4.1]:
+epics_base_version [7.0.6.1]:
+epics_base_location [/epics/base-7.0.6.1]:
+require_version [4.0.0]:
 git_repository []: https://github.com/icshwi/fimscb.git         # And update the URL
 ```
 
@@ -180,7 +180,7 @@ Why do we do `make init patch` as well as `build install`?
 We can check that it works correctly by starting an IOC that loads this module.
 
 ```console
-[iocuser@host:e3-fimscb]$ iocsh.bash -r fimscb
+[iocuser@host:e3-fimscb]$ iocsh -r fimscb
 ```
 
 to make sure that it loads correctly. In this case there is not much that can go
@@ -203,7 +203,7 @@ In order to configure this correctly, you must define the dependency in
 version is specified. This is done by adding the following to `CONFIG_MODULE`:
 
 ```make
-STREAM_DEP_VERSION:=2.8.18
+STREAM_DEP_VERSION:=2.8.22
 ```
 
 as well as the associated code to `fimscb.Makefile`:
@@ -215,7 +215,7 @@ ifneq ($(strip $(STREAM_DEP_VERSION)),)
 endif
 ```
 
-If you uninstall and reinstall `fimscb` and then run `iocsh.bash -r fimscb` you
+If you uninstall and reinstall `fimscb` and then run `iocsh -r fimscb` you
 should see that *StreamDevice* and all of its dependencies has been loaded now.
 
 (local_modules)=
@@ -242,9 +242,9 @@ company [European Spallation Source ERIC]:
 module_name []: clock                           # Update the module name
 module_version [main]: 0.1.0+0                  # Choose/define a version for your e3 module
 summary [Wrapper for the module clock]:
-epics_base_version [7.0.5]:
-epics_base_location [/epics/base-7.0.5]:
-require_version [3.4.1]:
+epics_base_version [7.0.6.1]:
+epics_base_location [/epics/base-7.0.6.1]:
+require_version [4.0.0]:
 git_repository []:                              # Leave this blank or enter any non-valid URL
 ```
 
@@ -331,7 +331,7 @@ dbLoadRecords($(clock_DB)/aiSecond.db)
 iocInit()
 ```
 
-and then run `iocsh.bash ch8.cmd`.
+and then run `iocsh ch8.cmd`.
 
 ---
 

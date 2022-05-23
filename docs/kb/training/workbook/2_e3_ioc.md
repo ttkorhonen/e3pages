@@ -18,39 +18,27 @@ the current terminal. When you install *require*, it will install an activation
 script called `setE3Env.bash`. To activate the environment, you must source the
 relevant `setE3Env.bash`.
 
-Using a default configuration (presently EPICS base 7.0.5 with *require* 3.4.1
+Using a default configuration (presently EPICS base 7.0.6.1 with *require* 4.0.0
 installed at `/epics`) the full path for this script would then be
-`/epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash`.
-
-For your convenience, the e3 building system - at the end of installation
-procedure of *require* and modules - creates a utility script within the
-`tools/` directory called `setenv`:
+`/epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash`. For other versions of
+base and require, you simply have to change this path, allowing one to easily
+switch between environments. For example:
 
 ```console
-[iocuser@host:e3]$ source tools/setenv
+[iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
+[iocuser@host:~]$ source /epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash
 ```
 
-:::{note}
-If such a file already exists, the old file will be renamed to `setenv_YYMMDDHHMM`.
-:::
-
-Thus, one can easily switch between environments. For example:
-
-```console
-[iocuser@host:e3]$ source tools/setenv
-[iocuser@host:e3]$ source /epics/base-7.0.3.1/require/3.4.1/bin/setE3Env.bash
-```
-
-This will first load the latest environment installed with `e3.bash`, and then
-it will load the environment corresponding to EPICS base 7.0.3.1 and *require*
-3.4.1 (assuming that that has been installed).
+The two commands will load environments for two separate versions of EPICS base
+(7.0.6.1, 7.0.5) and require (4.0.0, 3.4.1), respectively. This assumes that both
+environments have been installed.
 
 ## Run an example IOC
 
-Starting an IOC in e3 is done by running the script `iocsh.bash` which is
-installed with *require* at `/epics/base-7.0.5/require/3.4.1/bin/iocsh.bash`. If
+Starting an IOC in e3 is done by running the script `iocsh` which is
+installed with *require* at `/epics/base-7.0.6.1/require/4.0.0/bin/iocsh`. If
 you have sourced the correct `setE3Env.bash`, then this will be on `$PATH`.
-`iocsh.bash` is a wrapper to `softIocPVA` from EPICS base and takes a number of
+`iocsh` is a wrapper to `softIocPVA` from EPICS base and takes a number of
 possible arguments, the most basic of which is a startup command file, which
 consists of a sequence of commands that will be executed by the IOC upon
 startup.
@@ -65,7 +53,7 @@ In order to run a very basic IOC, run the following command after sourcing
 `setE3Env.bash` as described above.
 
 ```console
-[iocuser@host:e3]$ iocsh.bash
+[iocuser@host:~]$ iocsh
 ```
 
 Congratulations, you have run your first e3 IOC!
@@ -97,11 +85,10 @@ dbl > "$(TOP)/${IOCNAME}_PVs.list"
 Save this file as `iocstats.cmd`, and then run
 
 ```console
-[iocuser@host:e3]$ iocsh.bash iocstats.cmd
+[iocuser@host:~]$ iocsh iocstats.cmd
 ```
 
-If the IOC starts up correctly (you will have to have installed the core modules
-during the last chapter), then do the following
+If the IOC starts up correctly then do the following:
 
 1. Check the IOC name:
 
@@ -122,19 +109,24 @@ during the last chapter), then do the following
 3. Open another terminal and source the same e3 configuration.
 
    ```console
-   [iocuser@host:e3]$ source tools/setenv
+   [iocuser@host:~]$ . /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
    ```
+
+   :::{note}
+   `source`ing a script is the same as using `.` as above; both run a set of commands
+   in the current shell.
+   :::
 
 4. Print all of the PVs to a file and skim through it:
 
    ```console
-   [iocuser@host:e3]$ while IFS= read -r pv; do caget $pv; done < IOC-9999_PVs.list
+   [iocuser@host:~]$ while IFS= read -r pv; do caget $pv; done < IOC-9999_PVs.list
    ```
 
 5. Check the heartbeat of your IOC.
 
    ```console
-   [iocuser@host:e3]$ camonitor ${IOCNAME}:HEARTBEAT
+   [iocuser@host:~]$ camonitor ${IOCNAME}:HEARTBEAT
    ```
 
 ## Play around with the example IOC
