@@ -1,6 +1,6 @@
 (require_build)=
 
-# Article: The build process with *require*
+# Article: The build process with *require* (In-depth; advanced)
 
 The e3 build process is a complicated bit of work. To recap, the overview is as follows:
 
