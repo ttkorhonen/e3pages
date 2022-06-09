@@ -26,14 +26,14 @@ actual project code:
 
 When you use a package manager, like `apt` or `npm` or `pip`, you typically only
 see the front-end; you do not have to specify where the packages can be found
-(albeit you can often modify this path if you so wish; for example if you have
+(although you can often modify this path if you so wish; for example if you have
 a custom registry), and you do not have to know about how packages actually have
 been built---the only thing of importance is that there exists a built package
 that is compatible with your system.
 
 In the case of e3, there are currently two different management solutions.
 They use the same back-end (composed of the EPICS base build system
-and `driver.Makefile` from *require*), but are otherwise different; one uses
+and `driver.makefile` from *require*), but are otherwise different; one uses
 custom tooling, and the other one uses existing community tooling. These solutions
 require different project structures, and the *wrappers* for the latter solution
 are referred to as *conda recipes*.
