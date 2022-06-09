@@ -129,7 +129,7 @@ which is the primary distribution method used at ESS.
 #### The "registry"
 
 With this distribution method, there is no real registry containing compiled packages---
-instead we store source code in a fixed *GitLab* group structure. Packages are built
+at ESS we store source code in a fixed *GitLab* group structure. Packages are built
 manually, or for deployment at ESS as part of `GitLab` CI pipelines by so-called
 "runners" that have direct access to a specific server. Once the package has been
 built (and tested, etc.), it is placed on that server through a manual approval action.
@@ -155,7 +155,7 @@ The front-end for this solution is conda's ana- or miniconda, and it is primaril
 the second option that is used. Conda is available for most platforms, and users
 can choose to either define entire or partial environments in environment-files,
 or can install (and uninstall) package of their choosing. As in the other solution,
-*GitLab* CI is used to automate building packages, but there is also a *[conda-bot]
+we use *GitLab* CI at ESS to automate building packages, and we also have a *[conda-bot]
 (https://gitlab.esss.lu.se/ics-infrastructure/conda-bot)* that is used to trigger
 builds of dependent packages (or rather *recipes*, to be more exact).
 
