@@ -31,7 +31,6 @@ It is highly recommended to use virtual environments (using, for example, the
 
 ### Building an EPICS module
 
-
 Assuming that you have an existing EPICS module you would like to create a recipe
 for, it should be publically available via git. Note that the configuration
 and *make* files that are used to build this EPICS module will not be used in the
@@ -54,19 +53,19 @@ up-to-date template.
 Cookiecutter then provides a list of prompts:
 
 ```console
-company [European Spallation Source ERIC]: 
+company [European Spallation Source ERIC]:
 module_name [mymodule]: fakemodule
-summary [EPICS fakemodule module]: 
+summary [EPICS fakemodule module]:
 Select module_kind:
 1 - ESS
 2 - Community
-Choose from 1, 2 [1]: 
+Choose from 1, 2 [1]:
 module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/training
 module_version [1.0.0]:
 ```
 
 Above, I have chosen the defaults for some of the responses other than the
-module name, and the repository path. 
+module name, and the repository path.
 
 This will create the following:
 
@@ -85,11 +84,14 @@ fakemodule-recipe/
 ```
 
 Note that for the kind module prompt, we have two options, ESS and Community.
-In the first case, if the EPICS module has a makefile named as `{module_name}.Makefile`, or `Makefile.E3`, the cookiecutter will copy that makefile to recipe `src` folder  as `Makefile.E3`, if the EPICS module has not makefile, the cookiecutter will create a standard `Makefile.E3` file in the recipe `src` folder.
+In the first case, if the EPICS module has a makefile named as
+`{module_name}.Makefile`, or `Makefile.E3`, the cookiecutter will copy
+that makefile to recipe `src` folder  as `Makefile.E3`, if the EPICS module
+has not makefile, the cookiecutter will create a standard `Makefile.E3` file
+in the recipe `src` folder.
 
 In the second case, the cookiecutter only will create a standard `Makefile.E3`
 file in the recipe `src` folder.
-
 
 ### Pushing to gitlab repository and build a new package
 
@@ -99,7 +101,7 @@ will need to init a local git repository and add a remote to the repository.
 Assuming you are using the ESS GitLab, then the steps are as follows:
 
 1. Create the remote repository by choosing 'New project' from the menu on
-<https://gitlab.esss.lu.se>.
+   <https://gitlab.esss.lu.se>.
 
 2. The repository should be named *fakemodule-recipe*, and (although not necessary)
    should be public, at least if you want to share it with anyone else. However,
@@ -140,6 +142,6 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
 4. If all has gone well, you can see your new recipe on GitLab.
 
 5. If you put the conda-recipe repository in the group e3-recipes
-<https://gitlab.esss.lu.se/e3-recipes> this will trigger a build
-with `.gitlab-ci` and make a new or a first version available in the
-Artifactory conda-e3 channel
+   <https://gitlab.esss.lu.se/e3-recipes> this will trigger a build
+   with `.gitlab-ci` and make a new or a first version available in the
+   Artifactory conda-e3 channel
