@@ -2,6 +2,8 @@
 
 # Module wrappers
 
+## E3 wrappers
+
 Another key feature of e3 is the module wrapper. This allows us to apply
 site-specific changes to modules from any source without needing to modify that
 source directly. Site-specific changes include code changes in the form of
@@ -48,4 +50,62 @@ would have no use of.
 :::
 
 To create a wrapper, see {ref}`cookiecutter_wrapper` and {ref}`wrapper_config`.
+You may also want to go through the {ref}`training_series`.
+
+## Conda recipes
+
+In the case the management system be `conda`, the wrappers are referred to as
+*conda recipes*.
+
+Conda will make its own build environment and it will then copy the source
+code into this environment and build according to a `recipe` given in a
+`meta.yaml` file.
+
+The template structure for a conda recipe is as follows:
+
+``` console
+[iocuser@host:~]$ tree ${MODULE}-recipe
+.
+├── LICENSE
+├── README.md
+├── recipe
+│   ├── build.sh
+│   └── meta.yaml
+└── src
+    └── Makefile
+```
+
+* `meta.yaml`: A file that contains all the metadata in the recipe.
+  Only package/name and package/version are required.
+
+* `build.sh`: The script that installs the files for the package.
+  sIt is executed using the bash command.
+
+* `Makefile`: This is just a copy of the `${MODULE}.Makefile`
+  that would be in a normal e3-wrapper, but with minor modifications.
+
+In the conda recipe also it is possible to add files on top of the
+sources repository, from separate repository or in the recipe
+itself. As example below we have the file structure for `iocstats-recipe`.
+
+``` console
+[iocuser@host:iocstats-recipe]$ tree
+.
+├── LICENSE
+├── README.md
+├── recipe
+│   ├── build.sh
+│   └── meta.yaml
+└── src
+    ├── cmds
+    │   └── iocStats.cmd
+    ├── iocsh
+    │   └── iocStats.iocsh
+    ├── Makefile
+    └── template
+        ├── iocAdminSoft-ess.substitutions
+        └── iocE3EnvVar-ess.template
+```
+
+To create a conda recipe, see {ref}`cookiecutter_recipe`.
 You may also want to go through the {ref}`training_series`.
