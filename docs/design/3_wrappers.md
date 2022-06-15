@@ -79,7 +79,7 @@ The template structure for a conda recipe is as follows:
   Only package/name and package/version are required.
 
 * `build.sh`: The script that installs the files for the package.
-  sIt is executed using the bash command.
+  It is executed using the bash command.
 
 * `Makefile`: This is just a copy of the `${MODULE}.Makefile`
   that would be in a normal e3-wrapper, but with minor modifications.
@@ -107,5 +107,5 @@ itself. As example below we have the file structure for `iocstats-recipe`.
         └── iocE3EnvVar-ess.template
 ```
 
-To create a conda recipe, see {ref}`cookiecutter_recipe`.
+To create a conda recipe, see {ref}`cookiecutter_recipe` and {ref}`recipe_config`.
 You may also want to go through the {ref}`training_series`.
