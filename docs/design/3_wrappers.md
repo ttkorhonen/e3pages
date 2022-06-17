@@ -2,7 +2,7 @@
 
 # Module wrappers
 
-## E3 wrappers
+## e3 wrappers
 
 Another key feature of e3 is the module wrapper. This allows us to apply
 site-specific changes to modules from any source without needing to modify that
@@ -57,9 +57,9 @@ You may also want to go through the {ref}`training_series`.
 In the case the management system be `conda`, the wrappers are referred to as
 *conda recipes*.
 
-Conda will make its own build environment and it will then copy the source
-code into this environment and build according to a `recipe` given in a
-`meta.yaml` file.
+Conda will create a contained build environment, and it will then
+copy the source code into this environment and build according to a
+`recipe` given in a `meta.yaml` file.
 
 The template structure for a conda recipe is as follows:
 
@@ -72,19 +72,18 @@ The template structure for a conda recipe is as follows:
 │   ├── build.sh
 │   └── meta.yaml
 └── src
-    └── Makefile
+    └── Makefile.E3
 ```
 
 * `meta.yaml`: A file that contains all the metadata in the recipe.
-  Only package/name and package/version are required.
+  Only package name and package version are required.
 
-* `build.sh`: The script that installs the files for the package.
-  It is executed using the bash command.
+* `build.sh`: The build script for building and installing the package.
 
-* `Makefile`: This is just a copy of the `${MODULE}.Makefile`
+* `Makefile.E3`: This is just a copy of the `${MODULE}.Makefile`
   that would be in a normal e3-wrapper, but with minor modifications.
 
-In the conda recipe also it is possible to add files on top of the
+In the conda recipe it is possible to add files on top of the
 sources repository, from separate repository or in the recipe
 itself. As example below we have the file structure for `iocstats-recipe`.
 

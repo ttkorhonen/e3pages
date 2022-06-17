@@ -3,20 +3,19 @@
 # Article: Configuring your conda recipe
 
 To create a conda recipe, you should use
-*[cookiecutter](https://github.com/cookiecutter/cookiecutter)* (see
-{ref}`cookiecutter_recipe`).
+`cookiecutter`, see{ref}`cookiecutter_recipe`.
 
 ## The `src/` directory
 
 If you used the cookiecutter [e3-recipe](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe),
-it will create the directory file Makefile.E3 on src directory.
+it will create the directory file `Makefile.E3` on src directory.
 
 This file is very similar to module [Makefile](6_configure_wrapper.md#the-module-makefile)
 created for an e3 wrapper. We only make sure that in the Makefile on recipe
-is necessary to comment out or remove the line:
+is necessary to remove the line:
 
 ``` make
-#include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
+include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 ```
 
 ## The `recipe/` directory Makefile
@@ -43,10 +42,10 @@ Also created automatically by cookiecutter, there are two files in the recipe di
   This file contains information about the package like its name,
   its version, its dependencies, etc.
 
-  For concreteness’ sake, let us focus on a specific recipe: [julabof25hl-recipe](https://gitlab.esss.lu.se/e3-recipes/julabof25hl-recipe/-/blob/master/recipe/meta.yaml).
-  To be explicit, we are currently looking at the recipe for version 0.1.18.
+  For concreteness’ sake, let us focus on a specific recipe: [julabof25hl-recipe](https://gitlab.esss.lu.se/e3-recipes/julabof25hl-recipe/-/blob/87e49dfa/recipe/meta.yaml).
+  To be explicit, we are currently looking at the recipe for version `0.1.18`.
 
-  At the top of the meta.yaml file there are some macros definitions.
+  At the top of the meta.yaml file there are some macro definitions.
 
   ``` yaml
   {% set version = "0.1.18" %}
@@ -62,11 +61,12 @@ Also created automatically by cookiecutter, there are two files in the recipe di
   ```
 
   :::{note}
-  The name should be lower case and may contain "-", but not spaces.
-  For the version number we should use the PEP-386 verlib conventions.
-  Cannot contain "-". YAML interprets version numbers such as 1.0 as floats,
-  meaning that 0.10 will be the same as 0.1. To avoid this,
-  put the version number in quotes so that it is interpreted as a string.
+  The name should be lower case and may contain `-`, but not spaces.
+  For the version number we should use the [PEP-386](https://peps.python.org/pep-0386/)
+  verlib conventions and cannot contain `-`. The YAML interprets version
+  numbers such as 1.0 as floats, meaning that 0.10 will be the same as 0.1.
+  To avoid this, put the version number in quotes so that it is interpreted
+  as a string.
   :::
 
   The source section specifies where the source code of the package is

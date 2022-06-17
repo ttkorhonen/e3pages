@@ -20,8 +20,8 @@ of Python to use. From the terminal, run the following:
 $ pip3 install cookiecutter --user
 ```
 
-:::{warning}
-Beware that you will need to have Python 3 as well as *pip* installed on your machine.
+:::{note}
+Be aware that you will need to have Python 3 as well as *pip* installed on your machine.
 :::
 
 :::{tip}
@@ -32,13 +32,14 @@ It is highly recommended to use virtual environments (using, for example, the
 ### Building an EPICS module
 
 Assuming that you have an existing EPICS module you would like to create a recipe
-for, it should be publically available via git. Note that the configuration
+for that is publically available via git. Note that the configuration
 and *make* files that are used to build this EPICS module will not be used in the
 conda package process, and that you will have to configure the recipe separately.
 
 ## Creating the conda recipe
 
-Run the following command in the terminal to create a cookiecutter:
+Run the following command in the terminal to create a conda recipe
+using the cookiecutter:
 
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git
@@ -83,19 +84,19 @@ fakemodule-recipe/
     └── Makefile.E3
 ```
 
-Note that for the kind module prompt, we have two options, ESS and Community.
+Note that for item `module_kind`, we have two options, ESS and Community.
 In the first case, if the EPICS module has a makefile named as
 `{module_name}.Makefile`, or `Makefile.E3`, the cookiecutter will copy
 that makefile to recipe `src` folder  as `Makefile.E3`, if the EPICS module
 has not makefile, the cookiecutter will create a standard `Makefile.E3` file
 in the recipe `src` folder.
 
-In the second case, the cookiecutter only will create a standard `Makefile.E3`
+In the second case, the cookiecutter will only create a standard `Makefile.E3`
 file in the recipe `src` folder.
 
-### Pushing to gitlab repository and build a new package
+### Creating a remote project on GitLab and deploying the package
 
-When you have created an conda recipe as above, it is only a local folder
+When you have created a conda recipe as above, it is only a local folder
 on your machine. If you want to share it on the ESS GitLab (or otherwise), you
 will need to init a local git repository and add a remote to the repository.
 Assuming you are using the ESS GitLab, then the steps are as follows:
@@ -113,11 +114,11 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
 
 3. As the repository has already been initialised, you do not need to do all of
    the steps, but only the following (from 'Push an existing folder'). You will
-   want to, of course, change the name `simonrose` to your account or to the
+   want to, of course, change the name `username` to your account or to the
    target group where you have created your repository, and change the name
    `fakemodule-recipe` to the name you have chosen:
 
-   ```bash
+   ``` console
    $ # You do not need to switch into the directory if you are already there
    $ cd existing_folder
    $
@@ -125,9 +126,9 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
    $
    $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to GitLab:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
-   $ git remote add origin https://gitlab.esss.lu.se/simonrose/fakemodule-recipe.git
+   $ git remote add origin https://gitlab.esss.lu.se/username/fakemodule-recipe.git
    $ # Otherwise, you can do this:
-   $ # git remote add origin git@gitlab.esss.lu.se:simonrose/fakemodule-recipe.git
+   $ # git remote add origin git@gitlab.esss.lu.se:username/fakemodule-recipe.git
    $
    $ # Add all of the files and commit them
    $ git add .
