@@ -5,7 +5,7 @@
 *[Cookiecutter](https://github.com/cookiecutter/cookiecutter)* is a templating
 utility built in Python. Cookiecutter is already extensively used within ICS to
 help standardize the creation of multiple projects, see
-<https://gitlab.esss.lu.se/ics-cookiecutter>. To create a conda-recipe , we will
+<https://gitlab.esss.lu.se/ics-cookiecutter>. To create a conda-recipe, we will
 be using [a template designed for
 that](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe).
 
@@ -21,7 +21,7 @@ $ pip3 install cookiecutter --user
 ```
 
 :::{note}
-Be aware that you will need to have Python 3 as well as *pip* installed on your machine.
+Be aware that you will need to have Python 3 as well as `pip` installed on your machine.
 :::
 
 :::{tip}
@@ -39,7 +39,7 @@ conda package process, and that you will have to configure the recipe separately
 ## Creating the conda recipe
 
 Run the following command in the terminal to create a conda recipe
-using the cookiecutter:
+using cookiecutter:
 
 ```console
 $ cookiecutter git+https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe.git
@@ -120,22 +120,18 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
 
    ``` console
    $ # You do not need to switch into the directory if you are already there
-   $ cd existing_folder
-   $
-   $ # git init
-   $
+   [iocuser@host:~]$ cd fakemodule-recipe
+   [iocuser@host:fakemodule-recipe]$ git init
    $ # There are two possibilities, depending on whether or not you have uploaded an SSH key to GitLab:
    $ # If you have not uploaded an ssh key (or do not know what that is), do the following:
-   $ git remote add origin https://gitlab.esss.lu.se/username/fakemodule-recipe.git
+   [iocuser@host:fakemodule-recipe]$ git remote add origin https://gitlab.esss.lu.se/username/fakemodule-recipe.git
    $ # Otherwise, you can do this:
    $ # git remote add origin git@gitlab.esss.lu.se:username/fakemodule-recipe.git
-   $
    $ # Add all of the files and commit them
-   $ git add .
-   $ git commit -m "Initial commit"
-   $
+   [iocuser@host:fakemodule-recipe]$ git add .
+   [iocuser@host:fakemodule-recipe]$ git commit -m "Initial commit"
    $ # Push to the remote repository
-   $ git push -u origin main
+   [iocuser@host:fakemodule-recipe]$ git push -u origin main
    ```
 
    If you use https and not ssh, then you will have to enter your username and password.

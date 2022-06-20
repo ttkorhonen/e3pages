@@ -2,13 +2,10 @@
 
 # Module wrappers
 
-The e3 has two different management solution, see {ref}`build_process`.
-In the first one that uses a custom tooling, the e3 build process
-uses the feature e3 wrapper.
-The second one uses the `conda` to build and distribute the modules
-as packages. This approach uses a separate wrapper
-(making it decoupled from the non-conda ones) which are referred
-to as recipes.
+The e3 environment has two different management solution, see {ref}`build_process`.
+The first and primary one, which uses custom tooling, relies on something we
+will refer to as just "e3 wrappers", while the second one, which uses `conda` for
+package management, uses a different wrapper that we refer to as "recipes".
 
 ## e3 wrappers
 
@@ -62,9 +59,6 @@ You may also want to go through the {ref}`training_series`.
 
 ## Conda recipes
 
-If `conda` is the management system, the wrappers are referred to as
-*conda recipes*.
-
 Conda will create a contained build environment, and it will then
 copy the source code into this environment and build according to a
 `recipe` given in a `meta.yaml` file.
@@ -92,7 +86,7 @@ The template structure for a conda recipe is as follows:
   used in the e3-wrapper, but with minor modifications.
 
 In the conda recipe it is possible to add files on top of the
-sources repository, from separate repository or in the recipe
+source's repository, from separate repository or in the recipe
 itself. As example below we have the file structure for `iocstats-recipe`.
 
 ``` console

@@ -45,7 +45,7 @@ Also created automatically by cookiecutter, there are two files in the recipe di
   For concreteness’ sake, let us focus on a specific recipe: [julabof25hl-recipe](https://gitlab.esss.lu.se/e3-recipes/julabof25hl-recipe/-/blob/87e49dfa/recipe/meta.yaml).
   To be explicit, we are currently looking at the recipe for version `0.1.18`.
 
-  At the top of the meta.yaml file there are some macro definitions.
+  At the top of the `meta.yaml` file there are some macro definitions.
 
   ``` yaml
   {% set version = "0.1.18" %}
@@ -61,16 +61,16 @@ Also created automatically by cookiecutter, there are two files in the recipe di
   ```
 
   :::{note}
-  The name should be lower case and may contain `-`, but not spaces.
-  For the version number we should use the [PEP-386](https://peps.python.org/pep-0386/)
-  verlib conventions and cannot contain `-`. The YAML interprets version
+  The name be lower case and may contain hyphens (`-`), but not spaces.
+  For the version number we follow [PEP-386](https://peps.python.org/pep-0386/)
+  verlib conventions. Hyphens (`-`) are not allowed. The YAML interprets version
   numbers such as 1.0 as floats, meaning that 0.10 will be the same as 0.1.
   To avoid this, put the version number in quotes so that it is interpreted
   as a string.
   :::
 
   The source section specifies where the source code of the package is
-  coming from. For the ESS recipes, we used source from git and from a
+  coming from. For the ESS recipes, we use the source from git and from a
   local path `../src`.
 
   ``` yaml
