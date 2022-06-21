@@ -7,6 +7,7 @@ site-specific changes to modules from any source without needing to modify that
 source directly. Site-specific changes include code changes in the form of
 patches, separate database and substitution files to enable ESS-compliant
 Process Variable (PV) naming structure, and custom GUIs.
+
 The e3 environment has two different management solution, see {ref}`build_process`.
 The first and primary one, which uses custom tooling, relies on something we
 will refer to as just "e3 wrappers", while the second one, which uses `conda` for
