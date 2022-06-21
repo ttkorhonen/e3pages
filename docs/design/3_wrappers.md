@@ -8,6 +8,13 @@ source directly. Site-specific changes include code changes in the form of
 patches, separate database and substitution files to enable ESS-compliant
 Process Variable (PV) naming structure, and custom GUIs.
 
+The e3 environment has two different management solution, see {ref}`build_process`.
+The first and primary one, which uses custom tooling, relies on something we
+will refer to as just "e3 wrappers", while the second one, which uses `conda` for
+package management, uses a different wrapper that we refer to as "recipes".
+
+## e3 wrappers
+
 The template structure for an e3 wrapper is as follows:
 
 ```console
@@ -48,4 +55,58 @@ would have no use of.
 :::
 
 To create a wrapper, see {ref}`cookiecutter_wrapper` and {ref}`wrapper_config`.
+You may also want to go through the {ref}`training_series`.
+
+## Conda recipes
+
+Conda will create a contained build environment, and it will then
+copy the source code into this environment and build according to a
+`recipe` given in a `meta.yaml` file.
+
+The template structure for a conda recipe is as follows:
+
+``` console
+[iocuser@host:~]$ tree ${MODULE}-recipe
+.
+├── LICENSE
+├── README.md
+├── recipe
+│   ├── build.sh
+│   └── meta.yaml
+└── src
+    └── Makefile.E3
+```
+
+* `meta.yaml`: A file that contains all the metadata in the recipe.
+  Only package name and package version are required.
+
+* `build.sh`: The build script for building and installing the package.
+
+* `Makefile.E3`: This is essentially just a copy of the `${MODULE}.Makefile`
+  used in the e3-wrapper, but with minor modifications.
+
+In the conda recipe it is possible to add files on top of the
+source's repository, from separate repository or in the recipe
+itself. As example below we have the file structure for `iocstats-recipe`.
+
+``` console
+[iocuser@host:iocstats-recipe]$ tree
+.
+├── LICENSE
+├── README.md
+├── recipe
+│   ├── build.sh
+│   └── meta.yaml
+└── src
+    ├── cmds
+    │   └── iocStats.cmd
+    ├── iocsh
+    │   └── iocStats.iocsh
+    ├── Makefile
+    └── template
+        ├── iocAdminSoft-ess.substitutions
+        └── iocE3EnvVar-ess.template
+```
+
+To create a conda recipe, see {ref}`cookiecutter_recipe` and {ref}`recipe_config`.
 You may also want to go through the {ref}`training_series`.

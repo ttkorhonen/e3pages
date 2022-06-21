@@ -22,6 +22,8 @@ articles/7_*
 articles/8_*
 articles/9_*
 articles/10_*
+articles/11_*
+articles/12_*
  ```
 
 [^1]: Before doing so, see `CONTRIBUTING.md` at the root level of e3 pages'
