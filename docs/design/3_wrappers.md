@@ -2,11 +2,13 @@
 
 # Module wrappers
 
-Another key feature of e3 is the module wrapper. This allows us to apply
-site-specific changes to modules from any source without needing to modify that
-source directly. Site-specific changes include code changes in the form of
-patches, separate database and substitution files to enable ESS-compliant
-Process Variable (PV) naming structure, and custom GUIs.
+A key feature of e3 is the module wrapper. It is named as such
+since it "wraps" the underlying EPICS module/extension. This allows us
+to apply site-specific changes to modules from any source without
+needing to modify that source directly. Site-specific changes include
+code changes in the form of patches, separate database and substitution
+files to enable ESS-compliant Process Variable (PV) naming structure,
+and custom GUIs.
 
 The e3 environment has two different management solution, see {ref}`build_process`.
 The first and primary one, which uses custom tooling, relies on something we
@@ -14,6 +16,10 @@ will refer to as just "e3 wrappers", while the second one, which uses `conda` fo
 package management, uses a different wrapper that we refer to as "recipes".
 
 ## e3 wrappers
+
+The build system of e3 will build according to configuration
+spread between the main `${MODULE}.Makefile` and other GNU Make
+files under `./configure`.
 
 The template structure for an e3 wrapper is as follows:
 
@@ -34,6 +40,15 @@ e3-${MODULE}
 └── tools                       # additional tools or utilities
 ```
 
+* `configure/CONFIG_MODULE`: The file that defines project
+  name, version, and that lists dependencies.
+
+* `configure/RELEASE`: Where the build environment and installation
+  target is defined.
+
+* `{MODULE}.Makefile`: The build project definitions; source
+  files, includes, database files, etc.
+
 In the above output, `${MODULE}` is the name of the EPICS
 module(/application/library). For community modules that are version controlled
 with git, this would be a *git submodule*. For ESS-specific modules, it can be a
@@ -41,27 +56,29 @@ embedded file tree (i.e. both the wrapper and the wrapped module are controlled
 in the same repository).
 
 :::{note}
-We generally prefer 'decoupled' modules---where the wrapper and the module are
+We generally prefer "decoupled" modules---where the wrapper and the module are
 in separate repositories---as that allows for more flexibility (e.g. allowing
-the standard EPICS module to be made available for community usage).
+the standard EPICS module to be made available for community
+usage, or for the module to be used with both conda and without).
+:::
+
+:::{tip}
+Embedded file-trees---"coupled" modules---are recommended for ESS-developed
+modules that the community would have no use of, and that do not need to
+be distributed also with conda.
 :::
 
 It should be noted that non-used directories in the above structure should be
 removed; e.g. if there are no patch-files, `patch/*` should be deleted.
-
-:::{tip}
-Embedded file-trees are recommended for ESS-developed modules that the community
-would have no use of.
-:::
 
 To create a wrapper, see {ref}`cookiecutter_wrapper` and {ref}`wrapper_config`.
 You may also want to go through the {ref}`training_series`.
 
 ## Conda recipes
 
-Conda will create a contained build environment, and it will then
-copy the source code into this environment and build according to a
-`recipe` given in a `meta.yaml` file.
+The build system of conda will create a contained build environment,
+and it will then copy the source code into this environment and build
+according to a `recipe` given in a `meta.yaml` file.
 
 The template structure for a conda recipe is as follows:
 
@@ -85,9 +102,9 @@ The template structure for a conda recipe is as follows:
 * `Makefile.E3`: This is essentially just a copy of the `${MODULE}.Makefile`
   used in the e3-wrapper, but with minor modifications.
 
-In the conda recipe it is possible to add files on top of the
-source's repository, from separate repository or in the recipe
-itself. As example below we have the file structure for `iocstats-recipe`.
+Just as with the e3 wrapper, it is possible to add files "on top" of the
+source's repository in the conda recipe. As example below we have the
+file structure for `iocstats-recipe`.
 
 ``` console
 [iocuser@host:iocstats-recipe]$ tree
@@ -98,12 +115,12 @@ itself. As example below we have the file structure for `iocstats-recipe`.
 │   ├── build.sh
 │   └── meta.yaml
 └── src
-    ├── cmds
+    ├── cmds                # example, template, or test startup scripts
     │   └── iocStats.cmd
-    ├── iocsh
+    ├── iocsh               # snippets
     │   └── iocStats.iocsh
     ├── Makefile
-    └── template
+    └── template            # template, substitution, and database files
         ├── iocAdminSoft-ess.substitutions
         └── iocE3EnvVar-ess.template
 ```
