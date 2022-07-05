@@ -38,15 +38,15 @@ custom tooling, and the other one uses existing community tooling. These solutio
 require different project structures, and the *wrappers* for the latter solution
 are referred to as *conda recipes*.
 
-### The `e3` python package, a source code registry, `git` tags, and *GitLab* CI
+### The `e3` python package, a source code registry, git tags, and *GitLab* CI
 
 This is the default e3 management solution in use at ESS, which is based on the
 solution in use at PSI. Here, only source code and (select) *references* are stored,
-as `git` tags. There is thus no package registry but only a *source code* registry,
+as git tags. There is thus no package registry but only a *source code* registry,
 i.e. users will instead have to compile their own modules, and will have to rely
 on so-called *specifications* to know which module versions can generate a working
 environment. The installation is then (typically) shared by multiple hosts by
-having them on a single machine that exports them as mount points over `NFS`.
+having them on a single machine that exports them as mount points over NFS.
 
 #### The front-end
 
@@ -62,7 +62,7 @@ one or several environments, and can activate the environment of interest. Envir
 can be local (e.g. in ones' own userspace) or be global (for example installed under
 `/opt`), and can be installed on network machines to guarantee a shared installation,
 which is the strategy used at ESS; there are servers that distribute e3 installations
-over `NFS`.
+over NFS.
 
 #### The installation
 
@@ -123,20 +123,20 @@ the following:
 ```
 
 With this solution, a local installation can be done on a central server,
-and can be shared with relevant hosts using e.g. `NFS` (or using `rsync`, etc.),
+and can be shared with relevant hosts using e.g. NFS (or using `rsync`, etc.),
 which is the primary distribution method used at ESS.
 
 #### The "registry"
 
 With this distribution method, there is no real registry containing compiled packages---
 at ESS we store source code in a fixed *GitLab* group structure. Packages are built
-manually, or for deployment at ESS as part of `GitLab` CI pipelines by so-called
+manually, or for deployment at ESS as part of GitLab CI pipelines by so-called
 "runners" that have direct access to a specific server. Once the package has been
 built (and tested, etc.), it is placed on that server through a manual approval action.
 Hosts that need access to these packages mount the installation and can make the
-relevant environment/release available by mounting it over `NFS`.
+relevant environment/release available by mounting it over NFS.
 
-To identify or reproduce compilations, we make use of `git` tags that encode some
+To identify or reproduce compilations, we make use of git tags that encode some
 key metadata. It is, however, up to the user to ensure a compatible environment---
 i.e.  that all dependencies can be satisfied. Specifications exist for this purpose;
 to describe e3 module references that can be combined into a working installation.
