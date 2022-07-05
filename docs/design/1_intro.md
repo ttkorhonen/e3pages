@@ -6,30 +6,29 @@ for ESS EPICS Environment), then EEE version 2, and then finally a major revamp
 to *e3*. Both EEE and e3 were based off of *[PSI](https://www.psi.ch/en)*'s
 EPICS environment.
 
-In short, e3 is a packaged EPICS environment---but e3 also offers much more.
-Part of e3 is also a common front-end for users and developers at ESS, a
-collection of utilities to set up and maintain the environment, and a framework
-to facilitate dependency management. The intention was twofold with e3: to
+In short, e3 is a number of EPICS environments and a front-end for users
+and developers at ESS to use these, as well as a collection of utilities to set up
+and maintain said environments. The intention was twofold with e3: to
 simplify life for integrators, but also for a central team managing the
 environment. At the core of e3 is a fork of PSI's
 [*require*](https://github.com/paulscherrerinstitute/require) module, *git*,
-*GNU Make*, and *module wrappers* (to bring standard community EPICS modules
-into the e3 environment).
+and *module wrappers*.
 
 Two of the key design considerations for e3 were dependency management and
 quality management. EPICS modules vary in structure and in quality, and each
 site that uses EPICS has their own style and conventions, which will be
 reflected in the source code. Furthermore, each module release will have
 dependencies upon specific releases of other modules. How e3 deals with these is
-to interface all community 'modules' with a wrapper. This wrapper links to the
+to interface all community "modules" with a wrapper. This wrapper links to the
 module source code, identifies module dependencies and versions, and contains
 our site-specific modifications; patches, database files, GUIs, etc. When a
 build occurs, e3 parses these dependency chains to find the necessary
 dependencies, compiles shared libraries, inflates and copies database files, and
-finally installs into a hierarchical EPICS tree. This tree allows us to easily
-keep track of what module version has been built for what version of EPICS base
-and *require*, and allows removal of deprecated versions. At ESS, there is a
-shared (network mounted) EPICS tree that all IOCs utilise the binaries from.
+finally manages installations. This allows us to keep track of what
+module version has been built for what version of EPICS base
+and *require*, as well as allows for removal of deprecated versions. At
+ESS, there is a shared (network mounted) EPICS installation that all
+IOCs utilise the binaries from.
 
 :::{note}
 Although ESS uses a shared build (using, for example, NFS) and dynamically
@@ -71,13 +70,6 @@ particular IOC. A module is not a functional IOC application on its own.
 The databases provided by the module are typically in the form of templates. The
 template includes macro values for the PV name prefix and potentially other
 parameters. These macro values must be defined by the IOC.
-
-### Wrapper
-
-An e3 *wrapper* is a separate (from the source EPICS module) repository
-containing site-specific modifications and additions: configuration files,
-source code modifications in the form of patches, and essentially an API to the
-module through what we call *snippets*.
 
 [^conda]: ESS have also experimented with using *conda* to distribute, and some
   of our groups still make use of it. This approach uses a separate wrapper
