@@ -57,7 +57,7 @@ file---otherwise the last line will be ignored.
 Most of the functionality for this is contained in the file
 `tools/iocsh_functions` in the [require repository](https://gitlab.esss.lu.se/e3/e3-require).
 There are also *gdb* and *valgrind* options if you would like to run an IOC with
-either of those utilities.
+either of those utilities. More information can be found at {ref} `debugging_e3`.
 
 ## Dynamic loading of modules
 
