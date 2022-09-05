@@ -6,15 +6,14 @@ The e3 build process is a complicated bit of work. To recap, the overview is as 
 
 1. In the e3-wrapper directory: we collect some information and decide what
    build process we will perform (from `RULES_E3`), calling `make` in the module
-   directory with information passed as in `CONFIG_E3_MAKEFILE`.
-2. In the module directory: `EPICSVERSION` has not been defined, so determine
-   which versions to build for.
-3. In the module directory: Target architecture `${T_A}` has not been defined,
+   directory with information passed as in `CONFIG_E3_MAKEFILE`. `EPICSVERSION`
+   is determined by the path `EPICS_BASE`.
+2. In the module directory: Target architecture `${T_A}` has not been defined,
    so determine the architectures to build for.
-4. In the module directory: Perform a final collection of the relevant files,
+3. In the module directory: Perform a final collection of the relevant files,
    create the directories `O.${EPICSVERSION}_Common` and
    `O.${EPICSVERSION}_${T_A}`.
-5. In the directories `O.*`: Build/Install all of the required shared libraries
+4. In the directories `O.*`: Build/Install all of the required shared libraries
    and other files for the given version of EPICS base and target architecture.
 
 We will go over each of these steps in more detail, as well as go over an
@@ -89,36 +88,21 @@ to make sure that the module is up-to-date). Note that `$(E3_MODULE_MAKE_CMDS)`
 is defined in `CONFIG_E3_MAKEFILE` which specifies which arguments should be
 passed to this recursive call of `make`.
 
-### Stage 2: Defining `EPICSVERSION`
+### Stage 2: Defining `T_A`
 
-The first pass through is to determine the EPICS version that we are building
-for. In e3, we build for one version at a time; this is taken from
-`EPICS_LOCATION`:
+In e3, we only build for a single verion of EPICS base at a time. This is defined
+in `driver.makefile` as
 
 ```makefile
-E3_EPICS_VERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
-BUILD_EPICS_VERSIONS = $(E3_EPICS_VERSION)
-
-# snip snip
-
-build install debug:: ${IGNOREFILES}
-    @+for VERSION in ${BUILD_EPICS_VERSIONS}; do ${MAKEVERSION} EPICSVERSION=$$VERSION $@; done
+EPICSVERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
 ```
 
-`EPICS_LOCATION` is defined in `CONFIG_E3_MAKEFILE` to be the same as
-`EPICS_BASE` from the module configuration. That is, if `EPICS_BASE` is
-specified to be `/home/iocuser/epics/base-7.0.6.1`, then the above code will run
-the next stage of the build process once with `EPICSVERSION=7.0.6.1`.
+which converts, for example, `/opt/epics/base-7.0.6.1` into `7.0.6.1`. 
 
-Note that `build`, `install`, and `debug` all use the same recursive call to
-`make`.
-
-### Stage 3: Defining `T_A`
-
-Now that we know which version of EPICS to build for, we go on to determine the
-target architectures to build for. In this case, we may build for more than one
-architecture at a time; at the moment, ESS supports `linux-x86_64`,
-`linux-corei7-poky`, and `linux-ppc64e6500`. This is also where we include the
+We begin by determining the target architectures to build for. In this case,
+we may build for more than one architecture at a time; at the moment, ESS
+supports `linux-x86_64`, `linux-corei7-poky`, and `linux-ppc64e6500` (as well
+as a debug architecture, `linux-x86_64-debug`). This is also where we include the
 EPICS build rules: see the sequence
 
 ```makefile
@@ -154,14 +138,32 @@ you build EPICS base for the first time.
 The next stage of the build is triggered by
 
 ```makefile
-# Loop over all architectures.
-install build debug::
-    @+for ARCH in ${CROSS_COMPILER_TARGET_ARCHS}; do \
-        umask 002; echo MAKING ARCH $$ARCH; ${MAKE} -f ${USERMAKEFILE} T_A=$$ARCH $@; \
-    done
+define target_rule
+$1-%: | $(COMMON_DIR)
+	$${MAKE} -f $${USERMAKEFILE} T_A=$$* $1
+endef
+$(foreach target,install build debug,$(eval $(call target_rule,$(target))))
+
+.SECONDEXPANSION:
+
+$(foreach target,install build debug,$(eval $(target):: $$$$(foreach arch,$$$${BUILD_ARCHS},$(target)-$$$${arch})))
 ```
 
-### Stage 4: Preparing to build `T_A`
+We can simplify this by focusing purely on the build target; in that case this essentially reads
+
+```makefile
+build-%: | $(COMMON_DIR)
+	${MAKE} -f ${USERMAKEFILE} T_A=$* build
+
+.SECONDEXPANSION:
+build:: $$(foreach arch,$${BUILD_ARCHS},$(target)-$${arch})
+```
+
+i.e. `build` depends on `build-T_A_1`, `build-T_A_2`, etc., each of which trigger
+a call to run `make build` again with `T_A` set appropriately.[^secondexpansion]
+
+
+### Stage 3: Preparing to build `T_A`
 
 For this stage of the build process, we are still in the module directory; the
 next stages will be done in the directories `O.$(EPICSVERSION)_Common` or
@@ -183,22 +185,19 @@ VAR_EXTENSIONS = ${EPICSVERSION} ${ARCH_PARTS} ${ARCH_PARTS:%=${EPICSVERSION}_%}
 export VAR_EXTENSIONS
 ```
 
-allows the developer to have architecture-specific files: for example, if `T_A =
-linux-x86_64` then `ARCH_PARTS` will be `linux-x86_64 linux x86_64`: If we now
-consider the next segment, we see
+allows the developer to have architecture-specific files: for example, if
+`T_A = linux-x86_64` then `ARCH_PARTS` will be `linux-x86_64 linux x86_64`:
+If we now consider the next segment, we see
 
 ```makefile
-REQ = ${REQUIRED} $(foreach x, ${VAR_EXTENSIONS}, ${REQUIRED_$x})
-export REQ
-
 SRCS += $(foreach x, ${VAR_EXTENSIONS}, ${SOURCES_$x})
 USR_LIBOBJS += ${LIBOBJS} $(foreach x,${VAR_EXTENSIONS},${LIBOBJS_$x})
 export USR_LIBOBJS
 ```
 
-which tells us that we can have `REQUIRED_linux` or `SOURCES_x86_64` (or another
-other part of `VAR_EXTENSIONS`) to selectively compile code or manage
-dependencies based on architecture and version.
+which tells us that we can have `SOURCES_x86_64` (or another other part of
+`VAR_EXTENSIONS`) to selectively compile code based on architecture and
+version.
 
 Finally, we run
 
@@ -210,7 +209,7 @@ install build debug:: O.${EPICSVERSION}_Common O.${EPICSVERSION}_${T_A}
 Note that due to the argument `-C O.${EPICSVERSION}_${T_A}` we switch to that
 directory, using the same `${USERMAKEFILE}` to manage the build process.
 
-### Stage 5: Building `T_A`
+### Stage 4: Building `T_A`
 
 We have now collected the majority of the information that we need to build our
 module. We will do a little more organisation and preparation, and then the
@@ -244,7 +243,7 @@ The simplest way of including a header file is to add the line `HEADERS +=
 header.h` into your `$(module).Makefile`. Having done this, the build/install
 process runs as follows.
 
-1. In stage 3 we start with the following:
+1. In stage 2 we start with the following:
 
    ```makefile
    HDRS = ${HEADERS} $(addprefix ${COMMON_DIR}/,$(addsuffix Record.h,${RECORDS}))
@@ -256,7 +255,7 @@ process runs as follows.
    other headers, including version-specific ones if necessary)
 
 2. There is only one place in the build process that these are relevant: in
-   stage 5 (within the directory `O.${EPICSVERSION}_{T_A}`) we have the
+   stage 4 (within the directory `O.${EPICSVERSION}_{T_A}`) we have the
    following line:
 
    ```makefile
@@ -305,9 +304,8 @@ process runs as follows.
    like to include: `dir1/header.h` `dir2/header.h` i.e. the same filename, but
    different locations, then only one of these two will be installed.
 
-   We have implemented a mechanism to get around this, please see the
-   [changelog](https://gitlab.esss.lu.se/e3/e3-require/-/blob/master/CHANGELOG.md)
-   for *require* 3.3.0.
+   In order to avoid this, you can add a path to the variable `KEEP_HEADER_SUBDIRS`,
+   which will preserve the directory tree structure of headers under that path.
 
 ### Compiling a `.c` file
 
@@ -319,7 +317,7 @@ of a source file to be compiled into the shared library is simple: add the line
 The next steps are complicated due to being shared among different configure
 files.
 
-1. Initially in stage 3 above, we have the line `SRCS += $(if
+1. Initially in stage 2 above, we have the line `SRCS += $(if
    ${SOURCES},$(filter-out -none-,${SOURCES}),${AUTOSRCS})` which includes your
    file in the variable `SRCS`.
 
@@ -334,7 +332,7 @@ files.
    which converts `$(APPSRC)/file.c` into `file.d` in the variable
    `HDEPENDS_FILES`.
 
-3. Next in stage 5, we include `RULES` from EPICS base which includes
+3. Next in stage 4, we include `RULES` from EPICS base which includes
    `RULES_BUILD`. This includes the following:
 
    ```makefile
@@ -366,9 +364,7 @@ files.
    files to produce object files and dependency files.
 
 4. We now need to connect the source files to the final shared library. The
-   first step is the following from
-
-   `driver.makefile`:
+   first step is the following from `driver.makefile`:
 
    ```makefile
    LIBRARY_OBJS = $(strip ${LIBOBJS} $(foreach l,${USR_LIBOBJS},$(addprefix ../,$(filter-out /%,$l))$(filter /%,$l)))
@@ -426,3 +422,11 @@ files.
 8. The magic now comes from the fact that we have already built this file back
    when we were creating `file.d`! As such, we can run the linking command, and
    we obtain our shared library, ready to install.
+
+---
+
+[^secondexpansion]: Why do we need the `.SECONDEXPANSION`? The issue at hand
+is because the architecture filters are defined *after* the inclusion of
+`driver.makefile`. As such, we take advantage of GNU make's ability to do
+a deferred secondary expansion of target dependencies to ensure that we perform
+the correct filtering on archtectures.
