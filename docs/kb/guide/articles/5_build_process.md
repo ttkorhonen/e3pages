@@ -97,7 +97,7 @@ in `driver.makefile` as
 EPICSVERSION:=$(patsubst base-%,%,$(notdir $(EPICS_LOCATION)))
 ```
 
-which converts, for example, `/opt/epics/base-7.0.6.1` into `7.0.6.1`. 
+which converts, for example, `/opt/epics/base-7.0.6.1` into `7.0.6.1`.
 
 We begin by determining the target architectures to build for. In this case,
 we may build for more than one architecture at a time; at the moment, ESS
@@ -140,7 +140,7 @@ The next stage of the build is triggered by
 ```makefile
 define target_rule
 $1-%: | $(COMMON_DIR)
-	$${MAKE} -f $${USERMAKEFILE} T_A=$$* $1
+    $${MAKE} -f $${USERMAKEFILE} T_A=$$* $1
 endef
 $(foreach target,install build debug,$(eval $(call target_rule,$(target))))
 
@@ -149,11 +149,12 @@ $(foreach target,install build debug,$(eval $(call target_rule,$(target))))
 $(foreach target,install build debug,$(eval $(target):: $$$$(foreach arch,$$$${BUILD_ARCHS},$(target)-$$$${arch})))
 ```
 
-We can simplify this by focusing purely on the build target; in that case this essentially reads
+We can simplify this by focusing purely on the build target; in that case
+this essentially reads
 
 ```makefile
 build-%: | $(COMMON_DIR)
-	${MAKE} -f ${USERMAKEFILE} T_A=$* build
+    ${MAKE} -f ${USERMAKEFILE} T_A=$* build
 
 .SECONDEXPANSION:
 build:: $$(foreach arch,$${BUILD_ARCHS},$(target)-$${arch})
@@ -161,7 +162,6 @@ build:: $$(foreach arch,$${BUILD_ARCHS},$(target)-$${arch})
 
 i.e. `build` depends on `build-T_A_1`, `build-T_A_2`, etc., each of which trigger
 a call to run `make build` again with `T_A` set appropriately.[^secondexpansion]
-
 
 ### Stage 3: Preparing to build `T_A`
 
