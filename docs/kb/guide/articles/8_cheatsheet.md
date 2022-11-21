@@ -31,4 +31,4 @@
 
 * `KEEP_HEADER_SUBDIRS` - Preserves the tree structure of the given header
   directories
-* `FETCH_BUILD_NUMBER` - Lets you find the correct build number for a module
+* `FETCH_BUILD_NUMBER` - Lets you find the correct revision number for a module

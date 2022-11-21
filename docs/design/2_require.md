@@ -77,15 +77,15 @@ versioning](https://semver.org/) (semver) scheme. A numerical version is
 specified in one of two ways:
 
 * MAJOR.MINOR.PATCH (e.g. `require asyn,4.41.0`)
-* MAJOR.MINOR.PATCH+BUILD (e.g. `require sis8300llrf,3.17.1+1`)
+* MAJOR.MINOR.PATCH+REVISION (e.g. `require sis8300llrf,3.17.1+1`)
 
-If you do not specify a BUILD number, then *require* will load the version with
-the highest build number. Otherwise, *require* will match the version exactly.
+If you do not specify a REVISION number, then *require* will load the version with
+the highest revision number. Otherwise, *require* will match the version exactly.
 
 Note that `1.0.0 < 1.0.0+0 < 1.0.0+1 < ... < 1.0.1 < ...`.
 
 :::{note}
-The syntax for build numbers changed between require 3.3.0 and require 3.4.0.
+The syntax for revision numbers changed between require 3.3.0 and require 3.4.0.
 Initially the separator was a `-`, but in order to be more consistent with
 [semantic versioning](https://semver.org/), the e3 team decided to change it to
 a `+`.
@@ -125,7 +125,7 @@ pcre 8.44.0+0
 
 The reader should be aware that *require* is limited in the degree to which it
 can perform dependency resolution; all it can do is a simple check against
-existing loaded versions. This is why build numbers are necessary. As an
+existing loaded versions. This is why revision numbers are necessary. As an
 example, consider the following scenario.
 
 #### Example scenario
@@ -145,7 +145,7 @@ version of *scaling*. What should happen to the existing installed version of
    possible, but not ideal. It is particularly bad if it is a module that is not
    being developed in-house, as our version will be out of sync with the
    community module.
-3. We could instead update the version to 3.16.1+1, i.e. add a build number.
+3. We could instead update the version to 3.16.1+1, i.e. add a revision number.
    This way, the existing version has not been modified. Moreover, you can use
    *sis8300llrf* version 3.16.1 with either version of scaling by specifying the
-   build number.
+   revision number.

@@ -54,7 +54,7 @@ make[3]: *** [install] Error 1
 ### Solution
 
 _require_ will not overwrite a module where the version matches the
-`major.minor.patch+build` format. To reinstall a module version, you need to do
+`major.minor.patch+revision` format. To reinstall a module version, you need to do
 the following:
 
 ```console

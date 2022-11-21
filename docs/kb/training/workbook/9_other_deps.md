@@ -215,11 +215,11 @@ Unfortunately, this does not work. If you look at the installed versions of
 
 What is that `+0` doing there?
 
-### A digression about build numbers
+### A digression about revision numbers
 
 You should have noticed by now that when you load a module (e.g. *asyn*
 version `4.42.0`) it is actually loaded as `4.42.0+0`. What is this `+0`?
-This is the *build number*. These are used in a number of different deployment
+This is the *revision number*. These are used in a number of different deployment
 systems to distinguish between builds where, for example, the source code may
 not have changed but some of the metadata or dependencies have. This allows us
 to have, for example, two copies of the same version of *StreamDevice* that may
@@ -227,21 +227,21 @@ depend on different versions of *asyn*.
 
 The default behaviour in e3 is the following.
 
-* If you request a specific version inclusive of a build number, that version
+* If you request a specific version inclusive of a revision number, that version
   will be loaded or built against.
-* If you do not request a build number, then the highest matching build number
+* If you do not request a revision number, then the highest matching revision number
   will be used.
 
 :::{warning}
-Even though you do not have to specify build numbers when loading a module, you
-_must_ specify a build number for `E3_MODULE_VERSION` in `CONFIG_MODULE` when
+Even though you do not have to specify revision numbers when loading a module, you
+_must_ specify a revision number for `E3_MODULE_VERSION` in `CONFIG_MODULE` when
 building a module.
 :::
 
 Most of this all happens under the hood. One main exception is any references to
 other modules within, for example, `mypid.Makefile`. To deal with that case,
 there is a function called `FETCH_BUILD_NUMBER` that can be used to determine
-the correct build number. In this particular case, we need to replace the
+the correct revision number. In this particular case, we need to replace the
 `USR_DBFLAGS` line above with the following.
 
 ```make
@@ -249,7 +249,7 @@ USR_DBFLAGS += -I $(E3_SITEMODS_PATH)/std/$(call FETCH_BUILD_NUMBER,$(E3_SITEMOD
 ```
 
 which will take the specified version (`3.6.2` in this case) and add the correct
-build number.
+revision number.
 
 ### Checking if everything is ok
 
