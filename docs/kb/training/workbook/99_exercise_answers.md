@@ -401,6 +401,12 @@ None
    Note how the same commands are used, the only changes are in the values of
    the variables so that the port name and PV names are unique.
 
+   You can run another instance of lewis on a separate port with:
+
+   ```console
+   lewis -k lewis.examples example_motor -p "stream: {bind_address: localhost, port: 9000}"
+   ```
+
 ## 5. Anatomy of an e3 module
 
 ### Exercises
@@ -611,17 +617,14 @@ every module.
 * The expression `require stream` in your startup script will load the *highest
   numerical version* available. So if you have the following versions installed
 
-<!-- TODO: update this exercise. The way everything is phrased it does exactly
-the right thing, which is not what we want! -->
-
   ```console
   [iocuser@host:e3-stream]$ make existent LEVEL=1
   /epics/base-7.0.6.1/require/4.0.0/siteMods/stream
-  |-- 2.8.20+0
-  `-- 2.8.22+0
+  |-- 2.8.22+0
+  `-- 2.8.23+0
   ```
 
-  then `require stream` will load `2.8.22+0`.
+  then `require stream` will load `2.8.23+0`.
 
 * In the first and third cases, where you load *stream* `2.8.22`, then the
   version of *asyn* that is loaded is `4.42.0`. This can be seen in the output
@@ -650,18 +653,18 @@ the right thing, which is not what we want! -->
   ```console
   [iocuser@host:~]$ iocsh -r asyn -r stream
   # --- snip snip ---
-  equire asyn
-  Module asyn version 4.42.0+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/
-  Loading library /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/lib/linux-x86_64/libasyn.so
-  Loaded asyn version 4.42.0+0
-  Loading dbd file /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/dbd/asyn.dbd
-  Calling function asyn_registerRecordDeviceDriver
-  Loading module info records for asyn
-  require stream
-  Module stream version 2.8.18+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.18+0/
-  Module stream depends on asyn 4.41.0+0
-  Conflict between requested asyn version 4.41.0+0 and already loaded version 4.42.0+0.
-  Aborting startup script
+   require asyn
+   Module asyn version 4.42.0+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/
+   Loading library /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/lib/linux-x86_64/libasyn.so
+   Loaded asyn version 4.42.0+0
+   Loading dbd file /epics/base-7.0.6.1/require/4.0.0/siteMods/asyn/4.42.0+0/dbd/asyn.dbd
+   Calling function asyn_registerRecordDeviceDriver
+   Loading module info records for asyn
+   require stream
+   Module stream version 2.8.23+0 found in /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.23+0/
+   Module stream depends on asyn 4.41.0+0
+   Conflict between requested asyn version 4.41.0+0 and already loaded version 4.42.0+0.
+   Aborting startup script
   ```
 
   This is due to the order in which the modules are loaded. First, we load the
@@ -681,7 +684,7 @@ the right thing, which is not what we want! -->
   asyn 4.42.0+0
   calc 3.7.4+1
   pcre 8.44.0+0
-  [iocuser@host:~]$ cat /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.20+0/lib/linux-x86_64/stream.dep
+  [iocuser@host:~]$ cat /epics/base-7.0.6.1/require/4.0.0/siteMods/stream/2.8.23+0/lib/linux-x86_64/stream.dep
   # Generated file. Do not edit.
   asyn 4.41.0+0
   calc 3.7.4+1

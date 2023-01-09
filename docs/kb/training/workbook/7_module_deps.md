@@ -183,8 +183,8 @@ This will now allow us to update *StreamDevice*'s dependencies and install it
 properly. Save the following as `CONFIG_MODULE.local` in `e3-stream/configure/`:
 
 ```make
-EPICS_MODULE_TAG:=2.8.20
-E3_MODULE_VERSION:=2.8.20+0
+EPICS_MODULE_TAG:=2.8.22
+E3_MODULE_VERSION:=2.8.23+0
 ASYN_DEP_VERSION:=4.41.0
 ```
 
@@ -195,13 +195,13 @@ and then run
 [iocuser@host:e3-stream]$ make init patch build install
 [iocuser@host:e3-stream]$ make existent
 /epics/base-7.0.6.1/require/4.0.0/siteMods/stream
-|-- 2.8.20+0
-|   |-- dbd
-|   |-- include
-|   |-- lib
-|   |-- SetSerialPort.iocsh
-|   `-- stream_meta.yaml
 `-- 2.8.22+0
+    |-- dbd
+    |-- include
+    |-- lib
+    |-- SetSerialPort.iocsh
+    `-- stream_meta.yaml
+`-- 2.8.23+0
     |-- dbd
     |-- include
     |-- lib
@@ -214,8 +214,8 @@ be loaded; this is a minimal test that a module must pass! You can do this by
 running any of the following:
 
 ```console
+[iocuser@host:~]$ iocsh -r stream,2.8.23
 [iocuser@host:~]$ iocsh -r stream,2.8.22
-[iocuser@host:~]$ iocsh -r stream,2.8.20
 [iocuser@host:~]$ iocsh -r stream
 ```
 
@@ -224,9 +224,6 @@ running any of the following:
 * Which version does the last one load, and why?
 * Which version of *asyn* is loaded in each case?
 * What happens if you run either of the following?
-
-<!-- TODO: update this exercise. The way everything is phrased it does exactly
-the right thing, which is not what we want! -->
 
   ```console
   [iocuser@host:~]$ iocsh -r stream -r asyn
@@ -289,6 +286,12 @@ require stream
 
 The resulting startup script will be much more maintainable over time and less
 prone to errors when new module versions are installed.
+
+To clean up the previous changes to your EPICs environment, you can run:
+
+```console
+[iocuser@host:e3-stream]$ make uninstall
+```
 
 :::{admonition} Exercise
 Suppose that your IOC starts fine today with the startup script
@@ -358,12 +361,7 @@ at the [underlying module](https://gitlab.esss.lu.se/epics-modules/fug), you can
 see that it includes such a protocol file,
 [fug.proto](https://gitlab.esss.lu.se/epics-modules/fug/-/tree/master/fugApp/Db).
 
-1. Clone the e3 wrapper above, and build and install it. Alternatively, `e3-fug`
-   is included in one of the groups that can be installed with `e3.bash`.
-
-   * Which group is it?
-   * What are the advantages of installing it as a group versus as a single module?
-
+1. Clone the e3 wrapper above, and build and install it.
 2. Look through temporary build files. Can you see where *stream* is referenced
    there?
 3. How did `e3-fug` know that *StreamDevice* is a dependency? Hint: The

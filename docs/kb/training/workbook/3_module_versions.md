@@ -25,7 +25,7 @@ be aware of these and their difference(s). Please remember that e3 is a
 configuration tool around EPICS, and that we thus have some variables which are
 unique to e3.
 
-Make sure you are in **E3_TOP**
+Make sure you have activated an e3 environment.
 
 :::{note}
 We will reiterate starting directory a few more times, but please pay attention
@@ -36,10 +36,22 @@ to the current working directory in the command prompt:
 Clone `e3-stream` and switch to that directory, and then run `make vars`:
 
 ```console
-[iocuser@host:~]$ git clone --recursive https://gitlab.esss.lu.se/e3/wrappers/communication/e3-stream.git
+[iocuser@host:~]$ git clone --recursive https://gitlab.esss.lu.se/e3/wrappers/e3-stream.git
 [iocuser@host:~]$ cd e3-stream
 [iocuser@host:e3-stream]$ make vars
 ```
+
+:::{tip}
+If you have installed to the `~/epics` location, you will have to add a file
+`configure/RELEASE.local` with the line:
+
+```console
+EPICS_BASE:=~/epics/base-7.0.6.1
+```
+
+Or you can add it to the directory above the e3-stream folder, and then it will
+apply to any module you clone in that parent directory.
+:::
 
 The variables of interest here are:
 
