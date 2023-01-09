@@ -23,7 +23,7 @@ You will also need to install the
 used to simulate a device that your IOC will communicate with.
 
 ```console
-[iocuser@host:~]$ pip install lewis
+[iocuser@host:~]$ pip3 install --user lewis
 ```
 
 To start the simulator, open another terminal and run
@@ -39,6 +39,15 @@ To start the simulator, open another terminal and run
 ```
 
 This will start the simulator running, which you can then test with `telnet` via
+
+:::{note}
+You may need to install telnet with
+
+```console
+sudo yum install telnet -y
+```
+
+:::
 
 ```console
 [iocuser@host:~]$ telnet 127.0.0.1 9999
@@ -158,8 +167,23 @@ Execute the next script:
 
 Start with typing `dbl` at the IOC prompt in order to see a full list of the
 IOC's PVs. Within those PVs should be a *heartbeat* PV, named something like
-`IOC-80159276:IocStats:HEARTBEAT`. Fetch its value: ```console localhost-1593 >
-dbpr IOC-80159276:IocStat:HEARTBEAT DBF_DOUBLE:         29 ``` Then fetch it
+`IOC-29051174:IocStat:HEARTBEAT`. Fetch its value:
+
+```console
+localhost-1593 > dbpr IOC-29051174:IocStat:HEARTBEAT
+A   : 40            AMSG:               ASG :               B   : 0
+C   : 0             CALC: (A<2147483647)?A+1:1              D   : 0
+DESC: 1 Hz counter since startup        DISA: 0             DISP: 0
+DISV: 1             DLYA: 0             E   : 0             F   : 0
+G   : 0             H   : 0             I   : 0             J   : 0
+K   : 0             L   : 0             NAME: IOC-29051174:IocStat:HEARTBEAT
+NAMSG:              OCAL: 0             OEVT:               OVAL: 41
+POVL: 41            PVAL: 41            SEVR: NO_ALARM      STAT: NO_ALARM
+TPRO: 0             VAL : 41
+
+```
+
+Then fetch it
 again.
 
 * What does this represent? How can the heartbeat of the IOC, much like a real

@@ -78,7 +78,7 @@ dbLoadRecords("$(linconv_DB)/linconv.db")
 Let us try run this and see what happens.
 
 ```console
-[iocuser@host:e3-linconv]$ iocsh -l cellMods st.cmd
+[iocuser@host:e3-linconv]$ iocsh st.cmd
 # --- snip snip ---
 require linconv
 Module linconv version master found in cellMods/base-7.0.6.1/require-4.0.0/linconv/master/
@@ -278,6 +278,3 @@ generated `pid.db` file.
 2. Where is `FETCH_BUILD_NUMBER` defined?
 3. Can you think of another way to load the records in the `.substitutions` file
    that does not involve the build-time database expansion?
-4. Find which modules arise as run-time dependencies for the modules in the `ps`
-   group (installed with `e3.bash -s mod`). Can you identify why they are
-   run-time and not build-time dependencies?

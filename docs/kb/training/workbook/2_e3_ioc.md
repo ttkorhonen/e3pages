@@ -126,7 +126,7 @@ If the IOC starts up correctly then do the following:
 5. Check the heartbeat of your IOC.
 
    ```console
-   [iocuser@host:~]$ camonitor ${IOCNAME}:HEARTBEAT
+   [iocuser@host:~]$ camonitor IOC-9999:HEARTBEAT
    ```
 
 ## Play around with the example IOC

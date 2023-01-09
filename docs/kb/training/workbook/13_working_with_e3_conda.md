@@ -606,18 +606,23 @@ Use the `e3-recipe` alias to create a new recipe (refer to
 [cookiecutter_configuration] to create this alias).  You'll be prompted to
 enter some values. Press enter to keep the default.
 
+:::note
+You can use your own module, as created above or earlier if you have uploaded
+it to your own repository. Here we use `fakemodule` as a working example.
+:::
+
 ```console
 [iocuser@host:dev]$ e3-recipe
 company [European Spallation Source ERIC]:
-module_name [mymodule]: foo
-summary [EPICS foo module]:
+module_name [mymodule]: fakemodule
+summary [EPICS fakemodule module]:
 Select module_kind:
 1 - ESS
 2 - ESS-WP12
 3 - Community
 Choose from 1, 2, 3 [1]:
-module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/test-subgroup
-module_version [1.0.0]: 0.1.0
+module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/training/fakemodule
+module_version [1.0.0]: 1.0.0
 ```
 
 The `module_home` variable shall point to the group in GitLab where your module
@@ -626,8 +631,8 @@ is stored.
 This will create the following project:
 
 ```console
-[iocuser@host:dev]$ tree foo-recipe/
-foo-recipe/
+[iocuser@host:dev]$ tree fakemodule-recipe/
+fakemodule-recipe/
 ├── LICENSE
 ├── README.md
 └── recipe

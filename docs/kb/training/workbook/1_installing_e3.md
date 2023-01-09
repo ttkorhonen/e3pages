@@ -1,10 +1,13 @@
 # 1. Installing e3
 
+It's recommended to first read the [design documents](../../../design/1_intro.md)
+before following this training.
+
 ## Lesson overview
 
 In this lesson, you'll learn how to do the following:
 
-* Download e3 using git.
+* Download e3 from the ESS artifactory using pip.
 * Install an e3 environment using `e3-build`
 * Test your installation
 
@@ -26,7 +29,7 @@ cannot currently be natively installed for Windows or MacOS.
 
 :::{note}
 As e3 heavily relies on git, it is recommended to first be familiar with git,
-and especially git submodules.
+and especially [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 :::
 
 If you are on a mostly blank CentOS7 machine, you can copy, paste, and run the
@@ -39,14 +42,13 @@ e3.[^prereqpkg]
 
 ---
 
-Start by downloading e3 from GitLab. For the purposes of this documentation, we
-will be using the latest (v1.1.0) of e3.
+Start by downloading e3 from the artifactory.
 
 ```console
 [iocuser@host:~]$ pip3 install --user e3 -i https://artifactory.esss.lu.se/artifactory/api/pypi/pypi-virtual/simple
 ```
 
-This will install a number of utilities, most imporantly `e3-build` which will
+This will install a number of utilities, most importantly `e3-build` which will
 allow you to install an e3 environment on your local machine.
 
 ## Selecting a specification
@@ -85,22 +87,17 @@ list of modules, or `specifications/2022q1-full.yml` for a full one.
 
 ## Building an e3 environment
 
-Once you have selected a specification, you can build it via
+:::{note}
+You can install epics where you want. The normal side-wide location is `/epics`
+which the rest of the tutorial expects as the location. For user installs
+`~/epics` is a better location.
+:::
+
+To build EPICS run the following command.
 
 ```console
-[iocuser@host:specifications]$ e3-build -t /opt/epics specifications/2022q1-core.yml
+[iocuser@host:specifications]$ e3-build -t ~/epics specifications/2022q1-core.yml
 ```
-
-The main option to pass is `-t /path/to/install/location` to specify the target
-install location. Typical paths for EPICS installations tend to be `/epics` or
-`/opt/epics`. For this tutorial series, we will assume that it is installed at
-the default `/epics`.
-
-:::{note}
-You will of course have to have permission to write in this location. You can
-either run the above command as `sudo` (not recommended) or change the ownership
-of the target location, or even just install it to `/home/myuser/epics`.
-:::
 
 EPICS base takes some time to build, so once you have run the above command,
 it is a good time to go and get a coffee.
@@ -191,9 +188,9 @@ You can test any of these modules by running, for example,
 
 ## Assignments
 
-1. Develop some understanding of how GNU Make and Makefiles work. The standard
-   reference for GNU make is
-   [here](https://www.gnu.org/software/make/manual/html_node/index.html).
+1. Develop some understanding of how
+  [GNU Make](https://www.gnu.org/software/make/manual/html_node/index.html)
+  and Makefiles work.
 2. Develop some understanding of how git submodules work.
 3. How are git submodules are used in e3?
 4. Install both EPICS base 7.0.5 and 7.0.6.1 (separately) on your host using two

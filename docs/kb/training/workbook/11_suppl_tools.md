@@ -44,6 +44,15 @@ background while opening up either a`telnet` connection at a specified port or a
 Unix Domain Socket in order to allow users to communicate with the process. For
 more information, see its [documentation](https://linux.die.net/man/1/procserv).
 
+:::{note}
+You may need to install it with:
+
+```console
+[iocuser@host:~]$ sudo yum install -y procServ
+```
+
+:::
+
 Let us create a `procServ` container for a blank IOC using `iocsh` and
 listening on port 2000, which we will then connect to via `telnet`. First, start
 the `procServ` container:
