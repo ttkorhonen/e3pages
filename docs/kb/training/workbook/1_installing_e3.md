@@ -82,8 +82,7 @@ One can obtain the official specifications used at ESS by cloning the following
 [iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/specifications.git
 ```
 
-The latest environment is either `specifications/2022q1-core.yml` for a shorter
-list of modules, or `specifications/2022q1-full.yml` for a full one.
+The latest environment is `specifications/2022q1.yml`.
 
 ## Building an e3 environment
 
@@ -96,7 +95,7 @@ which the rest of the tutorial expects as the location. For user installs
 To build EPICS run the following command.
 
 ```console
-[iocuser@host:specifications]$ e3-build -t ~/epics specifications/2022q1-core.yml
+[iocuser@host:specifications]$ e3-build -t ~/epics specifications/2022q1.yml
 ```
 
 EPICS base takes some time to build, so once you have run the above command,
