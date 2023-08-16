@@ -192,8 +192,8 @@ You can test any of these modules by running, for example,
   and Makefiles work.
 2. Develop some understanding of how git submodules work.
 3. How are git submodules are used in e3?
-4. Install both EPICS base 7.0.5 and 7.0.6.1 (separately) on your host using two
-   of the specifications included.
+4. Install both EPICS base `7.0.5` and `7.0.6.1` (separately) on your host
+   using two of the specifications included.
 
 [^prereqpkg]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package.
   It can be found at:

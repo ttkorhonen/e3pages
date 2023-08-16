@@ -196,7 +196,7 @@ stream                        2.8.10      hbaf0b60_1  conda-e3-virtual
 stream                        2.8.22      h74e095f_2  conda-e3-virtual
 ```
 
-Let's switch to 2.8.10
+Let's switch to `2.8.10`
 
 ```console
 (epics) [iocuser@host:~]$ conda install stream=2.8.10
@@ -233,7 +233,7 @@ The following packages will be DOWNGRADED:
 
 ```
 
-Let's now create a separate environment with EPICS Base 3.15. Note that this is
+Let's now create a separate environment with EPICS Base `3.15`. Note that this is
 only as an example. EPICS Base  3 isn't supported anymore at ESS. You should use
 EPICS 7.  This is to demonstrate you can work on separate environments with
 different EPICS Base  version.
@@ -358,8 +358,8 @@ dependencies:
   - require >=3.1.4,<3.2.0a0
 ```
 
-You can see above that the first package was compiled with EPICS Base  3.15.5 and
-the last with EPICS Base  7.0.6.1. The last one also has `calc` has run
+You can see above that the first package was compiled with EPICS Base  `3.15.5` and
+the last with EPICS Base  `7.0.6.1`. The last one also has `calc` has run
 dependency.
 
 Note that conda package names are always **lowercase**. When searching or
