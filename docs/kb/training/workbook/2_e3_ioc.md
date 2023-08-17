@@ -18,7 +18,7 @@ the current terminal. When you install *require*, it will install an activation
 script called `setE3Env.bash`. To activate the environment, you must source the
 relevant `setE3Env.bash`.
 
-Using a default configuration (presently EPICS base 7.0.6.1 with *require* 4.0.0
+Using a default configuration (presently EPICS base `7.0.6.1` with *require* `4.0.0`
 installed at `/epics`) the full path for this script would then be
 `/epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash`. For other versions of
 base and require, you simply have to change this path, allowing one to easily
@@ -30,8 +30,8 @@ switch between environments. For example:
 ```
 
 The two commands will load environments for two separate versions of EPICS base
-(7.0.6.1, 7.0.5) and require (4.0.0, 3.4.1), respectively. This assumes that both
-environments have been installed.
+(`7.0.6.1`, `7.0.5`) and require (`4.0.0`, `3.4.1`), respectively. This assumes
+that both environments have been installed.
 
 ## Run an example IOC
 

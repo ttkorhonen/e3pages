@@ -32,7 +32,7 @@ is known as *local mode*, and will be discussed more in-depth later.
 
 As described in [Chapter 3](3_module_versions.md), an e3 module wrapper links to
 a specific commit in a source repository. This allows us to build, for example,
-*StreamDevice* 2.8.22 at one point, and to later build a newer version by simply
+*StreamDevice* `2.8.22` at one point, and to later build a newer version by simply
 changing a few lines in the configuration files.
 
 ## Directory anatomy
@@ -228,8 +228,8 @@ index 0735f5598..3977a6a03 100644
 which modifies the default EPICS build rules in order for e3 to build properly.
 
 :::{note}
-While the EPICS community use `p0` files for base 3.15.5, and `p1` files for
-base 3.16.x, e3 only supports use of `p0` files for compatibility reasons.
+While the EPICS community use `p0` files for base `3.15.5`, and `p1` files for
+base `3.16.x`, e3 only supports use of `p0` files for compatibility reasons.
 <!-- TODO: Figure out what the story behind this is. -->
 :::
 
@@ -309,7 +309,7 @@ If you want to create a patch file for an e3 module, run `git diff --no-prefix >
 [iocuser@host:iocstats]$ git diff --no-prefix > ../patch/Site/3.1.16+4/add_more_stats.p0.patch
 ```
 
-Make sure that the patch file name is installed in the correct directory (3.1.16+4,
+Make sure that the patch file name is installed in the correct directory (`3.1.16+4`,
 from `CONFIG_MODULE`) and a useful description, and make sure that you update the
 `HISTORY.md` file explaining the purpose and role of the patch.
 

@@ -112,7 +112,7 @@ What is the purpose of creating the `CONFIG_MODULE.local` file? Why do we modify
 ## Updating a dependency
 
 Suppose that for some reason (perhaps due critical bugs in an IOC or some other
-reason) we need to downgrade from *StreamDevice* 2.8.22 to 2.8.20. When updating
+reason) we need to downgrade from *StreamDevice* `2.8.22` to `2.8.20`. When updating
 a dependency, we also have to consider all of its dependencies (*asyn*, *pcre*,
 and *calc* in this case), although we will focus only on *asyn*.
 
@@ -135,7 +135,7 @@ If the old version of *StreamDevice* is not compatible with *asyn*, then you
 will need to install a different version of *asyn* in the current e3 environment.
 The procedure for that is also the same as in [Chapter 3](3_module_versions.md).
 We can start by checking the current version and seeing what is installed, and
-then installing the necessary version (4.41.0)
+then installing the necessary version (`4.41.0`)
 
 ```console
 [iocuser@host:e3-asyn]$ make vars # Check the current version
@@ -255,8 +255,8 @@ versions) when `require stream` occurs during IOC startup. In that sense,
 
 If there are any conflicts in this process, then *require* will shut the IOC
 down. This is what happens when you run `iocsh -r asyn -r stream` above:
-since no version is specified for *asyn*, the latest version (4.42.0) is loaded.
-Then when *StreamDevice* is loaded, it depends on *asyn* 4.42.0. The loaded
+since no version is specified for *asyn*, the latest version (`4.42.0`) is loaded.
+Then when *StreamDevice* is loaded, it depends on *asyn* `4.42.0`. The loaded
 version of *asyn* and the requested version of *asyn* differ, so *require* shuts
 the IOC down.
 
@@ -264,7 +264,7 @@ This is a sneak-preview of so-called *dependency hell*; in this case, the
 solution is simple. Since *asyn* is only really being loaded due to
 *StreamDevice*'s dependency, the solution is to only load *StreamDevice*
 directly and let it take care of loading the correct version of *asyn*. However,
-what happens if you need to use *StreamDevice*, which depends on *asyn* 4.42.0,
+what happens if you need to use *StreamDevice*, which depends on *asyn* `4.42.0`,
 and a version of *modbus* which depends on a different version of *asyn*?
 
 In general the best practice when writing a startup script for an IOC is only to
