@@ -19,7 +19,6 @@
 ## What architectures to build
 
 * `EXCLUDE_ARCHS` - Architectures to skip
-* `ARCH_FILTER` - Architectures to restrict build to
 
 ## Module dependencies
 
