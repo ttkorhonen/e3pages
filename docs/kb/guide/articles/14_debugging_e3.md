@@ -2,15 +2,16 @@
 
 # Debugging e3
 
-EPICS base comes with build system which creates two artifacts when for
-x86_64 machines, one is the normal build with `-O3` optimization for production,
-and another with GCC debugging option `-g` turned on to export debugging
-symbols in the result object to facilitate debugging. With these, variable
-and function names will be available when debugging with GDB or valgrind.
+The e3 build system is configured to build two "architectures" for x86_64
+machines: one is the normal linux-x86_64 with `-O3` optimization for production,
+and another (linux-x86_64-debug) with GCC debugging option `-g` turned on to
+export debugging symbols in the result object to facilitate debugging. With
+these, variable and function names will be available when debugging with GDB or
+valgrind.
 
 Inside `$EPICS_BASE/lib`  directory you'll see a `linux-x86_64-debug` artifact
 if EPICS with debug options target was built. This default in for environments
-4.0.0/7.0.6.1 onwards.
+7.0.6.1/4.0.0 onwards.
 
 ## Using the debug artifact
 
@@ -39,14 +40,14 @@ with `-dg` other options as `-l` and `-r` works as expected. Which is an useful
 way to debug modules.
 
 ```console
-$ iocsh -dv -l='/path/to/myModule' -r myModule
+$ iocsh -dg -l='/path/to/myModule' -r myModule
 ```
 
-It's possible to debug the EPICS base by calling iocsh under GDB without a
+It's possible to debug EPICS base by calling iocsh under GDB without a
 startup script or `-r` will run softIocPVA alone.
 
 ```console
-$ iocsh -dv [--dvarg='any-valgrind-options']
+$ iocsh -dg [--dgarg='any-gdb-options']
 ```
 
 ## Running an IOC under valgrind
@@ -66,7 +67,7 @@ useful way to debug modules.
 $ iocsh -dv -l='/path/to/myModule' -r myModule
 ```
 
-It's possible to debug the EPICS base by calling iocsh under valgrind without a
+It's possible to debug EPICS base by calling iocsh under valgrind without a
 startup script or `-r` will run softIocPVA alone.
 
 ```console
