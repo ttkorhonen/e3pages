@@ -26,15 +26,14 @@ more about conda concepts in the official
 
 To install conda, we'll use the
 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.  The only
-requirements to run the installation are `bzip2` and `curl`.
+requirements to run the installation are `bzip2` and `wget`.
 
 ```console
-curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -bp $HOME/miniconda
-rm -f Miniconda3-latest-Linux-x86_64.sh
-# Let conda update your ~/.bashrc
-source $HOME/miniconda/bin/activate
-conda init
+$ mkdir -p ~/miniconda3
+$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+$ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+$ rm -rf ~/miniconda3/miniconda.sh
+$ ~/miniconda3/bin/conda init bash
 ```
 
 You can refer to the [official
@@ -47,7 +46,7 @@ The installer might not come with the latest available version of conda. After
 installation you should update conda:
 
 ```console
-conda update -y -c conda-forge -n base conda
+$ conda update -y -c conda-forge -n base conda
 ```
 
 To check the version of conda installed, run:
@@ -65,7 +64,7 @@ If you don't want conda to activate the base environment by default (and modify
 your `PATH`), you should run:
 
 ```console
-conda config --set auto_activate_base false
+$ conda config --set auto_activate_base false
 ```
 
 All e3 packages are available on [ESS
@@ -75,9 +74,9 @@ the default `channel_alias`.  To work with e3, you have to use the
 `conda-e3-virtual` channel:
 
 ```console
-conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
-conda config --add channels conda-e3-virtual
-conda config --remove channels defaults
+$ conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
+$ conda config --add channels conda-e3-virtual
+$ conda config --remove channels defaults
 ```
 
 Conda 4.7 introduced a new [.conda package
@@ -119,22 +118,6 @@ conda install -y -n base -c conda-forge conda-build
 ```{note}
 The base environment shall be writeable by the current user to run this command.
 ```
-
-Download the
-[conda_build_config.yaml](https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/blob/master/conda_build_config.yaml)
-file from the [e3-pinning
-repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).  You should save
-it at the root of your home directory.
-
-```console
-[iocuser@host:~]$ cd
-[iocuser@host:~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  2960  100  2960    0     0   7750      0 --:--:-- --:--:-- --:--:--  7748
-```
-
-This file defines the default version of each dependency to use.
 
 ## Conda usage
 
