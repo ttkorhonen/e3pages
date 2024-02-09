@@ -62,12 +62,6 @@ the standard EPICS module to be made available for community
 usage, or for the module to be used with both conda and without).
 :::
 
-:::{tip}
-Embedded file-trees---"coupled" modules---are recommended for ESS-developed
-modules that the community would have no use of, and that do not need to
-be distributed also with conda.
-:::
-
 It should be noted that non-used directories in the above structure should be
 removed; e.g. if there are no patch-files, `patch/*` should be deleted.
 
