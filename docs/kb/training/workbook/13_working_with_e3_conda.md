@@ -58,8 +58,11 @@ The following NEW packages will be INSTALLED:
   # --- snip snip ---
 ```
 
-Note that conda will automatically choose the most recent version of
-epics-base from the conda-e3-virtual channel.
+Note tconda will automatically select the latest version of `epics-base`
+from the conda-e3-virtual channel. This selection will be made in a manner
+that ensures compatibility with the rest of the packages, including,
+for example, the `stream` package.
+
 As you see, it will download all the required dependencies to install the
 requested packages. To start working in this environment, just activate it. The
 name of the active environment will be displayed in your prompt. You can then
