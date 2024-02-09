@@ -4,7 +4,7 @@
 
 ## Package management
 
-A built EPICS module is nothing more executable and linkable files,
+A built EPICS module is nothing more than executable and linkable files,
 data files (like database files or snippets), and metadata. An EPICS module
 prior to being built is composed of files to generate the built files. The
 act of installing is just to copy built files into a specific location; typically

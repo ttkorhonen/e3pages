@@ -82,8 +82,6 @@ One can obtain the official specifications used at ESS by cloning the following
 [iocuser@host:~]$ git clone https://gitlab.esss.lu.se/e3/specifications.git
 ```
 
-The latest environment is `specifications/2022q1.yml`.
-
 ## Building an e3 environment
 
 :::{note}
@@ -95,7 +93,7 @@ which the rest of the tutorial expects as the location. For user installs
 To build EPICS run the following command.
 
 ```console
-[iocuser@host:specifications]$ e3-build -t ~/epics specifications/2022q1.yml
+[iocuser@host:specifications]$ e3-build -t ~/epics specifications/2023q1.yml
 ```
 
 EPICS base takes some time to build, so once you have run the above command,
@@ -105,19 +103,19 @@ it is a good time to go and get a coffee.
 
 Once the environment is built, you can activate the environment (similar to
 activating a python virtual environment or a conda environment) using the
-shell script `setE3Env.bash` which is installed with the new environment.
+shell script `activate` which is installed with the new environment.
 
 ```console
-[iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
+[iocuser@host:~]$ source /epics/base-7.0.7/require/5.0.0/bin/activate
 
 Set the ESS EPICS Environment as follows:
-THIS Source NAME    : setE3Env.bash
-THIS Source PATH    : /epics/base-7.0.6.1/require/4.0.0/bin
-EPICS_BASE          : /epics/base-7.0.6.1
+THIS Source NAME    : activate
+THIS Source PATH    : /epics/base-7.0.7/require/5.0.0/bin
+EPICS_BASE          : /epics/base-7.0.7
 EPICS_HOST_ARCH     : linux-x86_64
-E3_REQUIRE_LOCATION : /epics/base-7.0.6.1/require/4.0.0
-PATH                : /epics/base-7.0.6.1/require/4.0.0/bin:/epics/base-7.0.6.1/bin/linux-x86_64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/iocuser/.local/bin:/home/iocuser/bin
-LD_LIBRARY_PATH     : /epics/base-7.0.6.1/lib/linux-x86_64:/epics/base-7.0.6.1/require/4.0.0/lib/linux-x86_64
+E3_REQUIRE_LOCATION : /epics/base-7.0.7/require/5.0.0
+PATH                : /epics/base-7.0.7/require/5.0.0/bin:/epics/base-7.0.7/bin/linux-x86_64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/iocuser/.local/bin:/home/iocuser/bin
+LD_LIBRARY_PATH     : /epics/base-7.0.7/lib/linux-x86_64:/epics/base-7.0.7/require/5.0.0/lib/linux-x86_64
 
 Enjoy E3!
 ```
@@ -132,16 +130,16 @@ You can now test that this worked by starting an IOC:
 epicsEnvSet REQUIRE_IOC "REQMOD:host-15636"
 #
 # Enable an exit subroutine for sotfioc
-dbLoadRecords "/epics/base-7.0.6.1/db/softIocExit.db" "IOC=REQMOD:host-15636"
+dbLoadRecords "/epics/base-7.0.7/db/softIocExit.db" "IOC=REQMOD:host-15636"
 #
 # Set E3_IOCSH_TOP for the absolute path where iocsh is executed.
 epicsEnvSet E3_IOCSH_TOP "/home/iocuser/specifications"
 #
 #
-# Load require module, which has the version 4.0.0
+# Load require module, which has the version 5.0.0
 #
-dlload /epics/base-7.0.6.1/require/4.0.0/lib/linux-x86_64/librequire.so
-dbLoadDatabase /epics/base-7.0.6.1/require/4.0.0/dbd/require.dbd
+dlload /epics/base-7.0.7/require/5.0.0/lib/linux-x86_64/librequire.so
+dbLoadDatabase /epics/base-7.0.7/require/5.0.0/dbd/require.dbd
 require_registerRecordDeviceDriver
 Loading module info records for require
 #
@@ -152,7 +150,7 @@ epicsEnvSet IOCSH_PS1 "host-15636 > "
 iocInit
 Starting iocInit
 ############################################################################
-## EPICS R7.0.6.1-E3-7.0.6.1-patch
+## EPICS R7.0.7-E3-7.0.7-patch
 ## Rev. 2022-03-09T15:26+0100
 ############################################################################
 iocRun: All initialization complete
@@ -164,14 +162,14 @@ Exit the IOC by typing `exit` at the console.
 You can see which modules and versions have been installed by running
 
 ```console
-[iocuser@host:~]$ ls /epics/base-7.0.6.1/require/4.0.0/siteMods/*
-/epics/base-7.0.6.1/require/4.0.0/siteMods/adcore:
+[iocuser@host:~]$ ls /epics/base-7.0.7/require/5.0.0/siteMods/*
+/epics/base-7.0.7/require/5.0.0/siteMods/adcore:
 3.12.1+0
 
-/epics/base-7.0.6.1/require/4.0.0/siteMods/adsupport:
+/epics/base-7.0.7/require/5.0.0/siteMods/adsupport:
 1.10.0+0
 
-/epics/base-7.0.6.1/require/4.0.0/siteMods/asyn:
+/epics/base-7.0.7/require/5.0.0/siteMods/asyn:
 4.42.0+0
 
 # --- snip snip ---
@@ -192,8 +190,8 @@ You can test any of these modules by running, for example,
   and Makefiles work.
 2. Develop some understanding of how git submodules work.
 3. How are git submodules are used in e3?
-4. Install both EPICS base `7.0.5` and `7.0.6.1` (separately) on your host
-   using two of the specifications included.
+4. Install multiple EPICS base versions - e.g. `7.0.5` and `7.0.7`
+  (separately) - on your host using two of the specifications included.
 
 [^prereqpkg]: `ethercat-generic-dkms-1.5.2.ESS1-1` is an ESS internal package.
   It can be found at:
