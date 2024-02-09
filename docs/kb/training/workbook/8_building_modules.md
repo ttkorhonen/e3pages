@@ -46,7 +46,7 @@ installed in an e3 environment:
 ```
 
 If `E3_SITEMODS_PATH` is not set, then you must of course first source the
-appropriate `setenv` or `setE3Env.bash`.
+appropriate environment using `activate`.
 
 In summary, e3's design is based on having *wrappers* as a front-end for EPICS
 modules. These can be thought of as storing metadata needed to build and deploy

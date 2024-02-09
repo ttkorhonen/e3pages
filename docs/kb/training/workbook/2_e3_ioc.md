@@ -15,29 +15,29 @@ In this lesson, you will learn how to do the following:
 In order to facilitate the development process, e3 supports using multiple EPICS
 environments. Such an environment consists of a collection of shell variables in
 the current terminal. When you install *require*, it will install an activation
-script called `setE3Env.bash`. To activate the environment, you must source the
-relevant `setE3Env.bash`.
+script called `activate` (previously `setE3Env.bash`). To activate the environment,
+you must source the relevant `activate` script.
 
-Using a default configuration (presently EPICS base `7.0.6.1` with *require* `4.0.0`
+Using a default configuration (presently EPICS base `7.0.7` with *require* `5.0.0`
 installed at `/epics`) the full path for this script would then be
-`/epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash`. For other versions of
+`/epics/base-7.0.7/require/5.0.0/bin/activate`. For other versions of
 base and require, you simply have to change this path, allowing one to easily
 switch between environments. For example:
 
 ```console
-[iocuser@host:~]$ source /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
+[iocuser@host:~]$ source /epics/base-7.0.7/require/5.0.0/bin/activate
 [iocuser@host:~]$ source /epics/base-7.0.5/require/3.4.1/bin/setE3Env.bash
 ```
 
 The two commands will load environments for two separate versions of EPICS base
-(`7.0.6.1`, `7.0.5`) and require (`4.0.0`, `3.4.1`), respectively. This assumes
+(`7.0.7`, `7.0.5`) and require (`5.0.0`, `3.4.1`), respectively. This assumes
 that both environments have been installed.
 
 ## Run an example IOC
 
 Starting an IOC in e3 is done by running the script `iocsh` which is
-installed with *require* at `/epics/base-7.0.6.1/require/4.0.0/bin/iocsh`. If
-you have sourced the correct `setE3Env.bash`, then this will be on `$PATH`.
+installed with *require* at `/epics/base-7.0.7/require/5.0.0/bin/iocsh`. If
+you have sourced an environment, then this will be on `$PATH`.
 `iocsh` is a wrapper to `softIocPVA` from EPICS base and takes a number of
 possible arguments, the most basic of which is a startup command file, which
 consists of a sequence of commands that will be executed by the IOC upon
@@ -50,7 +50,7 @@ The last line of the file must end in a newline or that line will not be execute
 ### The simplest example
 
 In order to run a very basic IOC, run the following command after sourcing
-`setE3Env.bash` as described above.
+an environment as described above.
 
 ```console
 [iocuser@host:~]$ iocsh
@@ -109,7 +109,7 @@ If the IOC starts up correctly then do the following:
 3. Open another terminal and source the same e3 configuration.
 
    ```console
-   [iocuser@host:~]$ . /epics/base-7.0.6.1/require/4.0.0/bin/setE3Env.bash
+   [iocuser@host:~]$ . /epics/base-7.0.7/require/5.0.0/bin/activate
    ```
 
    :::{note}
