@@ -72,3 +72,40 @@ startup script or `-r` will run softIocPVA alone.
 ```console
 $ iocsh -dv [--dvarg='any-valgrind-options']
 ```
+
+## Debugging a core file
+
+In case you want to debug a crash after it has happened, then we need to do two
+things:
+* Ensure that core dumps are being generated
+* Use `gdb` to investigate the core dump
+
+### Activating core dumps
+
+In order to activate core dumps, you need to ensure that the `ulimit -c` is set
+correctly. By default, this is set to 0 (do not produce core dumps), but it can
+be changed simply by running
+```console
+$ ulimit -S -c unlimited
+```
+You can choose a smaller limit, but if you do the core dump files might be
+truncated and thus miss some necessary data.
+
+
+### Running gdb on a core dump file
+
+Once a core file is generated, in order to expect you pass it as an argument to
+`gdb`:
+```console
+$ gdb --core=path/to/core/file --exec=path/to/softIocPVA
+```
+Some clarifications:
+* The core path is the location of the core file on disc. Depending on how you
+  have your system configured, the core dump file could end up in the current
+  working directory of the IOC, or possibly elsewhere; see
+  [core](https://man7.org/linux/man-pages/man5/core.5.html) for more details.
+* The path to `softIocPVA` is the location of the actual executable that was
+  running the IOC. For example, if your e3 environment is located at
+  `/opt/epics/base-7.0.7/require/5.0.0`, then you would pass
+  `--exec=/opt/epics/base-7.0.7/bin/linux-x86_64/softIocPVA`. This is necessary
+  in order to ensure that `gdb` knows what debug symbols to use.
