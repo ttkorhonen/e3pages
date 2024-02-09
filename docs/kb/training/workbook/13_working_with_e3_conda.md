@@ -6,7 +6,7 @@ In this lesson, you'll learn how to do the following:
 * Install new packages.
 * Create different environments for other epics versions.
 * Create, build and install an e3 module in a conda environment.
-* Create and build locally a e3-recipe
+* Create and build an e3-recipe locally.
 
 :::{note}
 This chapter contains detailed information as to work with conda and e3.
@@ -58,7 +58,7 @@ The following NEW packages will be INSTALLED:
   # --- snip snip ---
 ```
 
-Note tconda will automatically select the latest version of `epics-base`
+Note that conda will automatically select the latest version of `epics-base`
 from the conda-e3-virtual channel. This selection will be made in a manner
 that ensures compatibility with the rest of the packages, including,
 for example, the `stream` package.
@@ -236,7 +236,7 @@ recsync                   1.5.0                h910a07a_0    conda-e3-virtual
 require                   5.0.0                h426397f_5    conda-e3-virtual
 sequencer                 2.2.9                h910a07a_1    conda-e3-virtual
 sscan                     2.11.5               hdc5059e_2    conda-e3-virtual
-stream                    2.8.24               hbceeb4b_0    conda-e3-virtua
+stream                    2.8.24               hbceeb4b_0    conda-e3-virtual
 ```
 
 Let's say you want to switch to another version of stream. You could
@@ -518,7 +518,7 @@ foo/
 Notice the `foo.Makefile` file, this is the main file used to
 build and install a conda e3 module.  The standard `Makefile`
 allows you to compile the module using the default EPICS build
-system if you want. BHowever, to maintain the e3-module as closely
+system if you want. However, to maintain the e3-module as closely
 as possible to the EPICS vanilla mode, it is advisable to include
 `foo.Makefile` in the `.gitignore` file.
 
@@ -540,7 +540,7 @@ required:
 * `require`
 
 Create the `e3-dev` environment with those packages.  If you have other
-depencies, like `asyn`, install them as well.
+dependencies, like `asyn`, install them as well.
 
 ```console
 [iocuser@host:dev]$ conda create -y -n e3-dev epics-base require compilers make tclx
