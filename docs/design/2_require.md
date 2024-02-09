@@ -15,13 +15,12 @@ has been started.
 
 ## IOC startup
 
-IOC startup is run from the bash script `iocsh`, which is installed in
+IOC startup is run from the script `iocsh`, which is installed in
 `${E3_REQUIRE_LOCATION}/bin/iocsh`. This script generates a temporary
 startup script which is passed to `softIocPVA` from EPICS base. This temporary
 startup script:
 
 * Sets some environment variables, e.g. `${IOCSH_TOP}` and `${REQUIRE_IOC}`
-* Prints a list of EPICS environment variables into the startup log
 * Loads *require*
 * Initialises PVs to track which modules and versions are loaded
 
@@ -39,9 +38,8 @@ most common being:
   script.
 * `iocsh -c 'some command'`---Executes the command `some command` in the
   IOC shell.
-* `iocsh filename` -- If the file is a `.db` file, a `.dbd` file, a `.subs`
-  file, or a `.subst` file, then the file will be appropriately loaded at
-  startup.
+
+For a comprehensive list of flags and arguments, use `iocsh -h`.
 
 :::{note}
 If the command `iocInit` is not explicitly called in `st.cmd`, it will be
@@ -54,8 +52,6 @@ The file `st.cmd` above **must** have a newline at the end of the
 file---otherwise the last line will be ignored.
 :::
 
-Most of the functionality for this is contained in the file
-`tools/iocsh_functions` in the [require repository](https://gitlab.esss.lu.se/e3/e3-require).
 There are also *gdb* and *valgrind* options if you would like to run an IOC with
 either of those utilities. More information can be found at {ref}`debugging_e3`.
 
