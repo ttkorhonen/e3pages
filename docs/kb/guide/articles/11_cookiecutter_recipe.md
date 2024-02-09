@@ -126,5 +126,6 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
 
 5. If you put the conda-recipe repository in the group e3-recipes
    <https://gitlab.esss.lu.se/e3-recipes> this will trigger a build
-   with `.gitlab-ci` and make the release job button available to release a new or a first
-   version of the module in the Artifactory conda-e3 channel
+   with `.gitlab-ci` and make the release job button available to
+   release a new or a first version of the module in the Artifactory
+   conda-e3 channel
