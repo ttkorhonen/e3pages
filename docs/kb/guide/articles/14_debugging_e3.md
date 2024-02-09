@@ -50,6 +50,87 @@ startup script or `-r` will run softIocPVA alone.
 $ iocsh -dg [--dgarg='any-gdb-options']
 ```
 
+### Adding breakpoints
+
+To add breakpoints, you have two options.
+* Break out of the IOC into gdb and add a breakpoint
+* Start the IOC with a gdb startup script that defines the breakpoints
+
+If you are trying to debug the IOC's behaviour at runtime, then the first option
+works fine. If you want to debug anything during the IOC startup (or if you want
+to set the same series of breakpoints regularly), then the second option is
+best.
+
+To break out of the IOC shell and back into gdb, simply type `^C`:
+```console
+$ iocsh -dg st.cmd
+Warning: environment variable IOCNAME is not set.
+███████╗██████╗     ██╗ ██████╗  ██████╗    ███████╗██╗  ██╗███████╗██╗     ██╗
+██╔════╝╚════██╗    ██║██╔═══██╗██╔════╝    ██╔════╝██║  ██║██╔════╝██║     ██║
+█████╗   █████╔╝    ██║██║   ██║██║         ███████╗███████║█████╗  ██║     ██║
+██╔══╝   ╚═══██╗    ██║██║   ██║██║         ╚════██║██╔══██║██╔══╝  ██║     ██║
+███████╗██████╔╝    ██║╚██████╔╝╚██████╗    ███████║██║  ██║███████╗███████╗███████╗
+╚══════╝╚═════╝     ╚═╝ ╚═════╝  ╚═════╝    ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-120.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /epics/base-7.0.7/bin/linux-x86_64/softIocPVA...done.
+Starting program: /epics/base-7.0.7/bin/linux-x86_64/softIocPVA -D /epics/base-7.0.7/dbd/softIocPVA.dbd /tmp/systemd-private-e3-iocsh-simonrose/tmp.ZKEYHfKzvv_iocsh_5.0.0-PID-16905
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+[New Thread 0x7ffff4d3b700 (LWP 16930)]
+[Thread 0x7ffff4d3b700 (LWP 16930) exited]
+[Detaching after fork from child process 16931]
+
+################ snip snip snip ################
+
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R7.0.7-E3-7.0.7-patch
+## Rev. 2023-01-30T16:37+0000
+## Rev. Date build date/time:
+############################################################################
+[New Thread 0x7ffff7f63700 (LWP 16933)]
+[New Thread 0x7ffff432d700 (LWP 16934)]
+[New Thread 0x7ffff4d3b700 (LWP 16935)]
+
+################ snip snip snip ################
+
+[New Thread 0x7fffe5869700 (LWP 16960)]
+[New Thread 0x7fffe5668700 (LWP 16961)]
+[New Thread 0x7fffe5467700 (LWP 16962)]
+16905 >
+Program received signal SIGINT, Interrupt.
+0x00007ffff58c3b5d in read () from /lib64/libc.so.6
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-326.el7_9.x86_64 libgcc-4.8.5-44.el7.x86_64 libstdc++-4.8.5-44.el7.x86_64 ncurses-libs-5.9-14.20130511.el7_4.x86_64 readline-6.2-11.el7.x86_64
+(gdb)
+```
+From this point, you can then add breakpoints either at specific line numbers
+or at function calls, and continue the IOC running:
+```console
+(gdb) b db_event_enable
+Breakpoint 1 at 0x7ffff68da240: file ../db/dbEvent.c, line 520.
+(gdb) c
+Continuing
+```
+
+These breakpoint (or any other gdb commands) can be added to a script file to be
+loaded at startup, and then run via
+```console
+$ iocsh -dg --dgarg="-x <command_file> --args" st.cmd
+```
+Note that `--args` is supplied by default, but needs to be supplied extra here.
+
+For more information, see [gdb man page](https://man7.org/linux/man-pages/man1/gdb.1.html).
+
 ## Running an IOC under valgrind
 
 In the same way as GDB, the `-dv` argument will startup the IOC under valgrind.
