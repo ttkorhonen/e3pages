@@ -26,15 +26,14 @@ more about conda concepts in the official
 
 To install conda, we'll use the
 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installer.  The only
-requirements to run the installation are `bzip2` and `curl`.
+requirements to run the installation are `bzip2` and `wget`.
 
 ```console
-curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -bp $HOME/miniconda
-rm -f Miniconda3-latest-Linux-x86_64.sh
-# Let conda update your ~/.bashrc
-source $HOME/miniconda/bin/activate
-conda init
+$ mkdir -p ~/miniconda3
+$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+$ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+$ rm -rf ~/miniconda3/miniconda.sh
+$ ~/miniconda3/bin/conda init bash
 ```
 
 You can refer to the [official
