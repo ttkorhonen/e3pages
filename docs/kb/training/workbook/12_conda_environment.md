@@ -119,22 +119,6 @@ conda install -y -n base -c conda-forge conda-build
 The base environment shall be writeable by the current user to run this command.
 ```
 
-Download the
-[conda_build_config.yaml](https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/blob/master/conda_build_config.yaml)
-file from the [e3-pinning
-repository](https://gitlab.esss.lu.se/e3-recipes/e3-pinning).  You should save
-it at the root of your home directory.
-
-```console
-[iocuser@host:~]$ cd
-[iocuser@host:~]$ curl -LO https://gitlab.esss.lu.se/e3-recipes/e3-pinning/-/raw/master/conda_build_config.yaml
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  2960  100  2960    0     0   7750      0 --:--:-- --:--:-- --:--:--  7748
-```
-
-This file defines the default version of each dependency to use.
-
 ## Conda usage
 
 ### How to create a new environment
