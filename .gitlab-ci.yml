@@ -3,12 +3,11 @@ stages:
   - check
   - deploy
 
-run pre-commit:
-  tags:
-    - docker
-  stage: check
-  image: registry.esss.lu.se/ics-docker/pre-commit:latest
-  allow_failure: true
+include:
+  - project: "ics-infrastructure/gitlab-ci-yml"
+    file: "PreCommit.gitlab-ci.yml"
+
+run-pre-commit:
   script:
     - pre-commit run trailing-whitespace --all-files
     - pre-commit run end-of-file-fixer --all-files
