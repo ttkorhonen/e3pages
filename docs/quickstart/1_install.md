@@ -1,6 +1,6 @@
 # Installing e3
 
-Building a core e3 installation using standard tools is relatively straightforward.
+Building an e3 installation using standard tools is relatively straightforward.
 To see which modules are included in such an installation, see the contents of
 [2022q1](https://gitlab.esss.lu.se/e3/specifications/-/blob/main/specifications/2022q1.yml);
 more information will be provided below.
