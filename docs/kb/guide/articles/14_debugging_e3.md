@@ -53,6 +53,7 @@ $ iocsh -dg [--dgarg='any-gdb-options']
 ### Adding breakpoints
 
 To add breakpoints, you have two options.
+
 * Break out of the IOC into gdb and add a breakpoint
 * Start the IOC with a gdb startup script that defines the breakpoints
 
@@ -62,6 +63,7 @@ to set the same series of breakpoints regularly), then the second option is
 best.
 
 To break out of the IOC shell and back into gdb, simply type `^C`:
+
 ```console
 $ iocsh -dg st.cmd
 Warning: environment variable IOCNAME is not set.
@@ -113,8 +115,10 @@ Program received signal SIGINT, Interrupt.
 Missing separate debuginfos, use: debuginfo-install glibc-2.17-326.el7_9.x86_64 libgcc-4.8.5-44.el7.x86_64 libstdc++-4.8.5-44.el7.x86_64 ncurses-libs-5.9-14.20130511.el7_4.x86_64 readline-6.2-11.el7.x86_64
 (gdb)
 ```
+
 From this point, you can then add breakpoints either at specific line numbers
 or at function calls, and continue the IOC running:
+
 ```console
 (gdb) b db_event_enable
 Breakpoint 1 at 0x7ffff68da240: file ../db/dbEvent.c, line 520.
@@ -124,9 +128,11 @@ Continuing
 
 These breakpoint (or any other gdb commands) can be added to a script file to be
 loaded at startup, and then run via
+
 ```console
 $ iocsh -dg --dgarg="-x <command_file> --args" st.cmd
 ```
+
 Note that `--args` is supplied by default, but needs to be supplied extra here.
 
 For more information, see [gdb man page](https://man7.org/linux/man-pages/man1/gdb.1.html).
@@ -159,6 +165,7 @@ $ iocsh -dv [--dvarg='any-valgrind-options']
 
 In case you want to debug a crash after it has happened, then we need to do two
 things:
+
 * Ensure that core dumps are being generated
 * Use `gdb` to investigate the core dump
 
@@ -167,21 +174,25 @@ things:
 In order to activate core dumps, you need to ensure that the `ulimit -c` is set
 correctly. By default, this is set to 0 (do not produce core dumps), but it can
 be changed simply by running
+
 ```console
 $ ulimit -S -c unlimited
 ```
+
 You can choose a smaller limit, but if you do the core dump files might be
 truncated and thus miss some necessary data.
-
 
 ### Running gdb on a core dump file
 
 Once a core file is generated, in order to expect you pass it as an argument to
 `gdb`:
+
 ```console
 $ gdb --core=path/to/core/file --exec=path/to/softIocPVA
 ```
+
 Some clarifications:
+
 * The core path is the location of the core file on disc. Depending on how you
   have your system configured, the core dump file could end up in the current
   working directory of the IOC, or possibly elsewhere; see
