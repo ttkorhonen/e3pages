@@ -104,10 +104,9 @@ If you installed the above specification at `/opt/epics`, then this would be
 
 ## Installing an e3 module
 
-To install an existing e3 module in *deployment mode*,[^depmode] only a few
-steps are required. First clone the repository (we will use use the
-[*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps) module for
-this example):
+To install an existing e3 module, only a few steps are required. First clone the
+repository (we will use use the [*caenelfastps*](https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps)
+module for this example):
 
 ```console
 [iocuser@host:e3]$ git clone https://gitlab.esss.lu.se/e3/ps/e3-caenelfastps.git
@@ -164,5 +163,3 @@ to running `make init`.
   standard CentOS packages. For external users, one will need to add this
   repository to package manager’s repository-search-list to install this
   package.
-
-[^depmode]: More on this in the e3 tutorial.
