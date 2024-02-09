@@ -518,9 +518,9 @@ foo/
 Notice the `foo.Makefile` file, this is the main file used to
 build and install a conda e3 module.  The standard `Makefile`
 allows you to compile the module using the default EPICS build
-system if you want. However, to maintain the e3-module as closely
-as possible to the EPICS vanilla mode, it is advisable to include
-`foo.Makefile` in the `.gitignore` file.
+system if you want. It's important to emphasize that `foo.Makefile`
+should not be committed. To prevent commits of this file, it is
+recommended to add it to the `.gitignore file`.
 
 ## Update the module
 
