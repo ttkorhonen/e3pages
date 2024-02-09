@@ -663,12 +663,6 @@ make -f foo.Makefile MODULE=foo db_internal
 make -f foo.Makefile MODULE=foo install
 ```
 
-## Upload the module to GitLab
-
-You should upload your module to <https://gitlab.esss.lu.se/epics-modules>
-
-To distribute your module, you need to package it with conda.
-
 ## e3 recipe creation
 
 To package a module with conda, you have to create a conda recipe.
@@ -781,11 +775,3 @@ The following NEW packages will be INSTALLED:
 ```
 
 Activate your test environment and test your package.
-
-## Upload the recipe to GitLab
-
-Upload your recipe to <https://gitlab.esss.lu.se/e3-recipes>.
-GitLab CI will automatically build it and provide the necessary job action
-to release the package into the conda-e3-channel in the Artifactory.
-
-[cookiecutter_configuration]: 12_conda_environment.md#cookiecutter
