@@ -46,7 +46,7 @@ The installer might not come with the latest available version of conda. After
 installation you should update conda:
 
 ```console
-conda update -y -c conda-forge -n base conda
+$ conda update -y -c conda-forge -n base conda
 ```
 
 To check the version of conda installed, run:
@@ -64,7 +64,7 @@ If you don't want conda to activate the base environment by default (and modify
 your `PATH`), you should run:
 
 ```console
-conda config --set auto_activate_base false
+$ conda config --set auto_activate_base false
 ```
 
 All e3 packages are available on [ESS
@@ -74,9 +74,9 @@ the default `channel_alias`.  To work with e3, you have to use the
 `conda-e3-virtual` channel:
 
 ```console
-conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
-conda config --add channels conda-e3-virtual
-conda config --remove channels defaults
+$ conda config --set channel_alias https://artifactory.esss.lu.se/artifactory/api/conda
+$ conda config --add channels conda-e3-virtual
+$ conda config --remove channels defaults
 ```
 
 Conda 4.7 introduced a new [.conda package
