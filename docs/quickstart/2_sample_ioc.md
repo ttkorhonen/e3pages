@@ -34,11 +34,6 @@ To set correct PV names, the environment variable `$IOCNAME` must be set before
 starting your IOC. (where the easiest option is to just write
 `export IOCNAME=yourIocName` prior to starting the IOC).
 
-There should preferably also be a `README.md` documenting the controlled
-system(s), the host machine (if the IOC is running in a lab), and any other
-relevant information useful for future IOC maintainers. The IOC should be
-version controlled in the proper [subgroup](https://gitlab.esss.lu.se/ioc).
-
 Thus you may end up with something like the following:
 
 ### Directory
