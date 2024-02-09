@@ -5,6 +5,8 @@ In this lesson, you'll learn how to do the following:
 * Create a simple environment with epics.
 * Install new packages.
 * Create different environments for other epics versions.
+* Create, build and install an e3 module in a conda environment.
+* Create and build locally a e3-recipe
 
 :::{note}
 This chapter contains detailed information as to work with conda and e3.
@@ -38,96 +40,140 @@ The following NEW packages will be INSTALLED:
 
   _libgcc_mutex      conda-e3-virtual/linux-64::_libgcc_mutex-0.1-conda_forge
   _openmp_mutex      conda-e3-virtual/linux-64::_openmp_mutex-4.5-0_gnu
-  asyn               conda-e3-virtual/linux-64::asyn-4.41.0-h0468fb3_10
-  calc               conda-e3-virtual/linux-64::calc-3.7.1-h3f5c933_3
-  epics-base         conda-e3-virtual/linux-64::epics-base-7.0.6.1-h68659b9_4
+  asyn               conda-e3-virtual/linux-64::asyn-4.43.0-h3f0f509_0
+  calc               conda-e3-virtual/linux-64::calc-3.7.4-h0e1289a_0
+  epics-base         conda-e3-virtual/linux-64::epics-base-7.0.7-h68659b9_2
   libgcc-ng          conda-e3-virtual/linux-64::libgcc-ng-9.3.0-h2828fa1_19
   libgomp            conda-e3-virtual/linux-64::libgomp-9.3.0-h2828fa1_19
   libstdcxx-ng       conda-e3-virtual/linux-64::libstdcxx-ng-9.3.0-h6de172a_19
   libusb             conda-e3-virtual/linux-64::libusb-1.0.22-he1b5a44_0
   ncurses            conda-e3-virtual/linux-64::ncurses-6.1-hf484d3e_1002
-  pcre               conda-e3-virtual/linux-64::pcre-8.44-he1b5a44_0
+  pcre               conda-e3-virtual/linux-64::pcre-8.45-h9c3ff4c_0
   perl               conda-e3-virtual/linux-64::perl-5.26.2-h516909a_1006
   readline           conda-e3-virtual/linux-64::readline-8.0-hf8c457e_0
-  require            conda-e3-virtual/linux-64::require-3.1.4-hba1cc46_3
-  seq                conda-e3-virtual/linux-64::seq-2.2.7-hfba5578_2
-  sscan              conda-e3-virtual/linux-64::sscan-2.11.5-hd0a8fca_1
-  stream             conda-e3-virtual/linux-64::stream-2.8.22-h74e095f_2
+  require            conda-e3-virtual/linux-64::require-5.0.0-h426397f_5
+  sequencer          conda-e3-virtual/linux-64::sequencer-2.2.9-h910a07a_1
+  sscan              conda-e3-virtual/linux-64::sscan-2.11.5-hdc5059e_2
+  stream             conda-e3-virtual/linux-64::stream-2.8.24-hbceeb4b_0
   # --- snip snip ---
 ```
 
+Note that conda will automatically choose the most recent version of
+epics-base from the conda-e3-virtual channel.
 As you see, it will download all the required dependencies to install the
 requested packages. To start working in this environment, just activate it. The
 name of the active environment will be displayed in your prompt. You can then
-run `iocsh.bash`.
+run `iocsh`.
 
 ```console
 [iocuser@host:~]$ conda activate epics
-(epics) [iocuser@host:~]$ iocsh.bash -r stream
-registerChannelProviderLocal firstTime true
+(epics) [iocuser@host:~]$ iocsh -r stream
+Warning: environment variable IOCNAME is not set.
+███████╗██████╗     ██╗ ██████╗  ██████╗    ███████╗██╗  ██╗███████╗██╗     ██╗
+██╔════╝╚════██╗    ██║██╔═══██╗██╔════╝    ██╔════╝██║  ██║██╔════╝██║     ██║
+█████╗   █████╔╝    ██║██║   ██║██║         ███████╗███████║█████╗  ██║     ██║
+██╔══╝   ╚═══██╗    ██║██║   ██║██║         ╚════██║██╔══██║██╔══╝  ██║     ██║
+███████╗██████╔╝    ██║╚██████╔╝╚██████╗    ███████║██║  ██║███████╗███████╗███████╗
+╚══════╝╚═════╝     ╚═╝ ╚═════╝  ╚═════╝    ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+
+# Start at "2024-W06-feb09-0955-52-CET"
+# European Spallation Source ERIC : iocsh (5.0.0-PID-90020)
 #
-# Start at "2020-W23-Jun03-0809-25-UTC"
+############################################################################
+##  Shell and environment variables
+############################################################################
+# PWD = "/home/iocuser"
+# USER = "iocuser"
+# LOGNAME = "iocuser"
+# PATH = "/home/iocuser/miniconda/envs/epics/epics/bin/linux-x86_64:/home/iocuser/miniconda/envs/epics/bin:/home/iocuser/.local/bin:/opt/conda/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin"
 #
-# Version information:
-# European Spallation Source ERIC : iocsh.bash (3.1.3-PID-2667)
+############################################################################
+##  EPICS variables
+############################################################################
+# EPICS_BASE = "/home/iocuser/miniconda/envs/epics/epics"
+# EPICS_HOST_ARCH = "linux-x86_64"
+# EPICS_DRIVER_PATH = "/home/iocuser/miniconda/envs/epics/modules"
+# EPICS_CA_AUTO_ADDR_LIST = ""
+# EPICS_CA_ADDR_LIST = "127.255.255.255 172.30.38.20"
+# EPICS_PVA_AUTO_ADDR_LIST = ""
+# EPICS_PVA_ADDR_LIST = ""
 #
-# --- snip snip ---
-# Load require module, which has the version 3.1.3
+############################################################################
+##  e3-specific variables
+############################################################################
+# E3_REQUIRE_VERSION = "5.0.0"
+# E3_REQUIRE_LOCATION = "/home/iocuser/miniconda/envs/epics/modules/require/5.0.0"
+# E3_REQUIRE_BIN = "/home/iocuser/miniconda/envs/epics/bin"
+# E3_REQUIRE_DB = "/home/iocuser/miniconda/envs/epics/modules/require/5.0.0/db"
+# E3_REQUIRE_DBD = "/home/iocuser/miniconda/envs/epics/modules/require/5.0.0/dbd"
+# E3_REQUIRE_INC = "/home/iocuser/miniconda/envs/epics/modules/require/5.0.0/include"
+# E3_REQUIRE_LIB = "/home/iocuser/miniconda/envs/epics/modules/require/5.0.0/lib"
 #
-dlload /home/iocuser/miniconda/envs/epics/modules/require/3.1.3/lib/linux-x86_64/librequire.so
-dbLoadDatabase /home/iocuser/miniconda/envs/epics/modules/require/3.1.3/dbd/require.dbd
+############################################################################
+##  IOC startup commands
+############################################################################
+# // Set REQUIRE_IOC for its internal PVs
+epicsEnvSet REQUIRE_IOC "REQMOD:skywalker-90020"
+#
+# // Set E3_IOCSH_TOP for the absolute path where iocsh is executed.
+epicsEnvSet E3_IOCSH_TOP "/home/iocuser"
+#
+# // Load require module, version 5.0.0
+#
+dlload /home/iocuser/miniconda/envs/epics/modules/require/5.0.0/lib/linux-x86_64/librequire.so
+dbLoadDatabase /home/iocuser/miniconda/envs/epics/modules/require/5.0.0/dbd/require.dbd
 require_registerRecordDeviceDriver
 Loading module info records for require
 #
 require stream
-Module stream version 2.8.22 found in /home/iocuser/miniconda/envs/epics/modules/stream/2.8.22/
-Module stream depends on asyn 4.41.0
-Module asyn version 4.41.0 found in /home/iocuser/miniconda/envs/epics/modules/asyn/4.41.0/
-Loading library /home/iocuser/miniconda/envs/epics/modules/asyn/4.41.0/lib/linux-x86_64/libasyn.so
-Loaded asyn version 4.41.0
-Loading dbd file /home/iocuser/miniconda/envs/epics/modules/asyn/4.41.0/dbd/asyn.dbd
+Module stream version 2.8.24 found in /home/iocuser/miniconda/envs/epics/modules/stream/2.8.24/
+Module stream depends on asyn 4.43.0
+Module asyn version 4.43.0 found in /home/iocuser/miniconda/envs/epics/modules/asyn/4.43.0/
+Loading library /home/iocuser/miniconda/envs/epics/modules/asyn/4.43.0/lib/linux-x86_64/libasyn.so
+Loaded asyn version 4.43.0
+Loading dbd file /home/iocuser/miniconda/envs/epics/modules/asyn/4.43.0/dbd/asyn.dbd
 Calling function asyn_registerRecordDeviceDriver
 Loading module info records for asyn
-Module stream depends on calc 3.7.1
-Module calc version 3.7.1 found in /home/iocuser/miniconda/envs/epics/modules/calc/3.7.1/
-Module calc depends on seq 2.2.7
-Module seq version 2.2.7 found in /home/iocuser/miniconda/envs/epics/modules/seq/2.2.7/
-Loading library /home/iocuser/miniconda/envs/epics/modules/seq/2.2.7/lib/linux-x86_64/libseq.so
-Loaded seq version 2.2.7
-seq has no dbd file
-Loading module info records for seq
+Module stream depends on calc 3.7.4
+Module calc version 3.7.4 found in /home/iocuser/miniconda/envs/epics/modules/calc/3.7.4/
+Module calc depends on sequencer 2.2.9
+Module sequencer version 2.2.9 found in /home/iocuser/miniconda/envs/epics/modules/sequencer/2.2.9/
+Loading library /home/iocuser/miniconda/envs/epics/modules/sequencer/2.2.9/lib/linux-x86_64/libsequencer.so
+Loaded sequencer version 2.2.9
+sequencer has no dbd file
+Loading module info records for sequencer
 Module calc depends on sscan 2.11.5
 Module sscan version 2.11.5 found in /home/iocuser/miniconda/envs/epics/modules/sscan/2.11.5/
-Module sscan depends on seq 2.2.7
-Module seq version 2.2.7 already loaded
+Module sscan depends on sequencer 2.2.9
+Module sequencer version 2.2.9 already loaded
 Loading library /home/iocuser/miniconda/envs/epics/modules/sscan/2.11.5/lib/linux-x86_64/libsscan.so
 Loaded sscan version 2.11.5
 Loading dbd file /home/iocuser/miniconda/envs/epics/modules/sscan/2.11.5/dbd/sscan.dbd
 Calling function sscan_registerRecordDeviceDriver
 Loading module info records for sscan
-Loading library /home/iocuser/miniconda/envs/epics/modules/calc/3.7.1/lib/linux-x86_64/libcalc.so
-Loaded calc version 3.7.1
-Loading dbd file /home/iocuser/miniconda/envs/epics/modules/calc/3.7.1/dbd/calc.dbd
+Loading library /home/iocuser/miniconda/envs/epics/modules/calc/3.7.4/lib/linux-x86_64/libcalc.so
+Loaded calc version 3.7.4
+Loading dbd file /home/iocuser/miniconda/envs/epics/modules/calc/3.7.4/dbd/calc.dbd
 Calling function calc_registerRecordDeviceDriver
 Loading module info records for calc
-Loading library /home/iocuser/miniconda/envs/epics/modules/stream/2.8.22/lib/linux-x86_64/libstream.so
-Loaded stream version 2.8.22
-Loading dbd file /home/iocuser/miniconda/envs/epics/modules/stream/2.8.22/dbd/stream.dbd
+Loading library /home/iocuser/miniconda/envs/epics/modules/stream/2.8.24/lib/linux-x86_64/libstream.so
+Loaded stream version 2.8.24
+Loading dbd file /home/iocuser/miniconda/envs/epics/modules/stream/2.8.24/dbd/stream.dbd
 Calling function stream_registerRecordDeviceDriver
 Loading module info records for stream
-# Set the IOC Prompt String One
-epicsEnvSet IOCSH_PS1 "8ef3d5671aef-2667 > "
-#
+# // Set the IOC Prompt String
+epicsEnvSet IOCSH_PS1 "90020 > "
 #
 iocInit
 Starting iocInit
 ############################################################################
-## EPICS R7.0.6.1
-## Rev. 2022-03-04T15:55+0000
+## EPICS R7.0.7
+## Rev. 2023-05-02T11:44+0000
+## Rev. Date build date/time:
 ############################################################################
 drvStreamInit: Warning! STREAM_PROTOCOL_PATH not set.
 iocRun: All initialization complete
-8ef3d5671aef-2667 >
+90020 >
 ```
 
 Once you are in an environment you can install new packages or change the
@@ -143,16 +189,23 @@ Solving environment: done
 
   environment location: /home/iocuser/miniconda/envs/epics
 
-  added / updated specs:
+    added / updated specs:
     - iocstats
     - recsync
 
-# --- snip snip ---
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    iocstats-3.1.16            |      h910a07a_11          94 KB  conda-e3-virtual
+    recsync-1.5.0              |       h910a07a_0          65 KB  conda-e3-virtual
+    ------------------------------------------------------------
+                                           Total:         160 KB
 
 The following NEW packages will be INSTALLED:
 
-  iocstats           conda-e3-virtual/linux-64::iocstats-3.1.16-h2bcc261_6
-  recsync            conda-e3-virtual/linux-64::recsync-1.4.0-hfba5578_0
+  iocstats           conda-e3-virtual/linux-64::iocstats-3.1.16-h910a07a_11
+  recsync            conda-e3-virtual/linux-64::recsync-1.5.0-h910a07a_0
 ```
 
 `conda list` will show you the list of installed packages in the environment:
@@ -164,23 +217,23 @@ The following NEW packages will be INSTALLED:
 # Name                    Version                   Build  Channel
 _libgcc_mutex             0.1                 conda_forge    conda-e3-virtual
 _openmp_mutex             4.5                       0_gnu    conda-e3-virtual
-asyn                      4.41.0              h0468fb3_10    conda-e3-virtual
-calc                      3.7.1                h3f5c933_3    conda-e3-virtual
-epics-base                7.0.6.1              h68659b9_4    conda-e3-virtual
-iocstats                  3.1.16               h2bcc261_6    conda-e3-virtual
+asyn                      4.43.0               h3f0f509_0    conda-e3-virtual
+calc                      3.7.4                h0e1289a_0    conda-e3-virtual
+epics-base                7.0.7                h68659b9_2    conda-e3-virtual
+iocstats                  3.1.16              h910a07a_11    conda-e3-virtual
 libgcc-ng                 9.3.0               h2828fa1_19    conda-e3-virtual
 libgomp                   9.3.0               h2828fa1_19    conda-e3-virtual
 libstdcxx-ng              9.3.0               h6de172a_19    conda-e3-virtual
 libusb                    1.0.22               he1b5a44_0    conda-e3-virtual
 ncurses                   6.1               hf484d3e_1002    conda-e3-virtual
-pcre                      8.44                 he1b5a44_0    conda-e3-virtual
+pcre                      8.45                 h9c3ff4c_0    conda-e3-virtual
 perl                      5.26.2            h516909a_1006    conda-e3-virtual
 readline                  8.0                  hf8c457e_0    conda-e3-virtual
-recsync                   1.4.0                hfba5578_0    conda-e3-virtual
-require                   3.1.4                hba1cc46_3    conda-e3-virtual
-seq                       2.2.7                hfba5578_2    conda-e3-virtual
-sscan                     2.11.5               hd0a8fca_1    conda-e3-virtual
-stream                    2.8.22               h74e095f_2    conda-e3-virtual
+recsync                   1.5.0                h910a07a_0    conda-e3-virtual
+require                   5.0.0                h426397f_5    conda-e3-virtual
+sequencer                 2.2.9                h910a07a_1    conda-e3-virtual
+sscan                     2.11.5               hdc5059e_2    conda-e3-virtual
+stream                    2.8.24               hbceeb4b_0    conda-e3-virtua
 ```
 
 Let's say you want to switch to another version of stream. You could
@@ -194,6 +247,8 @@ Loading channels: done
 stream                        2.8.10      h2feebe4_0  conda-e3-virtual
 stream                        2.8.10      hbaf0b60_1  conda-e3-virtual
 stream                        2.8.22      h74e095f_2  conda-e3-virtual
+stream                        2.8.22      ha977fd6_2  conda-e3-virtual
+stream                        2.8.24      hbceeb4b_0  conda-e3-virtual
 ```
 
 Let's switch to `2.8.10`
@@ -215,21 +270,36 @@ The following packages will be downloaded:
 
     package                    |            build
     ---------------------------|-----------------
+    asyn-4.41.0                |      hceeaaa5_10         1.1 MB  conda-e3-virtual
+    calc-3.7.1                 |       h6ca1cf9_3         365 KB  conda-e3-virtual
+    epics-base-7.0.5.0         |       h68659b9_4        28.6 MB  conda-e3-virtual
     iocstats-3.1.16            |       h2c1926d_5          92 KB  conda-e3-virtual
+    recsync-1.3.0.post1        |       h60aecf9_1          59 KB  conda-e3-virtual
+    require-3.1.3              |       h9bea806_1         114 KB  conda-e3-virtual
+    seq-2.2.7                  |       h60aecf9_1         378 KB  conda-e3-virtual
+    sscan-2.11.2               |       h44690a7_1         288 KB  conda-e3-virtual
+    stream-2.8.10              |       hbaf0b60_1         498 KB  conda-e3-virtual
     ------------------------------------------------------------
-                                           Total:          92 KB
+                                           Total:        31.5 MB
+
+The following NEW packages will be INSTALLED:
+
+  seq                conda-e3-virtual/linux-64::seq-2.2.7-h60aecf9_1
+
+The following packages will be REMOVED:
+
+  sequencer-2.2.9-h910a07a_1
 
 The following packages will be DOWNGRADED:
 
-  asyn                                   4.41.0-h0468fb3_10 --> 4.41.0-hceeaaa5_10
-  calc                                     3.7.1-h3f5c933_3 --> 3.7.1-h6ca1cf9_3
-  epics-base                             7.0.6.1-h68659b9_4 --> 7.0.5.0-h68659b9_4
-  iocstats                                3.1.16-h2bcc261_6 --> 3.1.16-h2c1926d_5
-  recsync                                  1.4.0-hfba5578_0 --> 1.3.0.post1-h60aecf9_1
-  require                                  3.1.4-hba1cc46_3 --> 3.1.3-h9bea806_1
-  seq                                      2.2.7-hfba5578_2 --> 2.2.7-h60aecf9_1
-  sscan                                   2.11.5-hd0a8fca_1 --> 2.11.2-h44690a7_1
-  stream                                  2.8.22-h74e095f_2 --> 2.8.10-hbaf0b60_1
+  asyn                                    4.43.0-h3f0f509_0 --> 4.41.0-hceeaaa5_10
+  calc                                     3.7.4-h0e1289a_0 --> 3.7.1-h6ca1cf9_3
+  epics-base                               7.0.7-h68659b9_2 --> 7.0.5.0-h68659b9_4
+  iocstats                               3.1.16-h910a07a_11 --> 3.1.16-h2c1926d_5
+  recsync                                  1.5.0-h910a07a_0 --> 1.3.0.post1-h60aecf9_1
+  require                                  5.0.0-h426397f_5 --> 3.1.3-h9bea806_1
+  sscan                                   2.11.5-hdc5059e_2 --> 2.11.2-h44690a7_1
+  stream                                  2.8.24-hbceeb4b_0 --> 2.8.10-hbaf0b60_1
 
 ```
 
@@ -337,30 +407,28 @@ dependencies:
 
 # --- snip snip ---
 
-iocstats 3.1.16 h2bcc261_6
+iocstats 3.1.16 h910a07a_11
 --------------------------
-file name   : iocstats-3.1.16-h2bcc261_6.tar.bz2
+file name   : iocstats-3.1.16-h910a07a_11.tar.bz2
 name        : iocstats
 version     : 3.1.16
-build       : h2bcc261_6
-build number: 6
-size        : 93 KB
+build       : h910a07a_11
+build number: 11
+size        : 94 KB
 license     : EPICS Open License
 subdir      : linux-64
-url         : https://artifactory.esss.lu.se/artifactory/api/conda/conda-e3-virtual/linux-64/iocstats-3.1.16-h2bcc261_6.tar.bz2
-md5         : 73d062648a0c5c767def3798a514fdfe
-timestamp   : 2022-03-04 18:50:11 UTC
+url         : https://artifactory.esss.lu.se/artifactory/api/conda/conda-e3-virtual/linux-64/iocstats-3.1.16-h910a07a_11.tar.bz2
+md5         : a541cc0b58e5da469ee55cda6ca165ba
+timestamp   : 2023-09-08 14:13:29 UTC
 dependencies:
-  - calc >=3.7.1,<3.7.2.0a0
-  - epics-base >=7.0.6.1,<7.0.6.2.0a0
+  - epics-base >=7.0.7,<7.0.8.0a0
   - libgcc-ng >=7.3.0
   - libstdcxx-ng >=7.3.0
-  - require >=3.1.4,<3.2.0a0
+  - require >=5.0.0,<5.1.0a0
 ```
 
 You can see above that the first package was compiled with EPICS Base  `3.15.5` and
-the last with EPICS Base  `7.0.6.1`. The last one also has `calc` has run
-dependency.
+the last with EPICS Base  `7.0.7`.
 
 Note that conda package names are always **lowercase**. When searching or
 installing a package, conda is case-insensitive. Running `conda install
@@ -380,10 +448,6 @@ Loading dbd file /home/iocuser/miniconda/envs/epics3/modules/iocstats/3.1.15/dbd
 Calling function iocstats_registerRecordDeviceDriver
 ```
 
-Note that when working with e3, you aren't limited to work with conda packages.
-During development, you can compile a module locally in a conda environment. See
-{ref}`how to compile a module <e3_module_compilation>`.
-
 ## e3 module creation
 
 e3 uses [*require*](https://gitlab.esss.lu.se/epics-modules/require), originally
@@ -395,71 +459,71 @@ file that includes this `driver.Makefile`.
 
 To make it easy to create a new e3 module, we provide a cookiecutter template.
 
-## Create the wrapper
+## Create the e3 module
 
-Use the `e3-wrapper` alias to create a new wrapper (refer to [cookiecutter_configuration]
+Use the `e3-module` alias to create a new module (refer to [cookiecutter_configuration]
 to create this alias).  You'll be prompted to enter some values
 Press enter to keep the default.
 
 ```console
-[iocuser@host:dev]$ e3-wrapper
-You've downloaded /home/iocuser/.cookiecutters/cookiecutter-e3-wrapper before. Is it okay to delete and re-download it? [yes]:
+[iocuser@host:dev]$ e3-module
+You've downloaded /home/iocuser/.cookiecutters/cookiecutter-e3-module before. Is it okay to delete and re-download it? [yes]: yes
 company [European Spallation Source ERIC]:
-module_name []: foo
-module_version [main]: 1.0.0
-summary [Wrapper for the module foo]:
-epics_base_version [7.0.6.1]:
-epics_base_location [/epics/base-7.0.6.1]:
-require_version [4.0.0]:
-git_repository []:
+module_name [mymodule]: foo
+full_name [Your name]: John Doe
+email [john.doe@ess.eu]:
+documentation_page [https://confluence.esss.lu.se/display/IS/Integration+by+ICS]:
+Select keep_epics_base_makefiles:
+1 - N
+2 - Y
+Choose from 1, 2 [1]: 2
 ```
 
-This will create a new wrapper. The default behaviour of cookiecutter is to put
-in an empty directory for the module. You can then, for example, generate a
-template using `makeBaseApp.pl` from EPICS base, copy some set of source files,
-or use the git submodule for external modules. Refer to [module_wrappers]
-for more details.
+This will create a new module. You can reach the same behavior generating a
+template using `makeBaseApp.pl` from EPICS base.
 
 ```console
 [iocuser@host:dev]$ tree foo/
-.
-└── e3-foo
-    ├── cmds
-    │   └── st.cmd
-    ├── configure
-    │   ├── CONFIG
-    │   ├── CONFIG_MODULE
-    │   ├── CONFIG_OPTIONS
-    │   ├── module
-    │   │   └── RULES_MODULE
-    │   ├── RELEASE
-    │   └── RULES
-    ├── foo
-    ├── foo.Makefile
-    ├── iocsh
-    │   └── README.md
-    ├── LICENSE
-    ├── Makefile
-    ├── opi
-    │   └── README.md
-    ├── patch
-    │   └── Site
-    │       ├── HISTORY.md
-    │       └── README.md
-    ├── README.md
-    └── template
-        └── README.md
+foo/
+├── cmds
+│   └── st.cmd
+├── configure
+│   ├── CONFIG
+│   ├── CONFIG_SITE
+│   ├── Makefile
+│   ├── RELEASE
+│   ├── RULES
+│   ├── RULES_DIRS
+│   ├── RULES.ioc
+│   └── RULES_TOP
+├── fooApp
+│   ├── Db
+│   │   └── Makefile
+│   ├── Makefile
+│   └── src
+│       ├── fooMain.cpp
+│       └── Makefile
+├── foo.Makefile
+├── iocsh
+│   └── foo.iocsh
+├── LICENSE
+├── Makefile
+├── README.md
+└── RELEASE.md
 ```
 
 Notice the `foo.Makefile` file, this is the main file used to
 build and install a conda e3 module.  The standard `Makefile`
 allows you to compile the module using the default EPICS build
-system if you want.
+system if you want. BHowever, to maintain the e3-module as closely
+as possible to the EPICS vanilla mode, it is advisable to include
+`foo.Makefile` in the `.gitignore` file.
 
 ## Update the module
 
-Add the needed files to your module.  You should also update the
-`foo.Makefile` file. It includes comments to help you.
+Include the necessary files in your module and ensure that you update
+the `foo.Makefile` file in accordance with the new changes or updates made
+to your module.
 
 ## Compile the module
 
@@ -483,55 +547,60 @@ Solving environment: done
 ```
 
 Activate the `e3-dev` environment and compile your module.
+Note that when using the make command, it is essential to specify the MODULE name.
+Additionally, you have the option to specify the version; if omitted, the require
+command will automatically generate the version as `dev`.
 
 ```console
 [iocuser@host:dev]$ conda activate e3-dev
 (e3-dev) [iocuser@host:dev]$ cd foo
-(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile
+(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile MODULE=foo
+MAKING EPICS VERSION 7.0.7
+mkdir -p O.7.0.7_Common
+make -f foo.Makefile T_A=linux-x86_64 build
 make[1]: Entering directory '/home/iocuser/dev/foo'
-MAKING EPICS VERSION 7.0.6.1
-MAKING ARCH linux-x86_64
-make[2]: Entering directory '/home/iocuser/dev/foo'
-mkdir -p O.7.0.6.1_Common
-mkdir -p O.7.0.6.1_linux-x86_64
-make[3]: Entering directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-/home/iocuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET                -D_X86_64_ -DUNIX  -Dlinux                  -MD   -O3 -g   -Wall                   -mtune=generic                   -m64 -fPIC               -I. -I../fooApp/src/ -I/home/iocuser/miniconda/envs/e3-dev/modules/require/3.1.4/include -I/home/iocuser/miniconda/envs/e3-dev/epics/include  -I/home/iocuser/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/iocuser/miniconda/envs/e3-dev/epics/include/os/Linux                   -I/home/iocuser/miniconda/envs/e3-dev/include                -c  ../fooApp/src/fooMain.cpp
+mkdir -p O.7.0.7_linux-x86_64
+make[2]: Entering directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
+/home/iocsuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET           -D_X86_64_ -DUNIX  -Dlinux             -MD   -O3 -g   -Wall              -mtune=generic              -m64  -fPIC          -I. -I../fooApp/src/ -I/home/iocsuser/miniconda/envs/e3-dev/modules/require/5.0.0/include -I/home/iocsuser/miniconda/envs/e3-dev/epics/include -I/home/iocsuser/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/iocsuser/miniconda/envs/e3-dev/epics/include/os/Linux              -I/home/iocsuser/miniconda/envs/e3-dev/include           -c  ../fooApp/src/fooMain.cpp
 echo "char _fooLibRelease[] = \"dev\";" >> foo_version_dev.c
-/home/iocuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET                -D_X86_64_ -DUNIX  -Dlinux                  -MD   -O3 -g   -Wall -Werror-implicit-function-declaration                   -mtune=generic     -m64 -fPIC                -I. -I../fooApp/src/ -I/home/iocuser/miniconda/envs/e3-dev/modules/require/3.1.4/include -I/home/iocuser/miniconda/envs/e3-dev/epics/include  -I/home/iocuser/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/iocuser/miniconda/envs/e3-dev/epics/include/os/Linux                   -I/home/iocuser/miniconda/envs/e3-dev/include                -c foo_version_dev.c
+/home/iocsuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE        -DUSE_TYPED_RSET           -D_X86_64_ -DUNIX  -Dlinux             -MD   -O3 -g   -Wall -Werror-implicit-function-declaration              -mtune=generic     -m64  -fPIC           -I. -I../fooApp/src/ -I/home/iocsuser/miniconda/envs/e3-dev/modules/require/5.0.0/include -I/home/iocsuser/miniconda/envs/e3-dev/epics/include -I/home/iocsuser/miniconda/envs/e3-dev/epics/include/compiler/gcc -I/home/iocsuser/miniconda/envs/e3-dev/epics/include/os/Linux              -I/home/iocsuser/miniconda/envs/e3-dev/include           -c foo_version_dev.c
 Collecting dependencies
-rm -f foo.dep
-cat *.d 2>/dev/null | sed 's/ /\n/g' | sed -n 's%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([0-9]*\.[0-9]*\.[0-9]*\)/.*%\1 \2%p;s%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([^/]*\)/.*%\1 \2%p'| grep -v "include" | sort -u >> foo.dep
-/home/iocuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++ -o libfoo.so -shared -fPIC -Wl,-hlibfoo.so -L/home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64 -Wl,-rpath,/home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64                       -rdynamic -m64 -Wl,--disable-new-dtags -Wl,-rpath,/home/iocuser/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/iocuser/miniconda/envs/e3-dev/lib -L/home/iocuser/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/iocuser/miniconda/envs/e3-dev/epics/lib/linux-x86_64                          fooMain.o foo_version_dev.o      -lpthread    -lm -lrt -ldl -lgcc
-rm -f MakefileInclude
-make[3]: Leaving directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-make[2]: Leaving directory '/home/iocuser/dev/foo'
+rm -f foo.dep.tmp
+cat *.d 2>/dev/null | sed 's/ /\n/g' | sed -n 's%/home/iocsuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([0-9]*\.[0-9]*\.[0-9]*\)/.*%\1 \2%p;s%/home/iocsuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([^/]*\)/.*%\1 \2%p'| grep -v "include" | sort -u > foo.dep.tmp
+cat foo.dep.tmp | sort -u >> foo.dep
+/home/iocsuser/miniconda/envs/e3-dev/bin/x86_64-conda_cos6-linux-gnu-g++ -o libfoo.so  -shared -fPIC -Wl,-hlibfoo.so -L/home/iocsuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64 -Wl,-rpath,/home/iocsuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64                  -rdynamic -m64 -Wl,--disable-new-dtags -Wl,-rpath,/home/iocsuser/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/iocsuser/miniconda/envs/e3-dev/lib -L/home/iocsuser/miniconda/envs/e3-dev/lib -Wl,-rpath-link,/home/iocsuser/miniconda/envs/e3-dev/epics/lib/linux-x86_64                   fooMain.o foo_version_dev.o      -lpthread    -lm -lrt -ldl -lgcc
+make[2]: Leaving directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
 make[1]: Leaving directory '/home/iocuser/dev/foo'
 ```
 
-If you have some database to generate, run `make -f foo.Makefile db`.  In our
-case, we don't have any template, so the command won't do anything.
+If you have some database to generate, run `make -f foo.Makefile MODULE=foo db_internal`.
+In our case, we don't have any template, so the command won't do anything.
 
 ```console
-(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile db
-make: Nothing to be done for 'db'.
+(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile MODULE=foo db_internal
+make: Nothing to be done for 'db_internal'.
 ```
 
 Install the module in the current environment.
 
 ```console
-(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile install
+(e3-dev) [iocuser@host: foo]$ make -f foo.Makefile MODULE=foo install
+MAKING EPICS VERSION 7.0.7
+make -f foo.Makefile T_A=linux-x86_64 install
 make[1]: Entering directory '/home/iocuser/dev/foo'
-MAKING EPICS VERSION 7.0.6.1
-MAKING ARCH linux-x86_64
-make[2]: Entering directory '/home/iocuser/dev/foo'
-make[3]: Entering directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-rm -f MakefileInclude
-make[3]: Leaving directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-make[3]: Entering directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-rm -f MakefileInclude
+make[2]: Entering directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
+Collecting dependencies
+rm -f foo.dep.tmp
+cat *.d 2>/dev/null | sed 's/ /\n/g' | sed -n 's%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([0-9]*\.[0-9]*\.[0-9]*\)/.*%\1 \2%p;s%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([^/]*\)/.*%\1 \2%p'| grep -v "include" | sort -u > foo.dep.tmp
+cat foo.dep.tmp | sort -u >> foo.dep
+make[2]: Leaving directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
+make[2]: Entering directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
+Collecting dependencies
+rm -f foo.dep.tmp
+cat *.d 2>/dev/null | sed 's/ /\n/g' | sed -n 's%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([0-9]*\.[0-9]*\.[0-9]*\)/.*%\1 \2%p;s%/home/iocuser/miniconda/envs/e3-dev/modules/*\([^/]*\)/\([^/]*\)/.*%\1 \2%p'| grep -v "include" | sort -u > foo.dep.tmp
+cat foo.dep.tmp | sort -u >> foo.dep
 Installing scripts ../iocsh/foo.iocsh to /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
 perl -CSD /home/iocuser/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m755 ../iocsh/foo.iocsh /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
-mkdir /home/iocuser/miniconda/envs/e3-dev/modules/foo
 mkdir /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
 Installing module library /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/libfoo.so
 perl -CSD /home/iocuser/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m755 libfoo.so /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
@@ -539,15 +608,14 @@ mkdir /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib
 mkdir /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
 Installing module dependency file /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64/foo.dep
 perl -CSD /home/iocuser/miniconda/envs/e3-dev/epics/bin/linux-x86_64/installEpics.pl  -d -m644 foo.dep /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/lib/linux-x86_64
-make[3]: Leaving directory '/home/iocuser/dev/foo/O.7.0.6.1_linux-x86_64'
-make[2]: Leaving directory '/home/iocuser/dev/foo'
+make[2]: Leaving directory '/home/iocuser/dev/foo/O.7.0.7_linux-x86_64'
 make[1]: Leaving directory '/home/iocuser/dev/foo'
 ```
 
 The module was installed as _dev_ version.  You can check that you can load it:
 
 ```console
-(e3-dev) [iocuser@host:foo]$ iocsh.bash -r foo
+(e3-dev) [iocuser@host:foo]$ iocsh -r foo
 # --- snip snip ---
 require foo
 Module foo version dev found in /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev/
@@ -575,26 +643,26 @@ iocshLoad("/home/iocuser/miniconda/envs/e3-dev/modules/foo/dev//foo.iocsh")
 # --- snip snip ---
 ```
 
+You can uninstall the module by running `make -f foo.Makefile uninstall`.
+
+```console
+(e3-dev) [iocuser@host:foo]$ make -f foo.Makefile MODULE=foo uninstall
+rm -rf /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
+```
+
 During development, you can modify your code, re-compile and re-install as many
 times as you want:
 
 ```console
-make -f foo.Makefile
-make -f foo.Makefile db
-make -f foo.Makefile install
-```
-
-You can uninstall the module by running `make -f foo.Makefile uninstall`.
-
-```console
-(e3-dev) [iocuser@host:foo]$ make -f foo.Makefile uninstall
-rm -rf /home/iocuser/miniconda/envs/e3-dev/modules/foo/dev
+make -f foo.Makefile MODULE=foo uninstall
+make -f foo.Makefile MODULE=foo
+make -f foo.Makefile MODULE=foo db_internal
+make -f foo.Makefile MODULE=foo install
 ```
 
 ## Upload the module to GitLab
 
-You should upload your module to the proper subgroup under
-<https://gitlab.esss.lu.se/epics-modules>
+You should upload your module to <https://gitlab.esss.lu.se/epics-modules>
 
 To distribute your module, you need to package it with conda.
 
@@ -616,13 +684,8 @@ it to your own repository. Here we use `fakemodule` as a working example.
 company [European Spallation Source ERIC]:
 module_name [mymodule]: fakemodule
 summary [EPICS fakemodule module]:
-Select module_kind:
-1 - ESS
-2 - ESS-WP12
-3 - Community
-Choose from 1, 2, 3 [1]:
-module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/training/fakemodule
-module_version [1.0.0]: 1.0.0
+module_home [https://gitlab.esss.lu.se/epics-modules]:
+module_version [1.0.0]:
 ```
 
 The `module_home` variable shall point to the group in GitLab where your module
@@ -635,14 +698,17 @@ This will create the following project:
 fakemodule-recipe/
 ├── LICENSE
 ├── README.md
-└── recipe
-    ├── build.sh
-    └── meta.yaml
+├── recipe
+│   ├── build.sh
+│   └── meta.yaml
+└── src
+    └── fakemodule.Makefile
 ```
 
 ## Update the recipe
 
-You should only have to update the `recipe/meta.yaml` file
+Typically, you should only need to update the `recipe/meta.yaml` and the
+`fakemodule.Makefile` files.
 
 ### meta.yaml
 
@@ -654,6 +720,11 @@ you've finalized your recipe.
 ```{note}
 The final recipe shouldn't contain any comments!
 ```
+
+### module.Makefile
+
+The `module.Makefile` should have the same content of the epics-module
+`module.Makefile` that you used before in the build/install development stage.
 
 ## Build the recipe
 
@@ -689,10 +760,7 @@ Maximum memory usage observed: 2.4M
 Total disk usage observed (not including envs): 52B
 
 
-####################################################################################
-Source and build intermediates have been left in /home/iocuser/miniconda/conda-bld.
-There are currently 2 accumulated.
-To remove them, you can run the ```conda build purge``` command
+####################################################################################<<<<<<<<<<<<<<<<s>>>>>>>>>>>>>>>>
 ````
 
 ## Test the built package
@@ -713,9 +781,8 @@ Activate your test environment and test your package.
 
 ## Upload the recipe to GitLab
 
-You should upload your recipe to <https://gitlab.esss.lu.se/e3-recipes/staging>.
-GitLab-ci will automatically build it and upload the package to Artifactory
-`conda-e3-test` channel.
+Upload your recipe to <https://gitlab.esss.lu.se/e3-recipes>.
+GitLab CI will automatically build it and provide the necessary job action
+to release the package into the conda-e3-channel in the Artifactory.
 
 [cookiecutter_configuration]: 12_conda_environment.md#cookiecutter
-[module_wrappers]: ../../../design/3_wrappers.md
