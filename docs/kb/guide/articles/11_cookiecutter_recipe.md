@@ -31,8 +31,8 @@ It is highly recommended to use virtual environments (using, for example, the
 
 ### Building an EPICS module
 
-Assuming that you have an existing EPICS module you would like to create a recipe
-for that is publically available via git. Note that the configuration
+Assuming that you have an existing EPICS module, and you would like to create a
+recipe for that is publicly available via git. Note that the configuration
 and *make* files that are used to build this EPICS module will not be used in the
 conda package process, and that you will have to configure the recipe separately.
 
@@ -57,10 +57,6 @@ Cookiecutter then provides a list of prompts:
 company [European Spallation Source ERIC]:
 module_name [mymodule]: fakemodule
 summary [EPICS fakemodule module]:
-Select module_kind:
-1 - ESS
-2 - Community
-Choose from 1, 2 [1]:
 module_home [https://gitlab.esss.lu.se/epics-modules]: https://gitlab.esss.lu.se/epics-modules/training
 module_version [1.0.0]:
 ```
@@ -81,18 +77,8 @@ fakemodule-recipe/
 │   ├── build.sh
 │   └── meta.yaml
 └── src
-    └── Makefile.E3
+    └── fakemodule.Makefile
 ```
-
-Note that for item `module_kind`, we have two options, ESS and Community.
-In the first case, if the EPICS module has a makefile named as
-`{module_name}.Makefile`, or `Makefile.E3`, the cookiecutter will copy
-that makefile to recipe `src` folder  as `Makefile.E3`, if the EPICS module
-has not makefile, the cookiecutter will create a standard `Makefile.E3` file
-in the recipe `src` folder.
-
-In the second case, the cookiecutter will only create a standard `Makefile.E3`
-file in the recipe `src` folder.
 
 ### Creating a remote project on GitLab and deploying the package
 
@@ -140,5 +126,6 @@ Assuming you are using the ESS GitLab, then the steps are as follows:
 
 5. If you put the conda-recipe repository in the group e3-recipes
    <https://gitlab.esss.lu.se/e3-recipes> this will trigger a build
-   with `.gitlab-ci` and make a new or a first version available in the
-   Artifactory conda-e3 channel
+   with `.gitlab-ci` and make the release job button available to
+   release a new or a first version of the module in the Artifactory
+   conda-e3 channel

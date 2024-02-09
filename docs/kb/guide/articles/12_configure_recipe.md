@@ -8,15 +8,10 @@ To create a conda recipe, you should use
 ## The `src/` directory
 
 If you used the cookiecutter [e3-recipe](https://gitlab.esss.lu.se/ics-cookiecutter/cookiecutter-e3-recipe),
-it will create the directory file `Makefile.E3` on src directory.
+it will create the file `{module_name}.Makefile` on src directory.
 
 This file is very similar to module [Makefile](6_configure_wrapper.md#the-module-makefile)
-created for an e3 wrapper. We only make sure that in the Makefile on recipe
-is necessary to remove the line:
-
-``` make
-include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
-```
+created for an e3 wrapper.
 
 ## The `recipe/` directory Makefile
 
@@ -31,11 +26,11 @@ Also created automatically by cookiecutter, there are two files in the recipe di
   LIBVERSION=${PKG_VERSION}
 
   # Clean between variants builds
-  make -f Makefile.E3 clean
+  make -f {module_name}.Makefile clean
 
-  make -f Makefile.E3 MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION}
-  make -f Makefile.E3 MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION} db
-  make -f Makefile.E3 MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION} install
+  make -f {module_name}.Makefile MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION}
+  make -f {module_name}.Makefile MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION} db_internal
+  make -f {module_name}.Makefile MODULE=${PKG_NAME} LIBVERSION=${LIBVERSION} install
   ```
 
 * `meta.yaml`: A file that contains all the metadata in the recipe.
