@@ -1,4 +1,5 @@
 git
+cmake
 tree
 ipmitool
 autoconf
